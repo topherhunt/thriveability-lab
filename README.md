@@ -23,7 +23,7 @@ This is a starter template I'll use when building new apps.
 - Review `Gemfile`
 - `bundle install`
 - Review `.gitignore`
-- Rename `VanillaApp`
+- Replace `VanillaApp` and `vanilla_app`
 - Review `config/initializers/devise.rb`
 - Review Users migration. If any other fields are needed, update 
   `app/views/devise/users/` templates and uncomment the params
@@ -35,8 +35,9 @@ This is a starter template I'll use when building new apps.
   - `CREATE ROLE developer WITH createdb login password 'developer';`
   - `\dg`
   - `\q`
-- `rake db:create db:seed db:migrate test:prepare`
+- `rake db:create db:migrate db:seed test:prepare`
 - Run specs
+- Rewrite this readme
 - Push up to new repository
 - Start on the fun stuff!
 
