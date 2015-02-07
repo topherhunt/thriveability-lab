@@ -58,3 +58,8 @@ config.assets.compile = true (from false)
 - `heroku run rake db:migrate`
 - `rake figaro:heroku`
 - `heroku open` and test!
+
+### Maintaining it
+
+Keep this app up to date by periodically updating gems and config to reflect the habitual tweaks I make when starting a new app. One change here can save me tons of time with each sandbox app I spin up down the road.
+
