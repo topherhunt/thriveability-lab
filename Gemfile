@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 
 gem 'rails'
-gem 'pg'
+gem 'mysql2'
 gem 'figaro'
 gem 'exception_notification'
 

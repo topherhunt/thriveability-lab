@@ -25,16 +25,12 @@ This is a starter template I'll use when building new apps.
 - Review `.gitignore`
 - Replace `VanillaApp` and `vanilla_app`
 - Review `config/initializers/devise.rb`
-- Review Users migration. If any other fields are needed, update 
+- Review Users migration. If any other fields are needed, update
   `app/views/devise/users/` templates and uncomment the params
   customizer in `ApplicationController`.
-- Create `config/application.yml` (Figaro; see template)
+- Create `config/application.yml` (Figaro; see template).
+  Ensure a unique Devise salt and pepper.
 - Create `config/database.yml` (see template)
-- Create the db role in Postgresql (if not using a shared role):
-  - `psql -h localhost`
-  - `CREATE ROLE developer WITH createdb login password 'developer';`
-  - `\dg`
-  - `\q`
 - `rake db:create db:migrate db:seed test:prepare`
 - Run specs
 - Rewrite this readme

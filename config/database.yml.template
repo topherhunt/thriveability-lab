@@ -1,11 +1,12 @@
 
 default: &default
-  adapter: postgresql
-  pool:    5
-  timeout: 5000
+  adapter:  mysql2
+  encoding: utf8
   host:     localhost
-  username: developer
-  password: developer
+  username: root
+  password:
+  pool:     5
+  timeout:  5000
 
 development:
   <<: *default
