@@ -6,17 +6,18 @@ gem 'rails'
 gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'figaro'
 
-gem 'devise'
 gem 'bcrypt-ruby'
+gem 'devise'
 gem 'will_paginate'
 
-gem 'haml-rails'
-gem 'sass-rails'
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
-gem 'uglifier'
 gem 'coffee-rails'
+gem 'font-awesome-rails'
+gem 'haml-rails'
 gem 'jquery-rails'
+gem 'sass-rails'
+gem 'uglifier'
 
 group :development do
   gem 'web-console'
@@ -33,4 +34,8 @@ group :test do
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'mocha'
+end
+
+group :production do
+  gem 'rails_12factor'
 end

@@ -21,13 +21,7 @@
 - `bundle install`
 - `rake rails:update:bin`
 - set `config.force_ssl = true` in production
-- Ensure Glyphicon fonts compile correctly in production:
-
-```
-config.assets.precompile += %w( .woff .eot .svg .ttf )
-config.assets.compile = true (from false)
-```
-
+- Ensure FontAwesome fonts compile correctly in production:
 - `heroku create`
 - `git push heroku master`
 - `heroku run rake db:migrate`
