@@ -73,15 +73,6 @@ Rails.application.configure do
     password:  ENV['MANDRILL_API_KEY']
   }
 
-  # Email us if an exception is raised in the production environment.
-  config.middleware.use ExceptionNotification::Rack,
-    email: {
-      email_prefix:         "[VanillaApp ERROR]",
-      sender_address:       ENV['SUPPORT_EMAIL'],
-      exception_recipients: [ENV['SUPPORT_EMAIL']],
-      background_sections:  ['backtrace', 'data']
-    }
-
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true

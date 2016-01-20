@@ -20,4 +20,11 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   # This makes #sign_in and #sign_out available in controller specs
   config.include Devise::TestHelpers, type: :controller
+
+  config.after do |example|
+    if example.metadata[:type] == :request and
+      example.exception.present?
+        save_and_open_page
+    end
+  end
 end

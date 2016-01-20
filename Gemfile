@@ -1,11 +1,10 @@
 
 source 'https://rubygems.org'
-ruby '2.2.0'
+ruby '2.2.2'
 
 gem 'rails'
 gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'figaro'
-gem 'exception_notification'
 
 gem 'devise'
 gem 'bcrypt-ruby'
@@ -19,12 +18,15 @@ gem 'uglifier'
 gem 'coffee-rails'
 gem 'jquery-rails'
 
+group :development do
+  gem 'web-console'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'quiet_assets'
   gem 'launchy' # for save_and_open_page
-  gem 'pry'
-  gem 'web-console'
+  gem 'byebug'
 end
 
 group :test do
