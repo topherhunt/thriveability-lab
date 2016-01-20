@@ -11,8 +11,8 @@ table.form {
 .dropdown-toggle { cursor: pointer; }
 
 // Utility
-.force_red { color: #a94442 !important; }
- 
+.clearfloat { clear: both; }
+
 // for Devise forms
 #error_explanation {
   color: #B20000;

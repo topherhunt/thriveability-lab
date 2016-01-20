@@ -1,4 +1,44 @@
-%h1 Welcome to IntegralClimateAction!
+%h1.text-center Welcome to IntegralClimateAction!
 
-%p Really. Welcome.
+%hr
 
+%p [some sample user tiles]
+
+.tiles-of-user-images{style: 'position: relative;'}
+  - 40.times do
+    %div{style: 'float: left; padding: 3px;'}
+      %div{style: 'width: 50px; height: 50px; background: #ddd;'}
+  .clearfloat
+
+%hr
+
+.row
+  .col-sm-5
+    .well{style: 'min-height: 200px;'}
+      %h4 Active projects
+  .col-sm-2
+    %p.text-center= link_to 'TAKE AN ACTION', '#', class: 'btn btn-primary'
+  .col-sm-5
+    .well{style: 'min-height: 200px;'}
+      %h4 Calendar of member events
+
+.row
+  .col-sm-2
+  .col-sm-8
+    .well{style: 'min-height: 200px;'}
+      %h4 Since you were here last time...
+
+.row
+  .col-sm-5
+    .well{style: 'min-height: 200px;'}
+      %h4 Discussions for you
+  .col-sm-2
+  .col-sm-5
+    .well{style: 'min-height: 200px;'}
+      %h4 Projects for you
+
+.row
+  .col-sm-2
+  .col-sm-8
+    .well{style: 'min-height: 200px;'}
+      %h4 Resources for you
