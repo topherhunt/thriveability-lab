@@ -15,15 +15,8 @@
 - App renders times in terms of US EST; make this sensitive to where the user is
 - Mandrill configured for mailings. Set up account & key for this
 
-### Heroku prep
+## Deployment
 
-- Add gem `rails_12factor` in group `:production`
-- `bundle install`
-- `rake rails:update:bin`
-- set `config.force_ssl = true` in production
-- Ensure FontAwesome fonts compile correctly in production:
-- `heroku create`
-- `git push heroku master`
-- `heroku run rake db:migrate`
-- `rake figaro:heroku`
-- `heroku open` and test!
+Deployed on Heroku at
+
+Errors are collected in Rollbar: https://rollbar.com/instance/uuid?uuid=a1a4cc32-c538-4aa2-a2d0-f2dfef24048e

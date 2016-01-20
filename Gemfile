@@ -5,6 +5,7 @@ ruby '2.2.2'
 gem 'rails'
 gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'figaro'
+gem 'rollbar'
 
 gem 'bcrypt-ruby'
 gem 'devise'
