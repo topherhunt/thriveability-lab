@@ -1,25 +1,19 @@
-# Topher's Rails 4.2.0 app template
+# Integral Climate Action site
 
-This is a starter template I'll use when building new apps.
+## What's set up
 
-### What's set up:
+- Bootstrap styling
+- Devise for standard user auth
+- Figaro is used; all sensitive vars should be kept in application.yml
+- Secret token is dynamically generated each time the server starts up
+- Security is 80% loose on this site. Users can register and use the site without confirming their account (via email) for 24 hours, then are asked to confirm account before continuing.
+- User stays signed in for 24 hours by default, and can check "Remember me" on signin to stay signed in for 1 month.
+- Rspec simple test suite
 
-- Figaro. `application.yml` will be ignored by Git, so create it yourself.
-- Bootstrap from the `bootstrap-sass` gem
-- Devise with Bootstrap-friendly Haml templates
-- Secret token is dynamically generated each time the server starts up.
-- App renders times in terms of US EST
-- Mandrill configured for mailings. (Put the API)
-- Controllers: Home (home, about), Users (show)
-- Vanilla Bootstrap layout with a top navbar with login & logout links,
-  standard Flash message support.
-- ApplicationHelper #show_errors_for model validation helper
-- Simple Rspec setup with starter specs
+## Todo
 
-### To create a new app from it:
-
-- Rewrite this readme
-- Push up to new repository
+- App renders times in terms of US EST; make this sensitive to where the user is
+- Mandrill configured for mailings. Set up account & key for this
 
 ### Heroku prep
 
@@ -39,7 +33,3 @@ config.assets.compile = true (from false)
 - `heroku run rake db:migrate`
 - `rake figaro:heroku`
 - `heroku open` and test!
-
-### Maintaining it
-
-Keep this app up to date by periodically updating gems and config to reflect the habitual tweaks I make when starting a new app. One change here can save me tons of time with each sandbox app I spin up down the road.
