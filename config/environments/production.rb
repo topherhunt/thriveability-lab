@@ -61,16 +61,16 @@ Rails.application.configure do
   # config.action_controller.asset_host = 'http://assets.example.com'
 
   # Action Mailer: deliver messages; don't raise errors
-  config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
+  config.action_mailer.default_url_options = { host: ENV.fetch("HOSTNAME") }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default charset: 'utf-8'
   config.action_mailer.smtp_settings = {
-    address:   'smtp.mandrillapp.com',
+    address:   "smtp.mailgun.org",
     port:      587,
-    user_name: ENV['MANDRILL_USERNAME'],
-    password:  ENV['MANDRILL_API_KEY']
+    user_name: ENV.fetch("MAILGUN_USERNAME"),
+    password:  ENV.fetch("MAILGUN_PASSWORD")
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
