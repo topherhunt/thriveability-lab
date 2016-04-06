@@ -1,3 +1,42 @@
-%h1= @user.email.capitalize
+- if @user == current_user
+  .float-right= link_to "Edit", edit_user_path(@user)
 
-%p Member since #{@user.created_at.to_date}
+%h1 Profile for #{@user.name}
+
+%table.form
+  %tr
+    %th Name
+    %td= @user.name
+  %tr
+    %th Member since
+    %td= @user.created_at.to_date
+  %tr
+    %th I'm good at... (professional or not)
+    %td= @user.skill_list.join(", ")
+  %tr
+    %th I'm passionate about...
+    %td= @user.passion_list.join(", ")
+  %tr
+    %th I'm proud to be known for these traits...
+    %td= @user.trait_list.join(", ")
+  %tr
+    %th I dream of a future where...
+    %td= @user.dream_of_future_where
+
+- if @user.created_resources.any?
+  %h3 Resources I've contributed
+
+  - @user.created_resources.each do |resource|
+    .resource
+      %p
+        %strong= link_to resource.title, resource.url, target: "_blank"
+      %p= resource.description
+      %p TODO: File attachment
+      %hr
+
+  %p= link_to "Add another resource", new_resource_path
+
+- else
+  %h3 Learn more about my work
+  %p Use this space to add any online resources or documents that could be of use to other community members.
+  %p= link_to "Add a resource", new_resource_path

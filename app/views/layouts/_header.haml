@@ -19,7 +19,7 @@
               = current_user.email
               %span.caret
             %ul.dropdown-menu
-              %li= link_to "Profile", user_path(current_user)
+              %li= link_to "My Profile", user_path(current_user)
               %li= link_to "Account settings", edit_user_registration_path
               %li= link_to "Log out", destroy_user_session_path, method: :delete, class: 'force_red'
         - else

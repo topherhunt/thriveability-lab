@@ -1,6 +1,8 @@
 # Keep this file as light-weight as possible.
 # More info: http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'capybara/rspec'
+
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]

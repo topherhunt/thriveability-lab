@@ -1,0 +1,28 @@
+= form_for @resource do |f|
+  = show_errors_for @resource
+
+  %table.form
+    %tr
+      %th= f.label :title
+      %td= f.text_field :title, class: "form-control"
+    %tr
+      %th= f.label :url, "Source URL"
+      %td= f.text_field :url, class: "form-control"
+    %tr
+      %th= f.label :description
+      %td= f.text_area :description, class: "form-control"
+    %tr
+      %th= f.label :attachment
+      %td= f.file_field :attachment, class: "form-control"
+    %tr.js-affirm-ownership.js-hidden
+      %th
+      %td
+        = f.label :ownership_affirmed do
+          *** TODO: Should only show up when I select an attachment file
+          %strong Please only upload files that you own or have permission to distribute.
+          %br
+          = f.check_box :ownership_affirmed
+          I affirm that I own or have permission to distribute this document.
+    %tr
+      %th
+      %td= f.submit "Save", class: "btn btn-primary"

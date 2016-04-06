@@ -3,12 +3,14 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 gem 'rails'
-gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'figaro'
+gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'rollbar'
 
+gem 'acts-as-taggable-on'
 gem 'bcrypt-ruby'
 gem 'devise'
+gem 'paperclip'
 gem 'will_paginate'
 
 gem 'bootstrap-sass'
@@ -17,6 +19,7 @@ gem 'coffee-rails'
 gem 'font-awesome-rails'
 gem 'haml-rails'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'uglifier'
 

@@ -1,4 +1,8 @@
 
+#main-container {
+  padding-bottom: 50px;
+}
+
 table.form {
 
   &.wide { min-width: 400px; }
@@ -11,9 +15,17 @@ table.form {
 .dropdown-toggle { cursor: pointer; }
 
 // Utility
-.clearfloat { clear: both; }
+
+.js-hidden { display: none; }
+.js-loading { background-image: asset-url("loading.gif"); }
+
+.float-left  { float: left; }
+.float-right { float: right; }
+.clearfloat  { clear: both; }
+
 
 // for Devise forms
+
 #error_explanation {
   color: #B20000;
   background-color: #FFdddd;

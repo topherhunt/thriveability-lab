@@ -6,5 +6,11 @@ Rails.application.routes.draw do
 
   devise_for :users
 
-  resources :users,       only: [:show]
+  resources :users, only: [:show, :edit, :update] do
+    member do
+      get :edit_resources
+    end
+  end
+
+  resources :resources, only: [:new, :create, :show]
 end

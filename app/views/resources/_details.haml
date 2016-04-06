@@ -1,0 +1,16 @@
+%table.form
+  %tr
+    %th Title
+    %td= @resource.title
+  %tr
+    %th URL
+    %td= link_to @resource.url, @resource.url
+  %tr
+    %th Description
+    %td= @resource.description
+  %tr
+    %th Uploaded file
+    %td ** TODO
+  %tr
+    %th Created by
+    %td= link_to @resource.creator.name, user_path(@resource.creator)

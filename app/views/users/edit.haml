@@ -1,0 +1,35 @@
+%h1 Edit my profile
+
+= form_for @user do |f|
+  %table.form
+    %tr
+      %th= f.label :first_name
+      %td= f.text_field :first_name, class: "form-control"
+    %tr
+      %th= f.label :last_name
+      %td= f.text_field :last_name, class: "form-control"
+    %tr
+      %th= f.label :image
+      %td= f.file_field :image, class: "form-control"
+    %tr
+      %th= f.label :skill_list, "I'm good at... (professional or not)"
+      %td
+        = f.text_field :skill_list, class: "form-control"
+        TODO: Make this a tag-it widget
+    %tr
+      %th= f.label :passion_list, "I'm passionate about..."
+      %td
+        = f.text_field :passion_list, class: "form-control"
+        TODO: Make this a tag-it widget
+    %tr
+      %th= f.label :trait_list, "I'm proud to be known for these traits..."
+      %td
+        = f.text_field :trait_list, class: "form-control"
+        TODO: Make this a tag-it widget
+    %tr
+      %th= f.label :dream_of_future_where, "I dream of a future where..."
+      %td
+        = f.text_area :dream_of_future_where, class: "form-control", style: "width: 300px; height: 60px;"
+    %tr
+      %th
+      %td= f.submit "Save", class: "btn btn-primary"
