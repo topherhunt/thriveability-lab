@@ -44,7 +44,7 @@
       %p
         %strong= link_to resource.title, resource.url, target: "_blank"
         &nbsp;
-        = link_to "Edit", "#"
+        = link_to "Edit", "#" if @user == current_user
         &nbsp;
         - if resource.attachment_file_name
           = link_to "Download", resource.attachment.url, download: true
