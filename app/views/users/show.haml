@@ -1,11 +1,14 @@
+%h1.float-left #{@user.name}
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "Edit", edit_user_path(@user) if @user == current_user
+.clearfloat
+
 .row
-  .col-sm-6
-    %h1 Profile for #{@user.name}
+  .col-sm-3
     = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
 
-  .col-sm-6
-    - if @user == current_user
-      %p= link_to "Edit", edit_user_path(@user)
+  .col-sm-9
+
 
     %table.form
       %tr

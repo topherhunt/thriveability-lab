@@ -2,12 +2,11 @@
 
 %hr
 
-%p [some sample user tiles]
-
 .tiles-of-user-images{style: 'position: relative;'}
-  - 40.times do
+  - User.all.each do |user|
     %div{style: 'float: left; padding: 3px;'}
       %div{style: 'width: 50px; height: 50px; background: #ddd;'}
+        = link_to image_tag(user.image.url(:thumb), style: "width: 100%;"), user_path(user)
   .clearfloat
 
 %hr
