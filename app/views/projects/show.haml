@@ -1,0 +1,63 @@
+%h1.float-left= @project.title
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "Edit", edit_project_path(@project) if @project.owner == current_user
+.clearfloat
+%h4= @project.subtitle
+
+.row
+  .col-sm-3
+    = image_tag @project.image.url(:medium), style: "width: 100%;" if @project.image_file_name
+  .col-sm-9
+    %table.form
+      %tr
+        %th Owner
+        %td= link_to @project.owner.name, user_path(@project.owner)
+      %tr
+        %th Introduction
+        %td= @project.introduction
+      %tr
+        %th Based in
+        %td= @project.location
+      %tr
+        %th Stage
+        %td= @project.stage
+      %tr
+        %th Needs
+        %td
+          - @project.need_list.each do |need|
+            %span.label.label-default= need
+
+%h3 Quadrants
+%table.form
+  %tr
+    %td
+      %div
+        %strong Vision
+      %div= @project.quadrant_ul
+    %td
+      %div
+        %strong Goals
+      %div= @project.quadrant_ur
+  %tr
+    %td
+      %div
+        %strong Community
+      %div= @project.quadrant_ll
+    %td
+      %div
+        %strong Context
+      %div= @project.quadrant_lr
+
+- if @project.call_to_action.present?
+  %h3 How you can help out right now
+  %p= @project.call_to_action
+  %table.form
+    %tr
+      %th I'm offering...
+      %td= select_tag :offering, ["collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"], { class: "form-control" }
+    %tr
+      %th Comments
+      %td= text_area_tag :comment, "", class: "form-control"
+    %tr
+      %td
+      %td= link_to "Send (TODO)", "#", class: "btn btn-primary"

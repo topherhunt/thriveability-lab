@@ -1,4 +1,4 @@
-%h1.float-left #{@user.name}
+%h1.float-left= @user.name
 %div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
   = link_to "Edit", edit_user_path(@user) if @user == current_user
 .clearfloat

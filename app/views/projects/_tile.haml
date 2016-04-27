@@ -1,0 +1,11 @@
+.row
+  .col-sm-3
+    - if project.image_file_name
+      = image_tag project.image.url(:thumb), style: "width: 100%; padding-top: 20px; padding-left: 20px;"
+  .col-sm-9
+    %h3= link_to project.title, project_path(project)
+    %p= project.subtitle
+    %p
+      %strong Seeking
+      - project.need_list.each do |need|
+        %span.label.label-default= need

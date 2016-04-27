@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160406014834) do
+ActiveRecord::Schema.define(version: 20160427150009) do
+
+  create_table "projects", force: :cascade do |t|
+    t.integer  "owner_id",           limit: 4
+    t.string   "title",              limit: 255
+    t.string   "subtitle",           limit: 255
+    t.text     "introduction",       limit: 65535
+    t.string   "location",           limit: 255
+    t.string   "quadrant_ul",        limit: 255
+    t.string   "quadrant_ur",        limit: 255
+    t.string   "quadrant_ll",        limit: 255
+    t.string   "quadrant_lr",        limit: 255
+    t.string   "call_to_action",     limit: 255
+    t.string   "stage",              limit: 255
+    t.string   "image_file_name",    limit: 255
+    t.string   "image_content_type", limit: 255
+    t.integer  "image_file_size",    limit: 4
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "resources", force: :cascade do |t|
     t.integer  "creator_id",              limit: 4

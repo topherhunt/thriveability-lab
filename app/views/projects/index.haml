@@ -1,0 +1,9 @@
+%h1.float-left Projects
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "List a project!", new_project_path
+.clearfloat
+
+.row
+  - @projects.each do |project|
+    .col-sm-6
+      = render partial: "tile", locals: { project: project }

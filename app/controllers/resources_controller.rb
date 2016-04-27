@@ -1,7 +1,7 @@
 class ResourcesController < ApplicationController
 
   def new
-    @resource = Resource.new(creator: current_user)
+    @resource = Resource.new
   end
 
   def create
