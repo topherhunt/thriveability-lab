@@ -8,9 +8,10 @@ gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'rollbar'
 
 gem 'acts-as-taggable-on'
+gem 'aws-sdk', '>= 2.0.34'
 gem 'bcrypt-ruby'
 gem 'devise'
-gem 'paperclip'
+gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'
 
 gem 'bootstrap-sass'

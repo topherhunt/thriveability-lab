@@ -1,27 +1,31 @@
-- if @user == current_user
-  .float-right= link_to "Edit", edit_user_path(@user)
+.row
+  .col-sm-6
+    %h1 Profile for #{@user.name}
+    = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image?
 
-%h1 Profile for #{@user.name}
+  .col-sm-6
+    - if @user == current_user
+      %p= link_to "Edit", edit_user_path(@user)
 
-%table.form
-  %tr
-    %th Name
-    %td= @user.name
-  %tr
-    %th Member since
-    %td= @user.created_at.to_date
-  %tr
-    %th I'm good at... (professional or not)
-    %td= @user.skill_list.join(", ")
-  %tr
-    %th I'm passionate about...
-    %td= @user.passion_list.join(", ")
-  %tr
-    %th I'm proud to be known for these traits...
-    %td= @user.trait_list.join(", ")
-  %tr
-    %th I dream of a future where...
-    %td= @user.dream_of_future_where
+    %table.form
+      %tr
+        %th Name
+        %td= @user.name
+      %tr
+        %th Member since
+        %td= @user.created_at.to_date
+      %tr
+        %th I'm good at... (professional or not)
+        %td= @user.skill_list.join(", ")
+      %tr
+        %th I'm passionate about...
+        %td= @user.passion_list.join(", ")
+      %tr
+        %th I'm proud to be known for these traits...
+        %td= @user.trait_list.join(", ")
+      %tr
+        %th I dream of a future where...
+        %td= @user.dream_of_future_where
 
 - if @user.created_resources.any?
   %h3 Resources I've contributed
@@ -30,9 +34,12 @@
     .resource
       %p
         %strong= link_to resource.title, resource.url, target: "_blank"
-        [TODO: edit]
+        &nbsp;
+        = link_to "Edit", "#"
+        &nbsp;
+        - if resource.attachment?
+          = link_to "Download", resource.attachment.url, download: true
       %p= resource.description
-      %p TODO: File attachment
       %hr
 
   %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
