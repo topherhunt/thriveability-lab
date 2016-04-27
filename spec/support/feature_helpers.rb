@@ -24,6 +24,6 @@ def fill_fields(hash)
   end
 end
 
-def saop
+def page!
   save_and_open_page
 end

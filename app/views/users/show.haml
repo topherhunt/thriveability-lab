@@ -30,13 +30,14 @@
     .resource
       %p
         %strong= link_to resource.title, resource.url, target: "_blank"
+        [TODO: edit]
       %p= resource.description
       %p TODO: File attachment
       %hr
 
-  %p= link_to "Add another resource", new_resource_path
+  %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
 
 - else
   %h3 Learn more about my work
-  %p Use this space to add any online resources or documents that could be of use to other community members.
-  %p= link_to "Add a resource", new_resource_path
+  %p Use this space to add any documents or online resources that could be of use to other community members.
+  %p= link_to "Add a resource", new_resource_path(editing_user_profile: true)

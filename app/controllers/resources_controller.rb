@@ -9,8 +9,8 @@ class ResourcesController < ApplicationController
     @resource.creator = current_user
 
     if @resource.save
-      # TODO: hinge on params[:editing_user_profile]
-      redirect_to true ? user_path(current_user) : resources_path, notice: "Resource saved successfully."
+      flash.notice = "Resource saved successfully."
+      redirect_to(params[:editing_user_profile].present? ? user_path(current_user) : resources_path)
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "new"

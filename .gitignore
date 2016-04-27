@@ -4,6 +4,7 @@
 /tmp
 /doc
 /coverage
+/public/system/
 
 database.yml
 application.yml

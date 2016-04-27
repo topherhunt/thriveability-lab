@@ -1,5 +1,6 @@
 = form_for @resource do |f|
   = show_errors_for @resource
+  = hidden_field_tag :editing_user_profile, true if params[:editing_user_profile].present?
 
   %table.form
     %tr
