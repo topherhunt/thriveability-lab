@@ -1,7 +1,7 @@
 .row
   .col-sm-6
     %h1 Profile for #{@user.name}
-    = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image?
+    = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
 
   .col-sm-6
     - if @user == current_user
@@ -16,13 +16,19 @@
         %td= @user.created_at.to_date
       %tr
         %th I'm good at... (professional or not)
-        %td= @user.skill_list.join(", ")
+        %td
+          - @user.skill_list.each do |skill|
+            %span.label.label-default= skill
       %tr
         %th I'm passionate about...
-        %td= @user.passion_list.join(", ")
+        %td
+          - @user.passion_list.each do |passion|
+            %span.label.label-default= passion
       %tr
         %th I'm proud to be known for these traits...
-        %td= @user.trait_list.join(", ")
+        %td
+          - @user.trait_list.each do |trait|
+            %span.label.label-default= trait
       %tr
         %th I dream of a future where...
         %td= @user.dream_of_future_where
@@ -37,7 +43,7 @@
         &nbsp;
         = link_to "Edit", "#"
         &nbsp;
-        - if resource.attachment?
+        - if resource.attachment_file_name
           = link_to "Download", resource.attachment.url, download: true
       %p= resource.description
       %hr

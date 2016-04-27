@@ -14,18 +14,18 @@
     %tr
       %th= f.label :skill_list, "I'm good at... (professional or not)"
       %td
-        = f.text_field :skill_list, class: "form-control"
-        TODO: Make this a tag-it widget
+        = f.hidden_field :skill_list, value: @user.skill_list.join(",")
+        %ul#skill-list-tagit.js-tagit{"data-tagit-target": "#user_skill_list"}
     %tr
       %th= f.label :passion_list, "I'm passionate about..."
       %td
-        = f.text_field :passion_list, class: "form-control"
-        TODO: Make this a tag-it widget
+        = f.hidden_field :passion_list, value: @user.passion_list.join(",")
+        %ul#passion-list-tagit.js-tagit{"data-tagit-target": "#user_passion_list"}
     %tr
       %th= f.label :trait_list, "I'm proud to be known for these traits..."
       %td
-        = f.text_field :trait_list, class: "form-control"
-        TODO: Make this a tag-it widget
+        = f.hidden_field :trait_list, value: @user.trait_list.join(",")
+        %ul#trait-list-tagit.js-tagit{"data-tagit-target": "#user_trait_list"}
     %tr
       %th= f.label :dream_of_future_where, "I dream of a future where..."
       %td

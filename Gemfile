@@ -20,7 +20,7 @@ gem 'coffee-rails'
 gem 'font-awesome-rails'
 gem 'haml-rails'
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+# gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'uglifier'
 
