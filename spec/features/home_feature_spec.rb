@@ -5,8 +5,8 @@ describe "Static pages" do
   specify "home page loads correctly" do
     visit root_path
     page.should have_content "Integral Climate"
-    page.should have_content "Recent users"
-    page.should have_content "Active projects"
+    page.should have_content "People"
+    page.should have_content "Projects"
   end
 
   specify "about page loads correctly" do

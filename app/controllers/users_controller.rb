@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:edit, :update]
 
   def show
     @user = User.find(params[:id])
@@ -16,9 +17,6 @@ class UsersController < ApplicationController
       flash.now.alert = "Unable to save your changes. See error messages below."
       render 'edit'
     end
-  end
-
-  def edit_resources
   end
 
   private

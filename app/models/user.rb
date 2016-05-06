@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   acts_as_taggable_on :traits
 
   # See https://github.com/thoughtbot/paperclip#quick-start
-  has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" }
+  has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
+    default_url: "/images/missing_user.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator

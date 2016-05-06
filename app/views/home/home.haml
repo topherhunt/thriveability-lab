@@ -2,44 +2,62 @@
 
 %hr
 
-%h4 Recent users
+.row
+  .col-sm-6
+    %h4.text-center People
+    %div{style: 'position: relative;'}
+      - User.limit(20).each do |user|
+        %div{style: 'float: left; padding: 3px;'}
+          %div{style: 'width: 50px; height: 50px; background: #ddd;'}
+            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.name }
+      .clearfloat
+    %p
+      %a Meet 142 more
+  .col-sm-6
+    %h4.text-center Conversations
+    .row
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
 
-.tiles-of-user-images{style: 'position: relative;'}
-  - User.all.each do |user|
-    %div{style: 'float: left; padding: 3px;'}
-      %div{style: 'width: 50px; height: 50px; background: #ddd;'}
-        = link_to image_tag(user.image.url(:thumb), style: "width: 100%;"), user_path(user)
-  .clearfloat
+.row
+  .col-sm-6
+    %h4.text-center Projects
+    %div{style: 'position: relative;'}
+      - Project.limit(20).each do |project|
+        %div{style: 'float: left; padding: 3px;'}
+          %div{style: 'width: 50px; height: 50px; background: #ddd;'}
+            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;"), project_path(project), class: "js-tooltip", data: { tooltip: project.title }
+      .clearfloat
+    %p
+      %a Learn about 65 more
+  .col-sm-6
+    %h4.text-center Events
+    .row
+      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
+      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
+      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
+      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
+      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
+
+.row
+  .col-sm-6
+    %h4.text-center Resources
+    .col-sm-6
+      %ul
+        %li Something oentuh oenuh onetuh
+        %li else nutoheu ntohe
+        %li else noethu noethu neo
+    .col-sm-6
+      %ul
+        %li Thingo eunthoe untho eun
+        %li one oentuhonetu hoenthu onetuh oen
+        %li two onethu onetuh noet
 
 %hr
 
-.row
-  .col-sm-5
-    .well{style: 'min-height: 200px;'}
-      %h4 Active projects
-  .col-sm-2
-    %p.text-center= link_to 'TAKE AN ACTION', '#', class: 'btn btn-primary'
-  .col-sm-5
-    .well{style: 'min-height: 200px;'}
-      %h4 Calendar of member events
-
-.row
-  .col-sm-2
-  .col-sm-8
-    .well{style: 'min-height: 200px;'}
-      %h4 Since you were here last time...
-
-.row
-  .col-sm-5
-    .well{style: 'min-height: 200px;'}
-      %h4 Discussions for you
-  .col-sm-2
-  .col-sm-5
-    .well{style: 'min-height: 200px;'}
-      %h4 Projects for you
-
-.row
-  .col-sm-2
-  .col-sm-8
-    .well{style: 'min-height: 200px;'}
-      %h4 Resources for you
+%p.text-center= link_to 'TAKE ACTION', '#', class: 'btn btn-primary'

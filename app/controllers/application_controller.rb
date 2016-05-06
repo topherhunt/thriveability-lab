@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
+  def require_login
+    unless current_user
+      redirect_to new_user_session_path, alert: "You must be logged in to take that action."
+    end
+  end
+
   def after_sign_in_path_for(resource)
     user_path(resource)
   end

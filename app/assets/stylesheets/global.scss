@@ -3,6 +3,19 @@
   padding-bottom: 50px;
 }
 
+.row.row-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.row.row-padded-top {
+  padding-top: 5px;
+}
+.row.row-padded-bottom {
+  padding-bottom: 5px;
+}
+
+// TODO: Get rid of table.form. Use .form-row everywhere now, grids are
+// much more flexible.
 table.form {
 
   &.wide { min-width: 400px; }

@@ -5,16 +5,46 @@
 %h4= @project.subtitle
 
 .row
-  .col-sm-3
-    = image_tag @project.image.url(:medium), style: "width: 100%;" if @project.image_file_name
-  .col-sm-9
+  .col-sm-4
+    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;" if @project.image_file_name
+    %hr
+
+    %h4.text-info How do you feel about this project?
+    %p
+      (TODO)
+      %a Excited
+      &nbsp;
+      %a Curious
+      &nbsp;
+      %a Inspired
+      &nbsp;
+      %a Want to stay informed
+      &nbsp;
+      %a Want to get involved
+      &nbsp;
+      %a Angry
+
+    - if @project.call_to_action.present?
+      %h3 How you can help out (TODO)
+      %p= @project.call_to_action
+      %table.form
+        %tr
+          %th I'm offering...
+          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"]), { class: "form-control" }
+        %tr
+          %th Comments
+          %td= text_area_tag :comment, "", class: "form-control"
+        %tr
+          %td
+          %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
+  .col-sm-8
+    %h4 Introduction
+    %p= @project.introduction
+
     %table.form
       %tr
         %th Owner
         %td= link_to @project.owner.name, user_path(@project.owner)
-      %tr
-        %th Introduction
-        %td= @project.introduction
       %tr
         %th Based in
         %td= @project.location
@@ -26,38 +56,22 @@
         %td
           - @project.need_list.each do |need|
             %span.label.label-default= need
+      %tr
+        %td{colspan: 2} <strong>288 people</strong> expressed interest in this project. (TODO)
+    %hr
 
-%h3 Quadrants
-%table.form
-  %tr
-    %td
-      %div
-        %strong Vision
-      %div= @project.quadrant_ul
-    %td
-      %div
-        %strong Goals
-      %div= @project.quadrant_ur
-  %tr
-    %td
-      %div
-        %strong Community
-      %div= @project.quadrant_ll
-    %td
-      %div
-        %strong Context
-      %div= @project.quadrant_lr
-
-- if @project.call_to_action.present?
-  %h3 How you can help out right now
-  %p= @project.call_to_action
-  %table.form
-    %tr
-      %th I'm offering...
-      %td= select_tag :offering, ["collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"], { class: "form-control" }
-    %tr
-      %th Comments
-      %td= text_area_tag :comment, "", class: "form-control"
-    %tr
-      %td
-      %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
+    %h4 Quadrants
+    .row
+      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
+        %strong Vision:
+        = @project.quadrant_ul
+      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
+        %strong Goals:
+        = @project.quadrant_ur
+    .row{style: "padding-top: 10px;"}
+      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
+        %strong Community:
+        = @project.quadrant_ll
+      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
+        %strong Context:
+        = @project.quadrant_lr

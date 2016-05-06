@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  before_action :require_login, only: [:new, :create, :edit, :update]
   before_action :load_project, only: [:edit, :update, :show]
   before_action :verify_ownership, only: [:edit, :update]
 

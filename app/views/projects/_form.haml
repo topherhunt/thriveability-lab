@@ -1,55 +1,62 @@
-= form_for @project do |f|
+= form_for(@project, html: { style: "max-width: 800px;" }) do |f|
   = show_errors_for @project
 
-  %table.form
-    %tr
-      %th= f.label :title
-      %td= f.text_field :title, class: "form-control"
-    %tr
-      %th= f.label :subtitle
-      %td= f.text_field :subtitle, class: "form-control"
-    %tr
-      %th= f.label :image
-      %th= f.file_field :image, class: "form-control"
-    %tr
-      %th= f.label :introduction
-      %td= f.text_area :introduction, class: "form-control"
-    %tr
-      %th= f.label :location, "Where is this project based?"
-      %td= f.text_field :location, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :title
+    .col-sm-9= f.text_field :title, class: "form-control"
+  .row.row-padded
+    .col-sm-3
+      = f.label :subtitle
+      %br
+      .small A one-line description of this project's mission
+    .col-sm-9= f.text_field :subtitle, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :image
+    .col-sm-9= f.file_field :image, class: "form-control"
+  .row.row-padded
+    .col-sm-3
+      = f.label :introduction
+      %br
+      .small In a few sentences, what do you want the world to know about this project?
+    .col-sm-9= f.text_area :introduction, class: "form-control"
+  .row.row-padded
+    .col-sm-3
+      = f.label :location, "Where is it based?"
+      %br
+      .small eg. Chico, CA
+    .col-sm-9= f.text_field :location, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :stage
+    .col-sm-9= f.select :stage, ["idea", "developing", "mature"], { include_blank: "- select one -" }, { class: "form-control" }
 
-  %h3 Quadrants [TODO: more creative title]
-
-  %table.form
-    %tr
-      %td
-        = f.label :quadrant_ul, "What's your vision for this project?"
-        = f.text_area :quadrant_ul, class: "form-control"
-      %td
-        = f.label :quadrant_ur, "What are some concrete goals?"
-        = f.text_area :quadrant_ur, class: "form-control"
-    %tr
-      %td
-        = f.label :quadrant_ll, "Who is taking part? Who will be affected?"
-        = f.text_area :quadrant_ll, class: "form-control"
-      %td
-        = f.label :quadrant_lr, "What framework and contexts are you constrained / supported by?"
-        = f.text_area :quadrant_lr, class: "form-control"
+  %h3.text-center Details
+  .row.row-padded
+    .col-sm-6.text-right
+      = f.label :quadrant_ul, "What's your vision for this project?"
+      = f.text_area :quadrant_ul, class: "form-control"
+    .col-sm-6
+      = f.label :quadrant_ur, "What are some concrete goals?"
+      = f.text_area :quadrant_ur, class: "form-control"
+  .row.row-padded
+    .col-sm-6.text-right
+      = f.label :quadrant_ll, "Who is taking part? Who will be affected?"
+      = f.text_area :quadrant_ll, class: "form-control"
+    .col-sm-6
+      = f.label :quadrant_lr, "What contexts are you constrained / supported by?"
+      = f.text_area :quadrant_lr, class: "form-control"
 
   %h3 Status & needs
 
-  %table.form
-    %tr
-      %th= f.label :stage
-      %td= f.select :stage, ["idea", "developing", "mature"], { include_blank: true }, { class: "form-control" }
-    %tr
-      %th= f.label :need_list, "I'm sharing with this community because I want..."
-      %td
-        = f.text_field :need_list, value: @project.need_list.join(","), class: "js-hidden"
-        %ul#need-list-tagit.js-tagit{"data-tagit-target": "#project_need_list"}
-    %tr
-      %th= f.label :call_to_action, "1 thing that the viewer can do right now to support this project"
-      %td= f.text_area :call_to_action, class: "form-control"
-    %tr
-      %th
-      %td= f.submit "Save", class: "btn btn-primary"
+  .row.row-padded
+    .col-sm-4
+      = f.label :need_list, "I'm sharing with this community because I want..."
+      .small eg. <span class="label label-default">advice</span>, <span class="label label-default">sponsorship</span>
+    .col-sm-8
+      = f.text_field :need_list, value: @project.need_list.join(","), class: "js-hidden"
+      %ul#need-list-tagit.js-tagit{"data-tagit-target": "#project_need_list"}
+  .row.row-padded
+    .col-sm-4= f.label :call_to_action, "1 thing that the viewer can do right now to support this project"
+    .col-sm-8= f.text_area :call_to_action, class: "form-control"
+  .row.row-padded
+    .col-sm-4
+    .col-sm-8= f.submit "Save", class: "btn btn-primary"
