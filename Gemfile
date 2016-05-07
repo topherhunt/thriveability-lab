@@ -32,7 +32,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'quiet_assets'
   gem 'launchy' # for save_and_open_page
-  gem 'byebug'
+  gem 'pry'
 end
 
 group :test do

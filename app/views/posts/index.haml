@@ -1,0 +1,16 @@
+%h1.float-left Posts
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "Write a Post!", new_post_path
+  &nbsp;
+  - if @drafts_count > 0
+    = link_to "View #{pluralize @drafts_count, "unpublished draft"}", drafts_posts_path
+.clearfloat
+
+.row
+  - @posts.each do |post|
+    .col-sm-6
+      %h3= link_to post.title, post_path(post)
+      %p
+        = post.intention_statement
+        - post.tag_list.each do |tag|
+          .label.label-default= tag

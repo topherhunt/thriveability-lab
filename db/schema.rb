@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427150009) do
+ActiveRecord::Schema.define(version: 20160507002941) do
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "author_id",           limit: 4
+    t.string   "title",               limit: 255
+    t.text     "content",             limit: 65535
+    t.string   "intention_type",      limit: 255
+    t.string   "intention_statement", limit: 255
+    t.boolean  "published",                         default: false
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.integer  "owner_id",           limit: 4

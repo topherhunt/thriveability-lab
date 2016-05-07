@@ -1,0 +1,20 @@
+%h1.float-left= @post.title
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "Edit", edit_post_path(@post) if @post.author == current_user
+.clearfloat
+
+%p
+  %strong Tags:
+  %span.label.label-primary= @post.intention_type
+  - @post.tag_list.each do |tag|
+    %span.label.label-default= tag
+%p
+  %strong Intention:
+  = @post.intention_statement
+
+- unless @post.published?
+  .alert.alert-warning
+    %h4 This draft is not yet published.
+    %p Click on the Edit link to review and publish it.
+
+.well= @post.content.gsub(/[\r\n]/, '<br>'.html_safe)

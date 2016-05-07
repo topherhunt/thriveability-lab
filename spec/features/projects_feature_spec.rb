@@ -7,20 +7,6 @@ describe "Projects" do
     @project = create(:project, owner: @user)
   end
 
-  specify "Visitor can browse and view existing projects" do
-    @project2 = create(:project, title: "Smothering Butterflies", quadrant_ul: "Because it's art")
-    @project3 = create(:project)
-
-    visit projects_path
-    page.should have_link @project.title
-    page.should have_link @project2.title
-    page.should have_link @project3.title
-    click_on @project2.title
-    current_path.should eq project_path(@project2)
-    page.should have_content @project2.title
-    page.should have_content @project2.quadrant_ul
-  end
-
   specify "User can create a project" do
     log_in @user
     click_on "Projects"
@@ -55,6 +41,20 @@ describe "Projects" do
       call_to_action: "Moneys! Moneys!",
       image_file_name: "elmerfudd.jpg",
       stage: "developing")
+  end
+
+  specify "Visitor can browse and view existing projects" do
+    @project2 = create(:project, quadrant_ul: "Because it's art")
+    @project3 = create(:project)
+
+    visit projects_path
+    page.should have_link @project.title
+    page.should have_link @project2.title
+    page.should have_link @project3.title
+    click_on @project2.title
+    current_path.should eq project_path(@project2)
+    page.should have_content @project2.title
+    page.should have_content @project2.quadrant_ul
   end
 
   specify "Project owner can edit their project" do

@@ -12,6 +12,14 @@ def log_out
   click_link "Log out"
 end
 
+def assert_content(content)
+  page.should have_content(content)
+end
+
+def refute_content(content)
+  page.should_not have_content(content)
+end
+
 def expect_attributes(object, hash)
   hash.each do |k, v|
     object.send(k).should eq v

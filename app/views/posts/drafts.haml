@@ -1,0 +1,17 @@
+%h1.float-left My drafts
+%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+  = link_to "View published posts", posts_path
+.clearfloat
+
+.row
+  - @posts.each do |post|
+    - next if post.title.blank? # these are non-drafts and will be deleted
+    .col-sm-6
+      %h3= link_to post.title, post_path(post)
+      %p
+        <em>Started on #{date post.created_at}</em> -
+        = link_to "Resume", edit_post_path(post)
+      %p
+        = post.intention_statement
+        - post.tag_list.each do |tag|
+          .label.label-default= tag

@@ -19,4 +19,13 @@ module ApplicationHelper
     content_tag :span, '', class: "glyphicon glyphicon-#{name.to_s}"
   end
 
+  def date(input, opt={})
+    return unless input.present?
+
+    output = ""
+    output += input.strftime("%b %e")
+    output += " #{input.year}" if input.year != Time.now.year or opt[:year]
+    output += input.strftime(", %l:%M %P") if opt[:time]
+    output
+  end
 end

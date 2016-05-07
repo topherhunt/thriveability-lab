@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   resources :resources, only: [:new, :create, :edit, :update, :show]
 
   resources :projects, only: [:index, :new, :create, :edit, :update, :show]
+
+  resources :posts, only: [:index, :new, :edit, :update, :show] do
+    collection { get :drafts }
+  end
 end

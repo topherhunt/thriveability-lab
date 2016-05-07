@@ -7,8 +7,16 @@ FactoryGirl.define do
 
   factory(:project) do
     association :owner, factory: :user
-    sequence(:title) { |n| "Project #{n} project" }
+    sequence(:title) { |n| "Project (#{n})" }
     subtitle "Subtitle"
     stage "idea"
+  end
+
+  factory(:post) do
+    association :author, factory: :user
+    sequence(:title) { |n| "Post (#{n})" }
+    content "Test post content"
+    intention_type "share news"
+    published true
   end
 end

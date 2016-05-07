@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
+  has_many :posts, foreign_key: :author_id, inverse_of: :author
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :registerable, :confirmable, :database_authenticatable,
@@ -13,8 +16,6 @@ class User < ActiveRecord::Base
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
     default_url: "/images/missing_user.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-
-  has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
 
   validates :dream_of_future_where, length: { maximum: 255 }
 
