@@ -38,26 +38,7 @@ describe "Posts" do
     @post.reload.published.should eq true
   end
 
-  specify "Visitor can browse and view published posts" do
-    @post1 = create(:post, intention_statement: "Foo bar baz test statement")
-    @post2 = create(:post)
-    @post3 = create(:post, published: false)
-
-    visit posts_path
-    assert_content @post1.title
-    assert_content @post2.title
-    refute_content @post3.title
-    click_on @post1.title
-    current_path.should eq post_path(@post1)
-    assert_content @post1.title
-    assert_content @post1.content
-    assert_content "Foo bar baz test statement"
-    visit post_path(@post3)
-    current_path.should eq posts_path
-    assert_content "That post doesn't exist."
-  end
-
-  specify "User can access their own unpublished posts (but not others')" do
+  specify "User can view and edit their own drafts (but not others')" do
     @post1 = create(:post, author: @user, published: false)
     @post2 = create(:post, published: false) # someone else's
     @post3 = create(:post, author: @user, published: true)
@@ -65,17 +46,58 @@ describe "Posts" do
 
     log_in(@user)
     visit posts_path
-    refute_content @post1.title
-    refute_content @post2.title
-    assert_content @post3.title
-    assert_content @post4.title
+    refute_content(@post1.title, @post2.title)
+    assert_content(@post3.title, @post4.title)
     click_on "View 1 unpublished draft"
     current_path.should eq drafts_posts_path
     assert_content @post1.title
-    refute_content @post2.title
-    refute_content @post3.title
-    refute_content @post4.title
+    refute_content(@post2.title, @post3.title, @post4.title)
     click_on "Resume"
     current_path.should eq edit_post_path(@post1)
+    visit post_path(@post2)
+    assert_content "That post doesn't exist."
+  end
+
+  specify "Visitor can browse and view published posts" do
+    @post1 = create(:post, intention_statement: "Foo bar baz test statement")
+    @post2 = create(:post)
+    @post3 = create(:post, published: false)
+
+    visit posts_path
+    assert_content(@post1.title, @post2.title)
+    refute_content @post3.title
+    click_on @post1.title
+    current_path.should eq post_path(@post1)
+    assert_content(@post1.title, @post1.content, "Foo bar baz test statement")
+    visit post_path(@post3)
+    assert_equal posts_path, current_path
+    assert_content "That post doesn't exist."
+  end
+
+  specify "Visitor can filter published posts by author, intention, and tags" do
+    @user1 = create(:user)
+    @user2 = create(:user)
+    @post1 = create(:post, author: @user1, intention_type: "share news",
+      tag_list: "apple, bear")
+    @post2 = create(:post, author: @user1, intention_type: "seek perspectives",
+      tag_list: "bear, cat")
+    @post3 = create(:post, author: @user2, intention_type: "seek perspectives",
+      tag_list: "apple, cat")
+
+    visit posts_path
+    assert_content "Filter by"
+    assert_content(@post1.title, @post2.title, @post3.title)
+    within("#posts-filters") { click_on @user1.name }
+    assert_content(@post1.title, @post2.title)
+    refute_content @post3.title
+    # filters work additively
+    within("#posts-filters") { click_on "seek perspectives" }
+    assert_content @post2.title
+    refute_content(@post1.title, @post3.title)
+    click_on "Clear filters"
+    assert_content(@post1.title, @post2.title, @post3.title)
+    within("#posts-filters") { click_on "apple" }
+    assert_content(@post1.title, @post3.title)
+    refute_content @post2.title
   end
 end

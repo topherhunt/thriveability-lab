@@ -12,12 +12,12 @@ def log_out
   click_link "Log out"
 end
 
-def assert_content(content)
-  page.should have_content(content)
+def assert_content(*contents)
+  contents.each { |c| page.should have_content(c) }
 end
 
-def refute_content(content)
-  page.should_not have_content(content)
+def refute_content(*contents)
+  contents.each { |c| page.should_not have_content(c) }
 end
 
 def expect_attributes(object, hash)

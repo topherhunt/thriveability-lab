@@ -3,6 +3,8 @@ FactoryGirl.define do
     sequence(:email) { |n| "test_user_#{n}@example.com" }
     password              "foobar01"
     password_confirmation "foobar01"
+    sequence(:first_name) { |n| "Firstname#{n}" }
+    sequence(:last_name) { |n| "Lastname#{n}" }
   end
 
   factory(:project) do
@@ -18,5 +20,6 @@ FactoryGirl.define do
     content "Test post content"
     intention_type "share news"
     published true
+    published_at 1.day.ago
   end
 end

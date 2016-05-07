@@ -7,10 +7,45 @@
 .clearfloat
 
 .row
-  - @posts.each do |post|
-    .col-sm-6
-      %h3= link_to post.title, post_path(post)
-      %p
-        = post.intention_statement
-        - post.tag_list.each do |tag|
-          .label.label-default= tag
+  .col-sm-3#posts-filters
+    %h3 Filter by...
+    - if @filters.any?
+      %p= link_to "Clear filters", posts_path
+    %p
+      %strong Authors:<br>
+      - @authors.each do |author|
+        - if @filters[:author_id] == author.id.to_s
+          %strong= author.name
+        - else
+          = link_to author.name, posts_path(@filters.merge(author_id: author.id))
+        &nbsp;
+    %p
+      %strong Intentions:<br>
+      - @intention_types.each do |intention_type|
+        - if @filters[:intention_type] == intention_type
+          %strong= intention_type
+        - else
+          = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
+        &nbsp;
+    %p
+      %strong Tags:<br>
+      - @tag_counts.each do |tag_count|
+        - if @filters[:tag] == tag_count.name
+          %strong= tag_count.name
+        - else
+          = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
+        &nbsp;
+
+  .col-sm-9
+    .row
+      - @posts.each do |post|
+        .col-sm-6
+          %h3= link_to post.title, post_path(post)
+          %p
+            = post.intention_statement
+            %span.label.label-primary= link_to post.intention_type, posts_path(@filters.merge(intention_type: post.intention_type))
+            - post.tag_list.each do |tag|
+              %span.label.label-default= link_to tag, posts_path(@filters.merge(tag: tag))
+          .small
+            by #{link_to post.author.name, posts_path(@filters.merge(author_id: post.author_id))} -
+            published #{date post.published_at}

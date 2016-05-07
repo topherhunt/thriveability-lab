@@ -4,7 +4,21 @@ class PostsController < ApplicationController
   before_action :verify_authorship, only: [:edit, :update]
 
   def index
+    @filters = params.slice(:author_id, :tag, :intention_type)
     @posts = Post.where(published: true).order("published_at DESC")
+    if @filters[:author_id]
+      @posts = @posts.where(author_id: @filters[:author_id])
+    end
+    if @filters[:intention_type]
+      @posts = @posts.where(intention_type: @filters[:intention_type])
+    end
+    if @filters[:tag]
+      @posts = @posts.tagged_with(@filters[:tag])
+    end
+
+    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:last_name)
+    @intention_types = @posts.pluck(:intention_type).uniq.sort
+    @tag_counts = @posts.tag_counts_on(:tags)
     @drafts_count = Post.where(author: current_user, published: false).count
   end
 
