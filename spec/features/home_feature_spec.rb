@@ -16,6 +16,6 @@ describe "Static pages" do
   end
 
   specify "#throwup raises an error for testing" do
-    expect{ visit "/throwup" }.to raise_error
+    expect{ visit "/throwup" }.to raise_error(RuntimeError)
   end
 end

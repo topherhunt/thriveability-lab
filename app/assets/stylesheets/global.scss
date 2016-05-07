@@ -1,7 +1,21 @@
 
-#main-container {
-  padding-bottom: 50px;
-}
+// Template
+
+#main-container { padding-bottom: 50px; }
+.dropdown-toggle { cursor: pointer; }
+
+// Utility
+
+.js-hidden { display: none; }
+.js-loading { background-image: asset-url("loading.gif"); }
+
+.float-left  { float: left; }
+.float-right { float: right; }
+.clearfloat  { clear: both; }
+
+.text-danger { color: #a94442 !important; }
+
+// Forms
 
 .row.row-padded {
   padding-top: 5px;
@@ -14,30 +28,13 @@
   padding-bottom: 5px;
 }
 
-// TODO: Get rid of table.form. Use .form-row everywhere now, grids are
-// much more flexible.
-table.form {
+textarea { min-height: 100px; }
 
-  &.wide { min-width: 400px; }
-
-  th, td { padding: 5px; }
-
-  textarea { min-height: 100px; }
+.field_with_errors {
+  // box-shadow: 0px 0px 5px 0px red;
+  // border-radius: 5px;
+  border-bottom: 2px solid #a94442;
 }
-
-.dropdown-toggle { cursor: pointer; }
-
-// Utility
-
-.js-hidden { display: none; }
-.js-loading { background-image: asset-url("loading.gif"); }
-
-.float-left  { float: left; }
-.float-right { float: right; }
-.clearfloat  { clear: both; }
-
-
-// for Devise forms
 
 #error_explanation {
   color: #B20000;

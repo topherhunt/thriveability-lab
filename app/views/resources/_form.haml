@@ -1,0 +1,26 @@
+= form_for @resource do |f|
+  = show_errors_for @resource
+  = hidden_field_tag :editing_user_profile, true if params[:editing_user_profile].present?
+
+  .row.row-padded
+    .col-sm-3= f.label :title
+    .col-sm-9= f.text_field :title, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :url, "Source URL"
+    .col-sm-9= f.text_field :url, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :description
+    .col-sm-9= f.text_area :description, class: "form-control"
+  .row.row-padded
+    .col-sm-3= f.label :attachment
+    .col-sm-9= f.file_field :attachment, class: "form-control"
+  .row.row-padded#js-affirm-ownership{ class: ("js-hidden" unless @resource.attachment.present?) }
+    .col-sm-3
+      = f.label :ownership_affirmed, "I affirm that I own or have permission to distribute this document."
+      %br
+      .small Please only upload files that you own or have permission to distribute.
+    .col-sm-9= f.check_box :ownership_affirmed, class: "form-control"
+
+  .row.row-padded
+    .col-sm-3
+    .col-sm-9= f.submit "Save", class: "btn btn-primary"
