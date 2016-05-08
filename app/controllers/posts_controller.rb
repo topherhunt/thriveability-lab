@@ -38,16 +38,25 @@ class PostsController < ApplicationController
   end
 
   def update
+    if params[:commit] == "Publish!"
+      @post.published = true
+      @post.published_at = Time.now
+    end
+
     if @post.update(post_params)
-      if params[:commit] == "Publish!"
-        @post.publish!
-        redirect_to post_path(@post), notice: "Post published!"
-      else
-        redirect_to post_path(@post), notice: "Post updated."
+      respond_to do |format|
+        format.html { redirect_to post_path(@post), notice: update_success_message }
+        format.js { render json: { success: true } }
       end
     else
-      flash.now.alert = "Unable to save your changes. See error messages below."
-      render "edit"
+      respond_to do |format|
+        format.html {
+          flash.now.alert = "Unable to save your changes. See error messages below."
+          render "edit"
+        }
+        format.js { render json: { errors: @post.errors.full_messages } }
+      end
+
     end
   end
 
@@ -69,6 +78,14 @@ class PostsController < ApplicationController
 
   def load_post
     @post = Post.find(params[:id])
+  end
+
+  def update_success_message
+    if @post.published? and @post.published_at > 1.minute.ago
+      "Post published!"
+    else
+      "Post updated."
+    end
   end
 
   def verify_authorship

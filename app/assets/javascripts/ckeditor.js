@@ -4,8 +4,10 @@ $(function(){
     http://docs.ckeditor.com/#!/guide/dev_toolbarconcepts
     http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced
     */
-  $('.js-ckeditor').each(function(){
-    CKEDITOR.replace($(this).attr('id'), {
+  $('textarea.js-ckeditor').each(function(){
+    var textarea = $(this);
+    var id = textarea.attr('id');
+    CKEDITOR.replace(id, {
       toolbar: [
   	    { name: 'styles', items: [ 'Format' ] },
     		{ name: 'basicStyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat' ] },
@@ -20,6 +22,12 @@ $(function(){
     		{ name: 'about', items: [ 'About' ] }
 	    ]
     });
+
+    // Periodically fill the original textarea element with the updated content;
+    // sadly ckeditor doesn't do this automatically.
+    setInterval(function(){
+      textarea.text( CKEDITOR.instances[id].getData() );
+    }, 5000);
   });
 
   // Default open links in a new tab
