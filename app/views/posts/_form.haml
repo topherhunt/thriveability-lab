@@ -1,4 +1,4 @@
-= form_for(@post, html: { style: "max-width: 800px;" }) do |f|
+= form_for(@post, html: { style: "max-width: 900px;" }) do |f|
   = show_errors_for @post
 
   .row.row-padded
@@ -18,7 +18,7 @@
     .col-sm-3
       = f.label :content
       .small No rich text formatting supported yet - coming soon!
-    .col-sm-9= f.text_area :content, class: "form-control", style: "height: 200px;"
+    .col-sm-9= f.text_area :content, class: "form-control js-ckeditor", style: "height: 200px;"
   .row.row-padded
     .col-sm-3
       = f.label :tag_list, "Tags"

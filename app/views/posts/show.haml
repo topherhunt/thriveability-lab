@@ -17,4 +17,4 @@
     %h4 This draft is not yet published.
     %p Click on the Edit link to review and publish it.
 
-.well= @post.content.gsub(/[\r\n]/, '<br>'.html_safe)
+.well= sanitize(@post.content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))

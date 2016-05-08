@@ -2,11 +2,13 @@
 source 'https://rubygems.org'
 ruby '2.2.2'
 
+# Server
 gem 'rails'
 gem 'figaro'
 gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
 gem 'rollbar'
 
+# Domain logic
 gem 'acts-as-taggable-on'
 gem 'aws-sdk', '>= 2.0.34'
 gem 'bcrypt-ruby'
@@ -14,6 +16,7 @@ gem 'devise'
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'
 
+# Frontend
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
 gem 'coffee-rails'
