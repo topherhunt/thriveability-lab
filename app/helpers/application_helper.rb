@@ -15,17 +15,15 @@ module ApplicationHelper
     render 'shared/errors', object: object if object.errors.any?
   end
 
-  def glyph (name)
-    content_tag :span, '', class: "glyphicon glyphicon-#{name.to_s}"
+  def show_inline_errors_for(record, field)
+    if record.errors[field].any?
+      content_tag :div, class: "inline-errors" do
+        record.errors[field].map{ |e| "This field #{e}" }.join("; ")
+      end
+    end
   end
 
-  def date(input, opt={})
-    return unless input.present?
-
-    output = ""
-    output += input.strftime("%b %e")
-    output += " #{input.year}" if input.year != Time.now.year or opt[:year]
-    output += input.strftime(", %l:%M %P") if opt[:time]
-    output
+  def required_label(form, field, title=nil)
+    form.label field, "#{(title || field).to_s.humanize} <span class='text-danger'>*</span>".html_safe
   end
 end

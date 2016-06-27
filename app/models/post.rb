@@ -9,7 +9,7 @@ class Post < ActiveRecord::Base
   validates_presence_of :content, if: :published?
   validates_presence_of :intention_type, if: :published?
 
-  validates :title, length: { maximum: 255 }
+  validates :title, presence: true, length: { maximum: 255 }
   validates :intention_type, inclusion: { in: ["share news", "share facts", "share perspective", "raise awareness", "seek perspectives", "seek advice", "other"] }, if: :published?
   validates :intention_statement, length: { maximum: 255 }
 end

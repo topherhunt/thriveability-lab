@@ -1,19 +1,16 @@
-.row
-  .col-sm-6.col-sm-offset-3
+.centered-600
+  %h2 Log in
+  = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+    = devise_error_messages!
 
-    %h2 Log in
+    .row.row-padded
+      .col-sm-3= required_label(f, :email)
+      .col-sm-9= f.email_field :email, autofocus: true, class: 'form-control'
+    .row.row-padded
+      .col-sm-3= required_label(f, :password)
+      .col-sm-9= f.password_field :password, autocomplete: "off", class: 'form-control'
+    .row.row-padded
+      .col-sm-3
+      .col-sm-9= f.submit "Log in", class: 'btn btn-primary'
 
-    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-      = devise_error_messages!
-      %table.form
-        %tr
-          %td= f.label :email
-          %td= f.email_field :email, autofocus: true, class: 'form-control'
-        %tr
-          %td= f.label :password
-          %td= f.password_field :password, autocomplete: "off", class: 'form-control'
-        %tr
-          %td
-          %td= f.submit "Log in", class: 'btn btn-primary'
-
-    = render 'devise/shared/links'
+  = render 'devise/shared/links'

@@ -48,4 +48,4 @@
               %span.label.label-default= link_to tag, posts_path(@filters.merge(tag: tag))
           .small
             by #{link_to post.author.name, posts_path(@filters.merge(author_id: post.author_id))} -
-            published #{date post.published_at}
+            published #{print_date post.published_at}

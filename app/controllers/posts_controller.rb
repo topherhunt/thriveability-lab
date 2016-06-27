@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :require_login, only: [:new, :edit, :update]
+  before_action :require_user_name, only: [:new, :edit, :create]
   before_action :load_post, only: [:edit, :update, :show]
   before_action :verify_authorship, only: [:edit, :update]
 
@@ -29,7 +30,7 @@ class PostsController < ApplicationController
   def new
     # In order to enable ajax autosave, we create the record immediately and
     # all writing happens during #edit. TODO: Routinely clean up orphaned posts
-    @post = current_user.posts.new
+    @post = current_user.posts.new(title: "Untitled")
     @post.save(validate: false) # the Post is not yet valid
     redirect_to edit_post_path(@post)
   end
@@ -56,7 +57,6 @@ class PostsController < ApplicationController
         }
         format.js { render json: { errors: @post.errors.full_messages } }
       end
-
     end
   end
 

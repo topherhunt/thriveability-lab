@@ -1,35 +1,35 @@
-%h1 Edit my profile
+.centered-800
+  %h1 Edit my profile
 
-= form_for @user do |f|
-  %table.form
-    %tr
-      %th= f.label :first_name
-      %td= f.text_field :first_name, class: "form-control"
-    %tr
-      %th= f.label :last_name
-      %td= f.text_field :last_name, class: "form-control"
-    %tr
-      %th= f.label :image
-      %td= f.file_field :image, class: "form-control"
-    %tr
-      %th= f.label :skill_list, "I'm good at... (professional or not)"
-      %td
+  = form_for @user do |f|
+    .row.row-padded
+      .col-sm-3= f.label :first_name
+      .col-sm-9= f.text_field :first_name, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :last_name
+      .col-sm-9= f.text_field :last_name, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :image
+      .col-sm-9= f.file_field :image, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :skill_list, "I'm good at... (professional or not)"
+      .col-sm-9
         = f.text_field :skill_list, value: @user.skill_list.join(","), class: "js-hidden"
         %ul#skill-list-tagit.js-tagit{"data-tagit-target": "#user_skill_list"}
-    %tr
-      %th= f.label :passion_list, "I'm passionate about..."
-      %td
+    .row.row-padded
+      .col-sm-3= f.label :passion_list, "I'm passionate about..."
+      .col-sm-9
         = f.text_field :passion_list, value: @user.passion_list.join(","), class: "js-hidden"
         %ul#passion-list-tagit.js-tagit{"data-tagit-target": "#user_passion_list"}
-    %tr
-      %th= f.label :trait_list, "I'm proud to be known for these traits..."
-      %td
+    .row.row-padded
+      .col-sm-3= f.label :trait_list, "I'm proud to be known for these traits..."
+      .col-sm-9
         = f.text_field :trait_list, value: @user.trait_list.join(","), class: "js-hidden"
         %ul#trait-list-tagit.js-tagit{"data-tagit-target": "#user_trait_list"}
-    %tr
-      %th= f.label :dream_of_future_where, "I dream of a future where..."
-      %td
+    .row.row-padded
+      .col-sm-3= f.label :dream_of_future_where, "I dream of a future where..."
+      .col-sm-9
         = f.text_area :dream_of_future_where, class: "form-control", style: "width: 300px; height: 60px;"
-    %tr
-      %th
-      %td= f.submit "Save", class: "btn btn-primary"
+    .row.row-padded
+      .col-sm-3
+      .col-sm-9= f.submit "Save", class: "btn btn-primary"

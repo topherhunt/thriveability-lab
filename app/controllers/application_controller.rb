@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def require_user_name
+    unless current_user.name.present?
+      redirect_to edit_user_registration_path, alert: "Please specify a user name first."
+    end
+  end
+
   def after_sign_in_path_for(resource)
     user_path(resource)
   end

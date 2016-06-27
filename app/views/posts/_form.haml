@@ -1,4 +1,4 @@
-= form_for(@post, html: { style: "max-width: 900px;", class: "js-autosave" }) do |f|
+= form_for(@post, html: { class: "js-autosave" }) do |f|
   = show_errors_for @post
 
   .row.row-padded
@@ -6,7 +6,9 @@
     .col-sm-9= f.text_field :title, class: "form-control"
   .row.row-padded
     .col-sm-3= f.label :intention_type, "I'm writing this post mainly to..."
-    .col-sm-9= f.select :intention_type, [["share an update about world events", "share news"], ["share facts / research / objective knowledge", "share facts"], ["share a personal experience or perspective on an issue", "share perspective"], ["raise awareness of a problem", "raise awareness"], ["learn about others’ perspectives", "seek perspectives"], ["seek advice", "seek advice"], ["[other]", "other"]], { include_blank: "- select one -" }, { class: "form-control" }
+    .col-sm-9
+      = f.select :intention_type, [["share an update about world events", "share news"], ["share facts / research / objective knowledge", "share facts"], ["share a personal experience or perspective on an issue", "share perspective"], ["raise awareness of a problem", "raise awareness"], ["learn about others’ perspectives", "seek perspectives"], ["seek advice", "seek advice"], ["[other]", "other"]], { include_blank: "- select one -" }, { class: "form-control" }
+      .small Select the main reason you’re writing this. This helps our community to more effectively receive and engage with your content.
   .row.row-padded
     .col-sm-3
       = f.label :intention_statement, "State your intention for this post in your own words."

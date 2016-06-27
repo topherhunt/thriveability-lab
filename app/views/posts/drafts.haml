@@ -9,7 +9,7 @@
     .col-sm-6
       %h3= link_to post.title, post_path(post)
       %p
-        <em>Started on #{date post.created_at}</em> -
+        <em>Started on #{print_date post.created_at}</em> -
         = link_to "Resume", edit_post_path(post)
       %p
         = post.intention_statement
