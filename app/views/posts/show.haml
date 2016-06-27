@@ -1,7 +1,7 @@
 %h1.float-left= @post.title
 %div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
   = link_to "Edit", edit_post_path(@post) if @post.author == current_user
-.clearfloat
+.clear-float
 
 %p
   %strong Tags:

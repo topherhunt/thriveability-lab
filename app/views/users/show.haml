@@ -1,7 +1,7 @@
 %h1.float-left= @user.name
 .float-left{style: "padding-top: 30px; padding-left: 30px;"}
   = link_to "Edit", edit_user_path(@user) if @user == current_user
-.clearfloat
+.clear-float
 
 .row
   .col-sm-3
@@ -60,7 +60,7 @@
     - @posts.each do |post|
       %h4.float-left= link_to post.title, post_path(post)
       .float-left.small{style: "padding-top: 13px; padding-left: 13px;"} published #{date post.published_at}
-      .clearfloat
+      .clear-float
       %p
         = post.intention_statement
         %span.label.label-primary= link_to post.intention_type, posts_path(intention_type: post.intention_type)

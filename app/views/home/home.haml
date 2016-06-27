@@ -10,7 +10,7 @@
         %div{style: 'float: left; padding: 3px;'}
           %div{style: 'width: 50px; height: 50px; background: #ddd;'}
             = link_to image_tag(user.image.url(:thumb), style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.name }
-      .clearfloat
+      .clear-float
     %p
       %a Meet 142 more
   .col-sm-6
@@ -32,7 +32,7 @@
         %div{style: 'float: left; padding: 3px;'}
           %div{style: 'width: 50px; height: 50px; background: #ddd;'}
             = link_to image_tag(project.image.url(:thumb), style: "width: 100%;"), project_path(project), class: "js-tooltip", data: { tooltip: project.title }
-      .clearfloat
+      .clear-float
     %p
       %a Learn about 65 more
   .col-sm-6

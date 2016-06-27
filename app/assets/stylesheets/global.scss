@@ -10,16 +10,13 @@
 
 .float-left  { float: left; }
 .float-right { float: right; }
-.clearfloat  { clear: both; }
+.clear-float  { clear: both; }
 
 .text-danger { color: #a94442 !important; }
 
 .label a { color: #fff !important; }
 
-.fa.fa-spinner {
-  -webkit-animation: spin 2s infinite linear;
-}
-
+.fa.fa-spinner { -webkit-animation: spin 2s infinite linear; }
 @-webkit-keyframes spin {
   0%   { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -27,26 +24,23 @@
 
 // Forms
 
-.row.row-padded {
+.row-padded {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.row.row-padded-top {
+.row-padded-top {
   padding-top: 5px;
 }
-.row.row-padded-bottom {
+.row-padded-bottom {
   padding-bottom: 5px;
 }
 
 textarea { min-height: 100px; }
 
-.field_with_errors {
-  // box-shadow: 0px 0px 5px 0px red;
-  // border-radius: 5px;
-  border-bottom: 2px solid #a94442;
-}
+.field_with_errors { border-bottom: 2px solid #a94442; }
 
 #error_explanation {
+  // TODO: Could I just import from .alert and .alert-danger?
   color: #B20000;
   background-color: #FFdddd;
   border: 1px solid #FF8080;
