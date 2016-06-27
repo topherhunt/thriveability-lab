@@ -1,16 +1,15 @@
-require 'rails_helper'
-require 'support/feature_helpers'
+require "test_helper"
 
-describe "User profile" do
-  before do
+class UserProfileTest < Capybara::Rails::TestCase
+  setup do
     @user = create(:user)
   end
 
-  specify "User can fill in profile info" do
-    log_in @user
+  test "User can fill in profile info" do
+    login_as @user
     click_on "My Profile"
     click_on "Edit"
-    assert_equal edit_user_path(@user), current_path
+    assert_path edit_user_path(@user)
     fill_fields(
       "user[first_name]" => "Elmer",
       "user[last_name]" => "Fudd",
@@ -21,7 +20,7 @@ describe "User profile" do
     attach_file "user[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
     # page.should have_selector ".dream-of-future-exemplars"
     click_button "Save"
-    assert_equal user_path(@user), current_path
+    assert_path user_path(@user)
     assert_content "Your profile has been updated."
     expect_attributes(@user.reload,
       first_name: "Elmer",
@@ -33,7 +32,7 @@ describe "User profile" do
       dream_of_future_where: "all men are created equal")
   end
 
-  specify "User profile lists my recent posts" do
+  test "User profile lists my recent posts" do
     @post1 = create(:post, published: true) # not mine
     @post2 = create(:post, author: @user, published: true)
     @post3 = create(:post, author: @user, published: false) # not published
@@ -44,10 +43,12 @@ describe "User profile" do
 
     visit user_path(@user)
     assert_content "Recent posts"
-    assert_content @post2.title, @post4.title
-    refute_content @post1.title, @post3.title
+    assert_content @post2.title
+    assert_content @post4.title
+    refute_content @post1.title
+    refute_content @post3.title
     refute_content @post5.title # not recent enough / too many recent posts
     click_on @post2.title
-    assert_equal post_path(@post2), current_path
+    assert_path post_path(@post2)
   end
 end

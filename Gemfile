@@ -32,16 +32,20 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'quiet_assets'
-  gem 'launchy' # for save_and_open_page
+  gem 'minitest-rails'
+  gem 'm'
+  gem 'factory_girl'
   gem 'pry'
+  gem 'binding_of_caller'
+  gem 'quiet_assets'
 end
 
 group :test do
-  gem 'capybara'
-  gem 'factory_girl_rails'
+  gem 'capybara-webkit'
+  gem 'maxitest'
+  gem 'minitest-rails-capybara'
   gem 'mocha'
+  gem 'launchy' # for save_and_open_page
 end
 
 group :production do

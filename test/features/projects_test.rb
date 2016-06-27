@@ -1,14 +1,13 @@
-require 'rails_helper'
-require 'support/feature_helpers'
+require "test_helper"
 
-describe "Projects" do
-  before do
+class ProjectsTest < Capybara::Rails::TestCase
+  setup do
     @user = create(:user)
     @project = create(:project, owner: @user)
   end
 
-  specify "User can create a project" do
-    log_in @user
+  test "User can create a project" do
+    login_as @user
     click_on "Projects"
     click_on "List a project!"
     fill_fields(
@@ -26,8 +25,8 @@ describe "Projects" do
     select "developing", from: "project[stage]"
     click_on "Save"
     @project = Project.last
-    current_path.should eq project_path(@project)
-    page.should have_content "Your new project is now publicly listed."
+    assert_path project_path(@project)
+    assert_content "Your new project is now publicly listed."
     expect_attributes(@project,
       title: "Gathering Acorns",
       subtitle: "Re-thinking the way we interface with squirrels",
@@ -43,45 +42,45 @@ describe "Projects" do
       stage: "developing")
   end
 
-  specify "Visitor can browse and view existing projects" do
+  test "Visitor can browse and view existing projects" do
     @project2 = create(:project, quadrant_ul: "Because it's art")
     @project3 = create(:project)
 
     visit projects_path
-    page.should have_link @project.title
-    page.should have_link @project2.title
-    page.should have_link @project3.title
+    assert_content @project.title
+    assert_content @project2.title
+    assert_content @project3.title
     click_on @project2.title
-    current_path.should eq project_path(@project2)
-    page.should have_content @project2.title
-    page.should have_content @project2.quadrant_ul
+    assert_path project_path(@project2)
+    assert_content @project2.title
+    assert_content @project2.quadrant_ul
   end
 
-  specify "Project owner can edit their project" do
-    log_in @user
+  test "Project owner can edit their project" do
+    login_as @user
     click_on "Projects"
     click_on @project.title
-    current_path.should eq project_path(@project)
+    assert_path project_path(@project)
     click_on "Edit"
     fill_fields(
       "project[title]": "abcxyz",
       "project[need_list]": "foo,bar,baz")
     click_on "Save"
-    page.should have_content "Project updated."
+    assert_content "Project updated."
     expect_attributes(@project.reload,
       title: "abcxyz",
       need_list: ["foo", "bar", "baz"])
   end
 
-  specify "Other users can't edit a project" do
+  test "Other users can't edit a project" do
     @user2 = create(:user)
 
-    log_in @user2
+    login_as @user2
     visit project_path(@project)
-    page.should have_content(@project.title)
-    page.should_not have_link "Edit"
+    assert_content(@project.title)
+    refute_content "Edit"
     visit edit_project_path(@project)
-    page.should have_content "You don't have permission to edit this project."
-    current_path.should eq project_path(@project)
+    assert_content "You don't have permission to edit this project."
+    assert_path project_path(@project)
   end
 end
