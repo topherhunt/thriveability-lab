@@ -1,14 +1,10 @@
 $(function(){
 
-  /* For config, see:
-    http://docs.ckeditor.com/#!/guide/dev_toolbarconcepts
-    http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced
-    */
-  $('textarea.js-ckeditor').each(function(){
-    var textarea = $(this);
-    var id = textarea.attr('id');
-    CKEDITOR.replace(id, {
-      toolbar: [
+  function toolbar_config(setting){
+    if (setting == 'none'){
+      return [];
+    } else {
+      return [
   	    { name: 'styles', items: [ 'Format' ] },
     		{ name: 'basicStyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat' ] },
     		{ name: 'paragraph', items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ] },
@@ -20,7 +16,19 @@ $(function(){
     		{ name: 'tools', items: [ 'Maximize' ] },
     		{ name: 'document', items: [ 'Source' ] },
     		{ name: 'about', items: [ 'About' ] }
-	    ]
+	    ];
+    }
+  }
+
+  /* For config, see:
+    http://docs.ckeditor.com/#!/guide/dev_toolbarconcepts
+    http://ckeditor.com/tmp/4.5.0-beta/ckeditor/samples/toolbarconfigurator/index.html#advanced
+    */
+  $('textarea.js-ckeditor').each(function(){
+    var textarea = $(this);
+    var id = textarea.attr('id');
+    CKEDITOR.replace(id, {
+      toolbar: toolbar_config(textarea.data('toolbar_config')) // defaults to "full"
     });
 
     // Periodically fill the original textarea element with the updated content;

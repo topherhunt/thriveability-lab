@@ -1,0 +1,21 @@
+%h3 Reply to #{@post.parent.author.first_name}'s post
+
+= form_for(@post, html: { class: "js-autosave" }) do |f|
+  = show_errors_for @post
+
+  .row.row-padded
+    .col-sm-3= f.label :intention_type, "My intention for this reply is to..."
+    .col-sm-9
+      = f.select :intention_type, Post::INTENTION_TYPES, { include_blank: "- select one -" }, { class: "form-control" }
+      .small Select the main reason you’re writing this. This helps our community to more effectively receive and engage with your content.
+  .row.row-padded
+    .col-sm-3
+      = f.label :content
+    .col-sm-9= f.text_area :content, class: "form-control js-ckeditor", style: "height: 200px;"
+  .row.row-padded
+    .col-sm-3
+    .col-sm-9
+      - if @post.published?
+        = f.submit "Save changes", class: "btn btn-primary"
+      - else
+        = f.submit "Post reply", class: "btn btn-primary"

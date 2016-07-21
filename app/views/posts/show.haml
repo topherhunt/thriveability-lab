@@ -1,6 +1,7 @@
 %h1.float-left= @post.title
-%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
-  = link_to "Edit", edit_post_path(@post) if @post.author == current_user
+- if current_user == @post.author
+  %div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
+    = link_to "Edit", edit_post_path(@post)
 .clear-float
 
 %p
@@ -18,3 +19,19 @@
     %p Click on the Edit link to review and publish it.
 
 .well= sanitize(@post.content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+
+- if @post.published?
+  - if current_user.in? @conversants
+    .reply-container
+      = link_to "Reply", new_post_path(parent_id: @post.id), class: "js-new-reply", "data-post-id": @post.id
+      %i.fa.fa-spinner.loading.js-hidden
+      .reply-form-container
+  - else
+    = link_to "Join the conversation!", "#", class: "btn btn-link", data: { toggle: "modal", target: "#join-conversation-modal" }
+    .modal.fade#join-conversation-modal
+      .modal-dialog
+        .modal-header
+          %button.close{"data-dismiss": "modal"} &times;
+          %h4.modal-title Join the conversation
+        .modal-body
+          = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }

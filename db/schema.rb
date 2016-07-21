@@ -11,19 +11,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507002941) do
+ActiveRecord::Schema.define(version: 20160713204423) do
 
-  create_table "posts", force: :cascade do |t|
-    t.integer  "author_id",           limit: 4
-    t.string   "title",               limit: 255
-    t.text     "content",             limit: 65535
+  create_table "post_conversants", force: :cascade do |t|
+    t.integer  "user_id",             limit: 4
+    t.integer  "post_id",             limit: 4
     t.string   "intention_type",      limit: 255
     t.string   "intention_statement", limit: 255
-    t.boolean  "published",                         default: false
-    t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "post_conversants", ["post_id"], name: "index_post_conversants_on_post_id", using: :btree
+  add_index "post_conversants", ["user_id"], name: "index_post_conversants_on_user_id", using: :btree
+
+  create_table "post_hierarchies", id: false, force: :cascade do |t|
+    t.integer "ancestor_id",   limit: 4, null: false
+    t.integer "descendant_id", limit: 4, null: false
+    t.integer "generations",   limit: 4, null: false
+  end
+
+  add_index "post_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "post_anc_desc_idx", unique: true, using: :btree
+  add_index "post_hierarchies", ["descendant_id"], name: "post_desc_idx", using: :btree
+
+  create_table "posts", force: :cascade do |t|
+    t.integer  "author_id",              limit: 4
+    t.string   "title",                  limit: 255
+    t.text     "content",                limit: 65535
+    t.string   "intention_type",         limit: 255
+    t.string   "intention_statement",    limit: 255
+    t.boolean  "published",                            default: false
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "parent_id",              limit: 4
+    t.integer  "reply_at_char_position", limit: 4
+  end
+
+  add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
+  add_index "posts", ["parent_id"], name: "index_posts_on_parent_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "owner_id",           limit: 4

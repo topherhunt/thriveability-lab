@@ -25,7 +25,6 @@ $(function(){
             setTimeout(display_saved, 1000);
             setTimeout(post_changes, 60 * 1000);
           } else {
-            console.error("Jquery .ajax success() called, but data.success was blank.");
             display_error();
           }
         },

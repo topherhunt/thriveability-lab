@@ -1,0 +1,18 @@
+= form_for post_conversant, url: post_conversants_path(post_id: @post.id), method: :post do |f|
+  = show_errors_for post_conversant
+
+  .row.row-padded
+    .col-sm-3= f.label :intention_type, "My intention in joining this conversation"
+    .col-sm-9
+      = f.select :intention_type, Post::INTENTION_TYPES, { include_blank: "- select one -" }, { class: "form-control" }
+      .small Select the main reason you want to jump in. This helps our community to more effectively receive and engage with your content.
+  .row.row-padded
+    .col-sm-3
+      = f.label :intention_statement, "State your intention for this post in your own words."
+    .col-sm-9
+      = f.text_field :intention_statement, class: "form-control"
+      .small Consciously setting an intention can encourage more thoughtful and more productive discussions.
+      .small e.g. <em>I'm writing this post to clarify a perspective </em>
+  .row.row-padded
+    .col-sm-3
+    .col-sm-9= f.submit "Join in!"

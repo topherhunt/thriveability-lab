@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def active_if_current(path)
+    "active" if request.path.include?(path)
+  end
 
   def bootstrap_flash_class(key)
     case key.to_sym

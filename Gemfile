@@ -12,6 +12,7 @@ gem 'rollbar'
 gem 'acts-as-taggable-on'
 gem 'aws-sdk', '>= 2.0.34'
 gem 'bcrypt-ruby'
+gem 'closure_tree' # performant hierarchy tree storage for Posts
 gem 'devise'
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'

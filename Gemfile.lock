@@ -82,6 +82,9 @@ GEM
       json
     climate_control (0.0.3)
       activesupport (>= 3.0)
+    closure_tree (6.0.0)
+      activerecord (>= 4.1.0)
+      with_advisory_lock (>= 3.0.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
@@ -247,6 +250,9 @@ GEM
       debug_inspector
       railties (>= 4.2)
     will_paginate (3.1.0)
+    with_advisory_lock (3.0.0)
+      activerecord (>= 3.2)
+      thread_safe
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -261,6 +267,7 @@ DEPENDENCIES
   bootstrap-sass
   bootstrap-will_paginate
   capybara-webkit
+  closure_tree
   coffee-rails
   devise
   factory_girl

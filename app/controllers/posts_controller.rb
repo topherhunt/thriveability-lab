@@ -23,6 +23,7 @@ class PostsController < ApplicationController
     @drafts_count = Post.where(author: current_user, published: false).count
   end
 
+  # TODO: Get rid of this. I find my drafts by filtering for them just like other posts.
   def drafts
     @posts = Post.where(author: current_user, published: false)
   end
@@ -30,12 +31,24 @@ class PostsController < ApplicationController
   def new
     # In order to enable ajax autosave, we create the record immediately and
     # all writing happens during #edit. TODO: Routinely clean up orphaned posts
-    @post = current_user.posts.new(title: "Untitled")
-    @post.save(validate: false) # the Post is not yet valid
-    redirect_to edit_post_path(@post)
+    @post = current_user.posts.new
+    @post.parent = Post.find(params[:parent_id]) if params[:parent_id]
+    @post.reply_at_char_position = params[:reply_at_char_position].presence
+    @post.save(validate: false)
+    respond_to do |format|
+      format.html { redirect_to edit_post_path(@post) }
+      format.js { render json: { success: true, id: @post.id } }
+    end
   end
 
   def edit
+    if @post.root?
+      render "edit_root"
+    elsif @post.reply_at_char_position.blank?
+      render "edit_reply_bottom"
+    else
+      render "edit_reply_inline"
+    end
   end
 
   def update
@@ -60,10 +73,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def autosave
+    TODO # autosave JS posts here, and only updates `content_autosaved`.
+  end
+
   def show
     unless @post.published? or @post.author == current_user
       raise ActiveRecord::RecordNotFound
     end
+    @conversants = @post.conversants.to_a
+    @post_conversant = PostConversant.new
   end
 
   private

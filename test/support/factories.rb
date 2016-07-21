@@ -22,4 +22,11 @@ FactoryGirl.define do
     published true
     published_at 1.day.ago
   end
+
+  factory(:post_conversant) do
+    association :post
+    association :user
+    intention_type "seek_perspectives"
+    intention_statement "I want to get other views on issues important to me"
+  end
 end
