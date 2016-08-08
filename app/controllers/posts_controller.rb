@@ -28,45 +28,45 @@ class PostsController < ApplicationController
     @posts = Post.where(author: current_user, published: false)
   end
 
-  def new
+  def create
     # In order to enable ajax autosave, we create the record immediately and
     # all writing happens during #edit. TODO: Routinely clean up orphaned posts
-    @post = current_user.posts.new
-    @post.parent = Post.find(params[:parent_id]) if params[:parent_id]
-    @post.reply_at_char_position = params[:reply_at_char_position].presence
+    @post = current_user.posts.new(
+      parent: (params[:parent_id] ? Post.find(params[:parent_id]) : nil),
+      reply_at_char_position: params[:reply_at_char_position].presence)
     @post.save(validate: false)
     respond_to do |format|
       format.html { redirect_to edit_post_path(@post) }
-      format.js { render json: { success: true, id: @post.id } }
+      format.js do
+        render json: { form_html: render_to_string(partial: "form_#{template_variant}", locals: { post: @post }) }
+      end
     end
   end
 
   def edit
-    if @post.root?
-      render "edit_root"
-    elsif @post.reply_at_char_position.blank?
-      render "edit_reply_bottom"
-    else
-      render "edit_reply_inline"
+    respond_to do |format|
+      format.html { render "edit_#{template_variant}" }
+      format.js { render partial: "form_#{template_variant}", locals: { post: @post } }
     end
   end
 
   def update
-    if params[:commit] == "Publish!"
+    unless params[:commit].downcase.include?("draft")
       @post.published = true
       @post.published_at = Time.now
     end
 
     if @post.update(post_params)
       respond_to do |format|
-        format.html { redirect_to post_path(@post), notice: update_success_message }
+        format.html { redirect_to post_path(@post.root), notice: update_success_message }
         format.js { render json: { success: true } }
       end
     else
+      @post.published = false
       respond_to do |format|
         format.html {
           flash.now.alert = "Unable to save your changes. See error messages below."
-          render "edit"
+          render "edit_#{template_variant}"
         }
         format.js { render json: { errors: @post.errors.full_messages } }
       end
@@ -97,6 +97,16 @@ class PostsController < ApplicationController
 
   def load_post
     @post = Post.find(params[:id])
+  end
+
+  def template_variant
+    if @post.root?
+      "root"
+    elsif @post.reply_at_char_position.present?
+      "inline_comment"
+    else
+      "bottom_comment"
+    end
   end
 
   def update_success_message

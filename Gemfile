@@ -43,6 +43,7 @@ end
 
 group :test do
   gem 'capybara-webkit'
+  gem 'capybara-screenshot', '>= 1.0.13'
   gem 'maxitest'
   gem 'minitest-rails-capybara'
   gem 'mocha'

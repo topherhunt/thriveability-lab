@@ -1,14 +1,4 @@
 class Post < ActiveRecord::Base
-  INTENTION_TYPES = [
-    ["share an update about world events", "share news"],
-    ["share facts / research / objective knowledge", "share facts"],
-    ["share a personal experience or perspective on an issue", "share perspective"],
-    ["raise awareness of a problem", "raise awareness"],
-    ["learn about others' perspectives", "seek perspectives"],
-    ["seek advice", "seek advice"],
-    ["critique a perspective", "critique"],
-    ["[other]", "other"]]
-
   belongs_to :author, class_name: :User, inverse_of: :posts
   has_many :post_conversant_joins, class_name: :PostConversant
   has_many :conversants, through: :post_conversant_joins, source: :user
@@ -19,8 +9,21 @@ class Post < ActiveRecord::Base
   acts_as_taggable_on :tags
 
   validates :author, presence: true
-  validates :title, presence: true, length: { maximum: 255 }
-  validates :intention_type, presence: true, inclusion: { in: ["share news", "share facts", "share perspective", "raise awareness", "seek perspectives", "seek advice", "other"] }
+  validate :require_title_if_root
+  validates :title, length: { maximum: 255 }
+  validates :intention_type, presence: true, inclusion: { in: IntentionType.all.map(&:short) }
   validates :intention_statement, length: { maximum: 255 }
   validates :content, presence: true
+
+  scope :published, ->{ where published: true }
+  scope :inline, ->{ where "reply_at_char_position IS NOT NULL" }
+  scope :not_inline, ->{ where "reply_at_char_position IS NULL" }
+
+  private
+
+  def require_title_if_root
+    if title.blank? and root?
+      errors.add(:title, "can't be blank")
+    end
+  end
 end

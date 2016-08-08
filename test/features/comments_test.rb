@@ -11,7 +11,7 @@ class CommentsTest < Capybara::Rails::TestCase
   test "User can join the conversation on a post" do
     login_as @user
     visit post_path(@post)
-    # assert_content "Word to all of this" # TODO: visitor can view existing comments
+    assert_content "Word to all of this"
     refute_content "Reply"
     click_on "Join the conversation!"
     assert_equals 3, @post.conversants.count
@@ -32,22 +32,28 @@ class CommentsTest < Capybara::Rails::TestCase
   end
 
   test "User can add comments and reply to others' comments" do
-    create(:post_conversant, user: @user, post: @post)
+    using_webkit do
+      create(:post_conversant, user: @user, post: @post) # I've joined the convo
 
-    login_as @user
-    visit post_path(@post)
-    assert_equals 1, @post.comments.count
-    assert_selector "form.reply", count: 0
-    page.find(".js-new-reply[data-post-id=\"#{@post.id}\"]").click
-    assert_selector "form.reply", count: 1
-    assert_content "Ways to support awesome conversation:"
-    fill_in "post[content]", with: "My novel and witty response"
-    click_on "Publish reply"
-    assert_content "1 error prevented this reply from being published"
-    select "seek perspectives", from: "comment[intention_type]"
-    click_on "Publish reply"
-    assert_equals 2, @post.comments.count
-    visit post_path(@post)
-    assert_content "My novel and witty response"
+      login_as @user
+      visit post_path(@post)
+      assert_equals 1, @post.children.not_inline.count
+      assert_selector "form.new-bottom-comment", count: 0
+      page.find(".js-new-reply[data-post-id=\"#{@post.id}\"]").click
+      assert_selector "form.new-bottom-comment", count: 1
+      assert_content "Ways to support awesome conversation:"
+      fill_in "post[content]", with: "My novel and witty response"
+      click_on "Publish reply"
+      assert_content "Unable to save your changes. See error messages below."
+      select "seek advice", from: "post[intention_type]"
+      click_on "Publish reply"
+      assert_equals 2, @post.children.not_inline.count
+      visit post_path(@post)
+      assert_content "My novel and witty response"
+      @reply = @post.reload.children.last
+      assert_equals @user, @reply.author
+      assert_equals "My novel and witty response", @reply.content
+      assert_equals "seek advice", @reply.intention_type
+    end
   end
 end

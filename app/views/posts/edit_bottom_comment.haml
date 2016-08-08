@@ -1,0 +1,3 @@
+%h3 Reply to #{@post.parent.author.first_name}'s post
+
+= render partial: "form_bottom_comment", locals: { post: @post }

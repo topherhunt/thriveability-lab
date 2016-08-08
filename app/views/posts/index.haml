@@ -1,6 +1,6 @@
 %h1.float-left Posts
 %div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
-  = link_to "Start a conversation", new_post_path
+  = link_to "Start a conversation", posts_path, class: "btn btn-default", method: :post
   &nbsp;
   - if @drafts_count > 0
     = link_to "View #{pluralize @drafts_count, "unpublished draft"}", drafts_posts_path
@@ -41,9 +41,12 @@
       - @posts.each do |post|
         .col-sm-6
           %h3= link_to post.title, post_path(post)
-          %div= post.intention_statement
           %div
-            %span.label.label-primary= link_to post.intention_type, posts_path(@filters.merge(intention_type: post.intention_type))
+            Intention: #{link_to post.intention_type, posts_path(@filters.merge(intention_type: post.intention_type))} -
+            = post.intention_statement
+          %div
+          %div
+            Tags:
             - post.tag_list.each do |tag|
               %span.label.label-default= link_to tag, posts_path(@filters.merge(tag: tag))
           .small

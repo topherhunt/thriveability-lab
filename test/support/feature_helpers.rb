@@ -1,5 +1,8 @@
 class Capybara::Rails::TestCase
   Capybara.javascript_driver = :webkit
+  Capybara::Webkit.configure do |config|
+    config.allow_url("cdn.ckeditor.com")
+  end
 
   def login_as(user, password = 'password')
     visit new_user_session_path
@@ -15,6 +18,10 @@ class Capybara::Rails::TestCase
 
   def page!
     save_and_open_page
+  end
+
+  def image! # Only works when using webkit!
+    Capybara::Screenshot.screenshot_and_open_image
   end
 
   def assert_path(path)

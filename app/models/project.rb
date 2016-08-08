@@ -6,7 +6,7 @@ class Project < ActiveRecord::Base
 
   # See https://github.com/thoughtbot/paperclip#quick-start
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
-    default_url: "/assets/missing_project.png"
+    default_url: "/missing_project.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   validates_presence_of :owner

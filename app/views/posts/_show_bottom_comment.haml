@@ -1,0 +1,14 @@
+.bottom-comment{"data-id": post.id, style: "font-size: 90%; padding-left: 10px; padding-top: 10px;"}
+  .float-left= image_tag(post.author.image.url(:thumb), style: "width: 60px; padding-right: 10px; padding-bottom: 10px;")
+  by #{link_to post.author.name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
+  %br
+  %em Intention: #{IntentionType.find(post.intention_type).try(:long)}
+  .clear-float
+  = post.content.html_safe
+  - if current_user.in? @conversants
+    %div
+      = link_to "Reply", "#", class: "js-new-reply btn btn-default btn-sm", "data-post-id": post.id
+      %i.fa.fa-spinner.loading.js-hidden
+      .new-reply-container
+  - post.children.published.not_inline.order("created_at ASC").each do |reply|
+    = render partial: "show_bottom_comment", locals: { post: reply }
