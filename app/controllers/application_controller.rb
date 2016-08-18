@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   def require_user_name
     unless current_user.name.present?
-      redirect_to edit_user_registration_path, alert: "Please specify a user name first."
+      redirect_to edit_user_path(current_user), alert: "Please give yourself a name before taking that action."
     end
   end
 
