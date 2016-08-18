@@ -46,4 +46,4 @@
     - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
       = render partial: "show_bottom_comment", locals: { post: reply }
   - else
-    No comments yet.
+    %p No comments yet.
