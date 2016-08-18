@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713204423) do
+ActiveRecord::Schema.define(version: 20160808205151) do
 
   create_table "post_conversants", force: :cascade do |t|
     t.integer  "user_id",             limit: 4
@@ -37,15 +37,16 @@ ActiveRecord::Schema.define(version: 20160713204423) do
   create_table "posts", force: :cascade do |t|
     t.integer  "author_id",              limit: 4
     t.string   "title",                  limit: 255
-    t.text     "content",                limit: 65535
+    t.text     "published_content",      limit: 65535
     t.string   "intention_type",         limit: 255
     t.string   "intention_statement",    limit: 255
-    t.boolean  "published",                            default: false
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id",              limit: 4
     t.integer  "reply_at_char_position", limit: 4
+    t.boolean  "published"
+    t.text     "draft_content",          limit: 65535
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree

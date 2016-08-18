@@ -7,48 +7,60 @@
 .clear-float
 
 .row
-  .col-sm-3#posts-filters.well
-    %h3 Filter by...
-    - if @filters.any?
-      %p= link_to "Clear filters", posts_path
-    %p
-      %strong Authors:<br>
-      - @authors.each do |author|
-        - if @filters[:author_id] == author.id.to_s
-          %strong= author.name
-        - else
-          = link_to author.name, posts_path(@filters.merge(author_id: author.id))
-        &nbsp;
-    %p
-      %strong Intentions:<br>
-      - @intention_types.each do |intention_type|
-        - if @filters[:intention_type] == intention_type
-          %strong= intention_type
-        - else
-          = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
-        &nbsp;
-    %p
-      %strong Tags:<br>
-      - @tag_counts.each do |tag_count|
-        - if @filters[:tag] == tag_count.name
-          %strong= tag_count.name
-        - else
-          = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
-        &nbsp;
+  .col-sm-3#posts-filters
+    %div{style: "margin-top: 10px;padding: 10px; background-color: #f6f6f6; border-radius: 10px;"}
+      %h3{style: "margin-top: 0px;"} Filter by...
+      - if @filters.any?
+        %p= link_to "Clear filters", posts_path
+      %p
+        %strong Authors:<br>
+        - @authors.each do |author|
+          - if @filters[:author_id] == author.id.to_s
+            %strong= author.name
+          - else
+            = link_to author.name, posts_path(@filters.merge(author_id: author.id))
+          &nbsp;
+      %p
+        %strong Intentions:<br>
+        - @intention_types.each do |intention_type|
+          - if @filters[:intention_type] == intention_type
+            %strong= intention_type
+          - else
+            = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
+          &nbsp;
+      %p
+        %strong Tags:<br>
+        - @tag_counts.each do |tag_count|
+          - if @filters[:tag] == tag_count.name
+            %strong= tag_count.name
+          - else
+            = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
+          &nbsp;
 
   .col-sm-9
     .row
       - @posts.each do |post|
         .col-sm-6
-          %h3= link_to post.title, post_path(post)
-          %div
-            Intention: #{link_to post.intention_type, posts_path(@filters.merge(intention_type: post.intention_type))} -
-            = post.intention_statement
-          %div
-          %div
-            Tags:
-            - post.tag_list.each do |tag|
-              %span.label.label-default= link_to tag, posts_path(@filters.merge(tag: tag))
-          .small
-            by #{link_to post.author.name, posts_path(@filters.merge(author_id: post.author_id))} -
-            published #{print_date post.published_at}
+          %h3= link_to post.title.presence || "Untitled draft", post_path(post)
+
+          -# TODO: This is almost completely redundant on the #show page and in each bottom_comment header. Consolidate?
+          %p.text-muted
+            - if post.published?
+              by #{link_to post.author.name, user_path(post.author)} on #{print_date post.published_at, time: true}
+              - if current_user == post.author
+                &nbsp;
+                = link_to fa_icon("pencil"), edit_post_path(post)
+            - else
+              %strong.text-danger Unpublished draft
+              = "- started on #{print_date post.created_at, time: true}"
+              &nbsp;
+              = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
+              = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+            - if post.tag_list.any?
+              %br
+              %strong Tags:
+              = post.tag_list.join(", ")
+            - if post.intention_type.present?
+              %br
+              %strong Intention:
+              #{post.intention_type}; #{post.intention_statement}

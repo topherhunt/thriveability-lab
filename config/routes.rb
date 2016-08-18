@@ -12,9 +12,8 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index, :new, :create, :edit, :update, :show]
 
-  resources :posts, only: [:index, :create, :edit, :update, :show] do
+  resources :posts, only: [:index, :create, :edit, :update, :show, :destroy] do
     collection do
-      get :drafts
       get :reply
     end
   end

@@ -11,18 +11,20 @@ class Post < ActiveRecord::Base
   validates :author, presence: true
   validate :require_title_if_root
   validates :title, length: { maximum: 255 }
-  validates :intention_type, presence: true, inclusion: { in: IntentionType.all.map(&:short) }
+  validates :intention_type, presence: true, inclusion: { in: IntentionType.all.map(&:short) }, if: :published?
+  validates :published_content, presence: true, if: :published?
   validates :intention_statement, length: { maximum: 255 }
-  validates :content, presence: true
 
+  # The `published` column is somewhat redundant (if published, then published_content will be NOT NULL) but a boolean is much more efficient to query I think.
   scope :published, ->{ where published: true }
   scope :inline, ->{ where "reply_at_char_position IS NOT NULL" }
   scope :not_inline, ->{ where "reply_at_char_position IS NULL" }
+  scope :visible_to, ->(user){ where("author_id = ? OR published = TRUE", user.try(:id) || 0) }
 
   private
 
   def require_title_if_root
-    if title.blank? and root?
+    if title.blank? and root? and published?
       errors.add(:title, "can't be blank")
     end
   end

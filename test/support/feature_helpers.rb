@@ -68,7 +68,7 @@ class Capybara::Rails::TestCase
   # Use Jquery to force display a hidden element. Useful for getting at links
   # that are dynamically displayed: js_show("#hidden-div")
   def js_show(selector)
-    page.execute_script(" $('#{selector}').show(); ")
+    page.execute_script(" $('#{selector}').show().css('visibility', 'visible'); ")
   end
 
   def js_hide(selector)

@@ -1,32 +1,39 @@
 FactoryGirl.define do
   factory(:user) do
-    sequence(:email) { |n| "test_user_#{n}@example.com" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
+    email { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
-    sequence(:first_name) { |n| "Firstname#{n}" }
-    sequence(:last_name) { |n| "Lastname#{n}" }
   end
 
   factory(:project) do
     association :owner, factory: :user
-    sequence(:title) { |n| "Project (#{n})" }
-    subtitle "Subtitle"
+    title { Faker::Lorem.words(4).join(" ") }
+    subtitle { Faker::Lorem.words(7).join(" ") }
     stage "idea"
   end
 
   factory(:post) do
     association :author, factory: :user
-    sequence(:title) { |n| "Post (#{n})" }
-    content "Test post content"
+    title { Faker::Lorem.words(5).join(" ") }
     intention_type "share news"
-    published true
-    published_at 1.day.ago
+
+    factory(:draft_post) do
+      draft_content { Faker::Lorem.paragraph }
+    end
+
+    factory(:published_post) do
+      published_content { Faker::Lorem.paragraph }
+      published true
+      published_at 1.day.ago
+    end
   end
 
   factory(:post_conversant) do
     association :post
     association :user
     intention_type "seek_perspectives"
-    intention_statement "I want to get other views on issues important to me"
+    intention_statement { Faker::Lorem.sentence }
   end
 end

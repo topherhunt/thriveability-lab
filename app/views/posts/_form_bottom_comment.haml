@@ -1,6 +1,6 @@
-.row
+.row.edit-bottom-comment-container{"data-id": post.id}
   .col-sm-7
-    = form_for(post, html: { class: "js-autosave new-bottom-comment" }) do |f|
+    = form_for(post, html: { class: "new-bottom-comment" }) do |f|
       = show_errors_for post
 
       .row.row-padded
@@ -10,15 +10,22 @@
           .small Select the main reason you’re writing this. This helps our community to more effectively receive and engage with your content.
       .row.row-padded
         .col-sm-3
-          = f.label :content
-        .col-sm-9= f.text_area :content, class: "form-control js-ckeditor", style: "height: 200px;"
+          = f.label :draft_content, "Content"
+        .col-sm-9
+          = f.text_area :draft_content, class: "form-control", style: "height: 200px;", "data-toolbar": "brief"
+          .js-autosave-indicator
       .row.row-padded
         .col-sm-3
         .col-sm-9
+          &nbsp;
+          = f.submit "Save draft", class: "btn btn-default"
           - if post.published?
-            = f.submit "Save changes", class: "btn btn-primary"
+            = f.submit "Publish changes", class: "btn btn-primary"
           - else
             = f.submit "Publish reply", class: "btn btn-primary"
+            &nbsp;
+            = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+
   .col-sm-5
     %p
       %strong Ways to support awesome conversation:
@@ -27,3 +34,10 @@
       %li Clarify where you're coming from. What experiences led you to take the position you took?
       %li TODO
       %li TODO
+
+  :javascript
+    $(function(){
+      var container = $('.edit-bottom-comment-container[data-id="#{post.id}"]');
+      init_autosave(container);
+      init_ckeditor(container.find('#post_draft_content'));
+    });

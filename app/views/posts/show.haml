@@ -1,32 +1,36 @@
-%h1.float-left= @post.title
-- if current_user == @post.author
-  %div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
-    = link_to "Edit", edit_post_path(@post)
-.clear-float
+%h1= @post.title.presence || "Untitled Draft"
 
-%p
-  %strong Tags:
-  - @post.tag_list.each do |tag|
-    %span.label.label-default= tag
-%p
-  %strong Intention:
-  #{@post.intention_type} - #{@post.intention_statement}
+%p.text-muted
+  - if @post.published?
+    by #{link_to @post.author.name, user_path(@post.author)} on #{print_date @post.published_at, time: true}
+    - if current_user == @post.author
+      &nbsp;
+      = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
+  - else
+    %strong.text-danger Unpublished draft
+    = "- you started writing this on #{print_date @post.created_at, time: true}"
+    &nbsp;
+    = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
+  - if @post.tag_list.any?
+    %br
+    %strong Tags:
+    = @post.tag_list.join(", ")
+  - if @post.intention_type.present?
+    %br
+    %strong Intention:
+    #{@post.intention_type}; #{@post.intention_statement}
 
-- unless @post.published?
-  .alert.alert-warning
-    %h4 This draft is not yet published.
-    %p Click on the Edit link to review and publish it.
-
-%hr
-= sanitize(@post.content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+= sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
 %hr
 
 - if @post.published?
+  %h3 Discussion
+
   - if current_user.in? @conversants
     %div
-      = link_to "Reply to this post", "#", class: "js-new-reply btn btn-default btn-sm", "data-post-id": @post.id
+      = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
       %i.fa.fa-spinner.loading.js-hidden
-      .new-reply-container
+      .new-reply-container.bottom-comment.js-hidden
   - else
     = link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
     .modal.fade#join-conversation-modal
@@ -38,7 +42,8 @@
           .modal-body
             = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }
 
-- if @post.children.published.not_inline.any?
-  %h3 Discussion
-  - @post.children.published.not_inline.order("created_at ASC").each do |reply|
-    = render partial: "show_bottom_comment", locals: { post: reply }
+  - if @post.children.visible_to(current_user).not_inline.any?
+    - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
+      = render partial: "show_bottom_comment", locals: { post: reply }
+  - else
+    No comments yet.

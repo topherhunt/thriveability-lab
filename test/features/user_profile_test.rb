@@ -33,13 +33,13 @@ class UserProfileTest < Capybara::Rails::TestCase
   end
 
   test "User profile lists my recent posts" do
-    @post1 = create(:post, published: true) # not mine
-    @post2 = create(:post, author: @user, published: true)
-    @post3 = create(:post, author: @user, published: false) # not published
-    @post4 = create(:post, author: @user, published: true)
+    @post1 = create(:published_post) # not mine
+    @post2 = create(:published_post, author: @user)
+    @post3 = create(:draft_post, author: @user)
+    @post4 = create(:published_post, author: @user)
     # some older posts...
-    10.times { create(:post, author: @user, published: true, published_at: 2.weeks.ago) }
-    @post5 = create(:post, author: @user, published: true, published_at: 3.weeks.ago)
+    10.times { create(:published_post, author: @user, published_at: 2.weeks.ago) }
+    @post5 = create(:published_post, author: @user, published_at: 3.weeks.ago)
 
     visit user_path(@user)
     assert_content "Recent posts"

@@ -1,14 +1,30 @@
-.bottom-comment{"data-id": post.id, style: "font-size: 90%; padding-left: 10px; padding-top: 10px;"}
+.bottom-comment{"data-id": post.id}
+
   .float-left= image_tag(post.author.image.url(:thumb), style: "width: 60px; padding-right: 10px; padding-bottom: 10px;")
-  by #{link_to post.author.name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
-  %br
-  %em Intention: #{IntentionType.find(post.intention_type).try(:long)}
-  .clear-float
-  = post.content.html_safe
-  - if current_user.in? @conversants
-    %div
-      = link_to "Reply", "#", class: "js-new-reply btn btn-default btn-sm", "data-post-id": post.id
+  %p.text-muted
+    - if post.published?
+      by #{link_to post.author.name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
+      &nbsp;
+      = link_to fa_icon("pencil"), edit_post_path(post), class: "js-edit-reply"
+    - else
+      %strong.text-danger Draft reply
+      = "- you started writing this on #{print_date(post.created_at, time: true)}"
+      &nbsp;
+      = link_to fa_icon("pencil"), edit_post_path(post), class: "js-edit-reply"
       %i.fa.fa-spinner.loading.js-hidden
-      .new-reply-container
-  - post.children.published.not_inline.order("created_at ASC").each do |reply|
-    = render partial: "show_bottom_comment", locals: { post: reply }
+      &nbsp;
+      = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft reply?"
+    - if post.intention_type.present?
+      %br
+        Intention: #{IntentionType.find(post.intention_type).try(:long)}
+  = sanitize(post.published_content || post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+  .clear-float
+
+  - if post.published?
+    - if current_user.in? @conversants
+      %div{style: "margin-top: -5px;"}
+        = link_to "Reply", "#", class: "js-new-reply", "data-post-id": post.id
+        %i.fa.fa-spinner.loading.js-hidden
+        .new-reply-container.bottom-comment.js-hidden
+    - post.children.visible_to(current_user).order("created_at ASC").each do |reply|
+      = render partial: "show_bottom_comment", locals: { post: reply }

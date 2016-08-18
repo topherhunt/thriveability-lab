@@ -1,4 +1,8 @@
 .centered-800
-  %h1 Write a Post
+  %h1
+    - if @post.published?
+      Edit post: "#{link_to @post.title, post_path(@post)}"
+    - else
+      Start a conversation!
 
   = render partial: "form_root", locals: { post: @post }
