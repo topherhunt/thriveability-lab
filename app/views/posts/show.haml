@@ -27,8 +27,8 @@
   %h3 Discussion
 
   - if current_user.in? @conversants
-    %div
-      %p= link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
+    %div{style: "padding-bottom: 10px;"}
+      = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
       %i.fa.fa-spinner.loading.js-hidden
       .new-reply-container.bottom-comment.js-hidden
   - else
