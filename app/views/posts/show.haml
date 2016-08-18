@@ -28,11 +28,11 @@
 
   - if current_user.in? @conversants
     %div
-      = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
+      %p= link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
       %i.fa.fa-spinner.loading.js-hidden
       .new-reply-container.bottom-comment.js-hidden
   - else
-    = link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
+    %p= link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
     .modal.fade#join-conversation-modal
       .modal-dialog
         .modal-content
