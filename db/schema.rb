@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160808205151) do
+ActiveRecord::Schema.define(version: 20160818152933) do
 
   create_table "post_conversants", force: :cascade do |t|
     t.integer  "user_id",             limit: 4
@@ -40,12 +40,12 @@ ActiveRecord::Schema.define(version: 20160808205151) do
     t.text     "published_content",      limit: 65535
     t.string   "intention_type",         limit: 255
     t.string   "intention_statement",    limit: 255
+    t.boolean  "published",                            default: false
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "parent_id",              limit: 4
     t.integer  "reply_at_char_position", limit: 4
-    t.boolean  "published"
     t.text     "draft_content",          limit: 65535
   end
 
@@ -105,29 +105,37 @@ ActiveRecord::Schema.define(version: 20160808205151) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                    limit: 255,  default: "", null: false
+    t.string   "encrypted_password",       limit: 255,  default: "", null: false
+    t.string   "reset_password_token",     limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",            limit: 4,    default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "confirmation_token",     limit: 255
+    t.string   "current_sign_in_ip",       limit: 255
+    t.string   "last_sign_in_ip",          limit: 255
+    t.string   "confirmation_token",       limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",      limit: 255
+    t.string   "unconfirmed_email",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name",             limit: 255
-    t.string   "last_name",              limit: 255
-    t.string   "image_file_name",        limit: 255
-    t.string   "image_content_type",     limit: 255
-    t.integer  "image_file_size",        limit: 4
+    t.string   "name",                     limit: 255
+    t.string   "image_file_name",          limit: 255
+    t.string   "image_content_type",       limit: 255
+    t.integer  "image_file_size",          limit: 4
     t.datetime "image_updated_at"
-    t.string   "dream_of_future_where",  limit: 255
+    t.string   "self_dreams",              limit: 1000
+    t.string   "self_passions",            limit: 1000
+    t.string   "self_skills",              limit: 1000
+    t.string   "self_proud_traits",        limit: 1000
+    t.string   "self_weaknesses",          limit: 1000
+    t.string   "self_evolve",              limit: 1000
+    t.string   "self_looking_for",         limit: 1000
+    t.string   "self_work_at",             limit: 1000
+    t.string   "self_professional_goals",  limit: 1000
+    t.string   "self_fields_of_expertise", limit: 1000
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -9,33 +9,42 @@
   = link_to "Edit", edit_user_path(@user) if @user == current_user
 .clear-float
 
-.row
-  .col-sm-3
-    = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
+.float-right= image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
 
-  .col-sm-9
-    %table.table
-      %tr
-        %th Member since
-        %td= print_date @user.created_at
-      %tr
-        %th I'm good at...
-        %td
-          - @user.skill_list.each do |skill|
-            %span.label.label-default= skill
-      %tr
-        %th I'm passionate about...
-        %td
-          - @user.passion_list.each do |passion|
-            %span.label.label-default= passion
-      %tr
-        %th I'm proud to be known for these traits...
-        %td
-          - @user.trait_list.each do |trait|
-            %span.label.label-default= trait
-      %tr
-        %th I dream of a future where...
-        %td= @user.dream_of_future_where
+%table.table
+  %tr
+    %th I'm passionate about...
+    %td= @user.self_passions
+  %tr
+    %th I'm good at...
+    %td= @user.self_skills
+  %tr
+    %th I'm proud to be known for these traits...
+    %td= @user.self_proud_traits
+  %tr
+    %th The weakness(es) I’m currently trying to overcome...
+    %td= @user.self_weaknesses
+  %tr
+    %th How I would like to evolve is...
+    %td= @user.self_evolve
+  %tr
+    %th I dream of a future where...
+    %td= @user.self_dreams
+  %tr
+    %th What I’m looking for at Integral Climate Hub...
+    %td= @user.self_looking_for
+  %tr
+    %th Member since
+    %td= print_date @user.created_at
+  %tr
+    %th I currently work at/as...
+    %td= @user.self_work_at
+  %tr
+    %th My professional goals are...
+    %td= @user.self_professional_goals
+  %tr
+    %th My major fields of expertise and experience are...
+    %td= @user.self_fields_of_expertise
 
 .row
   - if @user.created_resources.any?
@@ -53,19 +62,21 @@
           %p= resource.description
       %hr
       %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
-  - else
-    %h3 Learn more about my work
-    %p Use this space to add any documents or online resources that could be of use to other community members.
-    %p= link_to "Add a resource", new_resource_path(editing_user_profile: true)
+  - elsif @user == current_user
+    .col-sm-6
+      %h3 Tell other members about my work
+      %p Use this space to add any documents or online resources that could be of use to other community members.
+      %p= link_to "Add a resource", new_resource_path(editing_user_profile: true)
 
-  .col-sm-6
-    %h3 Recent posts
-    - @posts.each do |post|
-      %h4.float-left= link_to post.title, post_path(post)
-      .float-left.small{style: "padding-top: 13px; padding-left: 13px;"} published #{print_date post.published_at}
-      .clear-float
-      %p
-        = post.intention_statement
-        %span.label.label-primary= link_to post.intention_type, posts_path(intention_type: post.intention_type)
-        - post.tag_list.each do |tag|
-          %span.label.label-default= link_to tag, posts_path(tag: tag)
+  - if @posts.any?
+    .col-sm-6
+      %h3 Recent posts
+      - @posts.each do |post|
+        %h4.float-left= link_to post.title, post_path(post)
+        .float-left.small{style: "padding-top: 13px; padding-left: 13px;"} published #{print_date post.published_at}
+        .clear-float
+        %p
+          = post.intention_statement
+          %span.label.label-primary= link_to post.intention_type, posts_path(intention_type: post.intention_type)
+          - post.tag_list.each do |tag|
+            %span.label.label-default= link_to tag, posts_path(tag: tag)

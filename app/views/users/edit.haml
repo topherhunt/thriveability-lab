@@ -1,35 +1,54 @@
 .centered-800
-  %h1 Edit my profile
+  %h1 Tell us about yourself
+
+  %p Rather than asking for the usual CV, we have some unconventional questions for you. We do this because we intend to support authentic engagement and deep conversations. We thus invite you to show something of your true self ~ your passions, dreams, qualities, desires, and even weaknesses. Although there is no obligation to fill in anything, doing it may stir up a wonderful reflection or new discovery of your self!
+  %p Just be playful and have fun! :-)
+  %hr
 
   = form_for @user do |f|
     .row.row-padded
-      .col-sm-3= f.label :first_name
-      .col-sm-9= f.text_field :first_name, class: "form-control"
+      .col-sm-3= f.label :name, "My name <span class='text-danger'>*</span>".html_safe
+      .col-sm-9= f.text_field :name, class: "form-control"
     .row.row-padded
-      .col-sm-3= f.label :last_name
-      .col-sm-9= f.text_field :last_name, class: "form-control"
-    .row.row-padded
-      .col-sm-3= f.label :image
+      .col-sm-3= f.label :image, "A photo of me <span class='text-danger'>*</span>".html_safe
       .col-sm-9= f.file_field :image, class: "form-control"
+
+    %h3 What makes me unique
+
     .row.row-padded
-      .col-sm-3= f.label :skill_list, "I'm good at... (professional or not)"
-      .col-sm-9
-        = f.text_field :skill_list, value: @user.skill_list.join(","), class: "js-hidden"
-        %ul#skill-list-tagit.js-tagit{"data-tagit-target": "#user_skill_list"}
+      .col-sm-3= f.label :self_passions, "I'm passionate about..."
+      .col-sm-9= f.text_field :self_passions, class: "form-control"
     .row.row-padded
-      .col-sm-3= f.label :passion_list, "I'm passionate about..."
-      .col-sm-9
-        = f.text_field :passion_list, value: @user.passion_list.join(","), class: "js-hidden"
-        %ul#passion-list-tagit.js-tagit{"data-tagit-target": "#user_passion_list"}
+      .col-sm-3= f.label :self_skills, "I'm good at..."
+      .col-sm-9= f.text_field :self_skills, class: "form-control"
     .row.row-padded
-      .col-sm-3= f.label :trait_list, "I'm proud to be known for these traits..."
-      .col-sm-9
-        = f.text_field :trait_list, value: @user.trait_list.join(","), class: "js-hidden"
-        %ul#trait-list-tagit.js-tagit{"data-tagit-target": "#user_trait_list"}
+      .col-sm-3= f.label :self_proud_traits, "I'm proud to be known for these traits..."
+      .col-sm-9= f.text_field :self_proud_traits, class: "form-control"
     .row.row-padded
-      .col-sm-3= f.label :dream_of_future_where, "I dream of a future where..."
-      .col-sm-9
-        = f.text_area :dream_of_future_where, class: "form-control", style: "width: 300px; height: 60px;"
+      .col-sm-3= f.label :self_weaknesses, "The weakness(es) I’m currently trying to overcome..."
+      .col-sm-9= f.text_field :self_weaknesses, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :self_evolve, "How I would like to evolve is..."
+      .col-sm-9= f.text_field :self_evolve, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :self_dreams, "I dream of a future where..."
+      .col-sm-9= f.text_area :self_dreams, class: "form-control", style: "width: 100%; height: 40px;"
+    .row.row-padded
+      .col-sm-3= f.label :self_looking_for, "What I’m looking for at Integral Climate Hub..."
+      .col-sm-9= f.text_field :self_looking_for, class: "form-control"
+
+    %h3 My work
+
+    .row.row-padded
+      .col-sm-3= f.label :self_work_at, "I currently work at/as..."
+      .col-sm-9= f.text_field :self_work_at, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :self_professional_goals, "My professional goals are..."
+      .col-sm-9= f.text_field :self_professional_goals, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :self_fields_of_expertise, "My major fields of expertise and experience are..."
+      .col-sm-9= f.text_field :self_fields_of_expertise, class: "form-control"
+
     .row.row-padded
       .col-sm-3
       .col-sm-9= f.submit "Save", class: "btn btn-primary"

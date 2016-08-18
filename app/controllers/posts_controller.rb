@@ -8,7 +8,7 @@ class PostsController < ApplicationController
     @filters = params.slice(:author_id, :tag, :intention_type)
     @posts = Post.roots.visible_to(current_user).order("published_at DESC")
     filter_posts
-    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:last_name)
+    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:name)
     @intention_types = @posts.pluck(:intention_type).uniq.select(&:present?).sort
     @tag_counts = @posts.tag_counts_on(:tags)
   end
