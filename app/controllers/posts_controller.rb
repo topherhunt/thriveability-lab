@@ -11,7 +11,6 @@ class PostsController < ApplicationController
     @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:last_name)
     @intention_types = @posts.pluck(:intention_type).uniq.select(&:present?).sort
     @tag_counts = @posts.tag_counts_on(:tags)
-    @drafts_count = Post.where(author: current_user, published: false).count
   end
 
   def create
