@@ -12,10 +12,10 @@ class UserProfileTest < Capybara::Rails::TestCase
     assert_path edit_user_path(@user)
     fill_fields(
       "user[name]" => "Elmer Fudd",
-      "user[skill_list]" => "knitting, hunting",
-      "user[passion_list]" => "cartoons, wacky wabbits",
-      "user[trait_list]" => "diligent, stealthy, tireless, patient",
-      "user[dream_of_future_where]" => "all men are created equal")
+      "user[self_skills]" => "knitting, hunting",
+      "user[self_passions]" => "cartoons, wacky wabbits",
+      "user[self_proud_traits]" => "diligent, stealthy, tireless, patient",
+      "user[self_dreams]" => "all men are created equal")
     attach_file "user[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
     # page.should have_selector ".dream-of-future-exemplars"
     click_button "Save"
@@ -24,10 +24,10 @@ class UserProfileTest < Capybara::Rails::TestCase
     expect_attributes(@user.reload,
       name: "Elmer Fudd",
       image_file_name: "elmerfudd.jpg",
-      skill_list: ["knitting", "hunting"],
-      passion_list: ["cartoons", "wacky wabbits"],
-      trait_list: ["diligent", "stealthy", "tireless", "patient"],
-      dream_of_future_where: "all men are created equal")
+      self_skills: "knitting, hunting",
+      self_passions: "cartoons, wacky wabbits",
+      self_proud_traits: "diligent, stealthy, tireless, patient",
+      self_dreams: "all men are created equal")
   end
 
   test "User profile lists my recent posts" do

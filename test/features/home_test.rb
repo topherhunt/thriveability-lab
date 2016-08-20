@@ -11,7 +11,7 @@ class HomeTest < Capybara::Rails::TestCase
   test "about page loads correctly" do
     visit root_path
     click_on "About"
-    assert_content "About Integral Climate"
+    assert_content "We're Integral Climate"
   end
 
   test "#throwup raises an error for testing" do

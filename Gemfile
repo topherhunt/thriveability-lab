@@ -14,6 +14,7 @@ gem 'aws-sdk', '>= 2.0.34'
 gem 'bcrypt-ruby'
 gem 'closure_tree' # performant hierarchy tree storage for Posts
 gem 'devise'
+gem 'factory_girl'
 gem 'faker'
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'
@@ -36,7 +37,6 @@ end
 group :development, :test do
   gem 'minitest-rails'
   gem 'm'
-  gem 'factory_girl'
   gem 'pry'
   gem 'binding_of_caller'
   gem 'quiet_assets'

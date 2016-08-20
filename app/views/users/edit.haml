@@ -6,6 +6,8 @@
   %hr
 
   = form_for @user do |f|
+    = show_errors_for(@user)
+
     .row.row-padded
       .col-sm-3= f.label :name, "My name <span class='text-danger'>*</span>".html_safe
       .col-sm-9= f.text_field :name, class: "form-control"

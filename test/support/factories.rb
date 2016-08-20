@@ -13,16 +13,14 @@ FactoryGirl.define do
     stage "idea"
   end
 
-  factory(:post) do
+  factory(:draft_post, class: :Post) do
     association :author, factory: :user
     title { Faker::Lorem.words(5).join(" ") }
     intention_type "share news"
-
-    factory(:draft_post) do
-      draft_content { Faker::Lorem.paragraph }
-    end
+    draft_content { Faker::Lorem.paragraph }
 
     factory(:published_post) do
+      draft_content nil
       published_content { Faker::Lorem.paragraph }
       published true
       published_at 1.day.ago
