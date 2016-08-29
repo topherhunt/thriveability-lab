@@ -1,3 +1,9 @@
+User.delete_all
+Project.delete_all
+Post.delete_all
+PostConversant.delete_all
+Resource.delete_all
+
 @admin = FactoryGirl.create(:user,
   name: "Topher Hunt",
   email: "hunt.topher@gmail.com",
