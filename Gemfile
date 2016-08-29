@@ -5,7 +5,7 @@ ruby '2.2.2'
 # Server
 gem 'rails'
 gem 'figaro'
-gem 'mysql2', '~> 0.3.18' # for compatibility with Rails 4.2.4
+gem 'pg'
 gem 'rollbar'
 
 # Domain logic

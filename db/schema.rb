@@ -13,11 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20160818152933) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "post_conversants", force: :cascade do |t|
-    t.integer  "user_id",             limit: 4
-    t.integer  "post_id",             limit: 4
-    t.string   "intention_type",      limit: 255
-    t.string   "intention_statement", limit: 255
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.string   "intention_type"
+    t.string   "intention_statement"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,70 +29,70 @@ ActiveRecord::Schema.define(version: 20160818152933) do
   add_index "post_conversants", ["user_id"], name: "index_post_conversants_on_user_id", using: :btree
 
   create_table "post_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id",   limit: 4, null: false
-    t.integer "descendant_id", limit: 4, null: false
-    t.integer "generations",   limit: 4, null: false
+    t.integer "ancestor_id",   null: false
+    t.integer "descendant_id", null: false
+    t.integer "generations",   null: false
   end
 
   add_index "post_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "post_anc_desc_idx", unique: true, using: :btree
   add_index "post_hierarchies", ["descendant_id"], name: "post_desc_idx", using: :btree
 
   create_table "posts", force: :cascade do |t|
-    t.integer  "author_id",              limit: 4
-    t.string   "title",                  limit: 255
-    t.text     "published_content",      limit: 65535
-    t.string   "intention_type",         limit: 255
-    t.string   "intention_statement",    limit: 255
-    t.boolean  "published",                            default: false
+    t.integer  "author_id"
+    t.string   "title"
+    t.text     "published_content"
+    t.string   "intention_type"
+    t.string   "intention_statement"
+    t.boolean  "published",              default: false
     t.datetime "published_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "parent_id",              limit: 4
-    t.integer  "reply_at_char_position", limit: 4
-    t.text     "draft_content",          limit: 65535
+    t.integer  "parent_id"
+    t.integer  "reply_at_char_position"
+    t.text     "draft_content"
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
   add_index "posts", ["parent_id"], name: "index_posts_on_parent_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
-    t.integer  "owner_id",           limit: 4
-    t.string   "title",              limit: 255
-    t.string   "subtitle",           limit: 255
-    t.text     "introduction",       limit: 65535
-    t.string   "location",           limit: 255
-    t.string   "quadrant_ul",        limit: 255
-    t.string   "quadrant_ur",        limit: 255
-    t.string   "quadrant_ll",        limit: 255
-    t.string   "quadrant_lr",        limit: 255
-    t.string   "call_to_action",     limit: 255
-    t.string   "stage",              limit: 255
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
+    t.integer  "owner_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.text     "introduction"
+    t.string   "location"
+    t.string   "quadrant_ul"
+    t.string   "quadrant_ur"
+    t.string   "quadrant_ll"
+    t.string   "quadrant_lr"
+    t.string   "call_to_action"
+    t.string   "stage"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "resources", force: :cascade do |t|
-    t.integer  "creator_id",              limit: 4
+    t.integer  "creator_id"
     t.boolean  "ownership_affirmed"
-    t.string   "title",                   limit: 255
-    t.text     "description",             limit: 65535
-    t.string   "url",                     limit: 255
-    t.string   "attachment_file_name",    limit: 255
-    t.string   "attachment_content_type", limit: 255
-    t.integer  "attachment_file_size",    limit: 4
+    t.string   "title"
+    t.text     "description"
+    t.string   "url"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id",        limit: 4
-    t.integer  "taggable_id",   limit: 4
-    t.string   "taggable_type", limit: 255
-    t.integer  "tagger_id",     limit: 4
-    t.string   "tagger_type",   limit: 255
+    t.integer  "tag_id"
+    t.integer  "taggable_id"
+    t.string   "taggable_type"
+    t.integer  "tagger_id"
+    t.string   "tagger_type"
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -98,33 +101,33 @@ ActiveRecord::Schema.define(version: 20160818152933) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name",           limit: 255
-    t.integer "taggings_count", limit: 4,   default: 0
+    t.string  "name"
+    t.integer "taggings_count", default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                    limit: 255,  default: "", null: false
-    t.string   "encrypted_password",       limit: 255,  default: "", null: false
-    t.string   "reset_password_token",     limit: 255
+    t.string   "email",                                 default: "", null: false
+    t.string   "encrypted_password",                    default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",            limit: 4,    default: 0,  null: false
+    t.integer  "sign_in_count",                         default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",       limit: 255
-    t.string   "last_sign_in_ip",          limit: 255
-    t.string   "confirmation_token",       limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",        limit: 255
+    t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name",                     limit: 255
-    t.string   "image_file_name",          limit: 255
-    t.string   "image_content_type",       limit: 255
-    t.integer  "image_file_size",          limit: 4
+    t.string   "name"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.string   "self_dreams",              limit: 1000
     t.string   "self_passions",            limit: 1000
