@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
-  before_action :require_login, only: [:drafts, :new, :edit, :update, :destroy]
-  before_action :require_user_name, only: [:new, :create, :edit]
+  before_action :require_login, only: [:drafts, :create, :edit, :update, :destroy]
+  before_action :require_user_name, only: [:edit]
   before_action :load_post, only: [:edit, :update, :show, :destroy]
   before_action :verify_authorship, only: [:edit, :update, :destroy]
 
