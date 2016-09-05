@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818152933) do
+ActiveRecord::Schema.define(version: 20160909004221) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "omniauth_accounts", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "omniauth_accounts", ["provider", "uid"], name: "index_omniauth_accounts_on_provider_and_uid", using: :btree
+  add_index "omniauth_accounts", ["user_id"], name: "index_omniauth_accounts_on_user_id", using: :btree
 
   create_table "post_conversants", force: :cascade do |t|
     t.integer  "user_id"
@@ -108,12 +119,12 @@ ActiveRecord::Schema.define(version: 20160818152933) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                                 default: "", null: false
-    t.string   "encrypted_password",                    default: "", null: false
+    t.string   "email",                                 default: "",   null: false
+    t.string   "encrypted_password",                    default: "",   null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         default: 0,  null: false
+    t.integer  "sign_in_count",                         default: 0,    null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -139,6 +150,7 @@ ActiveRecord::Schema.define(version: 20160818152933) do
     t.string   "self_work_at",             limit: 1000
     t.string   "self_professional_goals",  limit: 1000
     t.string   "self_fields_of_expertise", limit: 1000
+    t.boolean  "has_set_password",                      default: true
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

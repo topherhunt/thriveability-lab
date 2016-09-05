@@ -233,6 +233,15 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :facebook, ENV.fetch('FACEBOOK_KEY'), ENV.fetch('FACEBOOK_SECRET'),
+    # TODO: Do I need to specify callback_url here?
+    callback_url: "https://integral-climate.herokuapp.com/users/auth/facebook/callback",
+    image_size: { width: 500, height: 500 }, # FB returns a tiny image by default
+    secure_image_url: true
+
+  config.omniauth :google_oauth2, ENV.fetch('GOOGLE_KEY'), ENV.fetch('GOOGLE_SECRET')
+
+  config.omniauth :linkedin, ENV.fetch('LINKEDIN_KEY'), ENV.fetch('LINKEDIN_SECRET')
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

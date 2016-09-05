@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.2'
 
 # Server
-gem 'rails'
+gem 'rails', '4.2.6'
 gem 'figaro'
 gem 'pg'
 gem 'rollbar'
@@ -16,6 +16,10 @@ gem 'closure_tree' # performant hierarchy tree storage for Posts
 gem 'devise'
 gem 'factory_girl'
 gem 'faker'
+gem 'omniauth-oauth2', '~> 1.3.1' # LinkedIn auth breaks on version 1.4
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-linkedin-oauth2'
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'
 

@@ -7,15 +7,14 @@
       = devise_error_messages!
       = f.hidden_field :reset_password_token
 
-      %table.form
-        %tr
-          %td= f.label :password, "New password"
-          %td= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control'
-        %tr
-          %td= f.label :password_confirmation, "Confirm new password"
-          %td= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
-        %tr
-          %td
-          %td= f.submit "Change my password", class: 'btn btn-primary'
+      .row.row-padded
+        .col-sm-5= f.label :password, "New password"
+        .col-sm-7= f.password_field :password, autofocus: true, autocomplete: "off", class: 'form-control'
+      .row.row-padded
+        .col-sm-5= f.label :password_confirmation, "Confirm new password"
+        .col-sm-7= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+      .row.row-padded
+        .col-sm-5
+        .col-sm-7= f.submit "Change my password", class: 'btn btn-primary'
 
     = render "devise/shared/links"

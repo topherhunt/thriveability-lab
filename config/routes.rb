@@ -4,9 +4,15 @@ Rails.application.routes.draw do
   get 'about' => 'home#about'
   get 'throwup' => 'home#throwup'
 
-  devise_for :users
+  # Thanks to https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  delete 'users/omniauth_accounts/:provider' => 'users/omniauth_accounts#destroy', as: 'users_omniauth_account'
 
-  resources :users, only: [:show, :edit, :update]
+  resources :users, only: [:show, :edit, :update] do
+    member do
+      post :reset_password
+    end
+  end
 
   resources :resources, only: [:new, :create, :edit, :update, :show]
 

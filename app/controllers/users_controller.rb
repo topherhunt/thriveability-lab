@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, only: [:edit, :update]
+  before_action :require_login, except: [:show]
 
   def show
     @user = User.find(params[:id])
@@ -22,6 +22,13 @@ class UsersController < ApplicationController
       flash.now.alert = "Unable to save your changes. See error messages below."
       render 'edit'
     end
+  end
+
+  def reset_password
+    @user = current_user
+    @user.send_reset_password_instructions
+    sign_out # Devise's pw reset mechanism won't work if I'm signed in
+    redirect_to root_path, notice: "We've emailed a password reset link to <#{@user.email}>. Please check your email for the link."
   end
 
   private

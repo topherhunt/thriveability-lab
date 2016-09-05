@@ -1,27 +1,59 @@
 .centered-600
   %h2 Account settings
 
-  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-    = devise_error_messages!
+  - if current_user.has_set_password?
+    -# TODO: Humanize this form's params (current_user, no :as, etc.)
+    = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+      = devise_error_messages!
 
+      .row.row-padded
+        .col-sm-4
+          = f.label :email
+        .col-sm-8{style: "min-width: 200px;"}= f.email_field :email, autofocus: true, class: 'form-control'
+      .row.row-padded
+        .col-sm-4
+          =f.label :password, "New password"
+          .small.em Leave blank to keep your current password
+        .col-sm-8= f.password_field :password, autocomplete: "off", class: 'form-control'
+      .row.row-padded
+        .col-sm-4= f.label :password_confirmation, "Confirm new password"
+        .col-sm-8= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
+      .row.row-padded
+        .col-sm-4= required_label(f, :current_password)
+        .col-sm-8= f.password_field :current_password, autocomplete: "off", class: 'form-control'
+      .row.row-padded
+        .col-sm-4
+        .col-sm-8= f.submit "Update", class: 'btn btn-primary'
+  - else # if this user has NOT set their password yet (ie. social-linked account)
     .row.row-padded
-      .col-sm-4
-        = f.label :email
-      .col-sm-8{style: "min-width: 200px;"}= f.email_field :email, autofocus: true, class: 'form-control'
+      .col-sm-4 <strong>Email</strong>
+      .col-sm-8= current_user.email
     .row.row-padded
-      .col-sm-4
-        =f.label :password, "New password"
-        .small.em Leave blank to keep your current password
-      .col-sm-8= f.password_field :password, autocomplete: "off", class: 'form-control'
-    .row.row-padded
-      .col-sm-4= f.label :password_confirmation, "Confirm new password"
-      .col-sm-8= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
-    .row.row-padded
-      .col-sm-4= required_label(f, :current_password)
-      .col-sm-8= f.password_field :current_password, autocomplete: "off", class: 'form-control'
-    .row.row-padded
-      .col-sm-4
-      .col-sm-8= f.submit "Update", class: 'btn btn-primary'
+      .col-sm-4 <strong>Password</strong>
+      .col-sm-8= link_to "Set a login password", reset_password_user_path(current_user), method: :post
+
+  %hr
+
+  %p
+    - if current_user.omniauth_accounts.find_by(provider: :facebook).present?
+      You've linked your Facebook account.
+      = link_to "Unlink", users_omniauth_account_path(:facebook), method: :delete, class: "text-danger", "data-confirm": "Really unlink your Facebook account?"
+    - else
+      = link_to fa_icon("facebook-official") + " Connect my Facebook account", user_facebook_omniauth_authorize_path
+
+  %p
+    - if current_user.omniauth_accounts.find_by(provider: :google_oauth2).present?
+      You've linked your Google account.
+      = link_to "Unlink", users_omniauth_account_path(:google_oauth2), method: :delete, class: "text-danger", "data-confirm": "Really unlink your Google account?"
+    - else
+      = link_to fa_icon("google") + " Connect my Google account", user_google_oauth2_omniauth_authorize_path
+
+  %p
+    - if current_user.omniauth_accounts.find_by(provider: :linkedin).present?
+      You've linked your LinkedIn account.
+      = link_to "Unlink", users_omniauth_account_path(:linkedin), method: :delete, class: "text-danger", "data-confirm": "Really unlink your LinkedIn account?"
+    - else
+      = link_to fa_icon("linkedin-square") + " Connect my LinkedIn account", user_linkedin_omniauth_authorize_path
 
   %hr
 

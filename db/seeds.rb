@@ -3,12 +3,13 @@ Project.delete_all
 Post.delete_all
 PostConversant.delete_all
 Resource.delete_all
+OmniauthAccount.delete_all
 
 @admin = FactoryGirl.create(:user,
   name: "Topher Hunt",
   email: "hunt.topher@gmail.com",
-  password: "foobar01",
-  password_confirmation: "foobar01")
+  password: "password",
+  password_confirmation: "password")
 @user1 = FactoryGirl.create(:user)
 @user2 = FactoryGirl.create(:user)
 @user3 = FactoryGirl.create(:user)
