@@ -34,6 +34,10 @@
 
   %hr
 
+  %h3 Social accounts
+
+  %p You can connect Facebook, Google, or LinkedIn to your Integral Climate account to allow you to log in using those services. One less password to remember!
+
   %p
     - if current_user.omniauth_accounts.find_by(provider: :facebook).present?
       You've linked your Facebook account.
