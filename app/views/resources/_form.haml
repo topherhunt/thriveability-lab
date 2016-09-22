@@ -2,8 +2,14 @@
 
 = form_for @resource do |f|
   = show_errors_for @resource
-  = hidden_field_tag :editing_user_profile, true if params[:editing_user_profile].present?
 
+  - if params[:editing_user_profile].present?
+    = hidden_field_tag :editing_user_profile, true
+
+  - if @target
+    = hidden_field_tag :target_type, @target.class.to_s
+    = hidden_field_tag :target_id, @target.id
+    %p  This resource will be linked to the #{@target.class.to_s} <strong>#{@target.title}</strong>.
   .row.row-padded
     .col-sm-3= required_label(f, :title)
     .col-sm-9= f.text_field :title, class: "form-control"

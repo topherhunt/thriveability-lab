@@ -9,14 +9,14 @@ FactoryGirl.define do
 
   factory(:project) do
     association :owner, factory: :user
-    title { Faker::Lorem.words(4).join(" ") }
-    subtitle { Faker::Lorem.words(7).join(" ") }
+    title { Faker::Lorem.words(3).join(" ").capitalize }
+    subtitle { Faker::Lorem.words(7).join(" ").capitalize }
     stage "idea"
   end
 
   factory(:draft_post, class: :Post) do
     association :author, factory: :user
-    title { Faker::Lorem.words(5).join(" ") }
+    title { Faker::Lorem.words(5).join(" ").capitalize }
     intention_type "share news"
     draft_content { Faker::Lorem.paragraph }
 
@@ -33,5 +33,11 @@ FactoryGirl.define do
     association :user
     intention_type "seek_perspectives"
     intention_statement { Faker::Lorem.sentence }
+  end
+
+  factory(:resource) do
+    title { Faker::Lorem.words(5).join(" ").capitalize }
+    url { Faker::Internet.url }
+    description { Faker::Lorem.paragraph }
   end
 end

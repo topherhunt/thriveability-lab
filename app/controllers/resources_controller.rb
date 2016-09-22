@@ -1,6 +1,7 @@
 class ResourcesController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit, :update]
   before_action :load_resource, only: [:edit, :update, :show]
+  before_action :load_target, only: [:new, :create]
   before_action :verify_ownership, only: [:edit, :update]
 
   def new
@@ -8,12 +9,11 @@ class ResourcesController < ApplicationController
   end
 
   def create
-    @resource = Resource.new(resource_params)
+    @resource = Resource.new(create_params)
     @resource.creator = current_user
 
     if @resource.save
-      flash.notice = "Resource saved successfully."
-      redirect_to(params[:editing_user_profile].present? ? user_path(current_user) : resources_path)
+      redirect_to return_to_path, notice: "Resource saved successfully."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "new"
@@ -21,9 +21,11 @@ class ResourcesController < ApplicationController
   end
 
   def edit
+    TODO
   end
 
   def update
+    TODO
   end
 
   def show
@@ -31,12 +33,23 @@ class ResourcesController < ApplicationController
 
   private
 
-  def resource_params
-    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed)
-  end
-
   def load_resource
     @resource = Resource.find(params[:id])
+  end
+
+  # Main purpose: to verify that the target class & id specify a valid resource.
+  def load_target
+    if params[:target_type]
+      @target = params[:target_type].constantize.find(params[:target_id])
+    end
+  end
+
+  def create_params
+    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_name)
+  end
+
+  def return_to_path
+    params[:editing_user_profile].present? ? user_path(current_user) : resources_path
   end
 
   def verify_ownership

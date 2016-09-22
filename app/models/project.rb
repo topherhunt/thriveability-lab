@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
   belongs_to :owner, class_name: :User
+  has_many :resources, as: :target
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
   acts_as_taggable_on :needs

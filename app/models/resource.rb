@@ -1,5 +1,6 @@
 class Resource < ActiveRecord::Base
-  belongs_to :creator, class_name: :User, inverse_of: :created_resources
+  belongs_to :creator, class_name: :User
+  belongs_to :target, polymorphic: true
 
   validates :title, presence: true
   validates :url, presence: true
