@@ -4,6 +4,7 @@ FactoryGirl.define do
     email { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
+    confirmed_at 1.week.ago
   end
 
   factory(:project) do

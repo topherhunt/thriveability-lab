@@ -1,25 +1,34 @@
+%p Use this page to add web pages or documents to our public database so other like-minded folks can discover and benefit from them.
+
 = form_for @resource do |f|
   = show_errors_for @resource
   = hidden_field_tag :editing_user_profile, true if params[:editing_user_profile].present?
 
   .row.row-padded
-    .col-sm-3= f.label :title
+    .col-sm-3= required_label(f, :title)
     .col-sm-9= f.text_field :title, class: "form-control"
   .row.row-padded
-    .col-sm-3= f.label :url, "Source URL"
+    .col-sm-3
+      = required_label(f, :url, "Source URL")
+      .small Where can you find this resource? Where did it come from?
     .col-sm-9= f.text_field :url, class: "form-control"
   .row.row-padded
-    .col-sm-3= f.label :description
+    .col-sm-3
+      = f.label :description
+      .small What does this resource offer to the community? Who might benefit from it?
     .col-sm-9= f.text_area :description, class: "form-control"
   .row.row-padded
-    .col-sm-3= f.label :attachment
+    .col-sm-3
+      = f.label :attachment, "Attach a file?"
+      .small (optional)
     .col-sm-9= f.file_field :attachment, class: "form-control"
   .row.row-padded#js-affirm-ownership{ class: ("js-hidden" unless @resource.attachment.present?) }
     .col-sm-3
       = f.label :ownership_affirmed, "I affirm that I own or have permission to distribute this document."
-      %br
-      .small Please only upload files that you own or have permission to distribute.
-    .col-sm-9= f.check_box :ownership_affirmed, class: "form-control"
+      .small Please only upload files that you own or have permission to distribute. If you don't, then only provide the website link.
+    .col-sm-9
+      = f.check_box :ownership_affirmed, class: "form-control"
+
 
   .row.row-padded
     .col-sm-3

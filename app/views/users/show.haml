@@ -6,7 +6,7 @@
 
 %h1.float-left= @user.name
 .float-left{style: "padding-top: 30px; padding-left: 30px;"}
-  = link_to "Edit", edit_user_path(@user) if @user == current_user
+  = link_to "Edit profile info", edit_user_path(@user) if @user == current_user
 .clear-float
 
 .float-right= image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
@@ -47,9 +47,9 @@
     %td= @user.self_fields_of_expertise
 
 .row
-  - if @user.created_resources.any?
-    .col-sm-6
-      %h3 Resources I've contributed
+  .col-sm-6
+    %h3 Resources
+    - if @user.created_resources.any?
       - @user.created_resources.each do |resource|
         .resource
           %p
@@ -62,15 +62,15 @@
           %p= resource.description
       %hr
       %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
-  - elsif @user == current_user
-    .col-sm-6
-      %h3 Tell other members about my work
-      %p Use this space to add any documents or online resources that could be of use to other community members.
-      %p= link_to "Add a resource", new_resource_path(editing_user_profile: true)
 
-  - if @posts.any?
-    .col-sm-6
-      %h3 Recent posts
+    - elsif @user == current_user
+      %p
+        Use this space to add any documents or online resources that could be of use to other community members.
+        = link_to "Add a resource", new_resource_path(editing_user_profile: true)
+
+  .col-sm-6
+    %h3 Recent posts
+    - if @posts.any?
       - @posts.each do |post|
         %h4.float-left= link_to post.title, post_path(post)
         .float-left.small{style: "padding-top: 13px; padding-left: 13px;"} published #{print_date post.published_at}
@@ -80,3 +80,5 @@
           %span.label.label-primary= link_to post.intention_type, posts_path(intention_type: post.intention_type)
           - post.tag_list.each do |tag|
             %span.label.label-default= link_to tag, posts_path(tag: tag)
+    - else
+      %p #{@user.name} hasn't written anything yet.
