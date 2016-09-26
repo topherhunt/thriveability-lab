@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: [:show]
+  before_action :require_login, except: [:index, :show]
+
+  def index
+    @users = User.order("current_sign_in_at DESC")
+  end
 
   def show
     @user = User.find(params[:id])
