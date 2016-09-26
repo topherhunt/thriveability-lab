@@ -1,3 +1,28 @@
-%h1 Resource: #{@resource.title}
+.centered-800
+  %h1 Resource: #{@resource.title}
 
-= render partial: "_details"
+  %table.table
+    %tr
+      %th Title
+      %td= @resource.title
+    %tr
+      %th URL
+      %td= link_to fa_icon("external-link") + " #{@resource.url}", @resource.url, target: "_blank"
+    %tr
+      %th Description
+      %td= @resource.description
+    - if @resource.attachment_file_name.present?
+      %tr
+        %th Uploaded file
+        %td= link_to @resource.attachment.url
+    %tr
+      %th Added by
+      %td= link_to @resource.creator.name, user_path(@resource.creator)
+    - if @resource.target.present?
+      %tr
+        %th Linked to
+        %td= link_to "#{@resource.target.class.to_s}: #{@resource.target.title}", url_for(@resource.target)
+    - if current_user == @resource.creator
+      %tr
+        %th
+        %td= link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)

@@ -15,6 +15,7 @@
         %li= link_to "People (TODO)", "#"
         %li{class: active_if_current(projects_path)}= link_to "Projects", projects_path
         %li{class: active_if_current(posts_path)}= link_to "Conversations", posts_path
+        %li{class: active_if_current(resources_path)}= link_to "Resources", resources_path
 
         - if user_signed_in?
           %li.dropdown

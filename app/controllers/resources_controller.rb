@@ -5,8 +5,7 @@ class ResourcesController < ApplicationController
   before_action :verify_ownership, only: [:edit, :update, :destroy]
 
   def index
-    TODO
-    @resources = Resource.all.order("title")
+    @resources = Resource.all.order("title").includes(:creator, :target)
   end
 
   def show

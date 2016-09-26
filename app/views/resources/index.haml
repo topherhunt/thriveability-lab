@@ -1,0 +1,28 @@
+%h1 Resources
+
+.row
+  .col-md-4
+    %p
+      %strong We exist to support our members connect, collaborate, and discover ideas that help them make meaningful change.
+      This is a place to add links to websites or documents that you think might be useful to others.
+    %p= link_to "Add a resource", new_resource_path
+  .col-md-8
+    %table.table.table-striped
+      %tr
+        %th Title
+        %th Linked to
+        %th Added by
+        %th
+      - @resources.each do |resource|
+        %tr
+          %td= link_to resource.title, resource_path(resource)
+          %td
+            - if resource.target.present?
+              = link_to "#{resource.target.class.to_s}: #{resource.target.title}", url_for(resource.target)
+          %td= link_to resource.creator.name, user_path(resource.creator)
+          %td
+            - if resource.url.present?
+              = link_to fa_icon("external-link") + " source", resource.url, target: "_blank"
+              &nbsp;
+            - if current_user == resource.creator
+              = link_to fa_icon("pencil"), edit_resource_path(resource)

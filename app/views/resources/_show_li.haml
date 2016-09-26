@@ -1,8 +1,11 @@
 %li.resource
-  = link_to "#{sanitize(resource.title)} #{fa_icon("external-link")}".html_safe, resource.url, target: "_blank"
+  = link_to resource.title, resource_path(resource)
+  - if resource.url.present?
+    &nbsp;
+    = link_to fa_icon("external-link"), resource.url, target: "_blank", class: "js-show-on-parent-hover"
   - if resource.attachment_file_name.present?
     &nbsp;
-    = link_to fa_icon("download"), resource.attachment.url, download: true
+    = link_to fa_icon("download"), resource.attachment.url, download: true, class: "js-show-on-parent-hover"
   - if current_user == resource.creator
     &nbsp;
     = link_to fa_icon("pencil"), edit_resource_path(resource), class: "js-show-on-parent-hover"
