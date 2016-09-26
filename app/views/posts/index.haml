@@ -1,63 +1,63 @@
-%h1.float-left Posts
-%div.float-left{style: "padding-top: 30px; padding-left: 30px;"}
-  = link_to "Start a conversation", posts_path, class: "btn btn-default", method: :post
-.clear-float
+%h1 Posts
 
 .row
-  .col-sm-3#posts-filters
-    %div{style: "margin-top: 10px;padding: 10px; background-color: #f6f6f6; border-radius: 10px;"}
-      %h3{style: "margin-top: 0px;"} Filter by...
-      - if @filters.any?
-        %p= link_to "Clear filters", posts_path
-      %p
-        %strong Authors:<br>
-        - @authors.each do |author|
-          - if @filters[:author_id] == author.id.to_s
-            %strong= author.name
-          - else
-            = link_to author.name, posts_path(@filters.merge(author_id: author.id))
-          &nbsp;
-      %p
-        %strong Intentions:<br>
-        - @intention_types.each do |intention_type|
-          - if @filters[:intention_type] == intention_type
-            %strong= intention_type
-          - else
-            = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
-          &nbsp;
-      %p
-        %strong Tags:<br>
-        - @tag_counts.each do |tag_count|
-          - if @filters[:tag] == tag_count.name
-            %strong= tag_count.name
-          - else
-            = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
-          &nbsp;
+  .col-sm-4
+    %p
+      %strong Meaningful concise statement.
+      = Faker::Lorem.paragraph
+    %p.text-center= link_to "Start a conversation", posts_path, method: :post
 
-  .col-sm-9
-    .row
-      - @posts.each do |post|
-        .col-sm-6
-          %h3= link_to post.title.presence || "Untitled draft", post_path(post)
-
-          -# TODO: This is almost completely redundant on the #show page and in each bottom_comment header. Consolidate?
-          %p.text-muted
-            - if post.published?
-              by #{link_to post.author.name, user_path(post.author)} on #{print_date post.published_at, time: true}
-              - if current_user == post.author
-                &nbsp;
-                = link_to fa_icon("pencil"), edit_post_path(post)
+    #posts-filters
+      %div{style: "margin-top: 10px;padding: 10px; background-color: #f6f6f6; border-radius: 10px;"}
+        %h4{style: "margin-top: 0px;"} Filter by...
+        - if @filters.any?
+          %p= link_to "Clear filters", posts_path
+        %p
+          %strong Authors:<br>
+          - @authors.each do |author|
+            - if @filters[:author_id] == author.id.to_s
+              %strong= author.name
             - else
-              %strong.text-danger Unpublished draft
-              = "- started on #{print_date post.created_at, time: true}"
+              = link_to author.name, posts_path(@filters.merge(author_id: author.id))
+            &nbsp;
+        %p
+          %strong Intentions:<br>
+          - @intention_types.each do |intention_type|
+            - if @filters[:intention_type] == intention_type
+              %strong= intention_type
+            - else
+              = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
+            &nbsp;
+        %p
+          %strong Tags:<br>
+          - @tag_counts.each do |tag_count|
+            - if @filters[:tag] == tag_count.name
+              %strong= tag_count.name
+            - else
+              = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
+            &nbsp;
+
+  .col-sm-8
+    %table.table.table-striped{style: "width: 100%;"}
+      %tr
+        %th Title
+        %th Intention
+        %th Author
+        %th Published at
+      - @posts.each do |post|
+        %tr
+          %td
+            = link_to post.title.presence || "Untitled draft", post_path(post)
+            - if current_user == post.author and ! post.published?
+              %br
+              %span.text-warning Unpublished draft
               &nbsp;
               = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
+              &nbsp;
               = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
-            - if post.tag_list.any?
-              %br
-              %strong Tags:
-              = post.tag_list.join(", ")
-            - if post.intention_type.present?
-              %br
-              %strong Intention:
-              #{post.intention_type}; #{post.intention_statement}
+          %td
+            = post.intention_type
+            - if post.intention_statement.present?
+              = "- #{post.intention_statement}"
+          %td= link_to post.author.name, user_path(post.author)
+          %td= print_date post.published_at, abbreviated: true, time: true if post.published?

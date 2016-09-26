@@ -1,12 +1,12 @@
 %h1 People
 
 .row
-  .col-md-4
+  .col-sm-4
     %p
       %strong Meaningful concise statement.
       = Faker::Lorem.paragraph
-  .col-md-8
-    %table.table.table-striped
+  .col-sm-8
+    %table.table.table-striped{style: "width: 100%;"}
       %tr
         %th
         %th Name
@@ -16,5 +16,5 @@
         %tr
           %td= image_tag(user.image.url(:thumb), style: "width: 30px;")
           %td= link_to (user.name.presence || "Nameless Cool Person"), user_path(user)
-          %td= print_date(user.created_at)
-          %td= print_date(user.current_sign_in_at)
+          %td= print_date(user.created_at, abbreviated: true)
+          %td= print_date(user.current_sign_in_at, abbreviated: true)
