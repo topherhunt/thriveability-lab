@@ -39,17 +39,23 @@ class ResourcesController < ApplicationController
 
   # Main purpose: to verify that the target class & id specify a valid resource.
   def load_target
-    if params[:target_type]
-      @target = params[:target_type].constantize.find(params[:target_id])
+    if params.dig(:resource, :target_type)
+      @target = params[:resource][:target_type].constantize.find(params[:resource][:target_id])
     end
   end
 
   def create_params
-    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_name)
+    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_id)
   end
 
   def return_to_path
-    params[:editing_user_profile].present? ? user_path(current_user) : resources_path
+    if @target
+      url_for(@target)
+    elsif params[:editing_user_profile].present?
+      user_path(current_user)
+    else
+      resources_path
+    end
   end
 
   def verify_ownership

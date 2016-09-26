@@ -5,68 +5,64 @@
     = link_to "Add my name", edit_user_path(current_user)
 
 %h1.float-left= @user.name
-.float-left{style: "padding-top: 30px; padding-left: 30px;"}
-  = link_to "Edit profile info", edit_user_path(@user) if @user == current_user
+.float-left{style: "padding-top: 15px; padding-left: 30px;"}
+  = link_to "Edit profile info", edit_user_path(@user) if current_user == @user
 .clear-float
 
-.float-right= image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
+.row
+  .col-sm-8
+    %table.table
+      %tr
+        %th I'm passionate about...
+        %td= @user.self_passions
+      %tr
+        %th I'm good at...
+        %td= @user.self_skills
+      %tr
+        %th I'm proud to be known for these traits...
+        %td= @user.self_proud_traits
+      %tr
+        %th The weakness(es) I’m currently trying to overcome...
+        %td= @user.self_weaknesses
+      %tr
+        %th How I would like to evolve is...
+        %td= @user.self_evolve
+      %tr
+        %th I dream of a future where...
+        %td= @user.self_dreams
+      %tr
+        %th What I’m looking for at Integral Climate Hub...
+        %td= @user.self_looking_for
+      %tr
+        %th Member since
+        %td= print_date @user.created_at
+      %tr
+        %th I currently work at/as...
+        %td= @user.self_work_at
+      %tr
+        %th My professional goals are...
+        %td= @user.self_professional_goals
+      %tr
+        %th My major fields of expertise and experience are...
+        %td= @user.self_fields_of_expertise
 
-%table.table
-  %tr
-    %th I'm passionate about...
-    %td= @user.self_passions
-  %tr
-    %th I'm good at...
-    %td= @user.self_skills
-  %tr
-    %th I'm proud to be known for these traits...
-    %td= @user.self_proud_traits
-  %tr
-    %th The weakness(es) I’m currently trying to overcome...
-    %td= @user.self_weaknesses
-  %tr
-    %th How I would like to evolve is...
-    %td= @user.self_evolve
-  %tr
-    %th I dream of a future where...
-    %td= @user.self_dreams
-  %tr
-    %th What I’m looking for at Integral Climate Hub...
-    %td= @user.self_looking_for
-  %tr
-    %th Member since
-    %td= print_date @user.created_at
-  %tr
-    %th I currently work at/as...
-    %td= @user.self_work_at
-  %tr
-    %th My professional goals are...
-    %td= @user.self_professional_goals
-  %tr
-    %th My major fields of expertise and experience are...
-    %td= @user.self_fields_of_expertise
+  .col-sm-4
+    = image_tag(@user.image.url(:medium), style: "width: 100%;") if @user.image_file_name
 
 .row
   .col-sm-6
     %h3 Resources
     - if @user.created_resources.any?
-      - @user.created_resources.each do |resource|
-        .resource
-          %p
-            %strong= link_to resource.title, resource.url, target: "_blank"
-            &nbsp;
-            = link_to "Edit", edit_resource_path(resource) if @user == current_user
-            &nbsp;
-            - if resource.attachment_file_name
-              = link_to "Download", resource.attachment.url, download: true
-          %p= resource.description
+      %ul
+        - @user.created_resources.each do |resource|
+          = render partial: "resources/show_li", locals: { resource: resource }
       %hr
-      %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
-
-    - elsif @user == current_user
-      %p
-        Use this space to add any documents or online resources that could be of use to other community members.
-        = link_to "Add a resource", new_resource_path(editing_user_profile: true)
+      - if current_user == @user
+        %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
+    - else
+      %p #{@user.name} hasn't contributed any resources yet.
+      - if current_user == @user
+        %p Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
 
   .col-sm-6
     %h3 Recent posts

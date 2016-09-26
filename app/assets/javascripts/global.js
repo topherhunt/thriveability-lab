@@ -17,4 +17,14 @@ $(function(){
     });
   });
 
+  // TODO: Unperformant?
+  $('.js-show-on-parent-hover').each(function(){
+    $(this).hide();
+    $(this).parent().hover(function(){
+      $(this).find('.js-show-on-parent-hover').show();
+    }, function(){
+      $(this).find('.js-show-on-parent-hover').hide();
+    });
+  });
+
 });

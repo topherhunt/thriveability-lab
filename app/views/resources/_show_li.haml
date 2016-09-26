@@ -1,0 +1,8 @@
+%li.resource
+  = link_to "#{sanitize(resource.title)} #{fa_icon("external-link")}".html_safe, resource.url, target: "_blank"
+  - if resource.attachment_file_name.present?
+    &nbsp;
+    = link_to fa_icon("download"), resource.attachment.url, download: true
+  - if current_user == resource.creator
+    &nbsp;
+    = link_to fa_icon("pencil"), edit_resource_path(resource), class: "js-show-on-parent-hover"
