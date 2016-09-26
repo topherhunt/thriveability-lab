@@ -1,3 +1,6 @@
 .centered-800
   %h1 Edit resource
   = render partial: "form"
+
+  %hr
+  %p= link_to fa_icon("trash") + " Delete this resource", resource_path(@resource), method: :delete, "data-confirm": "Really remove this resource? This action can't be undone.", class: "text-danger"

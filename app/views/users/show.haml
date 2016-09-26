@@ -60,9 +60,10 @@
       - if current_user == @user
         %p= link_to "Add another resource", new_resource_path(editing_user_profile: true)
     - else
-      %p #{@user.name} hasn't contributed any resources yet.
-      - if current_user == @user
-        %p Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
+      %p
+        #{@user.name} hasn't contributed any resources yet.
+        - if current_user == @user
+          Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
 
   .col-sm-6
     %h3 Recent posts

@@ -1,8 +1,16 @@
 class ResourcesController < ApplicationController
-  before_action :require_login, only: [:new, :create, :edit, :update]
-  before_action :load_resource, only: [:edit, :update, :show]
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
+  before_action :load_resource, only: [:show, :edit, :update, :destroy]
   before_action :load_target, only: [:new, :create]
-  before_action :verify_ownership, only: [:edit, :update]
+  before_action :verify_ownership, only: [:edit, :update, :destroy]
+
+  def index
+    TODO
+    @resources = Resource.all.order("title")
+  end
+
+  def show
+  end
 
   def new
     @resource = Resource.new
@@ -13,7 +21,7 @@ class ResourcesController < ApplicationController
     @resource.creator = current_user
 
     if @resource.save
-      redirect_to return_to_path, notice: "Resource saved successfully."
+      redirect_to return_to_path, notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "new"
@@ -21,14 +29,20 @@ class ResourcesController < ApplicationController
   end
 
   def edit
-    TODO
   end
 
   def update
-    TODO
+    if @resource.update(update_params)
+      redirect_to return_to_path, notice: "Your changes have been saved."
+    else
+      flash.now.alert = "Unable to save your changes. See error messages below."
+      render "edit"
+    end
   end
 
-  def show
+  def destroy
+    @resource.destroy!
+    redirect_to return_to_path, notice: "The resource was deleted."
   end
 
   private
@@ -48,9 +62,13 @@ class ResourcesController < ApplicationController
     params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_id)
   end
 
+  def update_params
+    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed)
+  end
+
   def return_to_path
-    if @target
-      url_for(@target)
+    if @resource.target
+      url_for(@resource.target)
     elsif params[:editing_user_profile].present?
       user_path(current_user)
     else

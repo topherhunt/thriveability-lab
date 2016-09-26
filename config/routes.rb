@@ -14,11 +14,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :resources, only: [:new, :create, :edit, :update, :show]
+  resources :resources
 
-  resources :projects, only: [:index, :new, :create, :edit, :update, :show]
+  resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
-  resources :posts, only: [:index, :create, :edit, :update, :show, :destroy] do
+  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy] do
     collection do
       get :reply
     end

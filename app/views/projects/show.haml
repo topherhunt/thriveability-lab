@@ -72,12 +72,11 @@
 
 .row
   .col-sm-6
-    %h3 Resources & links
+    %h4 Resources & links
     - if @project.resources.any?
       %ul
         - @project.resources.each do |resource|
           = render partial: "resources/show_li", locals: { resource: resource }
-      %hr
       - if current_user == @project.owner
         %p= link_to "Add another resource", new_resource_path(resource: { target_type: "Project", target_id: @project.id })
     - else
