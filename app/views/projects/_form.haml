@@ -28,21 +28,7 @@
   .row.row-padded
     .col-sm-3= f.label :stage
     .col-sm-9= f.select :stage, ["idea", "developing", "mature"], { include_blank: "- select one -" }, { class: "form-control" }
-  .row.row-padded
-    .col-sm-3
-      = f.label :tag_list, "Tags"
-      .small Specify up to 3 brief, general labels that help other people discover your project based on the topics or fields it’s relevant to.
-    .col-sm-9
-      = f.text_field :tag_list, value: @project.tag_list.join(","), class: "js-hidden"
-      %ul#project-tags-tagit.js-tagit{ data: { "tagit-target": "#project_tag_list", "tag-limit": 3, "available-tags": popular_project_tags(30) }}
-      .small.js-hide-if-tagit-limit-exceeded
-        Common tags:
-        - PredefinedTag.all.order(:name).each do |tag|
-          &nbsp;
-          = link_to(tag.name, "#", class: "js-add-tag", "data-target": "#project-tags-tagit")
-      .js-show-if-tagit-limit-exceeded.js-hidden
-        %strong.text-danger You can only add 3 tags to this field.
-        Please remove some tags before adding more.
+  = render partial: "shared/edit_tags", locals: { form: f, object: @project }
 
   %h3.text-center Details
   .row.row-padded
