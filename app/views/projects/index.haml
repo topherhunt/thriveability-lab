@@ -6,6 +6,10 @@
       %strong Meaningful concise statement.
       = Faker::Lorem.paragraph
     %p.text-center= link_to "Add your project", new_project_path
+    %hr
+    %p
+      %strong Filter by tag:
+      = tag_filter_links(most_common_tags(Project, 15), "projects_path").join(", ").html_safe
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}

@@ -34,7 +34,7 @@
       .small Specify up to 3 brief, general labels that help other people discover your project based on the topics or fields it’s relevant to.
     .col-sm-9
       = f.text_field :tag_list, value: @project.tag_list.join(","), class: "js-hidden"
-      %ul#project-tags-tagit.js-tagit{ data: { "tagit-target": "#project_tag_list", "tag-limit": 3, "available-tags": most_common_30_tags }}
+      %ul#project-tags-tagit.js-tagit{ data: { "tagit-target": "#project_tag_list", "tag-limit": 3, "available-tags": most_common_tags(Project, 30) }}
       .small.js-hide-if-tagit-limit-exceeded Common tags: #{predefined_tag_list}
       .js-show-if-tagit-limit-exceeded.js-hidden
         %strong.text-danger You can only add 3 tags to this field.

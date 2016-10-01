@@ -5,6 +5,9 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all.order(:title)
+    if params[:tags].present?
+      @projects = @projects.tagged_with(params[:tags].split(","))
+    end
   end
 
   def new
