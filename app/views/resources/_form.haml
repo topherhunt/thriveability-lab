@@ -25,6 +25,21 @@
     .col-sm-9= f.text_area :description, class: "form-control"
   .row.row-padded
     .col-sm-3
+      = f.label :tag_list, "Tags"
+      .small Specify up to 3 brief, general labels that help other people discover this resource based on the topics or fields it’s relevant to.
+    .col-sm-9
+      = f.text_field :tag_list, value: @resource.tag_list.join(","), class: "js-hidden"
+      %ul#resource-tags-tagit.js-tagit{ data: { "tagit-target": "#resource_tag_list", "tag-limit": 3, "available-tags": popular_resource_tags(30) }}
+      .small.js-hide-if-tagit-limit-exceeded
+        Common tags:
+        - PredefinedTag.all.order(:name).each do |tag|
+          &nbsp;
+          = link_to(tag.name, "#", class: "js-add-tag", "data-target": "#resource-tags-tagit")
+      .js-show-if-tagit-limit-exceeded.js-hidden
+        %strong.text-danger You can only add 3 tags to this field.
+        Please remove some tags before adding more.
+  .row.row-padded
+    .col-sm-3
       = f.label :attachment, "Attach a file?"
       .small (optional)
     .col-sm-9= f.file_field :attachment, class: "form-control"

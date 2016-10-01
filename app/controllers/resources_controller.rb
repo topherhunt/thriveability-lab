@@ -6,6 +6,8 @@ class ResourcesController < ApplicationController
 
   def index
     @resources = Resource.all.order("title").includes(:creator, :target)
+    @filters = params.slice(:tags)
+    @resources = @resources.tagged_with(@filters[:tags]) if @filters[:tags].present?
   end
 
   def show
@@ -58,11 +60,11 @@ class ResourcesController < ApplicationController
   end
 
   def create_params
-    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_id)
+    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_id, :tag_list)
   end
 
   def update_params
-    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed)
+    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :tag_list)
   end
 
   def return_to_path

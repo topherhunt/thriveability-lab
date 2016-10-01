@@ -6,15 +6,19 @@
       %strong Meaningful concise statement.
       = Faker::Lorem.paragraph
     %p.text-center= link_to "Add your project", new_project_path
+
     %hr
-    %p
-      %strong Filter by tag:
-      - most_common_tags(Project, 15).each do |tag|
-        - if params[:tags].split(", ").include?(name)
-          = name
-        - else
-          = link_to name, projects_path(tags: name)
-        &nbsp;
+    #filters
+      %p
+        %strong Filter by tag:
+        - popular_project_tags(15).each do |name|
+          &nbsp;
+          - if @filters[:tags].to_s.split(", ").include?(name)
+            %span.text-muted= name
+          - else
+            = link_to name, projects_path(tags: name)
+      - if @filters.any?
+        %p= link_to fa_icon("times") + " Clear filters", projects_path, class: "text-warning"
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}

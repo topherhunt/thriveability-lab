@@ -5,7 +5,21 @@
     %p
       %strong We exist to support our members connect, collaborate, and discover ideas that help them make meaningful change.
       This is a place to add links to websites or documents that you think might be useful to others.
-    %p= link_to "Add a resource", new_resource_path
+    %p.text-center= link_to "Add a resource", new_resource_path
+
+    %hr
+    #filters
+      %p
+        %strong Filter by tag:
+        - popular_resource_tags(15).each do |name|
+          &nbsp;
+          - if @filters[:tags].to_s.split(", ").include?(name)
+            %span.text-muted= name
+          - else
+            = link_to name, resources_path(tags: name)
+      - if @filters.any?
+        %p= link_to fa_icon("times") + " Clear filters", resources_path, class: "text-warning"
+
   .col-md-8
     %table.table.table-striped{style: "width: 100%;"}
       %tr

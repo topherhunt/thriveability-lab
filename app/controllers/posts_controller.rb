@@ -5,11 +5,10 @@ class PostsController < ApplicationController
   before_action :verify_authorship, only: [:edit, :update, :destroy]
 
   def index
-    @filters = params.slice(:author_id, :tags)
     @posts = Post.roots.visible_to(current_user).order("published_at DESC")
-    filter_posts
     @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:name)
-    @tag_counts = @posts.tag_counts_on(:tags)
+    @filters = params.slice(:author_id, :tags)
+    filter_posts
   end
 
   def create
@@ -116,13 +115,10 @@ class PostsController < ApplicationController
   # === Mutators ===
 
   def filter_posts
-    if @filters[:author_id]
+    if @filters[:author_id].present?
       @posts = @posts.where(author_id: @filters[:author_id])
     end
-    if @filters[:intention_type]
-      @posts = @posts.where(intention_type: @filters[:intention_type])
-    end
-    if @filters[:tags]
+    if @filters[:tags].present?
       @posts = @posts.tagged_with(@filters[:tags])
     end
   end

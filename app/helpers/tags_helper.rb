@@ -12,4 +12,10 @@ module TagsHelper
       .map(&:name)[0..(limit-1)]
   end
 
+  def popular_resource_tags(limit)
+    Resource.tag_counts_on(:tags)
+      .sort_by{ |i| -i.taggings_count }
+      .map(&:name)[0..(limit-1)]
+  end
+
 end

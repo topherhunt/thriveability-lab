@@ -26,7 +26,7 @@
     .row.row-padded
       .col-sm-3
         = f.label :tag_list, "Tags"
-        .small Specify up to 3 brief, general labels that help other people discover your project based on the topics or fields it’s relevant to.
+        .small Specify up to 3 brief, general labels that help other people discover this post based on the topics or fields it’s relevant to.
       .col-sm-9
         = f.text_field :tag_list, value: post.tag_list.join(","), class: "js-hidden"
         %ul#post-tags-tagit.js-tagit{ data: { "tagit-target": "#post_tag_list", "tag-limit": 3, "available-tags": popular_post_tags(30) }}

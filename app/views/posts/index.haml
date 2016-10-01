@@ -8,20 +8,20 @@
     %p.text-center= link_to "Start a conversation", posts_path, method: :post
 
     %hr
-    #posts-filters
+    #filters
       %p
         %strong Filter by author:<br>
         - @authors.each do |author|
           - if @filters[:author_id] == author.id.to_s
-            %strong= author.name
+            %span.text-muted= author.name
           - else
-            = link_to author.name, posts_path(@filters.merge(author_id: author.id))
+            = link_to author.name, posts_path(author_id: author.id)
           &nbsp;
       %p
         %strong Filter by tag:
         - popular_post_tags(15).each do |name|
           - if @filters[:tags].to_s.split(", ").include?(name)
-            = name
+            %span.text-muted= name
           - else
             = link_to name, posts_path(tags: name)
           &nbsp;
