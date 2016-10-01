@@ -9,7 +9,12 @@
     %hr
     %p
       %strong Filter by tag:
-      = tag_filter_links(most_common_tags(Project, 15), "projects_path").join(", ").html_safe
+      - most_common_tags(Project, 15).each do |tag|
+        - if params[:tags].split(", ").include?(name)
+          = name
+        - else
+          = link_to name, projects_path(tags: name)
+        &nbsp;
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}

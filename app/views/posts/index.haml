@@ -7,35 +7,26 @@
       = Faker::Lorem.paragraph
     %p.text-center= link_to "Start a conversation", posts_path, method: :post
 
+    %hr
     #posts-filters
-      %div{style: "margin-top: 10px;padding: 10px; background-color: #f6f6f6; border-radius: 10px;"}
-        %h4{style: "margin-top: 0px;"} Filter by...
-        - if @filters.any?
-          %p= link_to "Clear filters", posts_path
-        %p
-          %strong Authors:<br>
-          - @authors.each do |author|
-            - if @filters[:author_id] == author.id.to_s
-              %strong= author.name
-            - else
-              = link_to author.name, posts_path(@filters.merge(author_id: author.id))
-            &nbsp;
-        %p
-          %strong Intentions:<br>
-          - @intention_types.each do |intention_type|
-            - if @filters[:intention_type] == intention_type
-              %strong= intention_type
-            - else
-              = link_to intention_type, posts_path(@filters.merge(intention_type: intention_type))
-            &nbsp;
-        %p
-          %strong Tags:<br>
-          - @tag_counts.each do |tag_count|
-            - if @filters[:tag] == tag_count.name
-              %strong= tag_count.name
-            - else
-              = link_to tag_count.name, posts_path(@filters.merge(tag: tag_count.name))
-            &nbsp;
+      %p
+        %strong Filter by author:<br>
+        - @authors.each do |author|
+          - if @filters[:author_id] == author.id.to_s
+            %strong= author.name
+          - else
+            = link_to author.name, posts_path(@filters.merge(author_id: author.id))
+          &nbsp;
+      %p
+        %strong Filter by tag:
+        - popular_post_tags(15).each do |name|
+          - if @filters[:tags].to_s.split(", ").include?(name)
+            = name
+          - else
+            = link_to name, posts_path(tags: name)
+          &nbsp;
+      - if @filters.any?
+        %p= link_to fa_icon("times") + " Clear filters", posts_path, class: "text-warning"
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}
