@@ -3,6 +3,7 @@ class Project < ActiveRecord::Base
   has_many :resources, as: :target
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
+  acts_as_taggable_on :tags
   acts_as_taggable_on :needs
 
   # See https://github.com/thoughtbot/paperclip#quick-start
