@@ -27,7 +27,7 @@
     %table.table.table-striped{style: "width: 100%;"}
       %tr
         %th Title
-        %th Intention
+        %th Tags
         %th Author
         %th Published at
       - @posts.each do |post|
@@ -41,9 +41,9 @@
               = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
               &nbsp;
               = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
-          %td
-            = post.intention_type
-            - if post.intention_statement.present?
-              = "- #{post.intention_statement}"
+          %td.small
+            - post.tag_list.each do |name|
+              = link_to name, posts_path(tags: name)
+              &nbsp;
           %td= link_to post.author.name, user_path(post.author)
           %td= print_date post.published_at, abbreviated: true, time: true if post.published?

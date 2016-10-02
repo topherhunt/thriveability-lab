@@ -22,6 +22,7 @@
       %tr
         %th
         %th Title
+        %th Tags
         %th Added date
         %th Added by
       - @projects.each do |project|
@@ -31,5 +32,9 @@
             = link_to (project.title), project_path(project)
             &mdash;
             %span.text-muted= project.subtitle
+          %td.small
+            - project.tag_list.each do |name|
+              = link_to name, projects_path(tags: name)
+              &nbsp;
           %td= print_date(project.created_at, abbreviated: true)
           %td= link_to project.owner.name, user_path(project.owner)

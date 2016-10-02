@@ -21,16 +21,16 @@
     %table.table.table-striped{style: "width: 100%;"}
       %tr
         %th Title
-        %th Linked to
+        %th Tags
         %th Added by
         %th
       - @resources.each do |resource|
         %tr
           %td= link_to resource.title, resource_path(resource)
-          %td
-            - if resource.target.present?
-              = link_to "#{resource.target.class.to_s}: #{resource.target.title}", url_for(resource.target)
-          %td= link_to resource.creator.name, user_path(resource.creator)
+          %td.small
+            - resource.tag_list.each do |name|
+              = link_to name, resources_path(tags: name)
+              &nbsp;
           %td
             - if resource.url.present?
               = link_to fa_icon("external-link") + " source", resource.url, target: "_blank"
