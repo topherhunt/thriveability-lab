@@ -8,17 +8,14 @@
     %p.text-center= link_to "Add your project", new_project_path
 
     %hr
-    #filters
-      %p
-        %strong Filter by tag:
+    = form_tag(projects_path, method: :get) do
+      %div.strong{style: "padding-top: 10px;"} Filter by tag...
+      %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
+        %option
         - popular_project_tags(15).each do |name|
-          &nbsp;
-          - if @filters[:tags].to_s.split(", ").include?(name)
-            %span.text-muted= name
-          - else
-            = link_to name, projects_path(tags: name)
-      - if @filters.any?
-        %p= link_to fa_icon("times") + " Clear filters", projects_path, class: "text-warning"
+          - selected = @filters[:tags].to_s.split(", ").include?(name)
+          %option{value: name, selected: selected}= name
+      .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}

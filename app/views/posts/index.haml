@@ -8,25 +8,20 @@
     %p.text-center= link_to "Start a conversation", posts_path, method: :post
 
     %hr
-    #filters
-      %p
-        %strong Filter by author:<br>
-        - @authors.each do |author|
-          - if @filters[:author_id] == author.id.to_s
-            %span.text-muted= author.name
-          - else
-            = link_to author.name, posts_path(author_id: author.id)
-          &nbsp;
-      %p
-        %strong Filter by tag:
+    = form_tag(posts_path, method: :get) do
+      %div.strong{style: "padding-top: 10px;"} Filter by tag...
+      %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
+        %option
         - popular_post_tags(15).each do |name|
-          - if @filters[:tags].to_s.split(", ").include?(name)
-            %span.text-muted= name
-          - else
-            = link_to name, posts_path(tags: name)
-          &nbsp;
-      - if @filters.any?
-        %p= link_to fa_icon("times") + " Clear filters", posts_path, class: "text-warning"
+          - selected = @filters[:tags].to_s.split(", ").include?(name)
+          %option{value: name, selected: selected}= name
+      %div.strong{style: "padding-top: 10px;"} Filter by author...
+      %select.js-chosen{name: "author_id", data: { placeholder: "Click to select an author" }}
+        %option
+        - @authors.each do |author|
+          - selected = @filters[:author_id] == author.id.to_s
+          %option{value: author.id, selected: selected}= author.name
+      .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
   .col-sm-8
     %table.table.table-striped{style: "width: 100%;"}

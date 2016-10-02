@@ -26,6 +26,7 @@ gem 'will_paginate'
 # Frontend
 gem 'bootstrap-sass'
 gem 'bootstrap-will_paginate'
+gem 'chosen-rails'
 gem 'coffee-rails'
 gem 'font-awesome-rails'
 gem 'haml-rails'
