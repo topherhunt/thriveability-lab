@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
   has_many :omniauth_accounts, dependent: :delete_all
+  has_many :projects, foreign_key: :owner_id
+  # TODO: This can be renamed to just `resources`; the risk of confusion is low
   has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
   has_many :posts, foreign_key: :author_id, inverse_of: :author
   has_many :like_flags # as the originator
+  has_many :stay_informed_flags
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,
@@ -75,7 +78,7 @@ class User < ActiveRecord::Base
   def merge!(to_user:)
     return if to_user.id == self.id
 
-    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts, :like_flags].to_set
+    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts, :like_flags, :stay_informed_flags].to_set
       raise "ERROR: Refusing to perform .merge!, it looks like I've forgotten to set up additional associations."
     end
 
@@ -83,6 +86,7 @@ class User < ActiveRecord::Base
     created_resources.update_all(creator_id: to_user.id)
     posts.update_all(author_id: to_user.id)
     like_flags.update_all(user_id: to_user.id)
+    stay_informed_flags.update_all(user_id: to_user.id)
     self.destroy!
   end
 

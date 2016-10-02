@@ -73,7 +73,15 @@
 
     %hr
     %h4 Get connected
+
     = render partial: "shared/likes_section", locals: { target: @project, link_wording: "This inspires me" }
+
+    %p.stay-informed
+      - if current_user and StayInformedFlag.where(user: current_user, target: @project).any?
+        #{fa_icon("bell")} You'll be informed of updates on this project.
+        = link_to fa_icon("times"), stay_informed_flag_path("Project", @project), method: :delete, class: "text-danger nowrap"
+      - else
+        = link_to fa_icon("bell") + " I want to stay informed", stay_informed_flag_path("Project", @project), method: :post, class: "btn btn-info"
 
     - if @project.call_to_action.present?
       %hr
@@ -90,3 +98,13 @@
         %tr
           %td
           %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
+
+    - if current_user == @project.owner
+      %hr
+      %h4 Data for the project owner
+      %ul
+        - stay_informed_flags_count = StayInformedFlag.where(target: @project).count
+        - if stay_informed_flags_count > 0
+          %li
+            = link_to pluralize(stay_informed_flags_count, "person"), stay_informed_flags_path("Project", @project)
+            will be informed of updates on this project.

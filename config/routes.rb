@@ -28,4 +28,10 @@ Rails.application.routes.draw do
 
   post   "like_flags/:target_type/:target_id" => "like_flags#create", as: :like_flag
   delete "like_flags/:target_type/:target_id" => "like_flags#destroy"
+
+  get    "stay_informed_flags/:target_type/:target_id" => "stay_informed_flags#index",
+         as: :stay_informed_flags
+  post   "stay_informed_flags/:target_type/:target_id" => "stay_informed_flags#create",
+         as: :stay_informed_flag
+  delete "stay_informed_flags/:target_type/:target_id" => "stay_informed_flags#destroy"
 end

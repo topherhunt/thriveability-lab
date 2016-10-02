@@ -1,0 +1,9 @@
+.centered-800
+  %h3
+    Project
+    #{link_to @target.title, project_path(@target)}
+    #{fa_icon('caret-right')}
+    Users who asked to stay informed
+  %ul
+    - @flags.each do |flag|
+      %li= link_to flag.user.name, user_path(flag.user)

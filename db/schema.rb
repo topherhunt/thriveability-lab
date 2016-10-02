@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002152123) do
+ActiveRecord::Schema.define(version: 20161002184918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,14 @@ ActiveRecord::Schema.define(version: 20161002152123) do
   end
 
   add_index "resources", ["target_type", "target_id"], name: "index_resources_on_target_type_and_target_id", using: :btree
+
+  create_table "stay_informed_flags", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
