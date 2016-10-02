@@ -75,13 +75,14 @@ class User < ActiveRecord::Base
   def merge!(to_user:)
     return if to_user.id == self.id
 
-    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts].to_set
+    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts, :like_flags].to_set
       raise "ERROR: Refusing to perform .merge!, it looks like I've forgotten to set up additional associations."
     end
 
     omniauth_accounts.update_all(user_id: to_user.id)
     created_resources.update_all(creator_id: to_user.id)
     posts.update_all(author_id: to_user.id)
+    like_flags.update_all(user_id: to_user.id)
     self.destroy!
   end
 
