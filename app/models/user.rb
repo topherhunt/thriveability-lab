@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :omniauth_accounts, dependent: :delete_all
   has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
   has_many :posts, foreign_key: :author_id, inverse_of: :author
+  has_many :like_flags # as the originator
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,

@@ -1,49 +1,55 @@
-%h1= @post.title.presence || "Untitled Draft"
+.centered-800
+  %h1= @post.title.presence || "Untitled Draft"
 
-%p.text-muted
   - if @post.published?
-    by #{link_to @post.author.name, user_path(@post.author)} on #{print_date @post.published_at, time: true}
-    - if current_user == @post.author
+    %p
+      by #{link_to @post.author.name, user_path(@post.author)} on #{print_date @post.published_at, time: true}
+      - if current_user == @post.author
+        &nbsp;
+        = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
+  - else
+    %p
+      %strong.text-danger Unpublished draft
+      = "- you started writing this on #{print_date @post.created_at, time: true}"
       &nbsp;
       = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
-  - else
-    %strong.text-danger Unpublished draft
-    = "- you started writing this on #{print_date @post.created_at, time: true}"
-    &nbsp;
-    = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
-  - if @post.tag_list.any?
-    %br
-    %strong Tags:
-    = @post.tag_list.join(", ")
   - if @post.intention_type.present?
-    %br
-    %strong Intention:
-    #{@post.intention_type}; #{@post.intention_statement}
+    %p
+      %strong Intention:
+      #{@post.intention_type}; #{@post.intention_statement}
+  - if @post.tag_list.any?
+    %p
+      %strong Tags:
+      - @post.tag_list.each do |name|
+        &nbsp;
+        = link_to name, posts_path(tags: name)
 
-= sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
-%hr
+  %hr
+  = sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+  = render partial: "shared/likes_section", locals: { target: @post, link_wording: "This inspires me" }
 
-- if @post.published?
-  %h3 Discussion
+  %hr
+  - if @post.published?
+    %h3 Discussion
 
-  - if current_user.in? @conversants
-    %div{style: "padding-bottom: 10px;"}
-      = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
-      %i.fa.fa-spinner.loading.js-hidden
-      .new-reply-container.bottom-comment.js-hidden
-  - else
-    %p= link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
-    .modal.fade#join-conversation-modal
-      .modal-dialog
-        .modal-content
-          .modal-header
-            %button.close{"data-dismiss": "modal"} &times;
-            %h4.modal-title Join conversation: "#{@post.title}"
-          .modal-body
-            = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }
+    - if current_user.in? @conversants
+      %div{style: "padding-bottom: 10px;"}
+        = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
+        %i.fa.fa-spinner.loading.js-hidden
+        .new-reply-container.bottom-comment.js-hidden
+    - else
+      %p= link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
+      .modal.fade#join-conversation-modal
+        .modal-dialog
+          .modal-content
+            .modal-header
+              %button.close{"data-dismiss": "modal"} &times;
+              %h4.modal-title Join conversation: "#{@post.title}"
+            .modal-body
+              = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }
 
-  - if @post.children.visible_to(current_user).not_inline.any?
-    - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
-      = render partial: "show_bottom_comment", locals: { post: reply }
-  - else
-    %p No comments yet.
+    - if @post.children.visible_to(current_user).not_inline.any?
+      - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
+        = render partial: "show_bottom_comment", locals: { post: reply }
+    - else
+      %p No comments yet.

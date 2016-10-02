@@ -25,4 +25,7 @@ Rails.application.routes.draw do
   end
 
   resources :post_conversants, only: [:new, :create]
+
+  post   "like_flags/:target_type/:target_id" => "like_flags#create", as: :like_flag
+  delete "like_flags/:target_type/:target_id" => "like_flags#destroy"
 end

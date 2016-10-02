@@ -32,3 +32,6 @@
       %tr
         %th
         %td= link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)
+    %tr
+      %th
+      %td= render partial: "shared/likes_section", locals: { target: @resource, link_wording: "This inspires me" }

@@ -1,11 +1,11 @@
-%h1.float-left= @project.title
-%div.float-left{style: "padding-top: 15px; padding-left: 30px;"}
-  = link_to "Edit project details", edit_project_path(@project) if @project.owner == current_user
-.clear-float
-%h4= @project.subtitle
-
 .row
   .col-sm-8
+    %div
+      %span.h1= @project.title
+      &nbsp;
+      = link_to fa_icon("pencil"), edit_project_path(@project) if @project.owner == current_user
+    %h4= @project.subtitle
+
     %table.table
       %tr
         %th Owner
@@ -55,29 +55,6 @@
         %strong Context:
         = @project.quadrant_lr
 
-  .col-sm-4
-    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;" if @project.image_file_name
-
-    - if @project.call_to_action.present?
-      %hr
-      %h3 How you can help out (TODO)
-      %p= @project.call_to_action
-
-      %table.form
-        %tr
-          %th I'm offering...
-          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"]), { class: "form-control" }
-        %tr
-          %th Comments
-          %td= text_area_tag :comment, "", class: "form-control"
-        %tr
-          %td
-          %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
-
-%hr
-
-.row
-  .col-sm-6
     %h4 Resources & links
     - if @project.resources.any?
       %ul
@@ -91,5 +68,25 @@
         - if current_user == @project.owner
           Use this space to add any links or documents relevant to this project, that could be useful to other community members. #{link_to "Add a resource", new_resource_path(resource: { target_type: "Project", target_id: @project.id })}
 
-  .col-sm-6
-    [TODO: What should go here?]
+  .col-sm-4
+    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;" if @project.image_file_name
+
+    %hr
+    %h4 Get connected
+    = render partial: "shared/likes_section", locals: { target: @project, link_wording: "This inspires me" }
+
+    - if @project.call_to_action.present?
+      %hr
+      %h4 How you can help out
+      %p= @project.call_to_action
+
+      %table.form
+        %tr
+          %th I'm offering...
+          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"]), { class: "form-control" }
+        %tr
+          %th Comments
+          %td= text_area_tag :comment, "", class: "form-control"
+        %tr
+          %td
+          %td= link_to "Send (TODO)", "#", class: "btn btn-primary"

@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001161552) do
+ActiveRecord::Schema.define(version: 20161002152123) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "like_flags", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "like_flags", ["target_type", "target_id"], name: "index_like_flags_on_target_type_and_target_id", using: :btree
+  add_index "like_flags", ["user_id"], name: "index_like_flags_on_user_id", using: :btree
 
   create_table "omniauth_accounts", force: :cascade do |t|
     t.integer  "user_id"
@@ -61,6 +72,7 @@ ActiveRecord::Schema.define(version: 20161001161552) do
     t.integer  "parent_id"
     t.integer  "reply_at_char_position"
     t.text     "draft_content"
+    t.integer  "like_flags_count",       default: 0
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
@@ -90,6 +102,7 @@ ActiveRecord::Schema.define(version: 20161001161552) do
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "like_flags_count",   default: 0
   end
 
   create_table "resources", force: :cascade do |t|
@@ -106,6 +119,7 @@ ActiveRecord::Schema.define(version: 20161001161552) do
     t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "like_flags_count",        default: 0
   end
 
   add_index "resources", ["target_type", "target_id"], name: "index_resources_on_target_type_and_target_id", using: :btree
