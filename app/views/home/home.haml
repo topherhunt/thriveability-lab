@@ -3,61 +3,49 @@
 %hr
 
 .row
+
   .col-sm-6
     %h4.text-center People
     %div{style: 'position: relative;'}
       - User.limit(20).each do |user|
         %div{style: 'float: left; padding: 3px;'}
           %div{style: 'width: 50px; height: 50px; background: #ddd;'}
-            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.name }
+            = link_to image_tag(user.image.url(:thumb), class: "image-framed-tiny", style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.name }
       .clear-float
-    %p
-      %a Meet 142 more
-  .col-sm-6
-    %h4.text-center Conversations
-    .row
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
-      .col-sm-6 Blahnto nehonetuh oenuh oenu hoenthu
+    - if User.count > 20
+      %p= link_to "Meet #{User.count - 20} more", users_path
 
-.row
   .col-sm-6
     %h4.text-center Projects
     %div{style: 'position: relative;'}
       - Project.limit(20).each do |project|
         %div{style: 'float: left; padding: 3px;'}
           %div{style: 'width: 50px; height: 50px; background: #ddd;'}
-            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;"), project_path(project), class: "js-tooltip", data: { tooltip: project.title }
+            = link_to image_tag(project.image.url(:thumb), class: "image-framed-tiny", style: "width: 100%;"), project_path(project), class: "js-tooltip", data: { tooltip: project.title }
       .clear-float
-    %p
-      %a Learn about 65 more
-  .col-sm-6
-    %h4.text-center Events
-    .row
-      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
-      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
-      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
-      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
-      .col-sm-6 <strong>June 4th</strong>: Something notehu oen uthoneut h
-
-.row
-  .col-sm-6
-    %h4.text-center Resources
-    .col-sm-6
-      %ul
-        %li Something oentuh oenuh onetuh
-        %li else nutoheu ntohe
-        %li else noethu noethu neo
-    .col-sm-6
-      %ul
-        %li Thingo eunthoe untho eun
-        %li one oentuhonetu hoenthu onetuh oen
-        %li two onethu onetuh noet
+    - if Project.count > 20
+      %p= link_to "Discover #{Project.count - 20} more", projects_path
 
 %hr
 
-%p.text-center= link_to 'TAKE ACTION', '#', class: 'btn btn-primary'
+.row
+
+  .col-sm-6
+    %h4.text-center Conversations
+    %ul
+      - Post.published.roots.limit(20).each do |post|
+        %li= link_to post.title, post_path(post)
+    - if Post.published.roots.count > 20
+      %p= link_to "See #{Post.published.roots.count - 20} more", posts_path
+
+  .col-sm-6
+    %h4.text-center Resources
+    %ul
+      - Resource.limit(20).each do |resource|
+        %li= link_to resource.title, resource_path(resource)
+    - if Resource.count > 20
+      %p= link_to "Discover #{Resource.count - 20} more", resources_path
+
+%hr
+
+%p.text-center= link_to 'TAKE ACTION', '#', class: 'btn btn-primary', "data-confirm": "We don't know what this button should do yet."

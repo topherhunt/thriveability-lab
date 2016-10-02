@@ -27,7 +27,7 @@
         %th Added by
       - @projects.each do |project|
         %tr
-          %td= image_tag(project.image.url(:thumb), style: "width: 30px;")
+          %td= image_tag(project.image.url(:thumb), class: "image-framed-tiny", style: "width: 30px;")
           %td
             = link_to (project.title), project_path(project)
             &mdash;

@@ -69,7 +69,7 @@
           Use this space to add any links or documents relevant to this project, that could be useful to other community members. #{link_to "Add a resource", new_resource_path(resource: { target_type: "Project", target_id: @project.id })}
 
   .col-sm-4
-    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;" if @project.image_file_name
+    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;", class: "image-framed"
 
     %hr
     %h4 Get connected
