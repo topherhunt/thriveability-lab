@@ -16,6 +16,12 @@
         %th Uploaded file
         %td= link_to @resource.attachment.url
     %tr
+      %th Tags
+      %td
+        - @resource.tag_list.each do |name|
+          = link_to name, resources_path(tags: name)
+          &nbsp;
+    %tr
       %th Added by
       %td= link_to @resource.creator.name, user_path(@resource.creator)
     - if @resource.target.present?

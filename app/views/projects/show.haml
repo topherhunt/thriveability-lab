@@ -6,15 +6,6 @@
 
 .row
   .col-sm-8
-    %h4 Introduction
-    %p
-      - if @project.introduction.present?
-        = @project.introduction
-      - else
-        No introduction yet.
-        - if @project.owner == current_user
-          = link_to "Write one", edit_project_path(@project)
-
     %table.table
       %tr
         %th Owner
@@ -26,12 +17,27 @@
         %th Stage
         %td= @project.stage
       %tr
+        %th Tags
+        %td
+          - @project.tag_list.each do |name|
+            = link_to name, projects_path(tags: name)
+            &nbsp;
+      %tr
         %th Needs
         %td
           - @project.need_list.each do |need|
             %span.label.label-default= need
 
     %hr
+
+    %h4 Introduction
+    %p
+      - if @project.introduction.present?
+        = @project.introduction
+      - else
+        No introduction yet.
+        - if @project.owner == current_user
+          = link_to "Write one", edit_project_path(@project)
 
     %h4 Quadrants
     .row
