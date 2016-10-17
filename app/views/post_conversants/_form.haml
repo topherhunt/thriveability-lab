@@ -5,7 +5,7 @@
     .col-sm-3= f.label :intention_type, "My intention in joining this conversation"
     .col-sm-9
       = f.select :intention_type, IntentionType.all.map{ |it| [it.long, it.short] }, { include_blank: "- select one -" }, { class: "form-control" }
-      .small Select the main reason you want to jump in. This helps our community to more effectively receive and engage with your content.
+      .small Select the main reason you want to jump in. This helps our community to engage with your content.
   .row.row-padded
     .col-sm-3
       = f.label :intention_statement, "State your intention for this post in your own words."
