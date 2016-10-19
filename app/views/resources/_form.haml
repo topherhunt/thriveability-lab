@@ -1,4 +1,6 @@
-%p Use this page to add web pages or documents to our public database so other like-minded folks can discover and benefit from them.
+%p Please share your most valuable resources here, such as a powerpoint of a presentation, a paper you have written, or a plan you developed. Of course these can also be others' resources, but have found to be useful nonetheless.
+
+%p However, please only upload resources you own or have the right to share (to avoid issues with copyrights and ownership)! Otherwise, please refer to it with a link, so people can access the resource at the appropriate place.
 
 = form_for @resource do |f|
   = show_errors_for @resource
@@ -43,7 +45,8 @@
   .row.row-padded
     .col-sm-3
       = f.label :attachment, "Attach a file?"
-      .small (optional)
+      .small Please clarify in one sentence your intention with referring to this resource, by specifying why you think it is useful, and whom it could be useful for.
+      .small Make sure to also attach 1-3 tags, so it will be easier to find for others.
     .col-sm-9= f.file_field :attachment, class: "form-control"
   .row.row-padded#js-affirm-ownership{ class: ("js-hidden" unless @resource.attachment.present?) }
     .col-sm-3
