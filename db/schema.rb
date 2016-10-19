@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161002184918) do
+ActiveRecord::Schema.define(version: 20161018212050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "get_involved_flags", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "get_involved_flags", ["target_type", "target_id"], name: "index_get_involved_flags_on_target_type_and_target_id", using: :btree
+  add_index "get_involved_flags", ["user_id"], name: "index_get_involved_flags_on_user_id", using: :btree
 
   create_table "like_flags", force: :cascade do |t|
     t.integer  "user_id"
@@ -105,6 +116,8 @@ ActiveRecord::Schema.define(version: 20161002184918) do
     t.integer  "like_flags_count",   default: 0
   end
 
+  add_index "projects", ["owner_id"], name: "index_projects_on_owner_id", using: :btree
+
   create_table "resources", force: :cascade do |t|
     t.integer  "creator_id"
     t.boolean  "ownership_affirmed"
@@ -122,6 +135,7 @@ ActiveRecord::Schema.define(version: 20161002184918) do
     t.integer  "like_flags_count",        default: 0
   end
 
+  add_index "resources", ["creator_id"], name: "index_resources_on_creator_id", using: :btree
   add_index "resources", ["target_type", "target_id"], name: "index_resources_on_target_type_and_target_id", using: :btree
 
   create_table "stay_informed_flags", force: :cascade do |t|
@@ -131,6 +145,9 @@ ActiveRecord::Schema.define(version: 20161002184918) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "stay_informed_flags", ["target_type", "target_id"], name: "index_stay_informed_flags_on_target_type_and_target_id", using: :btree
+  add_index "stay_informed_flags", ["user_id"], name: "index_stay_informed_flags_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"

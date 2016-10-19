@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :posts, foreign_key: :author_id, inverse_of: :author
   has_many :like_flags # as the originator
   has_many :stay_informed_flags
+  has_many :get_involved_flags
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,

@@ -34,4 +34,10 @@ Rails.application.routes.draw do
   post   "stay_informed_flags/:target_type/:target_id" => "stay_informed_flags#create",
          as: :stay_informed_flag
   delete "stay_informed_flags/:target_type/:target_id" => "stay_informed_flags#destroy"
+
+  get    "get_involved_flags/:target_type/:target_id" => "get_involved_flags#index",
+         as: :get_involved_flags
+  post   "get_involved_flags/:target_type/:target_id" => "get_involved_flags#create",
+         as: :get_involved_flag
+  delete "get_involved_flags/:target_type/:target_id" => "get_involved_flags#destroy"
 end

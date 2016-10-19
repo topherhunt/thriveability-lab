@@ -78,10 +78,27 @@
 
     %p.stay-informed
       - if current_user and StayInformedFlag.where(user: current_user, target: @project).any?
-        #{fa_icon("bell")} You'll be informed of updates on this project.
-        = link_to fa_icon("times"), stay_informed_flag_path("Project", @project), method: :delete, class: "text-danger nowrap"
+        = link_to fa_icon("bell") + " I want to stay informed", stay_informed_flag_path("Project", @project), method: :delete, class: "btn btn-default active"
       - else
         = link_to fa_icon("bell") + " I want to stay informed", stay_informed_flag_path("Project", @project), method: :post, class: "btn btn-info"
+      - stay_informed_flags_count = @project.stay_informed_flags.count
+      - if stay_informed_flags_count > 0
+        &nbsp;
+        %span.badge.stay-informed-flags-count= stay_informed_flags_count
+    - if current_user == @project.owner and stay_informed_flags_count > 0
+      %p= link_to "See list of people who want to stay informed", stay_informed_flags_path("Project", @project), class: "stay-informed-flags-details"
+
+    %p.get-involved
+      - if current_user and GetInvolvedFlag.where(user: current_user, target: @project).any?
+        = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :delete, class: "btn btn-default active"
+      - else
+        = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :post, class: "btn btn-info"
+      - get_involved_flags_count = @project.get_involved_flags.count
+      - if get_involved_flags_count > 0
+        &nbsp;
+        %span.badge.get-involved-flags-count= get_involved_flags_count
+    - if current_user == @project.owner and get_involved_flags_count > 0
+      %p= link_to "See list of people who want to get involved", get_involved_flags_path("Project", @project), class: "get-involved-flags-details"
 
     - if @project.call_to_action.present?
       %hr
@@ -98,13 +115,3 @@
         %tr
           %td
           %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
-
-    - if current_user == @project.owner
-      %hr
-      %h4 Data for the project owner
-      %ul
-        - stay_informed_flags_count = StayInformedFlag.where(target: @project).count
-        - if stay_informed_flags_count > 0
-          %li
-            = link_to pluralize(stay_informed_flags_count, "person"), stay_informed_flags_path("Project", @project)
-            will be informed of updates on this project.

@@ -3,7 +3,7 @@
     Project
     #{link_to @target.title, project_path(@target)}
     #{fa_icon('caret-right')}
-    Users who asked to stay informed
-  %ul.stay-informed-users-list
+    Users who asked to get involved
+  %ul.get-involved-users-list
     - @flags.each do |flag|
       %li= link_to flag.user.name, user_path(flag.user)
