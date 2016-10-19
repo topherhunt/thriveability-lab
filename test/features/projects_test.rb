@@ -9,16 +9,11 @@ class ProjectsTest < Capybara::Rails::TestCase
   test "User can create a project" do
     login_as @user
     click_on "Projects"
-    click_on "List a project!"
+    click_on "Add your project"
     fill_fields(
       "project[title]": "Gathering Acorns",
       "project[subtitle]": "Re-thinking the way we interface with squirrels",
       "project[introduction]": "Foo bar baz! " * 100,
-      "project[location]": "Rio De Janeiro",
-      "project[quadrant_ul]": "Vision vision vision",
-      "project[quadrant_ur]": "Concrete concrete concrete",
-      "project[quadrant_ll]": "Community community community",
-      "project[quadrant_lr]": "Framework context framework",
       "project[need_list]": "collaborators, funding, feedback, sponsorship",
       "project[call_to_action]": "Moneys! Moneys!")
     attach_file "project[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
@@ -27,19 +22,9 @@ class ProjectsTest < Capybara::Rails::TestCase
     @project = Project.last
     assert_path project_path(@project)
     assert_content "Your new project is now publicly listed."
-    expect_attributes(@project,
-      title: "Gathering Acorns",
-      subtitle: "Re-thinking the way we interface with squirrels",
-      introduction: "Foo bar baz! " * 100,
-      location: "Rio De Janeiro",
-      quadrant_ul: "Vision vision vision",
-      quadrant_ur: "Concrete concrete concrete",
-      quadrant_ll: "Community community community",
-      quadrant_lr: "Framework context framework",
-      need_list: ["collaborators", "funding", "feedback", "sponsorship"],
-      call_to_action: "Moneys! Moneys!",
-      image_file_name: "elmerfudd.jpg",
-      stage: "developing")
+    assert_equals "Gathering Acorns", @project.title
+    assert_equals ["collaborators", "funding", "feedback", "sponsorship"].to_set, @project.need_list.to_set
+    assert_equals "developing", @project.stage
   end
 
   test "Visitor can browse and view existing projects" do
@@ -61,15 +46,14 @@ class ProjectsTest < Capybara::Rails::TestCase
     click_on "Projects"
     click_on @project.title
     assert_path project_path(@project)
-    click_on "Edit"
+    page.find('a.edit-project').click
     fill_fields(
       "project[title]": "abcxyz",
       "project[need_list]": "foo,bar,baz")
     click_on "Save"
     assert_content "Project updated."
-    expect_attributes(@project.reload,
-      title: "abcxyz",
-      need_list: ["foo", "bar", "baz"])
+    assert_equals "abcxyz", @project.reload.title
+    assert_equals ["foo", "bar", "baz"].to_set, @project.need_list.to_set
   end
 
   test "Other users can't edit a project" do

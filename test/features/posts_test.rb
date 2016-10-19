@@ -29,7 +29,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_equals nil, @post.published_content
     assert_equals "share news", @post.intention_type
     assert_equals "Test statement content", @post.intention_statement
-    assert_equals ["global warming", "icebergs"], @post.tag_list
+    assert_equals ["global warming", "icebergs"].to_set, @post.tag_list.to_set
     assert ! @post.published?
     page.find(".edit-post-link").click
     click_on "Publish!"
@@ -80,7 +80,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content "That post doesn't exist."
   end
 
-  test "Visitor can filter published posts by author, intention, and tags" do
+  test "Visitor can filter published posts by author" do
     @user1 = create(:user)
     @user2 = create(:user)
     @post1 = create(:published_post, author: @user1, intention_type: "share news",
@@ -95,22 +95,12 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content @post1.title
     assert_content @post2.title
     assert_content @post3.title
-    within("#posts-filters") { click_on @user1.name }
+    within(".filter-posts") {
+      select @user1.name, from: "author_id"
+      click_button "Filter"
+    }
     assert_content @post1.title
     assert_content @post2.title
     refute_content @post3.title
-    # filters work additively
-    within("#posts-filters") { click_on "seek perspectives" }
-    assert_content @post2.title
-    refute_content @post1.title
-    refute_content @post3.title
-    click_on "Clear filters"
-    assert_content @post1.title
-    assert_content @post2.title
-    assert_content @post3.title
-    within("#posts-filters") { click_on "apple" }
-    assert_content @post1.title
-    assert_content @post3.title
-    refute_content @post2.title
   end
 end

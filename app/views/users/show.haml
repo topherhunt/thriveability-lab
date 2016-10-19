@@ -8,8 +8,9 @@
   .col-sm-8
     %div{style: "padding-bottom: 10px;"}
       %span.h1= @user.name
-      &nbsp;
-      = link_to fa_icon("pencil") + " Update my profile", edit_user_path(@user) if current_user == @user
+      - if current_user == @user
+        &nbsp;
+        = link_to fa_icon("pencil") + " Update my profile", edit_user_path(@user), class: "edit-user"
 
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
       = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed"

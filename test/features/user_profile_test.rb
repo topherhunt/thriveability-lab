@@ -8,7 +8,7 @@ class UserProfileTest < Capybara::Rails::TestCase
   test "User can fill in profile info" do
     login_as @user
     click_on "My Profile"
-    click_on "Edit"
+    page.find('a.edit-user').click
     assert_path edit_user_path(@user)
     fill_fields(
       "user[name]" => "Elmer Fudd",

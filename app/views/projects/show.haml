@@ -2,8 +2,9 @@
   .col-sm-8
     %div
       %span.h1= @project.title
-      &nbsp;
-      = link_to fa_icon("pencil"), edit_project_path(@project) if @project.owner == current_user
+      - if @project.owner == current_user
+        &nbsp;
+        = link_to fa_icon("pencil"), edit_project_path(@project), class: "edit-project"
     %h4= @project.subtitle
 
     %table.table
