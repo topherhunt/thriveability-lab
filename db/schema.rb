@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018212050) do
+ActiveRecord::Schema.define(version: 20161019234318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,7 +113,6 @@ ActiveRecord::Schema.define(version: 20161018212050) do
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "like_flags_count",   default: 0
   end
 
   add_index "projects", ["owner_id"], name: "index_projects_on_owner_id", using: :btree

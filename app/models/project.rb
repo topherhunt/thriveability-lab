@@ -1,9 +1,9 @@
 class Project < ActiveRecord::Base
   belongs_to :owner, class_name: :User
   has_many :resources, as: :target
-  has_many :like_flags, as: :target
-  has_many :stay_informed_flags, as: :target
-  has_many :get_involved_flags, as: :target
+  has_many :received_like_flags, as: :target
+  has_many :received_stay_informed_flags, as: :target
+  has_many :received_get_involved_flags, as: :target
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
   acts_as_taggable_on :tags

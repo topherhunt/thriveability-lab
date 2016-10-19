@@ -76,25 +76,14 @@
     %h4 Get connected
 
     = render partial: "shared/likes_section", locals: { target: @project, link_wording: "This inspires me" }
-
-    %p.stay-informed
-      - if current_user and StayInformedFlag.where(user: current_user, target: @project).any?
-        = link_to fa_icon("bell") + " I want to stay informed", stay_informed_flag_path("Project", @project), method: :delete, class: "btn btn-default active"
-      - else
-        = link_to fa_icon("bell") + " I want to stay informed", stay_informed_flag_path("Project", @project), method: :post, class: "btn btn-info"
-      - stay_informed_flags_count = @project.stay_informed_flags.count
-      - if stay_informed_flags_count > 0
-        &nbsp;
-        %span.badge.stay-informed-flags-count= stay_informed_flags_count
-    - if current_user == @project.owner and stay_informed_flags_count > 0
-      %p= link_to "See list of people who want to stay informed", stay_informed_flags_path("Project", @project), class: "stay-informed-flags-details"
+    = render partial: "shared/stay_informed_flags_section", locals: { target: @project, owner: @project.owner, link_wording: "Keep me informed" }
 
     %p.get-involved
       - if current_user and GetInvolvedFlag.where(user: current_user, target: @project).any?
         = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :delete, class: "btn btn-default active"
       - else
         = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :post, class: "btn btn-info"
-      - get_involved_flags_count = @project.get_involved_flags.count
+      - get_involved_flags_count = GetInvolvedFlag.where(target: @project).count
       - if get_involved_flags_count > 0
         &nbsp;
         %span.badge.get-involved-flags-count= get_involved_flags_count

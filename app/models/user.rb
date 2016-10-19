@@ -4,9 +4,11 @@ class User < ActiveRecord::Base
   # TODO: This can be renamed to just `resources`; the risk of confusion is low
   has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
   has_many :posts, foreign_key: :author_id, inverse_of: :author
-  has_many :like_flags # as the originator
-  has_many :stay_informed_flags
-  has_many :get_involved_flags
+  has_many :created_like_flags # as the originator
+  has_many :created_stay_informed_flags
+  has_many :created_get_involved_flags
+  has_many :received_like_flags, as: :target
+  has_many :received_stay_informed_flags, as: :target
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,
@@ -73,6 +75,10 @@ class User < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def first_name
+    name.split(' ').first
   end
 
   # TODO: Move this to a Handler class

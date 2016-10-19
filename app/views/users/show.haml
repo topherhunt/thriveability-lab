@@ -63,6 +63,11 @@
   .col-sm-4
     = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed hidden-xs"
 
+    %hr
+    %h4 Get connected
+    = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.first_name} inspires me" }
+    = render partial: "shared/stay_informed_flags_section", locals: { target: @user, owner: @user, link_wording: "Follow #{@user.first_name}" }
+
 .row
   .col-sm-6
     %h3 Resources

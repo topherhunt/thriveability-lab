@@ -1,0 +1,11 @@
+%p.stay-informed
+  - if current_user and StayInformedFlag.where(user: current_user, target: target).any?
+    = link_to fa_icon("bell") + " #{link_wording}", stay_informed_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active"
+  - else
+    = link_to fa_icon("bell") + " #{link_wording}", stay_informed_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info"
+  - stay_informed_flags_count = StayInformedFlag.where(target: target).count
+  - if stay_informed_flags_count > 0
+    &nbsp;
+    %span.badge.stay-informed-flags-count= stay_informed_flags_count
+- if current_user == owner and stay_informed_flags_count > 0
+  %p= link_to "See list of followers", stay_informed_flags_path(target.class.to_s, target), class: "stay-informed-flags-details"

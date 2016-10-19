@@ -1,8 +1,9 @@
 %p.likes
-  - if current_user and current_user.like_flags.where(target: target).any?
+  - if current_user and LikeFlag.where(user: current_user, target: target).any?
     = link_to fa_icon("heart") + " #{link_wording}", like_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active"
   - else
     = link_to fa_icon("heart") + " " + link_wording, like_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info"
-  - if target.like_flags_count > 0
+  - like_flags_count = LikeFlag.where(target: target).count
+  - if like_flags_count > 0
     &nbsp;
-    %span.badge.like-flags-count= target.like_flags_count
+    %span.badge.like-flags-count= like_flags_count
