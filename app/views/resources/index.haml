@@ -15,6 +15,12 @@
         - popular_resource_tags(15).each do |name|
           - selected = @filters[:tags].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
+      %div.strong{style: "padding-top: 10px;"} Filter by media type...
+      %select.js-chosen{name: "media_types", data: { placeholder: "Click to select a media type" }}
+        %option
+        - popular_resource_media_types(15).each do |name|
+          - selected = @filters[:media_types].to_s.split(", ").include?(name)
+          %option{value: name, selected: selected}= name
       .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
   .col-md-8
@@ -22,7 +28,7 @@
       %tr
         %th Title
         %th Tags
-        %th Added by
+        %th.nowrap Media types
         %th
       - @resources.each do |resource|
         %tr
@@ -31,7 +37,11 @@
             - resource.tag_list.each do |name|
               = link_to name, resources_path(tags: name)
               &nbsp;
-          %td
+          %td.small
+            - resource.media_type_list.each do |name|
+              = link_to name, resources_path(media_types: name)
+              &nbsp;
+          %td.nowrap
             - if resource.url.present?
               = link_to fa_icon("external-link") + " source", resource.url, target: "_blank"
               &nbsp;

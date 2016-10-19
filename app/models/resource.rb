@@ -1,5 +1,8 @@
 class Resource < ActiveRecord::Base
+  DEFAULT_MEDIA_TYPES = ['video', 'lecture', 'audio', 'image', 'book', 'research article', 'in press', 'unpublished', 'essay', 'popular media', 'brochure', 'website', 'course']
+
   acts_as_taggable_on :tags
+  acts_as_taggable_on :media_types
 
   belongs_to :creator, class_name: :User
   belongs_to :target, polymorphic: true

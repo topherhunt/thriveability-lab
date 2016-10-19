@@ -21,4 +21,11 @@ module TagsHelper
       .sort
   end
 
+  def popular_resource_media_types(limit)
+    Resource.tag_counts_on(:media_types)
+      .sort_by{ |i| -i.taggings_count }
+      .map(&:name)[0..(limit-1)]
+      .sort
+  end
+
 end

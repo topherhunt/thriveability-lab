@@ -7,7 +7,7 @@
     = form.text_field :tag_list, value: object.tag_list.sort.join(","), class: "js-hidden"
     %ul.js-tagit{ id: "#{object_name}-tags-tagit", data: { "tagit-target": "##{object_name}_tag_list", "tag-limit": 3, "available-tags": self.send("popular_#{object_name}_tags", 30) }}
     .small.js-hide-if-tagit-limit-exceeded
-      Common tags:
+      %strong Common tags:
       - PredefinedTag.all.order(:name).each do |tag|
         &nbsp;
         = link_to(tag.name, "#", class: "js-add-tag", "data-target": "##{object_name}-tags-tagit")
