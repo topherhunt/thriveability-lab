@@ -5,7 +5,8 @@
     - if post.published?
       by #{link_to post.author.name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
       &nbsp;
-      = link_to fa_icon("pencil"), edit_post_path(post), class: "js-edit-reply"
+      - if current_user == post.author
+        = link_to fa_icon("pencil"), edit_post_path(post), class: "js-edit-reply"
     - else
       %strong.text-danger Draft reply
       = "- you started writing this on #{print_date(post.created_at, time: true)}"

@@ -83,12 +83,10 @@
         = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :delete, class: "btn btn-default active"
       - else
         = link_to fa_icon("child") + "&nbsp; I want to get involved".html_safe, get_involved_flag_path("Project", @project), method: :post, class: "btn btn-info"
-      - get_involved_flags_count = GetInvolvedFlag.where(target: @project).count
-      - if get_involved_flags_count > 0
+      - get_involved_flags = GetInvolvedFlag.where(target: @project).includes(:user)
+      - if get_involved_flags.size > 0
         &nbsp;
-        %span.badge.get-involved-flags-count= get_involved_flags_count
-    - if current_user == @project.owner and get_involved_flags_count > 0
-      %p= link_to "See list of people who want to get involved", get_involved_flags_path("Project", @project), class: "get-involved-flags-details"
+        %span.badge.get-involved-flags-count.js-tooltip{"data-tooltip": get_involved_flags.first(10).map{ |f| f.user.name }.compact.join(", ")}= get_involved_flags.size
 
     - if @project.call_to_action.present?
       %hr

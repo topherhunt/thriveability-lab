@@ -34,4 +34,6 @@
         %td= link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)
     %tr
       %th
-      %td= render partial: "shared/likes_section", locals: { target: @resource, link_wording: "This inspires me" }
+      %td
+        = render partial: "shared/likes_section", locals: { target: @resource, link_wording: "This inspires me" }
+        = render partial: "shared/stay_informed_flags_section", locals: { target: @resource, owner: @resource.creator, link_wording: "Send me updates on this resource" }
