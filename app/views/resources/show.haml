@@ -22,6 +22,12 @@
           = link_to name, resources_path(tags: name)
           &nbsp;
     %tr
+      %th Media type
+      %td
+        - @resource.media_type_list.each do |name|
+          = link_to name, resources_path(media_types: name)
+          &nbsp;
+    %tr
       %th Added by
       %td= link_to @resource.creator.name, user_path(@resource.creator)
     - if @resource.target.present?
