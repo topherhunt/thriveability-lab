@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless current_user
+      if request.method == "GET"
+        session[:return_to] = request.path
+      else
+        session[:return_to] = request.referer
+      end
       redirect_to new_user_session_path, alert: "You must be logged in to take that action."
     end
   end
@@ -24,6 +29,17 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    user.name.present? ? root_path : user_path(user)
+    if session[:return_to]
+      session.delete(:return_to)
+    elsif user.name.present?
+      root_path
+    else
+      user_path(user)
+    end
+  end
+
+  rescue_from ActionController::InvalidAuthenticityToken do
+    session[:return_to] = request.referer
+    redirect_to new_user_session_path, alert: "You must be logged in to take that action."
   end
 end
