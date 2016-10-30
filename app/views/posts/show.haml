@@ -39,7 +39,7 @@
       %div{style: "padding-bottom: 10px;"}
         = link_to "Reply to this post", "#", class: "js-new-reply", "data-post-id": @post.id
         %i.fa.fa-spinner.loading.js-hidden
-        .new-reply-container.bottom-comment.js-hidden
+      .new-reply-container.js-hidden{ "data-parent-id": @post.id }
     - else
       %p= link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
       .modal.fade#join-conversation-modal
@@ -52,7 +52,8 @@
               = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }
 
     - if @post.children.visible_to(current_user).not_inline.any?
-      - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
-        = render partial: "show_bottom_comment", locals: { post: reply }
+      %div{style: "margin-left: -10px;"}
+        - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
+          = render partial: "show_bottom_comment", locals: { post: reply }
     - else
       %p No comments yet.
