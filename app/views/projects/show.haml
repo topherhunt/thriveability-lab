@@ -93,10 +93,10 @@
       %h4 How you can help out
       %p= @project.call_to_action
 
-      %table.form
+      %table.table
         %tr
           %th I'm offering...
-          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness"]), { class: "form-control" }
+          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness", "other"]), { class: "form-control" }
         %tr
           %th Comments
           %td= text_area_tag :comment, "", class: "form-control"
