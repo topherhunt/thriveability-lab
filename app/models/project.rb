@@ -7,7 +7,6 @@ class Project < ActiveRecord::Base
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
   acts_as_taggable_on :tags
-  acts_as_taggable_on :needs
 
   # See https://github.com/thoughtbot/paperclip#quick-start
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },

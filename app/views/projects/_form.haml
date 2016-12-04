@@ -46,17 +46,12 @@
       = f.label :quadrant_lr, "What contexts are you constrained / supported by?"
       = f.text_area :quadrant_lr, class: "form-control"
 
-  %h3 Status & needs
+  %h3 How can others help?
 
   .row.row-padded
     .col-sm-4
-      = f.label :need_list, "I'm sharing with this community because I want..."
-      .small eg. <span class="label label-default">advice</span>, <span class="label label-default">sponsorship</span>
-    .col-sm-8
-      = f.text_field :need_list, value: @project.need_list.join(","), class: "js-hidden"
-      %ul#need-list-tagit.js-tagit{"data-tagit-target": "#project_need_list"}
-  .row.row-padded
-    .col-sm-4= f.label :call_to_action, "1 thing that the viewer can do right now to support this project"
+      = f.label :call_to_action, "What can others do to help?"
+      .small Describe what forms of help you'd be grateful for. Other members may contact you in response to what you write here.
     .col-sm-8= f.text_area :call_to_action, class: "form-control"
   .row.row-padded
     .col-sm-4

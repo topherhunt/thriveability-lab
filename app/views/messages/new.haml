@@ -1,0 +1,20 @@
+.centered-800
+  %h1 Send #{@message.recipient.first_name} a message
+
+  %p Write your message below, then click <strong>Submit</strong>. We'll email #{@message.recipient.first_name} with your message, and CC a copy to you as well. If #{@message.recipient.first_name} replies, you'll receive the reply directly in your email inbox.
+
+  = form_for(@message, html: { style: "max-width: 800px;" }) do |f|
+    = show_errors_for @message
+
+    = f.hidden_field :project_id
+    = f.hidden_field :recipient_id
+
+    .row.row-padded
+      .col-sm-3= f.label :subject_code, "What are you writing about?"
+      .col-sm-9= f.select :subject_code, Message::SUBJECTS.invert, { include_blank: "- select one -" }, class: "form-control"
+    .row.row-padded
+      .col-sm-3= f.label :body, "Your message"
+      .col-sm-9= f.text_area :body, class: "form-control"
+    .row.row-padded
+      .col-sm-3
+      .col-sm-9= f.submit "Send!", class: "btn btn-primary"

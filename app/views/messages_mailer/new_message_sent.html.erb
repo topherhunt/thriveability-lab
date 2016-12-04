@@ -1,0 +1,13 @@
+<p>Howdy <%= @message.sender.first_name %>!</p>
+
+<p>This email confirms that your message has been sent to <%= link_to @message.recipient.full_name, user_url(@message.recipient) %> regarding their project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+
+<h3>Subject:</h3>
+<p><strong><%= Message::SUBJECTS.fetch(@message.subject_code) %></strong></p>
+
+<h3>The message:</h3>
+<hr>
+<%= simple_format(@message.body) %>
+<hr>
+
+<p>If <%= @message.recipient.first_name %> replies to your message, the reply will be sent directly to your email inbox.</p>

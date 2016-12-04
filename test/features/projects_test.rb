@@ -14,7 +14,6 @@ class ProjectsTest < Capybara::Rails::TestCase
       "project[title]": "Gathering Acorns",
       "project[subtitle]": "Re-thinking the way we interface with squirrels",
       "project[introduction]": "Foo bar baz! " * 100,
-      "project[need_list]": "collaborators, funding, feedback, sponsorship",
       "project[call_to_action]": "Moneys! Moneys!")
     attach_file "project[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
     select "developing", from: "project[stage]"
@@ -23,7 +22,6 @@ class ProjectsTest < Capybara::Rails::TestCase
     assert_path project_path(@project)
     assert_content "Your new project is now publicly listed."
     assert_equals "Gathering Acorns", @project.title
-    assert_equals ["collaborators", "funding", "feedback", "sponsorship"].to_set, @project.need_list.to_set
     assert_equals "developing", @project.stage
   end
 
@@ -47,13 +45,12 @@ class ProjectsTest < Capybara::Rails::TestCase
     click_on @project.title
     assert_path project_path(@project)
     page.find('a.edit-project').click
-    fill_fields(
-      "project[title]": "abcxyz",
-      "project[need_list]": "foo,bar,baz")
+    fill_in 'project[title]', with: "abcxyz"
+    fill_in 'project[tag_list]', with: "foo,bar,baz"
     click_on "Save"
     assert_content "Project updated."
     assert_equals "abcxyz", @project.reload.title
-    assert_equals ["foo", "bar", "baz"].to_set, @project.need_list.to_set
+    assert_equals ["foo", "bar", "baz"].to_set, @project.tag_list.to_set
   end
 
   test "Other users can't edit a project" do

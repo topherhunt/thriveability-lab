@@ -1,0 +1,13 @@
+<p>Howdy <%= @message.recipient.first_name %>!</p>
+
+<p>Integral Climate member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+
+<h3>Subject:</h3>
+<p><strong><%= Message::SUBJECTS.fetch(@message.subject_code) %></strong></p>
+
+<h3>The message:</h3>
+<hr>
+<%= simple_format(@message.body) %>
+<hr>
+
+<p>To write back to <%= @message.sender.first_name %>, simply reply to this email.</p>

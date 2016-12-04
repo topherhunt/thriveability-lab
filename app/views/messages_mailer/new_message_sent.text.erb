@@ -1,0 +1,13 @@
+Howdy <%= @message.sender.first_name %>!
+
+This email confirms that your message has been sent to <%= @message.recipient.full_name %> regarding their project, <%= @message.project.title %>.
+
+Subject: <%= Message::SUBJECTS.fetch(@message.subject_code) %>
+
+The message:
+
+----------
+<%= @message.body %>
+----------
+
+If <%= @message.recipient.first_name %> replies to your message, the reply will be sent directly to your email inbox.

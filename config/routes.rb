@@ -26,6 +26,8 @@ Rails.application.routes.draw do
 
   resources :post_conversants, only: [:new, :create]
 
+  resources :messages, only: [:new, :create]
+
   post   "like_flags/:target_type/:target_id" => "like_flags#create", as: :like_flag
   delete "like_flags/:target_type/:target_id" => "like_flags#destroy"
 
