@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def require_login
     unless current_user
       if request.method == "GET"
-        session[:return_to] = request.path
+        session[:return_to] = request.original_url
       else
         session[:return_to] = request.referer
       end
