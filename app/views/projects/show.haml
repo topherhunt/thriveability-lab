@@ -10,7 +10,7 @@
     %table.table
       %tr
         %th Owner
-        %td= link_to @project.owner.name, user_path(@project.owner)
+        %td= link_to @project.owner.full_name, user_path(@project.owner)
       %tr
         %th Based in
         %td= @project.location
@@ -86,20 +86,11 @@
       - get_involved_flags = GetInvolvedFlag.where(target: @project).includes(:user)
       - if get_involved_flags.size > 0
         &nbsp;
-        %span.badge.get-involved-flags-count.js-tooltip{"data-tooltip": get_involved_flags.first(10).map{ |f| f.user.name }.compact.join(", ")}= get_involved_flags.size
+        %span.badge.get-involved-flags-count.js-tooltip{"data-tooltip": get_involved_flags.first(10).map{ |f| f.user.full_name }.compact.join(", ")}= get_involved_flags.size
 
     - if @project.call_to_action.present?
       %hr
       %h4 How you can help out
       %p= @project.call_to_action
 
-      %table.table
-        %tr
-          %th I'm offering...
-          %td= select_tag :offering, options_for_select(["- select one -", "collaboration", "funding", "sponsorship", "feedback", "consulting", "spreading awareness", "other"]), { class: "form-control" }
-        %tr
-          %th Comments
-          %td= text_area_tag :comment, "", class: "form-control"
-        %tr
-          %td
-          %td= link_to "Send (TODO)", "#", class: "btn btn-primary"
+    %p.text-center Questions? Ideas? Feedback?<br> #{link_to "Send #{@project.owner.first_name} an email"}

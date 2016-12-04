@@ -3,7 +3,7 @@
 
   - if @post.published?
     %p
-      by #{link_to @post.author.name, user_path(@post.author)} on #{print_date @post.published_at, time: true}
+      by #{link_to @post.author.full_name, user_path(@post.author)} on #{print_date @post.published_at, time: true}
       - if current_user == @post.author
         &nbsp;
         = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"

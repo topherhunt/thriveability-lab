@@ -2,13 +2,13 @@ class User < ActiveRecord::Base
   has_many :omniauth_accounts, dependent: :delete_all
   has_many :projects, foreign_key: :owner_id
   # TODO: This can be renamed to just `resources`; the risk of confusion is low
-  has_many :created_resources, class_name: :Resource, foreign_key: :creator_id, inverse_of: :creator
+  has_many :created_resources, class_name: 'Resource', foreign_key: :creator_id, inverse_of: :creator
   has_many :posts, foreign_key: :author_id, inverse_of: :author
   has_many :created_like_flags # as the originator
-  has_many :created_stay_informed_flags
-  has_many :created_get_involved_flags
-  has_many :received_like_flags, as: :target
-  has_many :received_stay_informed_flags, as: :target
+  has_many :created_stay_informed_flags, class_name: 'StayInformedFlag'
+  has_many :created_get_involved_flags, class_name: 'GetInvolvedFlag'
+  has_many :received_like_flags, class_name: 'LikeFlag', as: :target
+  has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,
@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
   validates :self_fields_of_expertise, length: { maximum: 1000 }
 
   before_save :update_has_set_password
+
+  def full_name
+    [first_name, last_name].select{ |s| s.present? }.join(' ').presence
+  end
 
   # TODO: Move this to a Handler class
   def self.find_or_create_or_link_from_omniauth(auth:, logged_in_user: nil)
@@ -63,10 +67,12 @@ class User < ActiveRecord::Base
         else
           # This social account isn't in our system, and we have no record of its
           # email address. Create a new user and link the social account.
+          names = auth.info.name.to_s.split(' ')
           new_user = User.create!(
             email: auth.info.email,
             password: Devise.friendly_token, # random throw-away password
-            name: auth.info.name,
+            first_name: names[0],
+            last_name: names[1..-1],
             image: auth.info.image,
             confirmed_at: Time.now.utc,
             has_set_password: false)
@@ -77,14 +83,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def first_name
-    name.split(' ').first
-  end
-
   # TODO: Move this to a Handler class
   def merge!(to_user:)
     return if to_user.id == self.id
 
+    # TODO: This shouldn't just blow up in the code, it should blow up in a unit test (that I actually run because the test suite should be maintained, right?)
     unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts, :like_flags, :stay_informed_flags].to_set
       raise "ERROR: Refusing to perform .merge!, it looks like I've forgotten to set up additional associations."
     end

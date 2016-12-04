@@ -6,7 +6,8 @@ Resource.delete_all
 OmniauthAccount.delete_all
 
 @admin = FactoryGirl.create(:user,
-  name: "Topher Hunt",
+  first_name: "Topher",
+  last_name: "Hunt",
   email: "hunt.topher@gmail.com",
   password: "password",
   password_confirmation: "password")

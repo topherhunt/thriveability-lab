@@ -6,4 +6,4 @@
   - like_flags = LikeFlag.where(target: target).includes(:user)
   - if like_flags.size > 0
     &nbsp;
-    %span.badge.like-flags-count.js-tooltip{"data-tooltip": like_flags.first(10).map{ |f| f.user.name }.compact.join(", ")}= like_flags.size
+    %span.badge.like-flags-count.js-tooltip{"data-tooltip": like_flags.first(10).map{ |f| f.user.full_name }.compact.join(", ")}= like_flags.size

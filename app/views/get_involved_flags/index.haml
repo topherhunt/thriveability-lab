@@ -6,4 +6,4 @@
     Users who asked to get involved
   %ul.get-involved-users-list
     - @flags.each do |flag|
-      %li= link_to flag.user.name, user_path(flag.user)
+      %li= link_to flag.user.full_name, user_path(flag.user)

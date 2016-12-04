@@ -1,16 +1,16 @@
-- if current_user == @user and @user.name.blank?
+- if current_user == @user and @user.first_name.blank?
   .alert.alert-warning
-    %strong You haven't provided your name yet!
-    Once you add your name to your profile, you can contribute new content to the community and others can find you more easily.
-    = link_to "Add my name", edit_user_path(current_user)
+    %strong We don't even know your name yet!
+    Once you fill in your profile information, you'll have full access to contribute to discussions, contact project owners, etc.
+    = link_to "Fill in my profile info", edit_user_path(current_user)
 
 .row
   .col-sm-8
     %div{style: "padding-bottom: 10px;"}
-      %span.h1= @user.name
+      %span.h1= @user.full_name || "Nameless Cool Person"
       - if current_user == @user
         &nbsp;
-        = link_to fa_icon("pencil") + " Update my profile", edit_user_path(@user), class: "edit-user"
+        = link_to fa_icon("pencil") + " Edit my profile", edit_user_path(@user), class: "edit-user"
 
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
       = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed"
@@ -77,9 +77,9 @@
           = render partial: "resources/show_li", locals: { resource: resource }
       - if current_user == @user
         %p= link_to fa_icon("plus") + " Add a resource", new_resource_path(editing_user_profile: true)
-    - else
+    - elsif @user.first_name.present?
       %p
-        #{@user.name} hasn't contributed any resources yet.
+        #{@user.first_name} hasn't contributed any resources yet.
         - if current_user == @user
           Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
 
@@ -94,8 +94,8 @@
           - post.tag_list.each do |name|
             = link_to name, posts_path(tags: name, author_id: @user.id), class: "small"
             &nbsp;
-    - else
-      %p #{@user.name} hasn't written anything yet.
+    - elsif @user.first_name.present?
+      %p #{@user.first_name} hasn't written anything yet.
 
     - if current_user == @user
       %p{style: "padding-top: 10px;"}= link_to fa_icon("plus") + " Write something", posts_path, method: :post

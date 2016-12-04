@@ -23,15 +23,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_user_name
-    unless current_user.name.present?
-      redirect_to edit_user_path(current_user), alert: "Please give yourself a name before taking that action."
+    unless current_user.first_name.present?
+      redirect_to edit_user_path(current_user), alert: "We'd like to know you better! Please fill in your name before taking that action."
     end
   end
 
   def after_sign_in_path_for(user)
     if session[:return_to]
       session.delete(:return_to)
-    elsif user.name.present?
+    elsif user.first_name.present?
       root_path
     else
       user_path(user)

@@ -11,7 +11,8 @@ class UserProfileTest < Capybara::Rails::TestCase
     page.find('a.edit-user').click
     assert_path edit_user_path(@user)
     fill_fields(
-      "user[name]" => "Elmer Fudd",
+      "user[first_name]" => "Elmer",
+      "user[last_name]" => "Fudd",
       "user[self_skills]" => "knitting, hunting",
       "user[self_passions]" => "cartoons, wacky wabbits",
       "user[self_proud_traits]" => "diligent, stealthy, tireless, patient",
@@ -22,7 +23,7 @@ class UserProfileTest < Capybara::Rails::TestCase
     assert_path user_path(@user)
     assert_content "Your profile has been updated."
     expect_attributes(@user.reload,
-      name: "Elmer Fudd",
+      full_name: "Elmer Fudd",
       image_file_name: "elmerfudd.jpg",
       self_skills: "knitting, hunting",
       self_passions: "cartoons, wacky wabbits",

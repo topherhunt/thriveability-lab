@@ -18,7 +18,7 @@
         %option
         - @authors.each do |author|
           - selected = @filters[:author_id] == author.id.to_s
-          %option{value: author.id, selected: selected}= author.name
+          %option{value: author.id, selected: selected}= author.full_name
       .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
   .col-sm-8
@@ -43,5 +43,5 @@
             - post.tag_list.each do |name|
               = link_to name, posts_path(tags: name)
               &nbsp;
-          %td= link_to post.author.name, user_path(post.author)
+          %td= link_to post.author.full_name, user_path(post.author)
           %td= print_date post.published_at, abbreviated: true, time: true if post.published?

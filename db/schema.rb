@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019234318) do
+ActiveRecord::Schema.define(version: 20161128161552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,7 +185,6 @@ ActiveRecord::Schema.define(version: 20161019234318) do
     t.string   "unconfirmed_email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -201,6 +200,8 @@ ActiveRecord::Schema.define(version: 20161019234318) do
     t.string   "self_professional_goals",  limit: 1000
     t.string   "self_fields_of_expertise", limit: 1000
     t.boolean  "has_set_password",                      default: true
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

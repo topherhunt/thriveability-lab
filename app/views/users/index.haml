@@ -13,6 +13,6 @@
       - @users.each do |user|
         %tr
           %td= image_tag(user.image.url(:thumb), class: "image-framed-tiny", style: "width: 30px;")
-          %td= link_to (user.name.presence || "Nameless Cool Person"), user_path(user)
+          %td= link_to (user.full_name || "Nameless Cool Person"), user_path(user)
           %td= print_date(user.created_at, abbreviated: true)
           %td= print_date(user.current_sign_in_at, abbreviated: true)

@@ -6,4 +6,4 @@
   - stay_informed_flags = StayInformedFlag.where(target: target).includes(:user)
   - if stay_informed_flags.size > 0
     &nbsp;
-    %span.badge.stay-informed-flags-count.js-tooltip{"data-tooltip": stay_informed_flags.first(10).map{ |f| f.user.name }.compact.join(", ")}= stay_informed_flags.size
+    %span.badge.stay-informed-flags-count.js-tooltip{"data-tooltip": stay_informed_flags.first(10).map{ |f| f.user.full_name }.compact.join(", ")}= stay_informed_flags.size

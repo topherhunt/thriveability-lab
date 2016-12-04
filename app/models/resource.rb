@@ -6,7 +6,8 @@ class Resource < ActiveRecord::Base
 
   belongs_to :creator, class_name: :User
   belongs_to :target, polymorphic: true
-  has_many :received_like_flags, as: :target
+  has_many :received_like_flags, class_name: 'LikeFlag', as: :target
+  has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
   validates :title, presence: true
   validates :url, presence: true

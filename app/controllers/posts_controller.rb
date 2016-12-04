@@ -6,7 +6,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.roots.visible_to(current_user).order("published_at DESC")
-    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:name)
+    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:first_name)
     @filters = params.slice(:author_id, :tags)
     filter_posts
   end

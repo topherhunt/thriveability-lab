@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory(:user) do
-    name { "#{Faker::Name.first_name} #{Faker::Name.last_name}" }
-    email { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
+    first_name { Faker::Name.first_name }
+    last_name  { Faker::Name.last_name  }
+    email { "#{full_name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
     confirmed_at 1.week.ago

@@ -96,7 +96,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content @post2.title
     assert_content @post3.title
     within(".filter-posts") {
-      select @user1.name, from: "author_id"
+      select @user1.full_name, from: "author_id"
       click_button "Filter"
     }
     assert_content @post1.title

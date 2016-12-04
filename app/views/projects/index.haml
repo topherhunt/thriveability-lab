@@ -35,4 +35,4 @@
               = link_to name, projects_path(tags: name)
               &nbsp;
           %td= print_date(project.created_at, abbreviated: true)
-          %td= link_to project.owner.name, user_path(project.owner)
+          %td= link_to project.owner.full_name, user_path(project.owner)

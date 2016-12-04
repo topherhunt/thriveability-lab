@@ -10,7 +10,7 @@
       - User.limit(20).each do |user|
         %div{style: 'float: left; padding: 3px;'}
           %div{style: 'width: 50px; height: 50px; background: #ddd;'}
-            = link_to image_tag(user.image.url(:thumb), class: "image-framed-tiny", style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.name }
+            = link_to image_tag(user.image.url(:thumb), class: "image-framed-tiny", style: "width: 100%;"), user_path(user), class: "js-tooltip", data: { tooltip: user.full_name }
       .clear-float
     - if User.count > 20
       %p= link_to "Meet #{User.count - 20} more", users_path

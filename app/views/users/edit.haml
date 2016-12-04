@@ -12,8 +12,15 @@
     = show_errors_for(@user)
 
     .row.row-padded
-      .col-sm-3= f.label :name, "My name <span class='text-danger'>*</span>".html_safe
-      .col-sm-9= f.text_field :name, class: "form-control"
+      .col-sm-3
+        = f.label :first_name
+        .small.em.text-danger required
+      .col-sm-9= f.text_field :first_name, class: "form-control"
+    .row.row-padded
+      .col-sm-3
+        = f.label :last_name
+        .small.em.text-danger required
+      .col-sm-9= f.text_field :last_name, class: "form-control"
     .row.row-padded
       .col-sm-3= f.label :image, "A photo of me <span class='text-danger'>*</span>".html_safe
       .col-sm-9

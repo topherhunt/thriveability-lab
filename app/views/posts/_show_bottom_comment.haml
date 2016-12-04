@@ -5,7 +5,7 @@
     = sanitize(post.published_content || post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
     %p.text-muted{style: "margin-top: 0.5em;"}
       - if post.published?
-        by #{link_to post.author.name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
+        by #{link_to post.author.full_name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
       - else
         %strong.text-danger Draft reply
         = "- you started writing this on #{print_date(post.created_at, time: true)}"

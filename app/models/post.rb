@@ -2,7 +2,8 @@ class Post < ActiveRecord::Base
   belongs_to :author, class_name: :User, inverse_of: :posts
   has_many :post_conversant_joins, class_name: :PostConversant
   has_many :conversants, through: :post_conversant_joins, source: :user
-  has_many :received_like_flags, as: :target
+  has_many :received_like_flags, class_name: 'LikeFlag', as: :target
+  has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
   has_closure_tree # tree hierarchy - see https://github.com/mceachen/closure_tree
 
