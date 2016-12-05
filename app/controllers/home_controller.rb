@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   end
 
   def about
+    @team = User.where(id: ENV.fetch('TEAM_USER_IDS').split(',')).to_a.shuffle
   end
 
   def throwup

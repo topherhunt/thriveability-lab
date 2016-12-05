@@ -26,3 +26,50 @@
       %li Elegantly structured and with great flexibility in how resources are organized
       %li Attractive, uplifting, and designed for a global audience
       %li Using technology to connect and inspire individuals around the globe
+
+%h2.text-center Our team
+.row
+  - @team.each do |user|
+    .col-sm-6{style: "padding-bottom: 10px;"}
+      = image_tag user.image.url(:medium), style: "float: right; width: 20%;", class: "image-framed"
+      %h3= link_to user.full_name, user_path(user)
+      - if user.self_dreams.present?
+        %p
+          %strong My dreams:
+          = user.self_dreams
+      - if user.self_passions.present?
+        %p
+          %strong My passions:
+          = user.self_passions
+      - if user.self_skills.present?
+        %p
+          %strong My skills:
+          = user.self_skills
+      - if user.self_proud_traits.present?
+        %p
+          %strong I'm proud of:
+          = user.self_proud_traits
+      - if user.self_weaknesses.present?
+        %p
+          %strong My weakness:
+          = user.self_weaknesses
+      - if user.self_evolve.present?
+        %p
+          %strong I'd like to evolve into:
+          = user.self_evolve
+      - if user.self_looking_for.present?
+        %p
+          %strong I'm looking for:
+          = user.self_looking_for
+      - if user.self_work_at.present?
+        %p
+          %strong My current work:
+          = user.self_work_at
+      - if user.self_professional_goals.present?
+        %p
+          %strong My professional goals:
+          = user.self_professional_goals
+      - if user.self_fields_of_expertise.present?
+        %p
+          %strong My fields of expertise:
+          = user.self_fields_of_expertise
