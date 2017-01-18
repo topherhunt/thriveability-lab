@@ -45,9 +45,7 @@
 
   .col-sm-6
     %h4.text-center #{@resources_count} resources
-    %ul
-      - @featured_resources.each do |resource|
-        %li= link_to resource.title, resource_path(resource)
+    %p Resources are aimed at supporting our members to discover ideas and tools that help them make meaningful change. You can add links or documents that you think may be useful to others, and explore those of others.
     %p= link_to "Explore all resources", resources_path
 
 %hr
