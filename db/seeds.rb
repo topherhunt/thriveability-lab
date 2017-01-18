@@ -14,6 +14,7 @@ OmniauthAccount.delete_all
 @user1 = FactoryGirl.create(:user)
 @user2 = FactoryGirl.create(:user)
 @user3 = FactoryGirl.create(:user)
+5.times { FactoryGirl.create(:user) }
 
 @project1 = FactoryGirl.create(:project, owner: @user1)
 @project2 = FactoryGirl.create(:project, owner: @user2)

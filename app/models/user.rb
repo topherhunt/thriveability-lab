@@ -33,8 +33,8 @@ class User < ActiveRecord::Base
 
   before_save :update_has_set_password
 
-  def self.most_recent
-    order('current_sign_in_at DESC').limit(20)
+  def self.most_recent(n)
+    order('current_sign_in_at DESC').limit(n)
   end
 
   def full_name

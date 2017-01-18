@@ -12,6 +12,6 @@ class UserTest < ActiveSupport::TestCase
     u1 = create :user, created_at: 3.days.ago
     u4 = create :user, created_at: 4.days.ago
     u5 = create :user, created_at: 5.days.ago
-    assert_equals [u3, u2, u1, u4, u5].map(&:id), User.most_recent.pluck(:id).to_a
+    assert_equals [u3, u2, u1, u4, u5].map(&:id), User.most_recent(5).pluck(:id).to_a
   end
 end
