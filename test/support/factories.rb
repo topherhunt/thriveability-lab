@@ -48,8 +48,14 @@ FactoryGirl.define do
   end
 
   factory(:resource) do
+    association :creator, factory: :user
     title { Faker::Lorem.words(5).join(" ").capitalize }
     url { Faker::Internet.url }
     description { Faker::Lorem.paragraph }
+  end
+
+  factory(:like_flag) do
+    association :user
+    target { raise "Target must be specified!" }
   end
 end

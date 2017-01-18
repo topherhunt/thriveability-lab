@@ -1,6 +1,10 @@
 class HomeController < ApplicationController
   def home
-    @user_thumbnails = User.all.map{ |u| u.image.url(:thumb) }
+    @featured_users = User.most_recent
+    @featured_projects = Project.most_popular
+    @featured_resources = Resource.most_popular
+    @featured_posts = Post.most_popular
+    @recent_events = RecentEvent.latest(5)
   end
 
   def about

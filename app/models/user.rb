@@ -33,6 +33,10 @@ class User < ActiveRecord::Base
 
   before_save :update_has_set_password
 
+  def self.most_recent
+    order('current_sign_in_at DESC').limit(20)
+  end
+
   def full_name
     [first_name, last_name].select{ |s| s.present? }.join(' ').presence
   end

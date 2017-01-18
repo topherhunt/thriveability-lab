@@ -17,6 +17,10 @@ class Resource < ActiveRecord::Base
   validates_attachment :attachment, size: { in: 0..10.megabytes }
   do_not_validate_attachment_file_type :attachment
 
+  def self.most_popular
+    all.sort_by{ |p| -p.received_like_flags.count }.take(5)
+  end
+
   private
 
   def require_ownership_if_uploaded

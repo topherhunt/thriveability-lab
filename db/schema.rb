@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204174458) do
+ActiveRecord::Schema.define(version: 20161211153904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20161204174458) do
     t.integer  "parent_id"
     t.integer  "reply_at_char_position"
     t.text     "draft_content"
-    t.integer  "like_flags_count",       default: 0
   end
 
   add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
@@ -146,7 +145,6 @@ ActiveRecord::Schema.define(version: 20161204174458) do
     t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "like_flags_count",        default: 0
   end
 
   add_index "resources", ["creator_id"], name: "index_resources_on_creator_id", using: :btree

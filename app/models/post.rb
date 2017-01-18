@@ -22,6 +22,12 @@ class Post < ActiveRecord::Base
   scope :inline, ->{ where "reply_at_char_position IS NOT NULL" }
   scope :not_inline, ->{ where "reply_at_char_position IS NULL" }
   scope :visible_to, ->(user){ where("author_id = ? OR published = TRUE", user.try(:id) || 0) }
+  scope :not_roots, ->{ where "parent_id IS NOT NULL" }
+
+  def self.most_popular
+    # TODO: Unperformant
+    published.roots.sort_by{ |p| -p.received_like_flags.count }.take(5)
+  end
 
   private
 
