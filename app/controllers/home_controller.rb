@@ -6,6 +6,9 @@ class HomeController < ApplicationController
     @featured_posts = Post.most_popular
     @recent_events = RecentEvent.latest(5)
     @users_count = User.count
+    @projects_count = Project.count
+    @posts_count = Post.published.roots.count
+    @resources_count = Resource.count
   end
 
   def about

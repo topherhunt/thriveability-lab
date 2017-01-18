@@ -1,13 +1,11 @@
 .row.hidden-xs
   %div{style: "width: 100%; height: 200px; background-image: url('#{image_path 'maxheaaauki-vincent-guth.jpg'}'); background-size: 100%; margin-top: -20px;"}
-    %h1.text-center{style: "color: #eee; vertical-align: middle; line-height: 200px;"} Integral Climate
-
-
+    %h1.text-center{style: "color: #eee; vertical-align: middle; line-height: 200px;"} Integral Climate is...
 
 .row
 
   .col-sm-6
-    %h4.text-center #{@users_count} people
+    %h4.text-center #{@users_count} people who envision a more sustainable world
     %div{style: 'position: relative;'}
       - @featured_users.each do |user|
         %div{style: 'float: left; width: 19.5%; height: 19.5%; padding: 0.5%;'}
@@ -16,7 +14,7 @@
     %p= link_to "Meet all members", users_path
 
   .col-sm-6
-    %h4.text-center Projects
+    %h4.text-center #{@projects_count} projects
     %ul
       - @featured_projects.each do |project|
         %li= link_to project.title, project_path(project)
@@ -28,14 +26,14 @@
 .row
 
   .col-sm-6
-    %h4.text-center Conversations
+    %h4.text-center #{@posts_count} conversations
     %ul
       - @featured_posts.each do |post|
         %li= link_to post.title, post_path(post)
     %p= link_to "Explore all conversations", posts_path
 
   .col-sm-6
-    %h4.text-center Resources
+    %h4.text-center #{@resources_count} resources
     %ul
       - @featured_resources.each do |resource|
         %li= link_to resource.title, resource_path(resource)
