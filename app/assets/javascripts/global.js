@@ -24,4 +24,12 @@ $(function(){
     width: '100%'
   });
 
+  $('.js-fadeout-on-hover').hover(function(){
+    console.log("Fading out.");
+    $(this).animate({opacity: 0}, 250);
+  }, function(){
+    console.log("Fading in.");
+    $(this).animate({opacity: 1}, 250);
+  });
+
 });

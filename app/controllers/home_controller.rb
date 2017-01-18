@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
   def home
     @featured_users = User.most_recent(15)
-    @featured_projects = Project.most_popular
+    @featured_projects = Project.most_popular(6)
     @featured_resources = Resource.most_popular
     @featured_posts = Post.most_popular
     @recent_events = RecentEvent.latest(5)

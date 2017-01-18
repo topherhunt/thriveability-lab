@@ -28,12 +28,12 @@ class Project < ActiveRecord::Base
   validates :call_to_action, length: { maximum: 255 }
   validates :stage, inclusion: { in: ["idea", "developing", "mature"] }
 
-  def self.most_popular
+  def self.most_popular(n)
     # TODO: This triggers N+1 queries.
     # More efficient approaches to this, for consideration in the long run:
     # - Store result in the Rails cache so it doesn't need to be recomputed each time
     # - Custom SQL query on the like_flags table to get the most liked project_id
     # - Add received_like_flags_count cache column so we can sort by that
-    all.sort_by{ |p| -p.received_like_flags.count }.take(5)
+    all.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
 end
