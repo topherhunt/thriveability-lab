@@ -26,10 +26,14 @@ class Capybara::Rails::TestCase
 
   def assert_path(path)
     10.times do
-      return if current_path == path
+      if path.is_a? Regexp
+        return if current_path =~ path
+      else
+        return if current_path == path
+      end
       sleep 0.2
     end
-    raise "Expected current_path to be \"#{path}\", but was \"#{current_path}\"!"
+    raise "Expected current_path to match \"#{path}\", but was \"#{current_path}\"!"
   end
 
   def expect_attributes(object, hash)

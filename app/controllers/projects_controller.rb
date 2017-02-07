@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
     @project.owner = current_user
 
     if @project.save
+      NotificationGenerator.new(current_user, :created_project, @project).run
       redirect_to project_path(@project), notice: "Your new project is now publicly listed."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

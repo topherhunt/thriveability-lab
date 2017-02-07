@@ -1,0 +1,25 @@
+ul.notifications-list {
+  .notification a {
+    display: block;
+    min-width: 450px;
+    white-space: normal; // navbar links want to `nowrap` by default
+    border-top: 1px solid #eee;
+  }
+
+  .notification.unread .description {
+    color: #2f6f9f; }
+  .notification.read a {
+    color: #888; }
+  .notification-icon {
+    float: left;
+    width: 30px;
+    margin-left: -10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-right: 10px; }
+}
+
+.all-notifications-list {
+  .notification.read, .notification.read a {
+    color: #888; }
+}

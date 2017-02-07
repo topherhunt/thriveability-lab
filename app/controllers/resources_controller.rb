@@ -23,6 +23,7 @@ class ResourcesController < ApplicationController
     @resource.creator = current_user
 
     if @resource.save
+      NotificationGenerator.new(current_user, :created_resource, @resource).run
       redirect_to return_to_path, notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

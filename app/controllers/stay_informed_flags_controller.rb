@@ -4,6 +4,7 @@ class StayInformedFlagsController < ApplicationController
   def create
     @target = params[:target_type].constantize.find(params[:target_id])
     @flag = StayInformedFlag.where(user: current_user, target: @target).first_or_create!
+    NotificationGenerator.new(current_user, :followed_object, @target).run
     redirect_to url_for(@target)
   end
 

@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
+      NotificationGenerator.new(current_user, :updated_profile, current_user).run
       redirect_to user_path(@user), notice: "Your profile has been updated."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

@@ -18,15 +18,14 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
-  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy] do
-    collection do
-      get :reply
-    end
-  end
+  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy]
 
   resources :post_conversants, only: [:new, :create]
 
   resources :messages, only: [:new, :create]
+
+  resources :notifications, only: [:index, :show]
+  post "notifications/mark_all_read" => "notifications#mark_all_read", as: :mark_all_read_notifications
 
   post   "like_flags/:target_type/:target_id" => "like_flags#create", as: :like_flag
   delete "like_flags/:target_type/:target_id" => "like_flags#destroy"

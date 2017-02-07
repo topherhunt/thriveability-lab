@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211153904) do
+ActiveRecord::Schema.define(version: 20170124160202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(version: 20161211153904) do
   add_index "messages", ["project_id"], name: "index_messages_on_project_id", using: :btree
   add_index "messages", ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
   add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "notify_user_id"
+    t.integer  "actor_id"
+    t.string   "action"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.boolean  "read",           default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notifications", ["actor_id"], name: "index_notifications_on_actor_id", using: :btree
+  add_index "notifications", ["notify_user_id"], name: "index_notifications_on_notify_user_id", using: :btree
+  add_index "notifications", ["target_type", "target_id"], name: "index_notifications_on_target_type_and_target_id", using: :btree
 
   create_table "omniauth_accounts", force: :cascade do |t|
     t.integer  "user_id"

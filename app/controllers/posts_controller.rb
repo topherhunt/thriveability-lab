@@ -90,8 +90,12 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :draft_content, :intention_type, :intention_statement, :tag_list)
   end
 
-  def publishing?
+  def publishing? # either the first time, or re-publishing
     params[:commit].to_s.downcase.include?("publish")
+  end
+
+  def newly_published?
+    ! @previously_published and publishing?
   end
 
   def template_variant
@@ -125,6 +129,7 @@ class PostsController < ApplicationController
 
   # Need to set some publish-related values prior to running validations
   def prepare_publishable_post_for_validation
+    @previously_published = @post.published
     @post.published = true
     @post.published_content = post_params[:draft_content]
   end
@@ -133,6 +138,10 @@ class PostsController < ApplicationController
     @post.draft_content = nil
     @post.published_at ||= Time.now.utc
     @post.save!
+
+    if newly_published?
+      NotificationGenerator.new(current_user, :published_post, @post).run
+    end
   end
 
   # On #update some publishing-related attributes must be set prior to updating

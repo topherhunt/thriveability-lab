@@ -1,0 +1,21 @@
+%li.dropdown
+  - if unread_notifications_count > 0
+    %a.dropdown-toggle{'data-toggle' => 'dropdown'}
+      Updates
+      .label.label-danger #{unread_notifications_count}
+      %span.caret
+  - else
+    %a.dropdown-toggle.text-muted{'data-toggle' => 'dropdown'}
+      Updates
+      %span.caret
+  %ul.dropdown-menu.notifications-list
+    - my_recent_notifications.each do |notification|
+      %li.notification{class: notification.read? ? "read" : "unread"}
+        %a{href: notification_path(notification)}
+          = image_tag(notification.image_url, class: "notification-icon")
+          %span.datetime #{print_date notification.created_at, time: true} -
+          %span.description= notification.sentence
+    .divider{role: "separator"}
+    - if unread_notifications_count > 0
+      %li= link_to "Mark all as read", mark_all_read_notifications_path, method: :post, class: "mark-all-notifications-as-read"
+    %li= link_to "See all notifications", notifications_path, class: "see-all-notifications"

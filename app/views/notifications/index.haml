@@ -1,0 +1,12 @@
+%h1 All recent notifications
+
+%table.table.all-notifications-list
+  - @notifications.each do |notification|
+    %tr.notification{class: notification.read? ? "read" : "unread"}
+      %td= print_date notification.created_at, time: true
+      %td= image_tag(notification.image_url, style: "width: 30px;")
+      %td= link_to notification.sentence, url_for(notification.target)
+  - if unread_notifications_count > 0
+    %tr
+      %td
+      %td= link_to "Mark all as read", mark_all_read_notifications_path, method: :post, class: "mark-all-notifications-as-read"
