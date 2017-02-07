@@ -24,7 +24,7 @@
 
     %h3 Personality, dreams, and passions
     .row.row-padded
-      .col-sm-8= f.text_area :bio_interior, class: "form-control", style: "height: 80px;"
+      .col-sm-8= f.text_area :bio_interior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
         %p.strong Share a little about your inner life!
         %ul
@@ -35,7 +35,7 @@
 
     %h3 Expertise, work, and goals
     .row.row-padded
-      .col-sm-8= f.text_area :bio_exterior, class: "form-control", style: "height: 80px;"
+      .col-sm-8= f.text_area :bio_exterior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
         %p.strong Tell others about your work in the world.
         %ul
@@ -44,6 +44,4 @@
           %li What skills and experience can you offer?
           %li What are you looking for by being part of this community?
 
-    .row.row-padded
-      .col-sm-3
-      .col-sm-9= f.submit "Save", class: "submit-user-profile btn btn-primary"
+    %p= f.submit "Save", class: "submit-user-profile btn btn-primary"
