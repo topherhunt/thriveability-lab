@@ -42,7 +42,8 @@ FactoryGirl.define do
   factory(:resource) do
     association :creator, factory: :user
     title { Faker::Lorem.words(5).join(" ").capitalize }
-    url { Faker::Internet.url }
+    source_name { Faker::Name.first_name }
+    current_url { Faker::Internet.url }
     description { Faker::Lorem.paragraph }
   end
 

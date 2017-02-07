@@ -62,7 +62,7 @@ class ResourcesController < ApplicationController
   end
 
   def create_params
-    params.require(:resource).permit(:title, :description, :url, :attachment, :ownership_affirmed, :target_type, :target_id, :tag_list, :media_type_list)
+    params.require(:resource).permit(:title, :description, :source_name, :current_url, :attachment, :ownership_affirmed, :target_type, :target_id, :tag_list, :media_type_list)
   end
 
   def update_params

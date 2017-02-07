@@ -3,7 +3,7 @@
 .row
   .col-md-4
     %p <strong>Resources are aimed at supporting our members to connect and discover ideas that help them make meaningful change.</strong> This is a place to add links to websites or documents that you think might be useful to others.
-    %p.text-center= link_to "Add a resource", new_resource_path
+    %p.text-center= link_to "Add a resource", new_resource_path, class: "add-new-resource-link"
 
     %hr
     = form_tag(resources_path, method: :get) do
@@ -25,12 +25,14 @@
     %table.table.table-striped{style: "width: 100%;"}
       %tr
         %th Title
+        %th Source
         %th Tags
         %th.nowrap Media types
         %th
       - @resources.each do |resource|
         %tr
           %td= link_to resource.title, resource_path(resource)
+          %td= resource.source_name
           %td.small
             - resource.tag_list.each do |name|
               = link_to name, resources_path(tags: name)
@@ -40,8 +42,8 @@
               = link_to name, resources_path(media_types: name)
               &nbsp;
           %td.nowrap
-            - if resource.url.present?
-              = link_to fa_icon("external-link") + " source", resource.url, target: "_blank"
+            - if resource.current_url.present?
+              = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
               &nbsp;
             - if current_user == resource.creator
               = link_to fa_icon("pencil"), edit_resource_path(resource)

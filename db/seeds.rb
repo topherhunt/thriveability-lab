@@ -23,3 +23,7 @@ OmniauthAccount.delete_all
 @post2 = FactoryGirl.create(:published_post, author: @user2)
 FactoryGirl.create(:post_conversant, user: @user3, post: @post2)
 FactoryGirl.create(:published_post, author: @user3, parent: @post2)
+
+FactoryGirl.create(:resource, creator: @user1)
+FactoryGirl.create(:resource, creator: @user2)
+FactoryGirl.create(:resource, creator: @user3)

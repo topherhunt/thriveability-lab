@@ -1,8 +1,9 @@
 %li.resource
   = link_to resource.title, resource_path(resource)
-  - if resource.url.present?
+  .small by #{resource.source_name}
+  - if resource.current_url.present?
     &nbsp;
-    = link_to fa_icon("external-link"), resource.url, target: "_blank", class: "js-show-on-parent-hover"
+    = link_to fa_icon("external-link"), resource.current_url, target: "_blank", class: "js-show-on-parent-hover"
   - if resource.attachment_file_name.present?
     &nbsp;
     = link_to fa_icon("download"), resource.attachment.url, download: true, class: "js-show-on-parent-hover"

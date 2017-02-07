@@ -10,14 +10,14 @@ class Resource < ActiveRecord::Base
   has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
   validates :title, presence: true
-  validates :url, presence: true
+  validates :source_name, presence: true
   validate :require_ownership_if_uploaded
 
   has_attached_file :attachment
   validates_attachment :attachment, size: { in: 0..10.megabytes }
   do_not_validate_attachment_file_type :attachment
 
-  before_save :ensure_url_has_protocol
+  before_save :ensure_current_url_has_protocol
 
   def self.most_popular
     all.sort_by{ |p| -p.received_like_flags.count }.take(5)
@@ -31,7 +31,7 @@ class Resource < ActiveRecord::Base
     end
   end
 
-  def ensure_url_has_protocol
-    self.url = "http://#{self.url}" unless url =~ /^https?\:\/\//
+  def ensure_current_url_has_protocol
+    self.current_url = "http://#{self.current_url}" unless current_url =~ /^https?\:\/\//
   end
 end

@@ -33,7 +33,6 @@ class UserProfileTest < Capybara::Rails::TestCase
     @post5 = create(:published_post, author: @user, published_at: 3.weeks.ago)
 
     visit user_path(@user)
-    assert_content "Recent posts"
     assert_content @post2.title
     assert_content @post4.title
     refute_content @post1.title # not mine

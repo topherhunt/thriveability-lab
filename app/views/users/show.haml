@@ -33,7 +33,7 @@
 
 .row
   .col-sm-6
-    %h3 Resources
+    %h3 Resources I've contributed
     - if @user.created_resources.any?
       %ul
         - @user.created_resources.each do |resource|
@@ -47,7 +47,7 @@
           Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
 
   .col-sm-6
-    %h3 Recent posts
+    %h3 Recently discussed
     - if @posts.any?
       - @posts.each do |post|
         %div{style: "padding-top: 10px;"}

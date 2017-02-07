@@ -7,11 +7,11 @@ class ResourceTest < ActiveSupport::TestCase
   end
 
   test "ensures URL contains a protocol" do
-    resource = create(:resource, url: "foo")
-    assert_equals "http://foo", resource.reload.url
+    resource = create(:resource, current_url: "foo")
+    assert_equals "http://foo", resource.reload.current_url
 
-    resource2 = create(:resource, url: "https://foo")
-    assert_equals "https://foo", resource2.reload.url
+    resource2 = create(:resource, current_url: "https://foo")
+    assert_equals "https://foo", resource2.reload.current_url
   end
 
   test ".most_popular returns the most popular resources" do

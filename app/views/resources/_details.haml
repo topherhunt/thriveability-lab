@@ -3,14 +3,20 @@
     %th Title
     %td= @resource.title
   %tr
-    %th URL
-    %td= link_to @resource.url, @resource.url
+    %th Source
+    %td= @resource.source_name
+  - if @resource.current_url.present?
+    %tr
+      %th Current URL
+      %td= link_to @resource.current_url, @resource.current_url
   %tr
     %th Description
     %td= @resource.description
-  %tr
-    %th Uploaded file
-    %td ** TODO
+  - if resource.attachment_file_name.present?
+    %tr
+      %th Attached file
+      %td= link_to fa_icon("download") + " " + @resource.attachment_file_name, @resource.attachment.url
+  - if current_user == resource.creator
   %tr
     %th Created by
     %td= link_to @resource.creator.full_name, user_path(@resource.creator)

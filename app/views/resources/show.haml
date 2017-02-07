@@ -6,8 +6,12 @@
       %th Title
       %td= @resource.title
     %tr
-      %th URL
-      %td= link_to fa_icon("external-link") + " #{@resource.url}", @resource.url, target: "_blank"
+      %th Source
+      %td= @resource.source_name
+    - if @resource.current_url.present?
+      %tr
+        %th.nowrap Current URL
+        %td= link_to fa_icon("external-link") + " #{@resource.current_url}", @resource.current_url, target: "_blank"
     %tr
       %th Description
       %td= @resource.description
