@@ -17,6 +17,8 @@ class Resource < ActiveRecord::Base
   validates_attachment :attachment, size: { in: 0..10.megabytes }
   do_not_validate_attachment_file_type :attachment
 
+  before_save :ensure_url_has_protocol
+
   def self.most_popular
     all.sort_by{ |p| -p.received_like_flags.count }.take(5)
   end
@@ -27,5 +29,9 @@ class Resource < ActiveRecord::Base
     if attachment.present? and ! ownership_affirmed?
       errors.add(:attachment, "You must verify that you own this file.")
     end
+  end
+
+  def ensure_url_has_protocol
+    self.url = "http://#{self.url}" unless url =~ /^https?\:\/\//
   end
 end

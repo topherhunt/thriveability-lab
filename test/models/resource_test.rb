@@ -6,6 +6,14 @@ class ResourceTest < ActiveSupport::TestCase
     number.times { create :like_flag, target: target }
   end
 
+  test "ensures URL contains a protocol" do
+    resource = create(:resource, url: "foo")
+    assert_equals "http://foo", resource.reload.url
+
+    resource2 = create(:resource, url: "https://foo")
+    assert_equals "https://foo", resource2.reload.url
+  end
+
   test ".most_popular returns the most popular resources" do
     p1 = create :resource
     p2 = create :resource
