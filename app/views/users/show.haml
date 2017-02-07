@@ -15,50 +15,13 @@
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
       = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed"
 
-    %table.table
-      %tr
-        %th Member since
-        %td= print_date @user.created_at
-      - if @user.self_passions.present?
-        %tr
-          %th I'm passionate about...
-          %td= @user.self_passions
-      - if @user.self_skills.present?
-        %tr
-          %th I'm good at...
-          %td= @user.self_skills
-      - if @user.self_proud_traits.present?
-        %tr
-          %th I'm proud to be known for these traits...
-          %td= @user.self_proud_traits
-      - if @user.self_weaknesses.present?
-        %tr
-          %th The weakness(es) I’m currently trying to overcome...
-          %td= @user.self_weaknesses
-      - if @user.self_evolve.present?
-        %tr
-          %th How I would like to evolve is...
-          %td= @user.self_evolve
-      - if @user.self_dreams.present?
-        %tr
-          %th I dream of a future where...
-          %td= @user.self_dreams
-      - if @user.self_looking_for.present?
-        %tr
-          %th What I’m looking for at Integral Climate Hub...
-          %td= @user.self_looking_for
-      - if @user.self_work_at.present?
-        %tr
-          %th I currently work at/as...
-          %td= @user.self_work_at
-      - if @user.self_professional_goals.present?
-        %tr
-          %th My professional goals are...
-          %td= @user.self_professional_goals
-      - if @user.self_fields_of_expertise.present?
-        %tr
-          %th My major fields of expertise and experience are...
-          %td= @user.self_fields_of_expertise
+    %p Member since #{print_date @user.created_at}
+
+    %h3 My personality, dreams, and passions
+    = simple_format(@user.bio_interior)
+
+    %h3 My expertise, work, and goals
+    = simple_format(@user.bio_exterior)
 
   .col-sm-4
     = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed hidden-xs"

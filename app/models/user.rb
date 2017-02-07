@@ -21,17 +21,6 @@ class User < ActiveRecord::Base
     default_url: "/missing_user.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
-  validates :self_passions, length: { maximum: 1000 }
-  validates :self_skills, length: { maximum: 1000 }
-  validates :self_proud_traits, length: { maximum: 1000 }
-  validates :self_weaknesses, length: { maximum: 1000 }
-  validates :self_evolve, length: { maximum: 1000 }
-  validates :self_dreams, length: { maximum: 1000 }
-  validates :self_looking_for, length: { maximum: 1000 }
-  validates :self_work_at, length: { maximum: 1000 }
-  validates :self_professional_goals, length: { maximum: 1000 }
-  validates :self_fields_of_expertise, length: { maximum: 1000 }
-
   before_save :update_has_set_password
 
   def self.most_recent(n)
