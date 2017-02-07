@@ -19,7 +19,9 @@
         .col-sm-4= f.label :password_confirmation, "Confirm new password"
         .col-sm-8= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control'
       .row.row-padded
-        .col-sm-4= required_label(f, :current_password)
+        .col-sm-4
+          = f.label :current_password
+          = required
         .col-sm-8= f.password_field :current_password, autocomplete: "off", class: 'form-control'
       .row.row-padded
         .col-sm-4

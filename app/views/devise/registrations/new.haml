@@ -4,13 +4,19 @@
     = devise_error_messages!
 
     .row.row-padded
-      .col-sm-4= required_label(f, :email)
+      .col-sm-4
+        = f.label :email
+        = required
       .col-sm-8= f.email_field :email, autofocus: true, class: "form-control"
     .row.row-padded
-      .col-sm-4= required_label(f, :password)
+      .col-sm-4
+        = f.label :password
+        = required
       .col-sm-8= f.password_field :password, autocomplete: "off", class: "form-control"
     .row.row-padded
-      .col-sm-4= required_label(f, :password_confirmation, "Confirm password")
+      .col-sm-4
+        = f.label :password_confirmation, "Confirm password"
+        = required
       .col-sm-8= f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
     .row.row-padded
       .col-sm-4

@@ -26,7 +26,7 @@ module ApplicationHelper
     end
   end
 
-  def required_label(form, field, title=nil)
-    form.label field, "#{(title || field).to_s.humanize} <span class='text-danger'>*</span>".html_safe
+  def required
+    '<em class="small text-danger">required</em>'.html_safe
   end
 end

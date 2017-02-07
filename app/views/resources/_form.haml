@@ -1,6 +1,4 @@
-%p Please share your most valuable resources here, such as a powerpoint of a presentation, a paper you have written, or a plan you developed. Of course these can also be others' resources, but have found to be useful nonetheless.
-
-%p However, please only upload resources you own or have the right to share (to avoid issues with copyrights and ownership)! Otherwise, please refer to it with a link, so people can access the resource at the appropriate place.
+%p Please share any resource (e.g., powerpoint, paper, plan) you consider valuable for the community here. However, be sure to <strong>only upload files that you have the right to share</strong> (to avoid issues with copyrights and ownership)! Otherwise, refer to it with a link, so people can access it at the appropriate place.
 
 = form_for @resource do |f|
   = show_errors_for @resource
@@ -13,19 +11,20 @@
     = f.hidden_field :target_id, value: @target.id
     %p  This resource will be linked to the #{@target.class.to_s} <strong>#{@target.title}</strong>.
   .row.row-padded
-    .col-sm-3= required_label(f, :title)
+    .col-sm-3
+      = f.label :title
+      = required
     .col-sm-9= f.text_field :title, class: "form-control"
   .row.row-padded
     .col-sm-3
-      = required_label(f, :source_name)
+      = f.label :source_name
+      = required
       .small Who authored or created this resource?
     .col-sm-9= f.text_field :source_name, class: "form-control"
   .row.row-padded
     .col-sm-3
       = f.label :current_url, "Current URL"
-      .small
-        Where can this resource be accessed online?
-        %span.text-info (optional)
+      .small Where can this resource be accessed online?
     .col-sm-9= f.text_field :current_url, class: "form-control"
   .row.row-padded
     .col-sm-3
@@ -51,7 +50,7 @@
 
   .row.row-padded
     .col-sm-3
-      = f.label :attachment, "Attach a file?"
+      = f.label :attachment, "Attach a file"
       .small Please only upload files that you own or have permission to distribute. If you don't, then only provide the website link.
     .col-sm-9= f.file_field :attachment, class: "form-control"
   .row.row-padded#js-affirm-ownership{ class: ("js-hidden" unless @resource.attachment.present?) }

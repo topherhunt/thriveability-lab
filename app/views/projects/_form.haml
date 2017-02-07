@@ -2,12 +2,14 @@
   = show_errors_for @project
 
   .row.row-padded
-    .col-sm-3= f.label :title
+    .col-sm-3
+      = f.label :title
+      = required
     .col-sm-9= f.text_field :title, class: "form-control"
   .row.row-padded
     .col-sm-3
       = f.label :subtitle
-      %br
+      = required
       .small A one-line description of this project's mission
     .col-sm-9= f.text_field :subtitle, class: "form-control"
   .row.row-padded
@@ -16,7 +18,6 @@
   .row.row-padded
     .col-sm-3
       = f.label :introduction
-      %br
       .small In a few sentences, what do you want the world to know about this project?
     .col-sm-9= f.text_area :introduction, class: "form-control"
   .row.row-padded
@@ -26,7 +27,9 @@
       .small eg. Chico, CA
     .col-sm-9= f.text_field :location, class: "form-control"
   .row.row-padded
-    .col-sm-3= f.label :stage
+    .col-sm-3
+      = f.label :stage
+      = required
     .col-sm-9= f.select :stage, ["idea", "developing", "mature"], { include_blank: "- select one -" }, { class: "form-control" }
   = render partial: "shared/edit_tags", locals: { form: f, object: @project }
 
