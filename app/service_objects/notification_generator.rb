@@ -35,12 +35,14 @@ class NotificationGenerator
         follower_ids_for(@target),
         @target_comment.ancestors.pluck(:author_id) ]
     when :liked_object
-      [ follower_ids_for(@actor),
-        follower_ids_for(@target), # Too spammy?
+      [
+        # follower_ids_for(@actor),
+        # follower_ids_for(@target),
         owner_id_for(@target) ]
     when :followed_object
-      [ follower_ids_for(@actor),
-        follower_ids_for(@target), # Too spammy?
+      [
+        # follower_ids_for(@actor),
+        # follower_ids_for(@target),
         owner_id_for(@target) ]
     else
       raise "Unknown notification action '#{@action}'!"
