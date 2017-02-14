@@ -11,6 +11,7 @@ class Resource < ActiveRecord::Base
 
   validates :title, presence: true
   validates :source_name, presence: true
+  validates :description, presence: true
   validate :require_ownership_if_uploaded
 
   has_attached_file :attachment

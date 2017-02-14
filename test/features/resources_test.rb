@@ -30,6 +30,7 @@ class ResourcesTest < Capybara::Rails::TestCase
     assert_equals 0, @user.created_resources.count
     click_on "Add a resource"
     page.find("#resource_title").set("My climate presentation")
+    page.find("#resource_description").set("A presentation on climate change")
     page.find("#resource_source_name").set("Elmer Fudd")
     page.find(".submit-resource-button").click
     assert_path user_path(@user)

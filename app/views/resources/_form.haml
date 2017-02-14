@@ -29,6 +29,7 @@
   .row.row-padded
     .col-sm-3
       = f.label :description
+      = required
       .small What does this resource offer to the community? Who might benefit from it?
     .col-sm-9= f.text_area :description, class: "form-control"
   = render partial: "shared/edit_tags", locals: { form: f, object: @resource }
