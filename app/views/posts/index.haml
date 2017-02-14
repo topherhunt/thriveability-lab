@@ -1,13 +1,13 @@
 %h1 Posts
 
 .row
-  .col-sm-4
+  .col-sm-8
     %p <strong> Posts are a way for you to share your ideas and learn about others' experiences.</strong> Here you can share your ideas, articles, or questions, and respond to others' comments.
-    %p.text-center= link_to "Start a conversation", posts_path, method: :post
+    %p.text-center= link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
 
-    %hr
+  .col-sm-4
     = form_tag(posts_path, method: :get, class: "filter-posts") do
-      %div.strong{style: "padding-top: 10px;"} Filter by tag...
+      %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
         %option
         - popular_post_tags(15).each do |name|
@@ -21,27 +21,26 @@
           %option{value: author.id, selected: selected}= author.full_name
       .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-  .col-sm-8
-    %table.table.table-striped{style: "width: 100%;"}
-      %tr
-        %th Title
-        %th Tags
-        %th Author
-        %th Published at
-      - @posts.each do |post|
-        %tr
-          %td
-            = link_to post.title.presence || "Untitled draft", post_path(post)
-            - if current_user == post.author and ! post.published?
-              %br
-              %span.text-warning Unpublished draft
-              &nbsp;
-              = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
-              &nbsp;
-              = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
-          %td.small
-            - post.tag_list.each do |name|
-              = link_to name, posts_path(tags: name)
-              &nbsp;
-          %td= link_to post.author.full_name, user_path(post.author)
-          %td= print_date post.published_at, abbreviated: true, time: true if post.published?
+- @posts.each do |post|
+  %div
+    %hr
+    .title
+      %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
+      &nbsp;
+      %span.label.label-default= post.intention_type
+      - post.tag_list.each do |name|
+        = link_to name, posts_path(tags: name), class: "label label-default"
+    .teaser
+      = ellipsify(post.published_content, 100)
+    .attribution.text-muted
+      Written by #{link_to post.author.full_name, user_path(post.author)}
+      - if post.published?
+        on #{print_date(post.published_at, time: true)}.
+      -# TODO: Unpublished posts shouldn't be listed here; accounting for them complicates the logic too much, with no clear benefit. There should be a separate section or a separate page maybe; have a link to "See my 4 unpublished drafts"
+      - if current_user == post.author and ! post.published?
+        &mdash;
+        %span.text-warning Unpublished draft
+        &nbsp;
+        = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
+        &nbsp;
+        = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."

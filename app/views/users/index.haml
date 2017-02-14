@@ -1,18 +1,12 @@
 %h1 People
+%p Here’s a list of all the cool people you can connect with and introduce yourself to.
 
-.row
-  .col-sm-4
-    %p <strong>Here’s a list of all the cool people you can connect with and introduce yourself to.</strong>
-  .col-sm-8
-    %table.table.table-striped{style: "width: 100%;"}
-      %tr
-        %th
-        %th Name
-        %th Member since
-        %th Last seen
-      - @users.each do |user|
-        %tr
-          %td= image_tag(user.image.url(:thumb), class: "image-framed-tiny", style: "width: 30px;")
-          %td= link_to (user.full_name || "Nameless Cool Person"), user_path(user)
-          %td= print_date(user.created_at, abbreviated: true)
-          %td= print_date(user.current_sign_in_at, abbreviated: true)
+- @users.each do |user|
+  %div
+    %hr
+    = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;"), user_path(user)
+    .title
+      %span.h4= link_to user.full_name, user_path(user)
+    .dates.text-muted
+      Member since #{print_date(user.created_at)}.
+      Last seen #{print_date(user.current_sign_in_at, time: true)}

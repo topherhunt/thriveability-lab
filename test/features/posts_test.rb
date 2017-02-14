@@ -9,7 +9,7 @@ class PostsTest < Capybara::Rails::TestCase
     login_as @user
     click_on "Conversations"
     assert_equals 0, Post.count
-    click_on "Start a conversation"
+    click_on "Start a new conversation"
     assert_equals 1, Post.count
     @post = Post.first
     assert_equals @user, @post.author

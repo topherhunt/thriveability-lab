@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :require_login, except: [:index, :show]
 
   def index
-    @users = User.order("current_sign_in_at DESC")
+    @users = User.where("first_name IS NOT NULL OR last_name IS NOT NULL").order("current_sign_in_at DESC")
   end
 
   def show

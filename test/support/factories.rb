@@ -9,6 +9,7 @@ FactoryGirl.define do
     bio_interior { Faker::Lorem.sentence }
     bio_exterior { Faker::Lorem.sentence }
     confirmed_at 1.week.ago
+    current_sign_in_at 3.days.ago
   end
 
   factory(:project) do

@@ -1,13 +1,14 @@
 %h1 Resources
 
 .row
-  .col-md-4
+  .col-sm-8.info-section
     %p <strong>Resources are aimed at supporting our members to connect and discover ideas that help them make meaningful change.</strong> This is a place to add links to websites or documents that you think might be useful to others.
-    %p.text-center= link_to "Add a resource", new_resource_path, class: "add-new-resource-link"
 
-    %hr
+    %p.text-center= link_to "Add a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
+
+  .col-sm-4.search-section
     = form_tag(resources_path, method: :get) do
-      %div.strong{style: "padding-top: 10px;"} Filter by tag...
+      %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
         %option
         - popular_resource_tags(15).each do |name|
@@ -19,31 +20,27 @@
         - popular_resource_media_types(15).each do |name|
           - selected = @filters[:media_types].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
-      .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-  .col-md-8
-    %table.table.table-striped{style: "width: 100%;"}
-      %tr
-        %th Title
-        %th Source
-        %th Tags
-        %th.nowrap Media types
-        %th
-      - @resources.each do |resource|
-        %tr
-          %td= link_to resource.title, resource_path(resource)
-          %td= resource.source_name
-          %td.small
-            - resource.tag_list.each do |name|
-              = link_to name, resources_path(tags: name)
-              &nbsp;
-          %td.small
-            - resource.media_type_list.each do |name|
-              = link_to name, resources_path(media_types: name)
-              &nbsp;
-          %td.nowrap
-            - if resource.current_url.present?
-              = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
-              &nbsp;
-            - if current_user == resource.creator
-              = link_to fa_icon("pencil"), edit_resource_path(resource)
+- @resources.each do |resource|
+  %div
+    %hr
+    .title
+      %span.h4= link_to (resource.title), resource_path(resource)
+      &nbsp;
+      - if resource.current_url.present?
+        = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
+        &nbsp;
+      - if current_user == resource.creator
+        = link_to fa_icon("pencil"), edit_resource_path(resource)
+      &nbsp;
+      - resource.tag_list.each do |name|
+        = link_to name, resources_path(tags: name), class: "label label-default"
+      - resource.media_type_list.each do |name|
+        = link_to name, resources_path(media_types: name), class: "label label-default"
+    .subtitle
+      = ellipsify(resource.description, 100)
+    .attribution.text-muted
+      Source: #{resource.source_name}.
+      Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
+      on #{print_date(resource.created_at)}.

@@ -1,58 +1,29 @@
 %h1 Projects
-
 .row
-  .col-sm-4
+  .col-sm-8
     %p <strong> Use projects to share what you're working on with the community, and learn about others' work.</strong>
-    %p.text-center= link_to "Add your project", new_project_path
-
-    %hr
+    %p.text-center= link_to "Add your project", new_project_path, class: "btn btn-success"
+  .col-sm-4
     = form_tag(projects_path, method: :get) do
-      %div.strong{style: "padding-top: 10px;"} Filter by tag...
+      %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
         %option
         - popular_project_tags(15).each do |name|
           - selected = @filters[:tags].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
-      .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-  .col-sm-8
-    - @projects.each do |project|
-      = image_tag(project.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;")
-      .title
-        %span.h4= link_to (project.title), project_path(project)
-        &mdash;
-        = project.subtitle
-      .text-muted
-        Added on #{print_date(project.created_at, abbreviated: true)}
-        by #{link_to project.owner.full_name, user_path(project.owner)}.
-        - if project.count_people_engaged > 1
-          #{project.count_people_engaged} people are connected.
-      %div
-        - if project.tag_list.count > 0
-          Tags:
-          - project.tag_list.each do |name|
-            = link_to name, projects_path(tags: name)
-            &nbsp;
-      %hr
-
-
-    -# %table.table.table-striped{style: "width: 100%;"}
-    -#   %tr
-    -#     %th
-    -#     %th Title
-    -#     %th Tags
-    -#     %th Added date
-    -#     %th Added by
-    -#   - @projects.each do |project|
-    -#     %tr
-    -#       %td= image_tag(project.image.url(:thumb), style: "width: 30px;")
-    -#       %td
-    -#         = link_to (project.title), project_path(project)
-    -#         &mdash;
-    -#         %span.text-muted= project.subtitle
-    -#       %td.small
-    -#         - project.tag_list.each do |name|
-    -#           = link_to name, projects_path(tags: name)
-    -#           &nbsp;
-    -#       %td= print_date(project.created_at, abbreviated: true)
-    -#       %td= link_to project.owner.full_name, user_path(project.owner)
+- @projects.each do |project|
+  %hr
+  = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px; margin-right: 10px;"), project_path(project)
+  .title
+    %span.h4= link_to (project.title), project_path(project)
+    &nbsp;
+    - project.tag_list.each do |name|
+      = link_to name, projects_path(tags: name), class: "label label-default"
+  %div= project.subtitle
+  .text-muted
+    Added by #{link_to project.owner.full_name, user_path(project.owner)}
+    on #{print_date(project.created_at)}.
+    - if project.count_people_engaged > 1
+      #{project.count_people_engaged} people are connected.
