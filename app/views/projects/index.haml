@@ -16,23 +16,43 @@
       .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
   .col-sm-8
-    %table.table.table-striped{style: "width: 100%;"}
-      %tr
-        %th
-        %th Title
-        %th Tags
-        %th Added date
-        %th Added by
-      - @projects.each do |project|
-        %tr
-          %td= image_tag(project.image.url(:thumb), style: "width: 30px;")
-          %td
-            = link_to (project.title), project_path(project)
-            &mdash;
-            %span.text-muted= project.subtitle
-          %td.small
-            - project.tag_list.each do |name|
-              = link_to name, projects_path(tags: name)
-              &nbsp;
-          %td= print_date(project.created_at, abbreviated: true)
-          %td= link_to project.owner.full_name, user_path(project.owner)
+    - @projects.each do |project|
+      = image_tag(project.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;")
+      .title
+        %span.h4= link_to (project.title), project_path(project)
+        &mdash;
+        = project.subtitle
+      .text-muted
+        Added on #{print_date(project.created_at, abbreviated: true)}
+        by #{link_to project.owner.full_name, user_path(project.owner)}.
+        - if project.count_people_engaged > 1
+          #{project.count_people_engaged} people are connected.
+      %div
+        - if project.tag_list.count > 0
+          Tags:
+          - project.tag_list.each do |name|
+            = link_to name, projects_path(tags: name)
+            &nbsp;
+      %hr
+
+
+    -# %table.table.table-striped{style: "width: 100%;"}
+    -#   %tr
+    -#     %th
+    -#     %th Title
+    -#     %th Tags
+    -#     %th Added date
+    -#     %th Added by
+    -#   - @projects.each do |project|
+    -#     %tr
+    -#       %td= image_tag(project.image.url(:thumb), style: "width: 30px;")
+    -#       %td
+    -#         = link_to (project.title), project_path(project)
+    -#         &mdash;
+    -#         %span.text-muted= project.subtitle
+    -#       %td.small
+    -#         - project.tag_list.each do |name|
+    -#           = link_to name, projects_path(tags: name)
+    -#           &nbsp;
+    -#       %td= print_date(project.created_at, abbreviated: true)
+    -#       %td= link_to project.owner.full_name, user_path(project.owner)

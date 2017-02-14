@@ -36,4 +36,13 @@ class Project < ActiveRecord::Base
     # - Add received_like_flags_count cache column so we can sort by that
     all.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
+
+  def count_people_engaged
+    [
+      owner_id,
+      received_like_flags.pluck(:user_id),
+      received_stay_informed_flags.pluck(:user_id),
+      received_get_involved_flags.pluck(:user_id)
+    ].flatten.uniq.count
+  end
 end
