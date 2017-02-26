@@ -5,15 +5,15 @@ PostConversant.delete_all
 Resource.delete_all
 OmniauthAccount.delete_all
 
-@admin = FactoryGirl.create(:user,
+@admin = FactoryGirl.create(:user, id: 1,
   first_name: "Topher",
   last_name: "Hunt",
   email: "hunt.topher@gmail.com",
   password: "password",
   password_confirmation: "password")
-@user1 = FactoryGirl.create(:user)
-@user2 = FactoryGirl.create(:user)
-@user3 = FactoryGirl.create(:user)
+@user1 = FactoryGirl.create(:user, id: 2)
+@user2 = FactoryGirl.create(:user, id: 3)
+@user3 = FactoryGirl.create(:user, id: 4)
 5.times { FactoryGirl.create(:user) }
 
 @project1 = FactoryGirl.create(:project, owner: @user1)

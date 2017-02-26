@@ -28,10 +28,11 @@
       %li Using technology to connect and inspire individuals around the globe
 
 %h2.text-center Our team
-.row
-  - @team.each do |user|
-    .col-sm-6{style: "padding-bottom: 10px;"}
-      = image_tag user.image.url(:medium), style: "float: right; width: 20%;"
-      %h3= link_to user.full_name, user_path(user)
-      = simple_format(user.bio_interior)
-      = simple_format(user.bio_exterior)
+- @team.in_groups_of(2) do |pair|
+  .row
+    - pair.each do |user|
+      .col-sm-6{style: "padding-bottom: 10px;"}
+        - if user.present?
+          = link_to image_tag(user.image.url(:medium), style: "width: 100%;"), user_path(user), style: "display: block; float: right; width: 20%;"
+          %h3= link_to user.full_name, user_path(user)
+          = simple_format(user.bio_interior)

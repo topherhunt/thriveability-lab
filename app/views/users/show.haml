@@ -13,7 +13,7 @@
         = link_to fa_icon("pencil") + " Edit my profile", edit_user_path(@user), class: "edit-user"
 
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
-      = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed"
+      = image_tag @user.image.url(:medium), style: "width: 100%;"
 
     %p Member since #{print_date @user.created_at}
 
@@ -24,7 +24,7 @@
     = simple_format(@user.bio_exterior)
 
   .col-sm-4
-    = image_tag @user.image.url(:medium), style: "width: 100%;", class: "image-framed hidden-xs"
+    = image_tag @user.image.url(:medium), style: "width: 100%;", class: "hidden-xs"
 
     %hr
     %h4 Get connected
