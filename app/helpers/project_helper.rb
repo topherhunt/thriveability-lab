@@ -2,11 +2,15 @@ module ProjectHelper
   def content_for_project_popover(project)
     buffer = ""
     if project.tag_list.any?
-      buffer << "<p>" + sanitize(project.tag_list.join(", "), tags: []) + "</p>"
+      buffer << "<div>"
+      project.tag_list.each do |word|
+        buffer << "<span class='label label-default'>#{sanitize(word, tags: [])}</span> "
+      end
+      buffer << "</div>"
     end
-    buffer << "<p>started by #{sanitize project.owner.full_name, tags: []}</p>"
+    buffer << "<div>Coordinated by #{sanitize project.owner.full_name, tags: []}</div>"
     if project.received_stay_informed_flags.count > 0
-      buffer << "<p>#{project.received_stay_informed_flags.count} followers</p>"
+      buffer << "<div>#{pluralize project.received_stay_informed_flags.count, "follower"}</div>"
     end
     buffer
   end
