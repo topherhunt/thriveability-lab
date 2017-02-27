@@ -1,6 +1,23 @@
 .row.hidden-xs
-  %div{style: "width: 100%; height: 200px; background-image: url('#{image_path 'maxheaaauki-vincent-guth.jpg'}'); background-size: 100%; margin-top: -20px;"}
-    %h1.text-center{style: "color: #eee; vertical-align: middle; line-height: 200px;"} Integral Climate is...
+  .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
+    .static-title
+      %h1.text-center Integral Climate is...
+    .carousel-inner{role: "listbox", style: "position: absolute; width: 100%;"}
+      .item.active
+        = image_tag("scenes/flower.jpg", style: "width: 100%;")
+        .carousel-caption Helping nature do what it does best
+      .item
+        = image_tag("scenes/sky_swirl.jpg", style: "width: 100%;")
+        .carousel-caption Aligning our actions with each other and with the systems that surround us
+      .item
+        = image_tag("scenes/windmills.jpg", style: "width: 100%;")
+        .carousel-caption A network of change initiatives that's more than the sum of its parts
+      .item
+        = image_tag("scenes/crater_lake.jpg", style: "width: 100%;")
+        .carousel-caption Tools and resources for enacting our values in the world
+      .item
+        = image_tag("scenes/desert_statue.jpg", style: "width: 100%;")
+        .carousel-caption A congregation point for the sustainability economy blah blah
 
 .row
 
