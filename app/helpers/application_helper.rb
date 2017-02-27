@@ -29,4 +29,8 @@ module ApplicationHelper
   def required
     '<em class="small text-danger">required</em>'.html_safe
   end
+
+  def hint_box(&block)
+    render "shared/hint_box", block: block
+  end
 end

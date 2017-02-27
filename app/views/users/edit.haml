@@ -13,35 +13,40 @@
         .small.em.text-danger required
       .col-sm-9= f.text_field :last_name, class: "form-control"
     .row.row-padded
-      .col-sm-3= f.label :image, "A photo of me <span class='text-danger'>*</span>".html_safe
+      .col-sm-3
+        = f.label :image, "A photo of me <span class='text-danger'>*</span>".html_safe
+        = hint_box do
+          .small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
       .col-sm-9
         = f.file_field :image, class: "form-control"
-        .small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
 
     %hr
 
-    %p Rather than asking for the usual CV, we have some unconventional questions for you. We thus invite you to show something of your true self! We believe that this is what makes authentic engagement and deep conversations possible. There is no obligation to fill in anything. However, doing it may stir up a wonderful reflection or new discovery of your self!
+    = hint_box do
+      Rather than asking for the usual CV, we have some unconventional questions for you. We thus invite you to show something of your true self! We believe that this is what makes authentic engagement and deep conversations possible. There is no obligation to fill in anything. However, doing it may stir up a wonderful reflection or new discovery of your self!
 
     %h3 Personality, dreams, and passions
     .row.row-padded
       .col-sm-8= f.text_area :bio_interior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
-        %p.strong Share a little about your inner life!
-        %ul
-          %li What future do you dream of?
-          %li What makes you feel alive?
-          %li What traits are you proud to be known for?
-          %li What would you like to evolve towards?
+        = hint_box do
+          %p.strong Share a little about your inner life!
+          %ul
+            %li What future do you dream of?
+            %li What makes you feel alive?
+            %li What traits are you proud to be known for?
+            %li What would you like to evolve towards?
 
     %h3 Expertise, work, and goals
     .row.row-padded
       .col-sm-8= f.text_area :bio_exterior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
-        %p.strong Tell others about your work in the world.
-        %ul
-          %li What do you do for a living?
-          %li What are your professional or career goals?
-          %li What skills and experience can you offer?
-          %li What are you looking for by being part of this community?
+        = hint_box do
+          %p.strong Tell others about your work in the world.
+          %ul
+            %li What do you do for a living?
+            %li What are your professional or career goals?
+            %li What skills and experience can you offer?
+            %li What are you looking for by being part of this community?
 
     %p= f.submit "Save", class: "submit-user-profile btn btn-primary"

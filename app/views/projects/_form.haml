@@ -10,7 +10,7 @@
     .col-sm-3
       = f.label :subtitle
       = required
-      .small A one-line description of this project's mission
+      .small.text-info A one-line description of this project's mission
     .col-sm-9= f.text_field :subtitle, class: "form-control"
   .row.row-padded
     .col-sm-3= f.label :image
@@ -18,13 +18,13 @@
   .row.row-padded
     .col-sm-3
       = f.label :introduction
-      .small In a few sentences, what do you want the world to know about this project?
+      .small.text-info In a few sentences, what do you want the world to know about this project?
     .col-sm-9= f.text_area :introduction, class: "form-control"
   .row.row-padded
     .col-sm-3
       = f.label :location, "Where is it based?"
       %br
-      .small eg. Chico, CA
+      .small.text-info eg. Chico, CA
     .col-sm-9= f.text_field :location, class: "form-control"
   .row.row-padded
     .col-sm-3
@@ -54,7 +54,7 @@
   .row.row-padded
     .col-sm-4
       = f.label :call_to_action, "What can others do to help?"
-      .small Describe what forms of help you'd be grateful for. Other members may contact you in response to what you write here.
+      .small.text-info Describe what forms of help you'd be grateful for. Other members may contact you in response to what you write here.
     .col-sm-8= f.text_area :call_to_action, class: "form-control"
   .row.row-padded
     .col-sm-4
