@@ -35,17 +35,19 @@
 
     %div{style: "position: relative;"}
       - @featured_projects.each do |project|
-        %div{style: "float: left; width: 33.2%; padding: 0.5%; overflow: hidden;"}
-          %a{href: project_path(project), style: "display: block; position: relative; top: 0px; left: 0px; width: 100%; min-height: 100px;"}
-            = image_tag project.image.url(:thumb), style: "width: 100%; opacity: 0.2;"
-            = image_tag project.image.url(:thumb), class: "js-fadeout-on-hover", style: "width: 100%; position: absolute; top: 0px; left: 0px; z-index: 2; background-color: #ddf;"
-            .homepage-project-desc{style: "position: absolute; top: 0px; left: 0px; z-index: 1; padding: 5px;"}
-              %p{style: "font-size: 110%;"}
-                .strong= project.title
-              - if project.tag_list.any?
-                %p= project.tag_list.join(", ")
-              %p started by #{project.owner.full_name}
-              %p #{project.received_stay_informed_flags.count} followers
+        %div{style: "float: left; width: 19.9%; padding: 0.5%; overflow: hidden;"}
+          = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}, title: project.title), project_path(project)
+
+          -# %a{href: project_path(project), style: "display: block; position: relative; top: 0px; left: 0px; width: 100%; min-height: 100px;"}
+          -#   = image_tag project.image.url(:thumb), style: "width: 100%; opacity: 0.2;"
+          -#   = image_tag project.image.url(:thumb), class: "js-fadeout-on-hover", style: "width: 100%; position: absolute; top: 0px; left: 0px; z-index: 2; background-color: #ddf;"
+          -#   .homepage-project-desc{style: "position: absolute; top: 0px; left: 0px; z-index: 1; padding: 5px;"}
+          -#     %p{style: "font-size: 110%;"}
+          -#       .strong= project.title
+          -#     - if project.tag_list.any?
+          -#       %p= project.tag_list.join(", ")
+          -#     %p started by #{project.owner.full_name}
+          -#     %p #{project.received_stay_informed_flags.count} followers
       .clear-float
     %p= link_to "Browse all projects and get involved", projects_path
 
