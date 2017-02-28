@@ -1,7 +1,8 @@
 class Capybara::Rails::TestCase
   Capybara.javascript_driver = :webkit
   Capybara::Webkit.configure do |config|
-    config.allow_url("cdn.ckeditor.com")
+    config.allow_url("cdn.ckeditor.com") # required for ckeditor text field JS to load
+    config.block_unknown_urls
   end
 
   def login_as(user, password = 'password')

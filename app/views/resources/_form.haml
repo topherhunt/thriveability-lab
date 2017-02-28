@@ -19,24 +19,24 @@
     .col-sm-3
       = f.label :source_name
       = required
-      .small Who authored or created this resource?
+      .hint.small Who authored or created this resource?
     .col-sm-9= f.text_field :source_name, class: "form-control"
   .row.row-padded
     .col-sm-3
       = f.label :current_url, "Current URL"
-      .small Where can this resource be accessed online?
+      .hint.small Where can this resource be accessed online?
     .col-sm-9= f.text_field :current_url, class: "form-control"
   .row.row-padded
     .col-sm-3
       = f.label :description
       = required
-      .small What does this resource offer to the community? Who might benefit from it?
+      .hint.small What does this resource offer to the community? Who might benefit from it?
     .col-sm-9= f.text_area :description, class: "form-control"
   = render partial: "shared/edit_tags", locals: { form: f, object: @resource }
   .row.row-padded
     .col-sm-3
       = f.label :media_type_list, "Media type"
-      .small Indicate what kind of resource this is by selecting all labels that apply (or writing in your own).
+      .hint.small Indicate what kind of resource this is by selecting all labels that apply (or writing in your own).
     .col-sm-9
       = f.text_field :media_type_list, value: @resource.media_type_list.sort.join(","), class: "js-hidden"
       %ul.js-tagit{ id: "resource-media-types-tagit", data: { "tagit-target": "#resource_media_type_list", "tag-limit": 3, "available-tags": Resource::DEFAULT_MEDIA_TYPES }}
@@ -52,7 +52,7 @@
   .row.row-padded
     .col-sm-3
       = f.label :attachment, "Attach a file"
-      .small Please only upload files that you own or have permission to distribute. If you don't, then only provide the website link.
+      .hint.small Please only upload files that you own or have permission to distribute. If you don't, then only provide the website link.
     .col-sm-9= f.file_field :attachment, class: "form-control"
   .row.row-padded#js-affirm-ownership{ class: ("js-hidden" unless @resource.attachment.present?) }
     .col-sm-3

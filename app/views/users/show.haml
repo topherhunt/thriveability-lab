@@ -41,10 +41,9 @@
       - if current_user == @user
         %p= link_to fa_icon("plus") + " Add a resource", new_resource_path(editing_user_profile: true)
     - elsif @user.first_name.present?
-      %p
-        #{@user.first_name} hasn't contributed any resources yet.
-        - if current_user == @user
-          Use this space to add any documents or online resources that could be of use to other community members. #{link_to "Add a resource", new_resource_path(editing_user_profile: true)}
+      %p #{@user.first_name} hasn't contributed any resources yet.
+      - if current_user == @user
+        .hint Use this space to add any documents or online resources that could be of use to other community members. #{link_to fa_icon("plus") + " Add a resource", new_resource_path(editing_user_profile: true)}
 
   .col-sm-6
     %h3 Recently discussed

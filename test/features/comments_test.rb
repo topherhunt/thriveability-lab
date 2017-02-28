@@ -32,9 +32,9 @@ class CommentsTest < Capybara::Rails::TestCase
   end
 
   test "User can add comments and reply to others' comments" do
-    create(:post_conversant, user: @user, post: @post) # I've joined the convo
-
     using_webkit do
+      create(:post_conversant, user: @user, post: @post) # I've joined the convo
+
       login_as @user
       visit post_path(@post)
       assert_equals 1, @post.children.not_inline.count

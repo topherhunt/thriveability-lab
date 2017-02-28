@@ -7,13 +7,13 @@
         .col-sm-3= f.label :intention_type, "My intention for this reply is to..."
         .col-sm-9
           = f.select :intention_type, IntentionType.all.map{ |it| [it.long, it.short] }, { include_blank: "- select one -" }, { class: "form-control" }
-          .small Select the main reason you’re writing this. This helps our community to engage with your content.
+          .hint.small{style: "margin-top: 5px;"} Select the main reason you’re writing this. This helps our community to engage with your content.
       .row.row-padded
         .col-sm-3
           = f.label :draft_content, "Content"
         .col-sm-9
           = f.text_area :draft_content, class: "form-control", style: "height: 200px;", "data-toolbar": "brief"
-          .js-autosave-indicator
+          .hint.js-autosave-indicator
       .row.row-padded
         .col-sm-3
         .col-sm-9
@@ -27,13 +27,14 @@
             = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
 
   .col-sm-5
-    %p
-      %strong Ways to support awesome conversation:
-    %ul
-      %li Ask someone for their perspective on an issue!
-      %li Clarify where you're coming from. What experiences led you to take the position you took?
-      %li TODO
-      %li TODO
+    .hint
+      %p
+        %strong Ways to support awesome conversation:
+      %ul
+        %li Ask someone for their perspective on an issue!
+        %li Clarify where you're coming from. What experiences led you to take the position you took?
+        %li TODO
+        %li TODO
 
   :javascript
     $(function(){

@@ -15,21 +15,19 @@
     .row.row-padded
       .col-sm-3
         = f.label :image, "A photo of me <span class='text-danger'>*</span>".html_safe
-        = hint_box do
-          .small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
+        .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
       .col-sm-9
         = f.file_field :image, class: "form-control"
 
     %hr
 
-    = hint_box do
-      Rather than asking for the usual CV, we have some unconventional questions for you. We thus invite you to show something of your true self! We believe that this is what makes authentic engagement and deep conversations possible. There is no obligation to fill in anything. However, doing it may stir up a wonderful reflection or new discovery of your self!
+    .hint Rather than asking for the usual CV, we have some unconventional questions for you. We thus invite you to show something of your true self! We believe that this is what makes authentic engagement and deep conversations possible. There is no obligation to fill in anything. However, doing it may stir up a wonderful reflection or new discovery of your self!
 
     %h3 Personality, dreams, and passions
     .row.row-padded
       .col-sm-8= f.text_area :bio_interior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
-        = hint_box do
+        .hint
           %p.strong Share a little about your inner life!
           %ul
             %li What future do you dream of?
@@ -41,7 +39,7 @@
     .row.row-padded
       .col-sm-8= f.text_area :bio_exterior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
-        = hint_box do
+        .hint
           %p.strong Tell others about your work in the world.
           %ul
             %li What do you do for a living?
