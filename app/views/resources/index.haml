@@ -25,7 +25,7 @@
 %hr
 
 .row
-  .col-sm-6
+  .col-sm-8
     - @resources.each do |resource|
       %div
         .title
@@ -49,5 +49,5 @@
           on #{print_date(resource.created_at)}.
         %hr
 
-  .col-sm-6.hidden-xs
-    = image_tag("list_images/resources.jpg", style: "width: 110%; margin-right: -10%;")
+  .col-sm-4.hidden-xs.sidebar-image
+    = image_tag "list_images/resources.jpg"

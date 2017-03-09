@@ -16,7 +16,7 @@
 %hr
 
 .row
-  .col-sm-6
+  .col-sm-8
     - @projects.each do |project|
       = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px; margin-right: 10px;"), project_path(project)
       .title
@@ -32,5 +32,5 @@
           #{project.count_people_engaged} people are connected.
       %hr
 
-  .col-sm-6.hidden-xs
-    = image_tag("list_images/projects.jpg", style: "width: 110%; margin-right: -10%;")
+  .col-sm-4.hidden-xs.sidebar-image
+    = image_tag "list_images/projects.jpg"

@@ -6,7 +6,7 @@
 %hr
 
 .row
-  .col-sm-6
+  .col-sm-8
     - @users.each do |user|
       %div
         = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;"), user_path(user)
@@ -17,5 +17,5 @@
           Last seen #{print_date(user.current_sign_in_at, time: true)}
         %hr
 
-  .col-sm-6.hidden-xs
-    = image_tag("list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 110%; margin-right: -10%;")
+  .col-sm-4.hidden-xs.sidebar-image
+    = image_tag "list_images/people#{[1,2].shuffle.first}.jpg"

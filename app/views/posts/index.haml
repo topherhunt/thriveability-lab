@@ -24,7 +24,7 @@
 %hr
 
 .row
-  .col-sm-6
+  .col-sm-8
     - @posts.each do |post|
       %div
         .title
@@ -49,5 +49,5 @@
             = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
         %hr
 
-  .col-sm-6.hidden-xs
-    = image_tag("list_images/conversations.jpg", style: "width: 110%; margin-right: -10%;")
+  .col-sm-4.hidden-xs.sidebar-image
+    = image_tag "list_images/conversations.jpg"
