@@ -22,25 +22,32 @@
           %option{value: name, selected: selected}= name
       %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-- @resources.each do |resource|
-  %div
-    %hr
-    .title
-      %span.h4= link_to (resource.title), resource_path(resource)
-      &nbsp;
-      - if resource.current_url.present?
-        = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
-        &nbsp;
-      - if current_user == resource.creator
-        = link_to fa_icon("pencil"), edit_resource_path(resource)
-      &nbsp;
-      - resource.tag_list.each do |name|
-        = link_to name, resources_path(tags: name), class: "label label-default"
-      - resource.media_type_list.each do |name|
-        = link_to name, resources_path(media_types: name), class: "label label-default"
-    .subtitle
-      = ellipsify(resource.description, 100)
-    .attribution.text-muted
-      Source: #{resource.source_name}.
-      Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
-      on #{print_date(resource.created_at)}.
+%hr
+
+.row
+  .col-sm-6
+    - @resources.each do |resource|
+      %div
+        .title
+          %span.h4= link_to (resource.title), resource_path(resource)
+          &nbsp;
+          - if resource.current_url.present?
+            = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
+            &nbsp;
+          - if current_user == resource.creator
+            = link_to fa_icon("pencil"), edit_resource_path(resource)
+          &nbsp;
+          - resource.tag_list.each do |name|
+            = link_to name, resources_path(tags: name), class: "label label-default"
+          - resource.media_type_list.each do |name|
+            = link_to name, resources_path(media_types: name), class: "label label-default"
+        .subtitle
+          = ellipsify(resource.description, 100)
+        .attribution.text-muted
+          Source: #{resource.source_name}.
+          Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
+          on #{print_date(resource.created_at)}.
+        %hr
+
+  .col-sm-6.hidden-xs
+    = image_tag("list_images/resources.jpg", style: "width: 110%; margin-right: -10%;")

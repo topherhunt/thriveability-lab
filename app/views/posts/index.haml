@@ -21,26 +21,33 @@
           %option{value: author.id, selected: selected}= author.full_name
       .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-- @posts.each do |post|
-  %div
-    %hr
-    .title
-      %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
-      &nbsp;
-      %span.label.label-default= post.intention_type
-      - post.tag_list.each do |name|
-        = link_to name, posts_path(tags: name), class: "label label-default"
-    .teaser
-      = ellipsify(post.published_content, 100)
-    .attribution.text-muted
-      Written by #{link_to post.author.full_name, user_path(post.author)}
-      - if post.published?
-        on #{print_date(post.published_at, time: true)}.
-      -# TODO: Unpublished posts shouldn't be listed here; accounting for them complicates the logic too much, with no clear benefit. There should be a separate section or a separate page maybe; have a link to "See my 4 unpublished drafts"
-      - if current_user == post.author and ! post.published?
-        &mdash;
-        %span.text-warning Unpublished draft
-        &nbsp;
-        = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
-        &nbsp;
-        = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+%hr
+
+.row
+  .col-sm-6
+    - @posts.each do |post|
+      %div
+        .title
+          %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
+          &nbsp;
+          %span.label.label-default= post.intention_type
+          - post.tag_list.each do |name|
+            = link_to name, posts_path(tags: name), class: "label label-default"
+        .teaser
+          = ellipsify(post.published_content, 100)
+        .attribution.text-muted
+          Written by #{link_to post.author.full_name, user_path(post.author)}
+          - if post.published?
+            on #{print_date(post.published_at, time: true)}.
+          -# TODO: Unpublished posts shouldn't be listed here; accounting for them complicates the logic too much, with no clear benefit. There should be a separate section or a separate page maybe; have a link to "See my 4 unpublished drafts"
+          - if current_user == post.author and ! post.published?
+            &mdash;
+            %span.text-warning Unpublished draft
+            &nbsp;
+            = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
+            &nbsp;
+            = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+        %hr
+
+  .col-sm-6.hidden-xs
+    = image_tag("list_images/conversations.jpg", style: "width: 110%; margin-right: -10%;")

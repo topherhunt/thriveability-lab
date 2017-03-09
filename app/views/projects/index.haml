@@ -13,17 +13,24 @@
           %option{value: name, selected: selected}= name
       %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-- @projects.each do |project|
-  %hr
-  = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px; margin-right: 10px;"), project_path(project)
-  .title
-    %span.h4= link_to (project.title), project_path(project)
-    &nbsp;
-    - project.tag_list.each do |name|
-      = link_to name, projects_path(tags: name), class: "label label-default"
-  %div= project.subtitle
-  .text-muted
-    Added by #{link_to project.owner.full_name, user_path(project.owner)}
-    on #{print_date(project.created_at)}.
-    - if project.count_people_engaged > 1
-      #{project.count_people_engaged} people are connected.
+%hr
+
+.row
+  .col-sm-6
+    - @projects.each do |project|
+      = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px; margin-right: 10px;"), project_path(project)
+      .title
+        %span.h4= link_to (project.title), project_path(project)
+        &nbsp;
+        - project.tag_list.each do |name|
+          = link_to name, projects_path(tags: name), class: "label label-default"
+      %div= project.subtitle
+      .text-muted
+        Added by #{link_to project.owner.full_name, user_path(project.owner)}
+        on #{print_date(project.created_at)}.
+        - if project.count_people_engaged > 1
+          #{project.count_people_engaged} people are connected.
+      %hr
+
+  .col-sm-6.hidden-xs
+    = image_tag("list_images/projects.jpg", style: "width: 110%; margin-right: -10%;")
