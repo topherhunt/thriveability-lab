@@ -1,4 +1,4 @@
-.row.hidden-xs
+.row.hidden-xs{style: "margin-top: -20px;"}
   .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
     .static-title
       %h1.text-center Integral Climate is...
@@ -19,75 +19,77 @@
         = image_tag("scenes/desert_statue.jpg", style: "width: 100%;")
         .carousel-caption A congregation point for the sustainability economy blah blah
 
-.row
+#main-container.container-fluid
 
-  .col-sm-6
-    %h4.text-center #{@users_count} people who envision a more sustainable world
-    %div{style: 'position: relative;'}
-      - @featured_users.each do |user|
-        %div{style: 'float: left; width: 19.9%; padding: 0.5%;'}
-          = link_to image_tag(user.image.url(:thumb), style: "width: 100%;", class: "js-tooltip", data: { tooltip: user.full_name }), user_path(user)
-      .clear-float
+  .row
 
-  .col-sm-6
-    %h4.text-center #{@projects_count} projects that are changing the world
+    .col-sm-6
+      %h4.text-center #{@users_count} people who envision a more sustainable world
+      %div{style: 'position: relative;'}
+        - @featured_users.each do |user|
+          %div{style: 'float: left; width: 19.9%; padding: 0.5%;'}
+            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;", class: "js-tooltip", data: { tooltip: user.full_name }), user_path(user)
+        .clear-float
 
-    %div{style: "position: relative;"}
-      - @featured_projects.each do |project|
-        %div{style: "float: left; width: 19.9%; padding: 0.5%; overflow: hidden;"}
-          = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}, title: project.title), project_path(project)
+    .col-sm-6
+      %h4.text-center #{@projects_count} projects that are changing the world
 
-          -# Our OLD project tile markup. The effect was an image that when you hover over it, it fades out and text appears on top of it. But once we scaled down the image sizes, the text got too squeezed so we switched to a popover.
-          -# %a{href: project_path(project), style: "display: block; position: relative; top: 0px; left: 0px; width: 100%; min-height: 100px;"}
-          -#   = image_tag project.image.url(:thumb), style: "width: 100%; opacity: 0.2;"
-          -#   = image_tag project.image.url(:thumb), class: "js-fadeout-on-hover", style: "width: 100%; position: absolute; top: 0px; left: 0px; z-index: 2; background-color: #ddf;"
-          -#   .homepage-project-desc{style: "position: absolute; top: 0px; left: 0px; z-index: 1; padding: 5px;"}
-          -#     %p{style: "font-size: 110%;"}
-          -#       .strong= project.title
-          -#     - if project.tag_list.any?
-          -#       %p= project.tag_list.join(", ")
-          -#     %p started by #{project.owner.full_name}
-          -#     %p #{project.received_stay_informed_flags.count} followers
-      .clear-float
+      %div{style: "position: relative;"}
+        - @featured_projects.each do |project|
+          %div{style: "float: left; width: 19.9%; padding: 0.5%; overflow: hidden;"}
+            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}, title: project.title), project_path(project)
 
-.row.row-padded-top
-  .col-sm-6
-    %p.text-center= link_to "Meet all members", users_path, class: "btn btn-success"
-  .col-sm-6
-    %p.text-center= link_to "Browse all projects and get involved", projects_path, class: "btn btn-success"
+            -# Our OLD project tile markup. The effect was an image that when you hover over it, it fades out and text appears on top of it. But once we scaled down the image sizes, the text got too squeezed so we switched to a popover.
+            -# %a{href: project_path(project), style: "display: block; position: relative; top: 0px; left: 0px; width: 100%; min-height: 100px;"}
+            -#   = image_tag project.image.url(:thumb), style: "width: 100%; opacity: 0.2;"
+            -#   = image_tag project.image.url(:thumb), class: "js-fadeout-on-hover", style: "width: 100%; position: absolute; top: 0px; left: 0px; z-index: 2; background-color: #ddf;"
+            -#   .homepage-project-desc{style: "position: absolute; top: 0px; left: 0px; z-index: 1; padding: 5px;"}
+            -#     %p{style: "font-size: 110%;"}
+            -#       .strong= project.title
+            -#     - if project.tag_list.any?
+            -#       %p= project.tag_list.join(", ")
+            -#     %p started by #{project.owner.full_name}
+            -#     %p #{project.received_stay_informed_flags.count} followers
+        .clear-float
 
-%hr
+  .row.row-padded-top
+    .col-sm-6
+      %p.text-center= link_to "Meet all members", users_path, class: "btn btn-success"
+    .col-sm-6
+      %p.text-center= link_to "Browse all projects and get involved", projects_path, class: "btn btn-success"
 
-.row
+  %hr
 
-  .col-sm-6
-    %h4.text-center #{@posts_count} conversations
-    %ul
-      - @featured_posts.each do |post|
-        %li= link_to post.title, post_path(post)
+  .row
 
-  .col-sm-6
-    %h4.text-center #{@resources_count} resources
-    %p Resources are aimed at supporting our members to discover ideas and tools that help them make meaningful change. You can add links or documents that you think may be useful to others, and explore those of others.
+    .col-sm-6
+      %h4.text-center #{@posts_count} conversations
+      %ul
+        - @featured_posts.each do |post|
+          %li= link_to post.title, post_path(post)
 
-.row.row-padded-top
-  .col-sm-6
-    %p.text-center= link_to "Explore all conversations", posts_path, class: "btn btn-success"
-  .col-sm-6
-    %p.text-center= link_to "Explore all resources", resources_path, class: "btn btn-success"
+    .col-sm-6
+      %h4.text-center #{@resources_count} resources
+      %p Resources are aimed at supporting our members to discover ideas and tools that help them make meaningful change. You can add links or documents that you think may be useful to others, and explore those of others.
 
-%hr
+  .row.row-padded-top
+    .col-sm-6
+      %p.text-center= link_to "Explore all conversations", posts_path, class: "btn btn-success"
+    .col-sm-6
+      %p.text-center= link_to "Explore all resources", resources_path, class: "btn btn-success"
 
-.row
-  .col-sm-3
-  .col-sm-6
-    %h4.text-center What's happening now
-    - @recent_events.each do |event|
-      %div.clear-float
-        %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
-          = link_to image_tag(event.user.image.url(:thumb), style: "width: 100%;"), user_path(event.user)
-        %div.small.text-muted= print_date event.datetime, time: true
-        %div
-          = link_to event.user.full_name, user_path(event.user)
-          = event.action_description
-          = link_to event.target_description, url_for(event.target)
+  %hr
+
+  .row
+    .col-sm-3
+    .col-sm-6
+      %h4.text-center What's happening now
+      - @recent_events.each do |event|
+        %div.clear-float
+          %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
+            = link_to image_tag(event.user.image.url(:thumb), style: "width: 100%;"), user_path(event.user)
+          %div.small.text-muted= print_date event.datetime, time: true
+          %div
+            = link_to event.user.full_name, user_path(event.user)
+            = event.action_description
+            = link_to event.target_description, url_for(event.target)

@@ -8,6 +8,7 @@ class HomeController < ApplicationController
     @projects_count = Project.count
     @posts_count = Post.published.roots.count
     @resources_count = Resource.count
+    render "home/home", layout: "home"
   end
 
   def about
