@@ -1,5 +1,7 @@
 %h1 People
-%p Here’s a list of all the cool people you can connect with and introduce yourself to.
+%p <strong>All people are part of our growing community of creative change-makers.</strong><br> Use this page to get to know others, and introduce yourself to them.
+- unless user_signed_in?
+  %p= link_to "Join the community", new_user_registration_path, class: "btn btn-success"
 
 - @users.each do |user|
   %div

@@ -2,8 +2,8 @@
 
 .row
   .col-sm-8
-    %p <strong> Posts are a way for you to share your ideas and learn about others' experiences.</strong> Here you can share your ideas, articles, or questions, and respond to others' comments.
-    %p.text-center= link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+    %p <strong>Conversations are powerful ways to connect, learn, collaborate, and innovate.</strong><br> Use conversations to share your ideas and questions, and respond to those of others.
+    %p= link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
 
   .col-sm-4
     = form_tag(posts_path, method: :get, class: "filter-posts") do

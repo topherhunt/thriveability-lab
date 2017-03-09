@@ -2,9 +2,9 @@
 
 .row
   .col-sm-8.info-section
-    %p <strong>Resources are aimed at supporting our members to connect and discover ideas that help them make meaningful change.</strong> This is a place to add links to websites or documents that you think might be useful to others.
+    %p <strong>Resources are ways to offer and discover ideas that help us make meaningful change.</strong><br> Use resources to share useful documents, videos, or websites, and search those of others
 
-    %p.text-center= link_to "Add a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
+    %p= link_to "Share a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
 
   .col-sm-4.search-section
     = form_tag(resources_path, method: :get) do
