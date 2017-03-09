@@ -7,6 +7,8 @@ gem 'rails', '4.2.6'
 gem 'figaro'
 gem 'pg'
 gem 'rollbar'
+gem 'unicorn'
+gem 'rack-timeout' # for easier debugging of timed-out requests
 
 # Domain logic
 gem 'acts-as-taggable-on'
