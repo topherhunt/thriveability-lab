@@ -15,6 +15,8 @@
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
       = image_tag @user.image.url(:medium), style: "width: 100%;"
 
+    %p= @user.tagline
+
     %p Member since #{print_date @user.created_at}
 
     %h3 My personality, dreams, and passions

@@ -18,21 +18,26 @@
         .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
       .col-sm-9
         = f.file_field :image, class: "form-control"
+    .row.row-padded
+      .col-sm-3
+        = f.label :tagline, "One-line summary"
+        .hint.small A short description of what you do and why. For example:<br> "<em>Author & change-maker in the field of cultural and inner transformation for global sustainability</em>"
+      .col-sm-9= f.text_field :tagline, class: "form-control"
 
     %hr
 
-    .hint Rather than asking for the usual CV, we have some unconventional questions for you. We thus invite you to show something of your true self! We believe that this is what makes authentic engagement and deep conversations possible. There is no obligation to fill in anything. However, doing it may stir up a wonderful reflection or new discovery of your self!
+    .hint With these questions we invite you to show something of your true self!
 
-    %h3 Personality, dreams, and passions
+    %h3 Personality, passions, and dreams
     .row.row-padded
       .col-sm-8= f.text_area :bio_interior, class: "form-control", style: "height: 120px;"
       .col-sm-4.small
         .hint
           %p.strong Share a little about your inner life!
           %ul
-            %li What future do you dream of?
-            %li What makes you feel alive?
             %li What traits are you proud to be known for?
+            %li What makes you feel alive?
+            %li What future do you dream of?
             %li What would you like to evolve towards?
 
     %h3 Expertise, work, and goals

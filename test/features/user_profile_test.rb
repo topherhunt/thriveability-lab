@@ -9,6 +9,7 @@ class UserProfileTest < Capybara::Rails::TestCase
     assert_path edit_user_path(@user)
     page.find("#user_first_name").set("Elmer")
     page.find("#user_last_name").set("Fudd")
+    page.find("#user_tagline").set("A one-line tagline for my account")
     page.find("#user_bio_interior").set("My dreams, passions, etc.")
     page.find("#user_bio_exterior").set("My work, skills, goals, etc.")
     attach_file "user[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
@@ -17,6 +18,7 @@ class UserProfileTest < Capybara::Rails::TestCase
     assert_content "Your profile has been updated."
     @user.reload
     assert_equals "Elmer Fudd", @user.full_name
+    assert_equals "A one-line tagline of my account", @user.tagline
     assert_equals "elmerfudd.jpg", @user.image_file_name
     assert_equals "My dreams, passions, etc.", @user.bio_interior
     assert_equals "My work, skills, goals, etc.", @user.bio_exterior
