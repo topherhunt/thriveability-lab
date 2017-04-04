@@ -13,10 +13,8 @@
       = "- you started writing this on #{print_date @post.created_at, time: true}"
       &nbsp;
       = link_to fa_icon("pencil"), edit_post_path(@post), class: "edit-post-link"
-  - if @post.intention_type.present?
-    %p
-      %strong Intention:
-      <em>#{@post.intention_type}</em> &nbsp; #{@post.intention_statement}
+  - if @post.intention.present?
+    %p <strong>Intention:</strong> <em>#{@post.intention}</em>
   - if @post.tag_list.any?
     %p
       %strong Tags:

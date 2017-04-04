@@ -22,7 +22,7 @@ FactoryGirl.define do
   factory(:draft_post, class: :Post) do
     association :author, factory: :user
     title { Faker::Lorem.words(5).join(" ").capitalize }
-    intention_type "share news"
+    intention "share news"
     draft_content { Faker::Lorem.paragraph }
 
     factory(:published_post) do
@@ -36,8 +36,7 @@ FactoryGirl.define do
   factory(:post_conversant) do
     association :post
     association :user
-    intention_type "seek_perspectives"
-    intention_statement { Faker::Lorem.sentence }
+    intention "seek perspectives"
   end
 
   factory(:resource) do

@@ -15,17 +15,16 @@ class CommentsTest < Capybara::Rails::TestCase
     refute_content "Reply"
     click_on "Join the conversation!"
     assert_equals 3, @post.conversants.count
-    assert_content "My intention in joining this conversation"
-    select "share facts / research / objective knowledge", from: "post_conversant[intention_type]"
-    click_on "Join in!"
+    assert_content "I'm joining this conversation to..."
+    click_button "Join in!"
     # Not yet joined because I didn't submit all required info
     assert_path post_conversants_path
     assert_equals 3, @post.conversants.count
-    assert_content "Intention statement can't be blank"
-    fill_in "post_conversant[intention_statement]", with: "test blah foo"
+    assert_content "Intention can't be blank"
+    select "offer advice", from: "post_conversant[intention]"
     click_button "Join in!"
     assert_path post_path(@post)
-    assert_content "We're glad you've joined the discussion! Reply to this post in-line or at the bottom of the page."
+    assert_content "We're glad you've joined the discussion! Reply to this post at the bottom of the page."
     assert_content "Reply" # now can add a reply
     assert_equals 4, @post.conversants.count
     assert @post.conversants.include?(@user)
@@ -43,17 +42,14 @@ class CommentsTest < Capybara::Rails::TestCase
       assert_selector "form.new-bottom-comment", count: 1
       assert_content "Ways to support awesome conversation:"
       fill_in "post[draft_content]", with: "My novel and witty response"
-      click_on "Publish reply"
-      assert_content "Unable to save your changes. See error messages below."
-      select "seek advice", from: "post[intention_type]"
-      click_on "Publish reply"
+      # No intention selection is required nor present
+      click_button "Publish reply"
       assert_path post_path(@post)
       assert_content "My novel and witty response"
       assert_equals 2, @post.children.not_inline.count
       @reply = @post.reload.children.last
       assert_equals @user, @reply.author
       assert_equals "My novel and witty response", @reply.published_content
-      assert_equals "seek advice", @reply.intention_type
     end
   end
 end

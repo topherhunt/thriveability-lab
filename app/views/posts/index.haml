@@ -30,7 +30,8 @@
         .title
           %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
           &nbsp;
-          %span.label.label-default= post.intention_type
+          %em Intention: #{post.intention}
+        .tags
           - post.tag_list.each do |name|
             = link_to name, posts_path(tags: name), class: "label label-default"
         .teaser

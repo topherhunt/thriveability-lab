@@ -2,17 +2,14 @@
   = show_errors_for post_conversant
 
   .row.row-padded
-    .col-sm-3= f.label :intention_type, "My intention in joining this conversation"
-    .col-sm-9
-      = f.select :intention_type, IntentionType.all.map{ |it| [it.long, it.short] }, { include_blank: "- select one -" }, { class: "form-control" }
-      .small Select the main reason you want to jump in. This helps our community to engage with your content.
-  .row.row-padded
     .col-sm-3
-      = f.label :intention_statement, "State your intention for this post in your own words."
+      = f.label :intention, "I'm joining this conversation to..."
+      = required
+      .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
     .col-sm-9
-      = f.text_field :intention_statement, class: "form-control"
-      .small Consciously setting an intention can encourage more thoughtful and more productive discussions.
-      .small e.g. <em>I'm writing this post to clarify a perspective </em>
+      = f.select :intention, Post::INTENTION_PRESETS, { include_blank: "- select one -" }, { class: "js-intention-select form-control" }
+      .row-padded
+        %input.js-intention-write-in.js-hidden.form-control{type: "text", placeholder: "Write your own intention..."}
   .row.row-padded
     .col-sm-3
     .col-sm-9= f.submit "Join in!", class: "btn btn-primary"

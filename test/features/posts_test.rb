@@ -5,7 +5,7 @@ class PostsTest < Capybara::Rails::TestCase
     @user = create(:user)
   end
 
-  test "User can create and publish post" do
+  test "User can create and publish a post" do
     login_as @user
     click_on "Conversations"
     assert_equals 0, Post.count
@@ -16,8 +16,7 @@ class PostsTest < Capybara::Rails::TestCase
     fill_in "post[title]", with: "Gathering Acorns"
     fill_in "post[draft_content]", with: "Test content " * 100
     fill_in "post[tag_list]", with: "global warming, icebergs"
-    fill_in "post[intention_statement]", with: "Test statement content"
-    select "share an update about world events", from: "post[intention_type]"
+    select "seek advice", from: "post[intention]"
     click_on "Save draft"
     assert_path post_path(@post)
     assert_content "Your changes have been saved as a draft."
@@ -27,8 +26,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_equals "Gathering Acorns", @post.title
     assert_equals "Test content " * 100, @post.draft_content
     assert_equals nil, @post.published_content
-    assert_equals "share news", @post.intention_type
-    assert_equals "Test statement content", @post.intention_statement
+    assert_equals "seek advice", @post.intention
     assert_equals ["global warming", "icebergs"].to_set, @post.tag_list.to_set
     assert ! @post.published?
     page.find(".edit-post-link").click
@@ -60,6 +58,21 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content "That post doesn't exist."
   end
 
+  test "User can write in a custom intention" do
+    using_webkit do
+      @post = create(:published_post, author: @user)
+
+      login_as @user
+      visit edit_post_path(@post)
+      select "- other -", from: "post[intention]"
+      page.find(".js-intention-write-in").set("My custom intention statement")
+      sleep 0.1
+      click_on "Publish changes"
+      assert_path post_path(@post)
+      assert_equals "My custom intention statement", @post.reload.intention
+    end
+  end
+
   test "Visitor can browse and view published posts" do
     @post1 = create(:published_post)
     @post2 = create(:published_post)
@@ -73,7 +86,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_path post_path(@post1)
     assert_content @post1.title
     assert_content @post1.published_content
-    assert_content @post1.intention_statement
+    assert_content @post1.intention
     # can't access an unpubished draft even if I try
     visit post_path(@post3)
     assert_path posts_path
@@ -83,11 +96,11 @@ class PostsTest < Capybara::Rails::TestCase
   test "Visitor can filter published posts by author" do
     @user1 = create(:user)
     @user2 = create(:user)
-    @post1 = create(:published_post, author: @user1, intention_type: "share news",
+    @post1 = create(:published_post, author: @user1, intention: "share news",
       tag_list: "apple, bear")
-    @post2 = create(:published_post, author: @user1, intention_type: "seek perspectives",
+    @post2 = create(:published_post, author: @user1, intention: "seek perspectives",
       tag_list: "bear, cat")
-    @post3 = create(:published_post, author: @user2, intention_type: "seek perspectives",
+    @post3 = create(:published_post, author: @user2, intention: "seek perspectives",
       tag_list: "apple, cat")
 
     visit posts_path

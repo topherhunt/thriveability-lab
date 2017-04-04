@@ -87,7 +87,7 @@ class PostsController < ApplicationController
   # === Queries & calculators ===
 
   def post_params
-    params.require(:post).permit(:title, :draft_content, :intention_type, :intention_statement, :tag_list)
+    params.require(:post).permit(:title, :draft_content, :intention, :tag_list)
   end
 
   def publishing? # either the first time, or re-publishing

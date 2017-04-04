@@ -18,7 +18,7 @@ class UserProfileTest < Capybara::Rails::TestCase
     assert_content "Your profile has been updated."
     @user.reload
     assert_equals "Elmer Fudd", @user.full_name
-    assert_equals "A one-line tagline of my account", @user.tagline
+    assert_equals "A one-line tagline for my account", @user.tagline
     assert_equals "elmerfudd.jpg", @user.image_file_name
     assert_equals "My dreams, passions, etc.", @user.bio_interior
     assert_equals "My work, skills, goals, etc.", @user.bio_exterior

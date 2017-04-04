@@ -12,6 +12,8 @@
         <em>Started on #{print_date post.created_at}</em> -
         = link_to "Resume", edit_post_path(post)
       %p
-        = post.intention_statement
+        %strong Intention:
+        = post.intention
+      %p
         - post.tag_list.each do |tag|
           .label.label-default= tag

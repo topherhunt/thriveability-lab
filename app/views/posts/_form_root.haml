@@ -9,20 +9,13 @@
       .col-sm-9= f.text_field :title, class: "form-control", autofocus: (post.published? ? false : true)
     .row.row-padded
       .col-sm-3
-        = f.label :intention_type, "I'm writing this post mainly to..."
+        = f.label :intention, "I'm writing this post to..."
         = required
+        .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
       .col-sm-9
-        = f.select :intention_type, IntentionType.all.map{ |it| [it.long, it.short] }, { include_blank: "- select one -" }, { class: "form-control" }
-        .hint.small Select the main reason you’re writing this. This helps our community to engage with your content.
-    .row.row-padded
-      .col-sm-3
-        = f.label :intention_statement, "State your intention for this post in your own words."
-      .col-sm-9
-        = f.text_field :intention_statement, class: "form-control"
-        .hint.small
-          Consciously setting an intention can encourage more thoughtful and more productive discussions.
-          %br
-          e.g. <em>I'm writing this post to clarify a perspective </em>
+        = f.select :intention, Post::INTENTION_PRESETS, { include_blank: "- select one -" }, { class: "js-intention-select form-control" }
+        .row-padded
+          %input.js-intention-write-in.js-hidden.form-control{type: "text", placeholder: "Write your own intention..."}
     .row.row-padded
       .col-sm-3
         = f.label :draft_content, "Content"

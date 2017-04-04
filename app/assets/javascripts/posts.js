@@ -42,4 +42,16 @@ $(function(){
     // The partial should init autosave once it's loaded
   });
 
+  $('.js-intention-select').change(function(e){
+    if ($(this).val() == '- other -'){
+      $('.js-intention-write-in').show();
+    } else {
+      $('.js-intention-write-in').hide();
+    }
+  });
+
+  $('.js-intention-write-in').on('keyup change', function(e){
+    $('.js-intention-select').children('option:last').val( $(this).val() );
+  });
+
 });

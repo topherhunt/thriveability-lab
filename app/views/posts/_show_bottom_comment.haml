@@ -3,15 +3,13 @@
   .this-comment
     .float-left= image_tag(post.author.image.url(:thumb), style: "width: 60px; padding-right: 10px; padding-bottom: 10px;")
     = sanitize(post.published_content || post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+
     %p.text-muted{style: "margin-top: 0.5em;"}
       - if post.published?
         by #{link_to post.author.full_name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
       - else
         %strong.text-danger Draft reply
         = "- you started writing this on #{print_date(post.created_at, time: true)}"
-
-      - if post.intention_type.present?
-        &nbsp; Intention: #{IntentionType.find(post.intention_type).try(:short)}
       %span.js-show-on-hover
         %i.fa.fa-spinner.loading.js-hidden
         - if current_user == post.author
@@ -24,6 +22,7 @@
           - if current_user.in? @conversants
             &nbsp;
             = link_to "Reply", "#", class: "js-new-reply", "data-post-id": post.id
+
     .new-reply-container.js-hidden{ "data-parent-id": post.id }
 
   - post.children.visible_to(current_user).order("created_at ASC").each do |reply|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322130503) do
+ActiveRecord::Schema.define(version: 20170322140240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,8 +82,7 @@ ActiveRecord::Schema.define(version: 20170322130503) do
   create_table "post_conversants", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "post_id"
-    t.string   "intention_type"
-    t.string   "intention_statement"
+    t.string   "intention"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -104,8 +103,7 @@ ActiveRecord::Schema.define(version: 20170322130503) do
     t.integer  "author_id"
     t.string   "title"
     t.text     "published_content"
-    t.string   "intention_type"
-    t.string   "intention_statement"
+    t.string   "intention"
     t.boolean  "published",              default: false
     t.datetime "published_at"
     t.datetime "created_at"
