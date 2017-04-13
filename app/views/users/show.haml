@@ -35,6 +35,7 @@
     %h4 Get connected
     = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.first_name} inspires me" }
     = render partial: "shared/stay_informed_flags_section", locals: { target: @user, owner: @user, link_wording: "Follow #{@user.first_name}" }
+    = link_to fa_icon("envelope") + " Send #{@user.first_name} a message", new_message_path(message: {recipient_id: @user.id})
 
 .row
   .col-sm-6

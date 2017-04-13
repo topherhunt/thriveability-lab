@@ -1,6 +1,10 @@
 Howdy <%= @message.sender.first_name %>!
 
+<% if @message.project %>
 This email confirms that your message has been sent to <%= @message.recipient.full_name %> regarding their project, <%= @message.project.title %>.
+<% else %>
+This email confirms that your message has been sent to <%= @message.recipient.full_name %>.
+<% end %>
 
 Subject: <%= Message::SUBJECTS.fetch(@message.subject_code) %>
 

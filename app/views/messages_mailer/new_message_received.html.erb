@@ -1,6 +1,10 @@
 <p>Howdy <%= @message.recipient.first_name %>!</p>
 
-<p>Integral Climate member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+<% if @message.project %>
+  <p>Integral Climate member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+<% else %>
+  <p>Integral Climate member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message.</p>
+<% end %>
 
 <h3>Subject:</h3>
 <p><strong><%= Message::SUBJECTS.fetch(@message.subject_code) %></strong></p>

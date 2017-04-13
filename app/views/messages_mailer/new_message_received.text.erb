@@ -1,6 +1,10 @@
 Howdy <%= @message.recipient.first_name %>!
 
+<% if @message.project %>
 Integral Climate member <%= @message.sender.full_name %> has sent you a message relating to your project, <%= @message.project.title %>.
+<% else %>
+Integral Climate member <%= @message.sender.full_name %> has sent you a message.
+<% end %>
 
 Subject: <%= Message::SUBJECTS.fetch(@message.subject_code) %>
 

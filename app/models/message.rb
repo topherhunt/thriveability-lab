@@ -16,7 +16,7 @@ class Message < ActiveRecord::Base
 
   validates_presence_of :sender
   validates_presence_of :recipient
-  validates_presence_of :project # for now; in the future this might be optional
+  # validates_presence_of :project # for now; in the future this might be optional
   validates_presence_of :subject_code
   validates_presence_of :body
   validates :subject_code, inclusion: { in: SUBJECTS.keys }
