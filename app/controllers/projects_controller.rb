@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :verify_ownership, only: [:edit, :update]
 
   def index
-    @projects = Project.all.order(:title)
+    @projects = Project.all.order("updated_at DESC")
     @filters = params.slice(:tags)
     @projects = @projects.tagged_with(@filters[:tags]) if @filters[:tags].present?
   end

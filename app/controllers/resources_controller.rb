@@ -5,7 +5,7 @@ class ResourcesController < ApplicationController
   before_action :verify_ownership, only: [:edit, :update, :destroy]
 
   def index
-    @resources = Resource.all.order("title").includes(:creator, :target)
+    @resources = Resource.all.order("updated_at DESC").includes(:creator, :target)
     @filters = params.slice(:tags, :media_types)
     @resources = @resources.tagged_with(@filters[:tags]) if @filters[:tags].present?
     @resources = @resources.tagged_with(@filters[:media_types]) if @filters[:media_types].present?
