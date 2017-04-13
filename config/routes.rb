@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'home'  => 'home#home'
   get 'about' => 'home#about'
   get 'throwup' => 'home#throwup'
+  get 'ping' => 'home#ping'
 
   # Thanks to https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }

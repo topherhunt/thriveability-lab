@@ -63,4 +63,6 @@
 
   .row.row-padded
     .col-sm-3
-    .col-sm-9= f.submit "Save", class: "submit-resource-button btn btn-primary"
+    .col-sm-9
+      = monitor_connection
+      = f.submit "Save", class: "submit-resource-button btn btn-primary"

@@ -18,4 +18,8 @@ class HomeController < ApplicationController
   def throwup
     raise "Threw up!"
   end
+
+  def ping
+    render text: "OK", status: 200
+  end
 end

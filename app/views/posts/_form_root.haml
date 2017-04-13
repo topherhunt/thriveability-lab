@@ -27,6 +27,7 @@
       .col-sm-3
       .col-sm-9
         %hr
+        = monitor_connection
         = f.submit "Save draft", class: "btn btn-default"
         - if post.published?
           = f.submit "Publish changes", class: "btn btn-primary"
