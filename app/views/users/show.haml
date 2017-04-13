@@ -17,6 +17,9 @@
 
     %p= @user.tagline
 
+    - if @user.location.present?
+      %p Based in #{@user.location}
+
     %p Member since #{print_date @user.created_at}
 
     %h3 My personality, dreams, and passions

@@ -6,6 +6,7 @@ FactoryGirl.define do
     password              "password"
     password_confirmation "password"
     # These are overkill for most test users, but useful in the dev environment
+    tagline      { Faker::Lorem.sentence }
     bio_interior { Faker::Lorem.sentence }
     bio_exterior { Faker::Lorem.sentence }
     confirmed_at 1.week.ago

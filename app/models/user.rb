@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
     default_url: "/missing_user.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates :tagline, length: { maximum: 120 }
+  validates :location, length: { maximum: 255 }
 
   before_save :update_has_set_password
 

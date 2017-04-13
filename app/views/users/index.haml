@@ -12,7 +12,11 @@
         = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;"), user_path(user)
         .title
           %span.h4= link_to user.full_name, user_path(user)
-        .tagline.em= user.tagline
+        %div
+          %span.tagline= user.tagline
+          &nbsp;
+          - if user.location.present?
+            %span.location Based in #{user.location}
         -# .dates.text-muted
           Member since #{print_date(user.created_at)}.
           Last seen #{print_date(user.current_sign_in_at, time: true)}
