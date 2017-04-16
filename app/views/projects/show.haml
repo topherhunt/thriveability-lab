@@ -90,4 +90,4 @@
     %hr
     %p.text-center
       Questions? Ideas? Feedback? Want to pitch in?
-      = link_to fa_icon("envelope") + " Send #{@project.owner.first_name} an email", new_message_path(message: { project_id: @project.id, recipient_id: @project.owner_id }), class: "new-project-message-link"
+      = link_to fa_icon("envelope") + " Send #{@project.owner.first_name} an email", new_message_path(message: { project_id: @project.id, recipient_id: @project.owner_id }), class: "new-project-message-link nowrap"

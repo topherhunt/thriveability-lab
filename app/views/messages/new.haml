@@ -9,6 +9,13 @@
     = f.hidden_field :project_id
     = f.hidden_field :recipient_id
 
+    - if @message.project
+      .row.row-padded
+        .col-sm-3
+          %strong Regarding project:
+        .col-sm-9
+          = link_to @message.project.title, @message.project
+
     .row.row-padded
       .col-sm-3= f.label :subject_code, "What are you writing about?"
       .col-sm-9= f.select :subject_code, Message::SUBJECTS.invert, { include_blank: "- select one -" }, class: "form-control"
