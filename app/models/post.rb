@@ -1,11 +1,11 @@
 class Post < ActiveRecord::Base
   INTENTION_PRESETS = [
-    "share an update about world events, research, or objective knowledge",
-    "share a personal experience, insight, or perspective on an issue",
+    "share about facts, events, or objective knowledge",
+    "share about a personal experience or perspective",
     "raise awareness of a problem",
     "propose a solution to a problem",
     "learn about others' perspectives",
-    "critique a perspective so we can all learn and grow",
+    "critique a perspective",
     "seek advice",
     "offer advice",
     "- other -"
