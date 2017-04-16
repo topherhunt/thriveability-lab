@@ -1,8 +1,14 @@
 .sidebar-image {
   img {
     width: 120%;
-    margin-left: -10%;
     margin-right: -10%;
-    margin-top: -21px; // to match up to the hr above it
+    margin-top: 0px; // to match up to the hr above it
   }
+}
+
+.list-row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid #eee;
+  min-height: 70px; // so the floated image doesn't bleed into the following div
 }

@@ -22,13 +22,11 @@
           %option{value: name, selected: selected}= name
       %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-%hr
-
-.row
+.row{style: "margin-top: 20px;"}
   .col-sm-8
     - @resources.each do |resource|
-      %div
-        .title
+      .list-row
+        %div
           %span.h4= link_to (resource.title), resource_path(resource)
           &nbsp;
           - if resource.current_url.present?
@@ -36,19 +34,17 @@
             &nbsp;
           - if current_user == resource.creator
             = link_to fa_icon("pencil"), edit_resource_path(resource)
-          &nbsp;
+        %div= ellipsify(resource.description, 100)
+        %div.nowrap
           - resource.tag_list.each do |name|
-            = link_to name, resources_path(tags: name), class: "label label-default"
+            = link_to name, resources_path(tags: name), class: "label label-primary"
           - resource.media_type_list.each do |name|
-            = link_to name, resources_path(media_types: name), class: "label label-default"
-        .subtitle
-          = ellipsify(resource.description, 100)
-        .attribution.text-muted
+            = link_to name, resources_path(media_types: name), class: "label label-info"
+        %div.text-muted
           Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
           on #{print_date(resource.created_at)}.
           - if resource.source_name.present?
             Source: #{resource.source_name}.
-        %hr
 
   .col-sm-4.hidden-xs.sidebar-image
     = image_tag "list_images/resources.jpg"

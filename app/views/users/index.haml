@@ -3,24 +3,16 @@
 - unless user_signed_in?
   %p= link_to "Join the community", new_user_registration_path, class: "btn btn-success"
 
-%hr
-
-.row
+.row{style: "margin-top: 20px;"}
   .col-sm-8
     - @users.each do |user|
-      %div
-        = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 40px; margin-right: 10px;"), user_path(user)
-        .title
+      .list-row
+        = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 50px;"), user_path(user)
+        .user-text{style: "margin-left: 60px;"}
           %span.h4= link_to user.full_name, user_path(user)
-        %div
-          %span.tagline= user.tagline
-          &nbsp;
+          %div= user.tagline
           - if user.location.present?
-            %span.location Based in #{user.location}
-        -# .dates.text-muted
-          Member since #{print_date(user.created_at)}.
-          Last seen #{print_date(user.current_sign_in_at, time: true)}
-        %hr
+            %div Based in #{user.location}
 
   .col-sm-4.hidden-xs.sidebar-image
     = image_tag "list_images/people#{[1,2].shuffle.first}.jpg"
