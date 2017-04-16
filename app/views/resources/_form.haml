@@ -1,4 +1,4 @@
-%p Please share any resource (e.g., powerpoint, paper, plan) you consider valuable for the community here. However, be sure to <strong>only upload files that you have the right to share</strong> (to avoid issues with copyrights and ownership)! Otherwise, refer to it with a link, so people can access it at the appropriate place.
+%p Please share any resource you consider valuable for the community. However, be sure to <span class='text-danger'>only upload files that you have the right to share!</span> Otherwise, refer to it with a link, so people can access it at the appropriate place.
 
 = form_for @resource do |f|
   = show_errors_for @resource
@@ -30,8 +30,8 @@
     .col-sm-3
       = f.label :description
       = required
-      .hint.small What does this resource offer to the community? Who might benefit from it?
-    .col-sm-9= f.text_area :description, class: "form-control"
+      .hint.small Please give a one-line description of what this resource contributes to the community.
+    .col-sm-9= f.text_field :description, class: "form-control"
   = render partial: "shared/edit_tags", locals: { form: f, object: @resource }
   .row.row-padded
     .col-sm-3

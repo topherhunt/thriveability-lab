@@ -30,11 +30,12 @@
         .title
           %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
           &nbsp;
-          %em Intention: #{post.intention}
         .tags
           - post.tag_list.each do |name|
             = link_to name, posts_path(tags: name), class: "label label-default"
-        .teaser
+        .intention
+          Intention: #{post.intention}
+        .text-muted
           = ellipsify(sanitize(post.published_content, tags: []), 100)
         .attribution.text-muted
           Written by #{link_to post.author.full_name, user_path(post.author)}

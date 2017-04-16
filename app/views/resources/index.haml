@@ -44,9 +44,10 @@
         .subtitle
           = ellipsify(resource.description, 100)
         .attribution.text-muted
-          Source: #{resource.source_name}.
           Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
           on #{print_date(resource.created_at)}.
+          - if resource.source_name.present?
+            Source: #{resource.source_name}.
         %hr
 
   .col-sm-4.hidden-xs.sidebar-image
