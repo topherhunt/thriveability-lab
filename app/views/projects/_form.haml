@@ -33,31 +33,34 @@
     .col-sm-9= f.select :stage, ["idea", "developing", "mature"], { include_blank: "- select one -" }, { class: "form-control" }
   = render partial: "shared/edit_tags", locals: { form: f, object: @project }
 
-  %h3.text-center Details
   .row.row-padded
-    .col-sm-6.text-right
+    .col-sm-3
       = f.label :quadrant_ul, "What's your vision for this project?"
+    .col-sm-9
       = f.text_area :quadrant_ul, class: "form-control"
-    .col-sm-6
+  .row.row-padded
+    .col-sm-3
       = f.label :quadrant_ur, "What are some concrete goals?"
+    .col-sm-9
       = f.text_area :quadrant_ur, class: "form-control"
   .row.row-padded
-    .col-sm-6.text-right
+    .col-sm-3
       = f.label :quadrant_ll, "Who is taking part? Who will be affected?"
+    .col-sm-9
       = f.text_area :quadrant_ll, class: "form-control"
-    .col-sm-6
-      = f.label :quadrant_lr, "What contexts are you constrained / supported by?"
-      = f.text_area :quadrant_lr, class: "form-control"
-
-  %h3 How can others help?
-
   .row.row-padded
-    .col-sm-4
+    .col-sm-3
+      = f.label :quadrant_lr, "What contexts or systems are you affected by?"
+      .hint.small (e.g., funding, legislation, institutions)
+    .col-sm-9
+      = f.text_area :quadrant_lr, class: "form-control"
+  .row.row-padded
+    .col-sm-3
       = f.label :call_to_action, "What can others do to help?"
       .hint.small Describe what forms of help you'd be grateful for. Other members may contact you in response to what you write here.
-    .col-sm-8= f.text_area :call_to_action, class: "form-control"
+    .col-sm-9= f.text_area :call_to_action, class: "form-control"
   .row.row-padded
-    .col-sm-4
-    .col-sm-8
+    .col-sm-3
+    .col-sm-9
       = monitor_connection
       = f.submit "Save", class: "save-project-button btn btn-primary"

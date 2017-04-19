@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413131553) do
+ActiveRecord::Schema.define(version: 20170419141945) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,11 +128,11 @@ ActiveRecord::Schema.define(version: 20170413131553) do
     t.string   "subtitle"
     t.text     "introduction"
     t.string   "location"
-    t.string   "quadrant_ul"
-    t.string   "quadrant_ur"
-    t.string   "quadrant_ll"
-    t.string   "quadrant_lr"
-    t.string   "call_to_action"
+    t.text     "quadrant_ul"
+    t.text     "quadrant_ur"
+    t.text     "quadrant_ll"
+    t.text     "quadrant_lr"
+    t.text     "call_to_action"
     t.string   "stage"
     t.string   "image_file_name"
     t.string   "image_content_type"

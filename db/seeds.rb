@@ -98,6 +98,8 @@ puts "\nAdding get involved flags..."
   GetInvolvedFlag.create(user: @users.sample, target: @projects.sample)
 end
 
+PredefinedTag.repopulate
+
 puts "\nSeeding complete! Stats:"
 puts "- #{User.count} Users"
 puts "- #{Project.count} Projects"

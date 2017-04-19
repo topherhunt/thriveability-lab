@@ -23,11 +23,6 @@ class Project < ActiveRecord::Base
   validates :title, length: { maximum: 255 }
   validates :subtitle, length: { maximum: 255 }
   validates :location, length: { maximum: 255 }
-  validates :quadrant_ul, length: { maximum: 255 }
-  validates :quadrant_ur, length: { maximum: 255 }
-  validates :quadrant_ll, length: { maximum: 255 }
-  validates :quadrant_lr, length: { maximum: 255 }
-  validates :call_to_action, length: { maximum: 255 }
   validates :stage, inclusion: { in: STAGES }
 
   def self.most_popular(n)
