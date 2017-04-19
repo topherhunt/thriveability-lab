@@ -25,10 +25,10 @@
             - project.tag_list.each do |name|
               = link_to name, projects_path(tags: name), class: "label label-primary"
           %div.text-muted
-            Added by #{link_to project.owner.full_name, user_path(project.owner)}
-            on #{print_date(project.created_at)}.
+            Added by #{link_to project.owner.full_name, user_path(project.owner)} -
+            last updated #{print_date(project.updated_at)}
             - if project.count_people_engaged > 1
-              #{project.count_people_engaged} people are connected.
+              = "- #{project.count_people_engaged} people are connected"
 
   .col-sm-4.hidden-xs.sidebar-image
     = image_tag "list_images/projects.jpg"
