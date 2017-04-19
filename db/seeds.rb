@@ -35,14 +35,14 @@ puts "\nCreating 100 users..."
   end
 end.compact
 
-@users = @users.sample(30) + [@topher]
+@users = @users.sample(50) + [@topher]
 
 puts "\nCreating 80 projects..."
 @projects = 80.times.map do |i|
   print "."
   FactoryGirl.create(:project,
-    owner: @users.sample,
-    image: 'http://lorempixel.com/300/300/sports/'
+    owner: @users.sample
+    # TODO: Add stock images... the lorempixel URL we were using, kept timing out
   )
 end
 
