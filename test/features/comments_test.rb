@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CommentsTest < Capybara::Rails::TestCase
+  include ActionView::Helpers::SanitizeHelper
+
   setup do
     @post = create(:published_post)
     @user = create(:user)
@@ -11,7 +13,7 @@ class CommentsTest < Capybara::Rails::TestCase
   test "User can join the conversation on a post" do
     login_as @user
     visit post_path(@post)
-    assert_content @comment1.published_content
+    assert_content sanitize(@comment1.published_content, tags: [])
     refute_content "Reply"
     click_on "Join the conversation!"
     assert_equals 3, @post.conversants.count

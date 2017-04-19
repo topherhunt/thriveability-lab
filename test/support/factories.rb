@@ -2,33 +2,44 @@ FactoryGirl.define do
   factory(:user) do
     first_name { Faker::Name.first_name }
     last_name  { Faker::Name.last_name  }
-    email { "#{full_name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
+    email      { "#{full_name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
     # These are overkill for most test users, but useful in the dev environment
-    tagline      { Faker::Lorem.sentence }
-    bio_interior { Faker::Lorem.sentence }
-    bio_exterior { Faker::Lorem.sentence }
-    confirmed_at 1.week.ago
-    current_sign_in_at 3.days.ago
+    tagline      { Faker::Lorem.words(rand(2..12)).join(" ").capitalize }
+    bio_interior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
+    bio_exterior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
+    created_at   { (rand * 400.0).days.ago }
+    confirmed_at { created_at + (rand * 10).hours }
+    current_sign_in_at { (rand * 30).days.ago }
   end
 
   factory(:project) do
     association :owner, factory: :user
-    title { Faker::Lorem.words(3).join(" ").capitalize }
-    subtitle { Faker::Lorem.words(7).join(" ").capitalize }
-    stage "idea"
+    title        { Faker::Lorem.words(3).join(" ").capitalize }
+    subtitle     { Faker::Lorem.words(10).join(" ").capitalize }
+    introduction { Faker::Lorem.sentences(rand(1..4)).join(" ") }
+    stage        { Project::STAGES.sample }
+    tag_list     { PredefinedTag::PRESETS.sample(rand(0..3)) }
+    created_at   { (rand * 400.0).days.ago }
   end
 
   factory(:draft_post, class: :Post) do
     association :author, factory: :user
-    title { Faker::Lorem.words(5).join(" ").capitalize }
-    intention "share news"
+    title         { Faker::Lorem.words(5).join(" ").capitalize }
+    intention     { Post::INTENTION_PRESETS.take(8).sample }
     draft_content { Faker::Lorem.paragraph }
+    tag_list      { PredefinedTag::PRESETS.sample(rand(0..3)) if parent.nil? and parent_id.nil? }
+    created_at    { (rand * 400.0).days.ago }
 
     factory(:published_post) do
       draft_content nil
-      published_content { Faker::Lorem.paragraph }
+      published_content {
+        "<p>" +
+        Faker::Lorem.sentences(rand(2..50))
+          .join([" ", " ", " ", "</p>\n<p>"].sample) +
+        "</p>"
+      }
       published true
       published_at 1.day.ago
     end
@@ -37,15 +48,19 @@ FactoryGirl.define do
   factory(:post_conversant) do
     association :post
     association :user
-    intention "seek perspectives"
+    intention  { Post::INTENTION_PRESETS.take(8).sample }
+    created_at { (rand * 400.0).days.ago }
   end
 
   factory(:resource) do
     association :creator, factory: :user
-    title { Faker::Lorem.words(5).join(" ").capitalize }
-    source_name { Faker::Name.first_name }
-    current_url { Faker::Internet.url }
-    description { Faker::Lorem.paragraph }
+    title           { Faker::Lorem.words(rand(2..15)).join(" ").capitalize }
+    source_name     { Faker::Lorem.words(rand(1..5)).join(" ").capitalize }
+    current_url     { Faker::Internet.url }
+    description     { Faker::Lorem.sentences(rand(1..5)).join(" ") }
+    tag_list        { PredefinedTag::PRESETS.sample(rand(0..3)) }
+    media_type_list { Resource::DEFAULT_MEDIA_TYPES.sample(rand(0..3)).first }
+    created_at      { (rand * 400.0).days.ago }
   end
 
   factory(:like_flag) do

@@ -30,7 +30,8 @@
         %div.nowrap
           - post.tag_list.each do |name|
             = link_to name, posts_path(tags: name), class: "label label-primary"
-        .text-muted= ellipsify(sanitize(post.published_content, tags: []), 100)
+        %div.nowrap.text-muted
+          = ellipsify(sanitize(post.published_content, tags: []), 300)
         .attribution.text-muted
           Written by #{link_to post.author.full_name, user_path(post.author)}
           - if post.published?

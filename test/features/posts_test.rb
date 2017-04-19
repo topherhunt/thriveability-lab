@@ -1,6 +1,8 @@
 require "test_helper"
 
 class PostsTest < Capybara::Rails::TestCase
+  include ActionView::Helpers::SanitizeHelper
+
   setup do
     @user = create(:user)
   end
@@ -85,7 +87,7 @@ class PostsTest < Capybara::Rails::TestCase
     click_on @post1.title
     assert_path post_path(@post1)
     assert_content @post1.title
-    assert_content @post1.published_content
+    assert_content sanitize(@post1.published_content, tags: [])
     assert_content @post1.intention
     # can't access an unpubished draft even if I try
     visit post_path(@post3)

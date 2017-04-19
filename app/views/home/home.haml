@@ -92,4 +92,5 @@
           %div
             = link_to event.user.full_name, user_path(event.user)
             = event.action_description
+            = "the #{event.target.class.to_s.downcase}" unless event.target.is_a? User
             = link_to event.target_description, url_for(event.target)

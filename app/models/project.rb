@@ -1,4 +1,6 @@
 class Project < ActiveRecord::Base
+  STAGES = ["idea", "developing", "mature"]
+
   belongs_to :owner, class_name: 'User'
   has_many :resources, as: :target
   has_many :received_like_flags, class_name: 'LikeFlag', as: :target
@@ -26,7 +28,7 @@ class Project < ActiveRecord::Base
   validates :quadrant_ll, length: { maximum: 255 }
   validates :quadrant_lr, length: { maximum: 255 }
   validates :call_to_action, length: { maximum: 255 }
-  validates :stage, inclusion: { in: ["idea", "developing", "mature"] }
+  validates :stage, inclusion: { in: STAGES }
 
   def self.most_popular(n)
     # TODO: This triggers N+1 queries.
