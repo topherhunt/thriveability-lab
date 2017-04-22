@@ -1,4 +1,4 @@
-.centered-800
+.centered-600
   %h1 Send #{@message.recipient.first_name} a message
 
   %p Write your message below, then click <strong>Submit</strong>. We'll email #{@message.recipient.first_name} with your message, and CC a copy to you as well. If #{@message.recipient.first_name} replies, you'll receive the reply directly in your email inbox.
@@ -17,8 +17,13 @@
           = link_to @message.project.title, @message.project
 
     .row.row-padded
-      .col-sm-3= f.label :subject_code, "What are you writing about?"
-      .col-sm-9= f.select :subject_code, Message::SUBJECTS.invert, { include_blank: "- select one -" }, class: "form-control"
+      .col-sm-3
+        = f.label :subject, "Subject"
+      .col-sm-9
+        - if @message.project
+          = f.select :subject, Message::PROJECT_SUBJECT_PRESETS, { include_blank: "- select one -" }, class: "form-control"
+        - else
+          = f.text_field :subject, class: "form-control"
     .row.row-padded
       .col-sm-3= f.label :body, "Your message"
       .col-sm-9= f.text_area :body, class: "form-control"

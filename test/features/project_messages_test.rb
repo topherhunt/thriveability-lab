@@ -26,7 +26,7 @@ class ProjectMessagesTest < Capybara::Rails::TestCase
     visit project_path(project)
     page.find('.new-project-message-link').click
     assert_path new_message_path
-    select Message::SUBJECTS.values.second, from: 'message[subject_code]'
+    select Message::PROJECT_SUBJECT_PRESETS.second, from: 'message[subject]'
     fill_in 'message[body]', with: "Test message body"
     click_on "Send!"
     assert_path project_path(project)
@@ -39,7 +39,7 @@ class ProjectMessagesTest < Capybara::Rails::TestCase
     assert_equals project, message.project
     assert_equals project.owner, message.recipient
     assert_equals sender, message.sender
-    assert_equals Message::SUBJECTS.keys.second, message.subject_code
+    assert_equals Message::PROJECT_SUBJECT_PRESETS.second, message.subject
     assert_equals "Test message body", message.body
     assert message.sent_at.between?(1.second.ago, Time.now)
   end

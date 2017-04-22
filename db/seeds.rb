@@ -100,6 +100,8 @@ end
 
 PredefinedTag.repopulate
 
+# TODO: Populate a few notifications for Topher so I can easily test the notification system from seed.
+
 puts "\nSeeding complete! Stats:"
 puts "- #{User.count} Users"
 puts "- #{Project.count} Projects"

@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:recipient_id, :project_id, :subject_code, :body)
+    params.require(:message).permit(:recipient_id, :project_id, :subject, :body)
   end
 
   def handle_redirect

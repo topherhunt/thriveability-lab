@@ -6,7 +6,7 @@ This email confirms that your message has been sent to <%= @message.recipient.fu
 This email confirms that your message has been sent to <%= @message.recipient.full_name %>.
 <% end %>
 
-Subject: <%= Message::SUBJECTS.fetch(@message.subject_code) %>
+Subject: <%= @message.subject %>
 
 The message:
 
