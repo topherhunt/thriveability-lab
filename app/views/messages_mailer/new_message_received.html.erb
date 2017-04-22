@@ -6,10 +6,9 @@
   <p>Integral Climate member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message.</p>
 <% end %>
 
-<h3>Subject:</h3>
-<p><strong><%= @message.subject %></strong></p>
+<p>Subject: <%= @message.subject %></p>
 
-<h3>The message:</h3>
+<strong>The message:</strong>
 <hr>
 <%= simple_format(@message.body) %>
 <hr>
