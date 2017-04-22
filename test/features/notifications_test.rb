@@ -34,7 +34,7 @@ class NotificationsTest < Capybara::Rails::TestCase
     login_as @user
     assert_selector(".notifications-list .notification.unread", count: 10)
     assert_equals 60, Notification.unread.count
-    page.all(".notifications-list .notification.unread a")[4].click
+    page.all(".notifications-list .notification.unread a.notification-target-link")[4].click
     assert_path post_path(Post.second)
     assert_equals 59, Notification.unread.count
     assert_selector(".notifications-list .notification.unread", count: 9)

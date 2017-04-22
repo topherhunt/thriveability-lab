@@ -9,12 +9,14 @@
       Updates
       %span.caret
   %ul.dropdown-menu.notifications-list
-    - my_recent_notifications.each do |notification|
-      %li.notification{class: notification.read? ? "read" : "unread"}
-        %a{href: notification_path(notification)}
-          = image_tag(notification.image_url, class: "notification-icon")
-          %span.datetime #{print_date notification.created_at, time: true} -
-          %span.description= notification.sentence
+    - my_recent_notifications.each do |n|
+      %li.notification{class: n.read? ? "read" : "unread"}
+        %div
+          = link_to image_tag(n.image_url, class: "notification-icon"), notification_path(n, redirect_to: "actor")
+          -# %span.datetime #{print_date n.created_at, time: true} -
+          = link_to n.actor.full_name, notification_path(n, redirect_to: "actor"), class: "notification-actor-link"
+          = n.action_description
+          = link_to "\"#{ellipsify n.target_description, 80}\"", notification_path(n, redirect_to: "target"), class: "notification-target-link"
     .divider{role: "separator"}
     - if unread_notifications_count > 0
       %li= link_to "Mark all as read", mark_all_read_notifications_path, method: :post, class: "mark-all-notifications-as-read"
