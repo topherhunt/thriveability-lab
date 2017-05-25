@@ -47,7 +47,6 @@ class CommentsTest < Capybara::Rails::TestCase
       # No intention selection is required nor present
       click_button "Publish reply"
       assert_path post_path(@post)
-      assert_content "My novel and witty response"
       assert_equals 2, @post.children.not_inline.count
       @reply = @post.reload.children.last
       assert_equals @user, @reply.author

@@ -14,7 +14,7 @@
         %li{class: active_if_current(about_path)}= link_to "About", about_path
         %li{class: active_if_current(users_path)}= link_to "People", users_path
         %li{class: active_if_current(projects_path)}= link_to "Projects", projects_path
-        %li{class: active_if_current(posts_path)}= link_to "Conversations", posts_path
+        %li{class: active_if_current(posts_path)}= link_to "Conversations", dashboard_posts_path
         %li{class: active_if_current(resources_path)}= link_to "Resources", resources_path
 
         - if user_signed_in?

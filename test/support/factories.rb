@@ -41,7 +41,7 @@ FactoryGirl.define do
         "</p>"
       }
       published true
-      published_at 1.day.ago
+      published_at { created_at + (rand * 24).hours }
     end
   end
 

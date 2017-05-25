@@ -1,11 +1,14 @@
-%h1 Conversations
-
 .row
-  .col-sm-8
-    %p <strong>Conversations are powerful ways to connect, learn, collaborate, and innovate.</strong><br> Use conversations to share your ideas and questions, and respond to those of others.
-    %p= link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+  .col-md-4
+    %h1 All Conversations
+    %p Conversations are powerful ways to connect, learn, collaborate, and innovate. Use conversations to share your ideas and questions, and respond to those of others.
 
-  .col-sm-4
+    %p{style: "padding-bottom: 10px;"}
+      = link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+      - if @my_drafts_count and @my_drafts_count > 0
+        &nbsp;
+        = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "btn btn-default btn-sm"
+
     = form_tag(posts_path, method: :get, class: "filter-posts") do
       %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
@@ -19,31 +22,23 @@
         - @authors.each do |author|
           - selected = @filters[:author_id] == author.id.to_s
           %option{value: author.id, selected: selected}= author.full_name
-      .text-right{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px; padding-bottom: 30px;"}= submit_tag "Filter", class: "btn btn-primary"
 
-.row{style: "margin-top: 20px;"}
+    .hidden-sm.hidden-xs= image_tag "list_images/conversations.jpg", style: "width: 100%;"
+
   .col-sm-8
     - @posts.each do |post|
       .list-row
-        %span.h4= link_to post.title.presence || "Untitled draft", post_path(post)
-        .intention Intention: #{post.intention}
-        %div.nowrap
-          - post.tag_list.each do |name|
-            = link_to name, posts_path(tags: name), class: "label label-primary"
+        %span.h4= link_to post.title, post_path(post)
+        -# .intention Intention: #{post.intention}
         %div.nowrap.text-muted
           = ellipsify(sanitize(post.published_content, tags: []), 300)
-        .attribution.text-muted
-          Written by #{link_to post.author.full_name, user_path(post.author)}
-          - if post.published?
-            on #{print_date(post.published_at, time: true)}.
-          -# TODO: Unpublished posts shouldn't be listed here; accounting for them complicates the logic too much, with no clear benefit. There should be a separate section or a separate page maybe; have a link to "See my 4 unpublished drafts"
-          - if current_user == post.author and ! post.published?
-            &mdash;
-            %span.text-warning Unpublished draft
-            &nbsp;
-            = link_to fa_icon("pencil"), edit_post_path(post), class: "edit-post-link"
-            &nbsp;
-            = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+        %div.nowrap
+          - post.author_and_conversants.take(10).each do |user|
+            = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
+          - post.tag_list.each do |name|
+            = link_to name, posts_path(tags: name), class: "btn btn-default btn-xs"
 
-  .col-sm-4.hidden-xs.sidebar-image
-    = image_tag "list_images/conversations.jpg"
+        -# .attribution.text-muted
+        -#   Written by #{link_to post.author.full_name, user_path(post.author)}
+        -#   on #{print_date(post.published_at, time: true)}.

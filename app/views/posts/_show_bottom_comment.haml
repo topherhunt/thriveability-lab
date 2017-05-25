@@ -4,7 +4,7 @@
     .float-left= image_tag(post.author.image.url(:thumb), style: "width: 60px; padding-right: 10px; padding-bottom: 10px;")
     = sanitize(post.published_content || post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
 
-    %p.text-muted{style: "margin-top: 0.5em;"}
+    %p.text-muted{style: "margin-top: 0.5em; line-height: 25px;"}
       - if post.published?
         by #{link_to post.author.full_name, user_path(post.author)} on #{print_date(post.created_at, time: true)}
       - else
@@ -21,7 +21,7 @@
         - elsif post.published?
           - if current_user.in? @conversants
             &nbsp;
-            = link_to "Reply", "#", class: "js-new-reply", "data-post-id": post.id
+            = link_to fa_icon("pencil") + " Reply", "#", class: "js-new-reply btn btn-xs btn-default", "data-post-id": post.id
 
     .new-reply-container.js-hidden{ "data-parent-id": post.id }
 

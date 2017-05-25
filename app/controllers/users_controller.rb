@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.where(published: true).order("published_at DESC").limit(10)
+    @posts = @user.posts.published.order("published_at DESC").limit(10)
   end
 
   def edit

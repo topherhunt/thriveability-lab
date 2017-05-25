@@ -4,11 +4,26 @@ class PostsController < ApplicationController
   before_action :load_post, only: [:edit, :update, :show, :destroy]
   before_action :verify_authorship, only: [:edit, :update, :destroy]
 
+  def dashboard
+    @most_active_conversations = Post.most_active(8)
+    @most_recent_activity = RecentEvent.latest_post_activity(5)
+    @tag_counts = Post.roots.published.order("published_at DESC").limit(100)
+      .tag_counts_on(:tags)
+      .sort_by(&:name)
+    @my_drafts_count = current_user.posts.roots.draft.count if current_user
+  end
+
   def index
-    @posts = Post.roots.visible_to(current_user).order("published_at DESC")
+    @posts = Post.roots.published.order("published_at DESC")
     @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:first_name)
     @filters = params.slice(:author_id, :tags)
     filter_posts
+    @my_drafts_count = current_user.posts.roots.draft.count if current_user
+  end
+
+  def drafts
+    # TODO: Consider also listing non-root (comment reply) Posts here. The trick is how to link back to the context...
+    @drafts = Post.roots.draft.where(author: current_user).order("created_at DESC")
   end
 
   def create
@@ -33,29 +48,37 @@ class PostsController < ApplicationController
     end
   end
 
+  # TODO: Get rid of the 2-format support. Add PostAutosaveController for the JS.
+  # TODO: Posting comments should be a different (albeit similar) controller.
+  #       The logic is different enough that it's a code smell to combine them.
   def update
     prepare_publishable_post_for_validation if publishing?
     if @post.update(post_params)
       complete_publishing_post if publishing?
       respond_to do |format|
-        format.html { redirect_to post_path(@post.root), notice: update_success_message }
-        format.js { render json: { success: true } }
+        format.html {
+          redirect_to success_redirect_url, notice: update_success_message
+        }
+        format.js {
+          render json: { success: true }
+        }
       end
     else
       reset_dirtied_post_attributes
       respond_to do |format|
         format.html {
           flash.now.alert = "Unable to save your changes. See error messages below."
-          render "edit_#{template_variant}" }
-        format.js { render json: { errors: @post.errors.full_messages } }
+          render "edit_#{template_variant}"
+        }
+        format.js {
+          render json: { errors: @post.errors.full_messages }
+        }
       end
     end
   end
 
   def show
-    unless @post.published? or @post.author == current_user
-      raise ActiveRecord::RecordNotFound
-    end
+    raise ActiveRecord::RecordNotFound unless @post.published?
     @conversants = @post.conversants.to_a + [@post.author]
     @post_conversant = PostConversant.new
   end
@@ -113,6 +136,16 @@ class PostsController < ApplicationController
       "This post has been published!"
     else
       "Your changes have been saved as a draft."
+    end
+  end
+
+  def success_redirect_url
+    if @post.parent
+      post_path(@post.root)
+    elsif @post.published?
+      post_path(@post)
+    else
+      dashboard_posts_path
     end
   end
 

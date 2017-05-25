@@ -23,12 +23,9 @@
           %div= project.subtitle
           %div.nowrap
             - project.tag_list.each do |name|
-              = link_to name, projects_path(tags: name), class: "label label-primary"
-          %div.text-muted
-            Added by #{link_to project.owner.full_name, user_path(project.owner)} -
-            last updated #{print_date(project.updated_at)}
-            - if project.count_people_engaged > 1
-              = "- #{project.count_people_engaged} people are connected"
+              = link_to name, projects_path(tags: name), class: "btn btn-default btn-xs"
+            - project.involved_users.take(10).each do |user|
+              = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
 
   .col-sm-4.hidden-xs.sidebar-image
     = image_tag "list_images/projects.jpg"

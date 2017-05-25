@@ -31,20 +31,17 @@
           &nbsp;
           - if resource.current_url.present?
             = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
-            &nbsp;
-          - if current_user == resource.creator
-            = link_to fa_icon("pencil"), edit_resource_path(resource)
-        %div= ellipsify(resource.description, 100)
+        %div.nowrap= resource.description
         %div.nowrap
+          %span.text-muted
+            = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)
+            Added on #{print_date(resource.created_at, abbreviated: true, year: true)}
+            &nbsp;
           - resource.tag_list.each do |name|
-            = link_to name, resources_path(tags: name), class: "label label-primary"
+            = link_to name, resources_path(tags: name), class: "btn btn-default btn-xs"
           - resource.media_type_list.each do |name|
-            = link_to name, resources_path(media_types: name), class: "label label-info"
-        %div.text-muted
-          Added by #{link_to resource.creator.full_name, user_path(resource.creator)}
-          on #{print_date(resource.created_at)}.
-          - if resource.source_name.present?
-            Source: #{resource.source_name}.
+            = link_to name, resources_path(media_types: name), class: "btn btn-default btn-xs"
+
 
   .col-sm-4.hidden-xs.sidebar-image
     = image_tag "list_images/resources.jpg"

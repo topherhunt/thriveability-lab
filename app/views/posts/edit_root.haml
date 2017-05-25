@@ -3,6 +3,6 @@
     - if @post.published?
       Edit post: "#{link_to @post.title, post_path(@post)}"
     - else
-      Start a conversation!
+      New conversation
 
   = render partial: "form_root", locals: { post: @post }

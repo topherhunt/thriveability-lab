@@ -1,17 +1,23 @@
 require "test_helper"
 
-class PostsTest < Capybara::Rails::TestCase
+class ConversationsTest < Capybara::Rails::TestCase
   include ActionView::Helpers::SanitizeHelper
 
   setup do
     @user = create(:user)
   end
 
+  test "Conversations dashboard renders correctly" do
+    visit root_path
+    click_on "Conversations"
+    assert_path dashboard_posts_path
+  end
+
   test "User can create and publish a post" do
     login_as @user
     click_on "Conversations"
     assert_equals 0, Post.count
-    click_on "Start a new conversation"
+    page.find(".test-new-conversation-button").click
     assert_equals 1, Post.count
     @post = Post.first
     assert_equals @user, @post.author
@@ -20,10 +26,8 @@ class PostsTest < Capybara::Rails::TestCase
     fill_in "post[tag_list]", with: "global warming, icebergs"
     select "seek advice", from: "post[intention]"
     click_on "Save draft"
-    assert_path post_path(@post)
+    assert_path dashboard_posts_path
     assert_content "Your changes have been saved as a draft."
-    assert_content "Unpublished draft"
-    assert_content "Test content " * 100
     @post.reload
     assert_equals "Gathering Acorns", @post.title
     assert_equals "Test content " * 100, @post.draft_content
@@ -31,33 +35,15 @@ class PostsTest < Capybara::Rails::TestCase
     assert_equals "seek advice", @post.intention
     assert_equals ["global warming", "icebergs"].to_set, @post.tag_list.to_set
     assert ! @post.published?
-    page.find(".edit-post-link").click
+    page.find(".test-my-drafts-link").click
+    page.find(".test-edit-draft-link").click
     click_on "Publish!"
-    assert_content "This post has been published!"
     assert_path post_path(@post)
+    assert_content "This post has been published!"
     @post.reload
     assert_equals true, @post.published
     assert_equals "Test content " * 100, @post.published_content
     assert_equals nil, @post.draft_content
-  end
-
-  test "User can view and edit their own drafts (but not others')" do
-    @post1 = create(:draft_post, author: @user)
-    @post2 = create(:draft_post) # someone else's
-    @post3 = create(:published_post, author: @user)
-    @post4 = create(:published_post)
-
-    login_as @user
-    visit posts_path
-    assert_content @post1.title # I see my own drafts
-    assert_content "Unpublished draft"
-    refute_content @post2.title
-    assert_content @post3.title
-    assert_content @post4.title
-    page.find(".edit-post-link").click
-    assert_path edit_post_path(@post1)
-    visit post_path(@post2)
-    assert_content "That post doesn't exist."
   end
 
   test "User can write in a custom intention" do
@@ -75,12 +61,34 @@ class PostsTest < Capybara::Rails::TestCase
     end
   end
 
-  test "Visitor can browse and view published posts" do
+  test "User can view and edit their own drafts (but not others')" do
+    @post1 = create(:draft_post, author: @user, created_at: 1.day.ago)
+    @post2 = create(:draft_post) # someone else's
+    @post3 = create(:published_post, author: @user)
+    @post4 = create(:published_post, created_at: 3.days.ago)
+    @post5 = create(:draft_post, author: @user, created_at: 2.days.ago)
+
+    login_as @user
+    visit dashboard_posts_path
+    page.find(".test-my-drafts-link").click
+    assert_content @post1.title # I see my own drafts
+    assert_content @post5.title # I see my own drafts
+    refute_content @post2.title # someone else's draft (not visible to me)
+    refute_content @post3.title # this is already published
+    refute_content @post4.title # this is already published
+    page.all(".test-edit-draft-link").first.click
+    assert_path edit_post_path(@post1)
+    visit post_path(@post2)
+    assert_content "That post doesn't exist."
+  end
+
+  test "Visitor can browse All Conversations" do
     @post1 = create(:published_post)
     @post2 = create(:published_post)
     @post3 = create(:draft_post)
 
-    visit posts_path
+    visit dashboard_posts_path
+    page.find(".test-all-conversations-link").click
     assert_content @post1.title
     assert_content @post2.title
     refute_content @post3.title
@@ -95,7 +103,7 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content "That post doesn't exist."
   end
 
-  test "Visitor can filter published posts by author" do
+  test "Visitor can filter conversations" do
     @user1 = create(:user)
     @user2 = create(:user)
     @post1 = create(:published_post, author: @user1, intention: "share news",
@@ -117,5 +125,15 @@ class PostsTest < Capybara::Rails::TestCase
     assert_content @post1.title
     assert_content @post2.title
     refute_content @post3.title
+  end
+
+  test "The All Conversations list doesn't include drafts" do
+    @post1 = create(:published_post)
+    @post2 = create(:draft_post, author: @user)
+
+    login_as @user
+    visit posts_path
+    assert_content @post1.title
+    refute_content @post2.title
   end
 end

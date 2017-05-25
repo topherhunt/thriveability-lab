@@ -23,4 +23,22 @@ class PostTest < ActiveSupport::TestCase
     set_popularity p3, 1
     assert_equals [p5, p4, p1, p2, p3], Post.most_popular.to_a
   end
+
+  test "Creating or updating a comment updates the timestamp on the root" do
+    root = create :published_post
+    comment1 = create :published_post, parent: root
+    comment2 = create :published_post, parent: comment1
+    # Creating a new comment touches just the root
+    Post.update_all(updated_at: 1.day.ago)
+    comment3 = create :published_post, parent: comment1
+    assert root.reload.updated_at >= 1.second.ago
+    assert comment1.reload.updated_at <= 1.day.ago
+    assert comment2.reload.updated_at <= 1.day.ago
+    # Updating the comment has the same effect
+    Post.update_all(updated_at: 1.day.ago)
+    comment3.update!(title: "something changed")
+    assert root.reload.updated_at >= 1.second.ago
+    assert comment1.reload.updated_at <= 1.day.ago
+    assert comment2.reload.updated_at <= 1.day.ago
+  end
 end

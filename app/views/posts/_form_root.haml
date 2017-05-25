@@ -34,4 +34,4 @@
         - else
           = f.submit "Publish!", class: "btn btn-primary"
           &nbsp;
-          = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
+          = link_to fa_icon("trash") + " Delete", post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."

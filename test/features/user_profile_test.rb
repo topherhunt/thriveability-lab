@@ -27,9 +27,9 @@ class UserProfileTest < Capybara::Rails::TestCase
   test "User profile lists my recent posts" do
     @user = create(:user)
     @post1 = create(:published_post) # not mine
-    @post2 = create(:published_post, author: @user)
-    @post3 = create(:draft_post, author: @user)
-    @post4 = create(:published_post, author: @user)
+    @post2 = create(:published_post, author: @user, published_at: 1.day.ago)
+    @post3 = create(:draft_post, author: @user, published_at: 2.days.ago)
+    @post4 = create(:published_post, author: @user, published_at: 7.days.ago)
     # some older posts...
     10.times { create(:published_post, author: @user, published_at: 2.weeks.ago) }
     @post5 = create(:published_post, author: @user, published_at: 3.weeks.ago)

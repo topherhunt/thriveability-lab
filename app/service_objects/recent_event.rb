@@ -12,6 +12,16 @@ class RecentEvent
      .take(limit)
   end
 
+  def self.latest_post_activity(limit)
+    [
+      latest_published_posts(limit),
+      latest_published_post_comments(limit),
+      latest_liked_objects(limit, "Post")
+    ].flatten
+     .sort_by{ |e| 0 - (e.datetime.to_i) }
+     .take(limit)
+  end
+
   def self.latest_created_projects(limit)
     Project.all.order("created_at DESC").limit(limit).includes(:owner)
       .map { |p| self.new(p.created_at, p.owner, :created_project, p) }
@@ -32,8 +42,12 @@ class RecentEvent
       .map { |p| self.new(p.created_at, p.author, :commented_on_post, p.root) }
   end
 
-  def self.latest_liked_objects(limit)
-    LikeFlag.order("created_at DESC").limit(limit).includes(:user, :target)
+  # TODO: Change this to followed_ since that's in most cases more meaningful
+  def self.latest_liked_objects(limit, target_type = nil)
+    like_flags = LikeFlag.order("created_at DESC").limit(limit)
+    like_flags = like_flags.where(target_type: target_type) if target_type
+    like_flags
+      .includes(:user, :target)
       .map{ |lf| self.new(lf.created_at, lf.user, :liked_object, lf.target) }
   end
 

@@ -19,7 +19,12 @@ Rails.application.routes.draw do
 
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
-  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy]
+  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy] do
+    collection do
+      get :dashboard
+      get :drafts
+    end
+  end
 
   resources :post_conversants, only: [:new, :create]
 

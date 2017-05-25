@@ -34,12 +34,13 @@ class Project < ActiveRecord::Base
     all.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
 
-  def count_people_engaged
-    [
+  def involved_users
+    user_ids = [
       owner_id,
       received_like_flags.pluck(:user_id),
       received_stay_informed_flags.pluck(:user_id),
       received_get_involved_flags.pluck(:user_id)
-    ].flatten.uniq.count
+    ].flatten.uniq
+    User.where(id: user_ids)
   end
 end
