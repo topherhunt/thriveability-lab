@@ -3,6 +3,14 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:edit, :update, :show]
   before_action :verify_ownership, only: [:edit, :update]
 
+  def dashboard
+    @most_popular_projects = Project.most_popular(8)
+    @most_recent_activity = RecentEvent.latest_project_activity(5)
+    @tag_counts = Project.order("updated_at DESC").limit(100)
+      .tag_counts_on(:tags)
+      .sort_by(&:name)
+  end
+
   def index
     @projects = Project.all.order("updated_at DESC")
     @filters = params.slice(:tags)

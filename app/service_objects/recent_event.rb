@@ -22,6 +22,15 @@ class RecentEvent
      .take(limit)
   end
 
+  def self.latest_project_activity(limit)
+    [
+      latest_created_projects(limit),
+      latest_liked_objects(limit, "Project")
+    ].flatten
+     .sort_by { |e| 0 - (e.datetime.to_i) }
+     .take(limit)
+  end
+
   def self.latest_resource_activity(limit)
     [
       latest_created_resources(limit),

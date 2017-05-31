@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/resources/dashboard", to: "resources#dashboard", as: :dashboard_resources
   resources :resources
 
+  get "/projects/dashboard", to: "projects#dashboard", as: :dashboard_projects
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
   get "/posts/dashboard", to: "posts#dashboard", as: :dashboard_posts

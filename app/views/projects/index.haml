@@ -1,9 +1,10 @@
-%h1 Projects
 .row
-  .col-sm-8
-    %p <strong>Projects are all the colorful ways we are making the world more sustainable.</strong><br> Use projects to share what you're working on, and learn about the initiatives of others.
-    %p= link_to "Add your project", new_project_path, class: "btn btn-success"
-  .col-sm-4
+  .col-md-4
+    %h1 All Projects
+    %p Projects are all the colorful ways we are making the world more sustainable. Use projects to share what you're working on, and learn about the initiatives of others.
+    %p{style: "padding-bottom: 10px;"}
+      = link_to "Add your project", new_project_path, class: "btn btn-success"
+
     = form_tag(projects_path, method: :get) do
       %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
@@ -11,9 +12,12 @@
         - popular_project_tags(15).each do |name|
           - selected = @filters[:tags].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
-      %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px; padding-bottom: 30px;"}
+        = submit_tag "Filter", class: "btn btn-primary"
 
-.row{style: "margin-top: 20px;"}
+    .hidden-sm.hidden-xs
+      = image_tag "list_images/projects.jpg", style: "width: 100%;"
+
   .col-sm-8
     - @projects.each do |project|
       .list-row
@@ -22,10 +26,7 @@
           %span.h4= link_to (project.title), project_path(project)
           %div= project.subtitle
           %div.nowrap
-            - project.tag_list.each do |name|
-              = link_to name, projects_path(tags: name), class: "btn btn-default btn-xs"
             - project.involved_users.take(10).each do |user|
               = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
-
-  .col-sm-4.hidden-xs.sidebar-image
-    = image_tag "list_images/projects.jpg"
+            - project.tag_list.each do |name|
+              = link_to name, projects_path(tags: name), class: "btn btn-default btn-xs"

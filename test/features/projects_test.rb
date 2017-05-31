@@ -9,12 +9,11 @@ class ProjectsTest < Capybara::Rails::TestCase
   test "User can create a project" do
     login_as @user
     click_on "Projects"
-    click_on "Add your project"
-    fill_fields(
-      "project[title]": "Gathering Acorns",
-      "project[subtitle]": "Re-thinking the way we interface with squirrels",
-      "project[introduction]": "Foo bar baz! " * 100,
-      "project[call_to_action]": "Moneys! Moneys!")
+    page.find(".test-new-project-button").click
+    fill_in "project[title]", with: "Gathering Acorns"
+    fill_in "project[subtitle]", with: "Re-thinking squirrels"
+    fill_in "project[introduction]", with: "Foo bar baz! " * 100
+    fill_in "project[call_to_action]", with: "Moneys! Moneys!"
     attach_file "project[image]", "#{Rails.root}/public/test/elmerfudd.jpg"
     select "developing", from: "project[stage]"
     click_on "Save"
@@ -41,8 +40,7 @@ class ProjectsTest < Capybara::Rails::TestCase
 
   test "Project owner can edit their project" do
     login_as @user
-    click_on "Projects"
-    click_on @project.title
+    visit project_path(@project)
     assert_path project_path(@project)
     page.find('a.edit-project').click
     fill_in 'project[title]', with: "abcxyz"
