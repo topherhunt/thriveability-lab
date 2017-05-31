@@ -1,25 +1,27 @@
-.row.hidden-xs{style: "margin-top: -20px;"}
-  .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
-    .static-title
-      %h1.text-center Integral Climate is...
-    .carousel-inner{role: "listbox", style: "position: absolute; width: 100%;"}
-      .item.active
-        = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
-        .carousel-caption Helping nature do what it does best
-      .item
-        = image_tag("homepage_banner/bg2.jpg", style: "width: 100%;")
-        .carousel-caption Aligning our actions with each other and with the systems that surround us
-      .item
-        = image_tag("homepage_banner/bg3.jpg", style: "width: 100%;")
-        .carousel-caption A network of change initiatives that's more than the sum of its parts
-      .item
-        = image_tag("homepage_banner/bg4.jpg", style: "width: 100%;")
-        .carousel-caption Tools and resources for enacting our values in the world
-      .item
-        = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
-        .carousel-caption A congregation point for the sustainability economy blah blah
-
 #main-container.container-fluid
+
+  .visible-sm.visible-xs
+    %h1.text-center Integral Climate is...
+  .hidden-sm.hidden-xs
+    .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
+      .static-title
+        %h1.text-center Integral Climate is...
+      .carousel-inner{role: "listbox", style: "position: absolute; width: 100%;"}
+        .item.active
+          = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
+          .carousel-caption Helping nature do what it does best
+        .item
+          = image_tag("homepage_banner/bg2.jpg", style: "width: 100%;")
+          .carousel-caption Aligning our actions with each other and with the systems that surround us
+        .item
+          = image_tag("homepage_banner/bg3.jpg", style: "width: 100%;")
+          .carousel-caption A network of change initiatives that's more than the sum of its parts
+        .item
+          = image_tag("homepage_banner/bg4.jpg", style: "width: 100%;")
+          .carousel-caption Tools and resources for enacting our values in the world
+        .item
+          = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
+          .carousel-caption A congregation point for the sustainability economy blah blah
 
   .row
 
