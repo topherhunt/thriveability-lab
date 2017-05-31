@@ -1,38 +1,69 @@
-%h1.text-center We're Integral Climate.
+#main-container.container-fluid
 
-.row
-  .col-sm-2
-  .col-sm-8
-    %h3 Our Mission
-    %p Our ambition is to create a global, open, village minded climate hub, which supports people to connect, share information, and learn and grow together. Integral Climate Hub is a platform where anybody with interest in climate and sustainability can come to be inspired, informed, and empowered. Its aim is to bring more visibility, creative collaboration, and empowerment to existing and newly emerging climate and sustainability projects. The name of this global hub refers to the recognition that addressing our planetary challenges demand changes in our inner climate (our psychology and culture, our values and worldviews) as much as in our outer climate (our behaviour and economy, our practices and systems) ~ hence, Integral Climate.
-    %p This hub is designed with an experimental approach aiming for high quality conversations and cooperation, intending to support qualities such as self-reflection, deep engagement, intentionality, inclusive thinking, and integrative perspectives. In our eyes, these qualities tend to shape more rewarding and generative ways of addressing global climate issues. Hence, we’ve designed this platform to serve as a tool not only for what we talk about, but also how we talk about it. In that sense, the platform itself can be seen as a scaffolding for more creative, effective, and integrative responses to climate change to emerge.
+  .visible-sm.visible-xs
+    %h1.text-center We're Integral Climate.
+  .hidden-sm.hidden-xs{style: "margin-top: -10px;"}
+    .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
+      .static-title
+        %h1.text-center We're Integral Climate.
+      .carousel-inner{role: "listbox", style: "position: absolute; width: 100%;"}
+        .item.active
+          = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
+        .item
+          = image_tag("homepage_banner/bg2.jpg", style: "width: 100%;")
+        .item
+          = image_tag("homepage_banner/bg3.jpg", style: "width: 100%;")
+        .item
+          = image_tag("homepage_banner/bg4.jpg", style: "width: 100%;")
+        .item
+          = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
 
-.row
-  .col-sm-6
-    %h3 We value
-    %ul
-      %li Intentional, generative conversation and interaction
-      %li Community and creative collaboration
-      %li Whole-self engagement fostering authenticity, creativity, and mindfulness
-      %li Striving for a better world, for all of life
-      %li Creative commons and sharing of resources
-      %li Self-responsibility, curiosity, and generosity
-  .col-sm-6
-    %h3 We've designed Integral Climate to be
-    %ul
-      %li Transparent, replicable, open source
-      %li Clean and simple
-      %li In service of engagement and mindfulness (instead of distraction, absent-mindedness)
-      %li Elegantly structured and with great flexibility in how resources are organized
-      %li Attractive, uplifting, and designed for a global audience
-      %li Using technology to connect and inspire individuals around the globe
-
-%h2.text-center Our team
-- @team.in_groups_of(2) do |pair|
   .row
-    - pair.each do |user|
-      .col-sm-6{style: "padding-bottom: 10px;"}
-        - if user.present?
-          = link_to image_tag(user.image.url(:medium), style: "width: 100%;"), user_path(user), style: "display: block; float: right; width: 20%;"
-          %h3= link_to user.full_name, user_path(user)
-          = simple_format(user.bio_interior)
+    .col-sm-6
+      %h3 Our Mission
+      %p <em>Integral Climate Hub</em> is a platform where anybody with interest in climate and sustainability can come to be informed, inspired, and empowered. Through this hub, we aim to support people to connect, share information, and learn and grow together, as well as bring more visibility, creative collaboration, and impact to their climate and sustainability initiatives.
+      %p Our name refers to the recognition that our planetary challenges demand changes in our inner climate (our psychology and culture, our values and worldviews) as much as in our outer climate (our behavior and economy, our practices and systems) ~ hence, Integral Climate.
+      %p Our hub is designed with the intention to support high quality conversations, intentionality, inclusive thinking, creative action, and integrative perspectives. In our eyes, these qualities tend to shape more generative ways of addressing global climate issues.
+      %p Hence, we’ve designed this platform to serve as a tool not only for <em>what</em> we talk about, but also for <em>how</em> we talk about it. In that sense, we hope the platform itself becomes a scaffolding for more creative, effective, and integrative responses to climate change to emerge.
+    .col-sm-6
+      %h3 Our Vision
+      %p In time, we envision transforming this platform into an <em>Integral World Hub</em> – a hub where people from all over the globe can collaborate on a wide range of projects, beyond climate and sustainability. We see Integral World Hub as the platform where <em>We The People</em> birth a new, more integral world into being, through the power of imagination and collaboration.
+      %p We aspire it to be a platform where people reinvent themselves and movements join hand. Where we inform and empower each other, creatively learning and growing together. Where we multiply our impact through the power of community. Where we believe in our own possibilities, because potentially we are all change-makers, powerful beyond measure.
+      %p While our world is in crisis in so many ways, current political responses are completely inadequate. To make matters worse, divisions are being intensified and people’s fears are being played to empower the few at the cost of the many.
+      %p The time to wake up to our deeper potentials, join forces, and make creative change has come! An integral world needs to be midwifed into being, through you and me, and through all who are ready to stand up. Integral World Hub aspires to support precisely that.
+
+  .row
+    .col-sm-6
+      %h3 Our Values
+      %p We value:
+      %ul
+        %li Whole-self engagement that is authentic, intentional, mindful
+        %li The power of community and creative collaboration
+        %li Attempts to create a better world, for all of life
+        %li Creative commons and sharing of resources
+        %li Responsibility, curiosity, and generosity.
+    .col-sm-6
+      %h3 Our Design
+      %p With our design we aim to:
+      %ul
+        %li Use technology to connect, inspire, and empower people around the globe
+        %li Foster engagement, intentionality, and mindfulness (versus distraction and shallow entertainment)
+        %li Offer a platform that is clean and simple, as well as attractive and uplifting
+        %li Offer a platform that is transparent, replicable, and open source.
+
+  .row
+    .col-sm-6
+      %h3 Our Team
+      - @team.each do |user|
+        %div{style: "min-height: 60px;"}
+          = link_to image_tag(user.image.url(:thumb), style: "float: left; width: 50px;"), user_path(user)
+          %div{style: "margin-left: 60px;"}
+            %span.h4
+              = link_to user.full_name, user_path(user)
+            .text-muted.nowrap
+              = user.tagline
+
+    .col-sm-6
+      %h3 Your Contribution
+      %p Are you interested in supporting our project in any way? Please drop us a line and let us know how you’d like to contribute! We deeply believe in community and creative collaboration, and these values also apply to how we build, maintain, and expand this platform.
+      %p If you can’t pitch in by offering your skills, talents, and/or time, but still would like to support us, consider making a donation...
