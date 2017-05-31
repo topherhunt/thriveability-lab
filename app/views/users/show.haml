@@ -32,11 +32,12 @@
     = image_tag @user.image.url(:medium), style: "width: 100%;", class: "hidden-xs"
 
     %hr
-    %h4 Get connected
-    = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.first_name} inspires me" }
-    = render partial: "shared/stay_informed_flags_section", locals: { target: @user, owner: @user, link_wording: "Follow #{@user.first_name}" }
-    - unless current_user == @user
-      = link_to fa_icon("envelope") + " Send #{@user.first_name} a message", new_message_path(message: {recipient_id: @user.id})
+
+    %div
+      = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.first_name} inspires me" }
+      = render partial: "shared/stay_informed_flags_section", locals: { target: @user, link_wording: "Follow #{@user.first_name}" }
+      - unless current_user == @user
+        %span= link_to fa_icon("envelope"), new_message_path(message: {recipient_id: @user.id}), class: "btn btn-info js-tooltip", title: "Send #{@user.first_name} a message"
 
 .row
   .col-sm-6

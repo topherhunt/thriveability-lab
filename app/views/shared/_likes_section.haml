@@ -1,9 +1,7 @@
-%p.likes
+%span.likes
+  - num_like_flags = LikeFlag.where(target: target).count
+  - text = num_like_flags > 0 ? " #{num_like_flags}" : ""
   - if current_user and LikeFlag.where(user: current_user, target: target).any?
-    = link_to fa_icon("heart") + " #{link_wording}", like_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active"
+    = link_to fa_icon("heart") + text, like_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active js-tooltip", title: link_wording
   - else
-    = link_to fa_icon("heart") + " " + link_wording, like_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info"
-  - like_flags = LikeFlag.where(target: target).includes(:user)
-  - if like_flags.size > 0
-    &nbsp;
-    %span.badge.like-flags-count.js-tooltip{"data-tooltip": like_flags.first(10).map{ |f| f.user.full_name }.compact.join(", ")}= like_flags.size
+    = link_to fa_icon("heart") + text, like_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info js-tooltip", title: link_wording

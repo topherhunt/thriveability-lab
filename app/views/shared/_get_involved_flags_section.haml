@@ -1,0 +1,7 @@
+%span.get-involved
+  - num_get_involved_flags = GetInvolvedFlag.where(target: target).count
+  - text = num_get_involved_flags > 0 ? " #{num_get_involved_flags}" : ""
+  - if current_user and GetInvolvedFlag.where(user: current_user, target: target).any?
+    = link_to fa_icon("child") + text, get_involved_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active js-tooltip", title: "I want to get involved"
+  - else
+    = link_to fa_icon("child") + text, get_involved_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info js-tooltip", title: "I want to get involved"

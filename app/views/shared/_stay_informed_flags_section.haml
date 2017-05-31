@@ -1,9 +1,7 @@
-%p.stay-informed
+%span.stay-informed
+  - num_stay_informed_flags = StayInformedFlag.where(target: target).count
+  - text = num_stay_informed_flags > 0 ? " #{num_stay_informed_flags}" : ""
   - if current_user and StayInformedFlag.where(user: current_user, target: target).any?
-    = link_to fa_icon("bell") + " #{link_wording}", stay_informed_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active"
+    = link_to fa_icon("bell") + text, stay_informed_flag_path(target.class.to_s, target), method: :delete, class: "btn btn-default active js-tooltip", title: link_wording
   - else
-    = link_to fa_icon("bell") + " #{link_wording}", stay_informed_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info"
-  - stay_informed_flags = StayInformedFlag.where(target: target).includes(:user)
-  - if stay_informed_flags.size > 0
-    &nbsp;
-    %span.badge.stay-informed-flags-count.js-tooltip{"data-tooltip": stay_informed_flags.first(10).map{ |f| f.user.full_name }.compact.join(", ")}= stay_informed_flags.size
+    = link_to fa_icon("bell") + text, stay_informed_flag_path(target.class.to_s, target), method: :post, class: "btn btn-info js-tooltip", title: link_wording
