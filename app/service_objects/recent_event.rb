@@ -18,7 +18,16 @@ class RecentEvent
       latest_published_post_comments(limit),
       latest_liked_objects(limit, "Post")
     ].flatten
-     .sort_by{ |e| 0 - (e.datetime.to_i) }
+     .sort_by { |e| 0 - (e.datetime.to_i) }
+     .take(limit)
+  end
+
+  def self.latest_resource_activity(limit)
+    [
+      latest_created_resources(limit),
+      latest_liked_objects(limit, "Resource")
+    ].flatten
+     .sort_by { |e| 0 - (e.datetime.to_i) }
      .take(limit)
   end
 

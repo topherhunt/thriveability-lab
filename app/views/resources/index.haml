@@ -1,12 +1,10 @@
-%h1 Resources
-
 .row
-  .col-sm-8.info-section
-    %p <strong>Resources are ways to offer and discover ideas that help us make meaningful change.</strong><br> Use resources to share useful documents, videos, or websites, and search those of others
+  .col-md-4
+    %h1 All Resources
+    %p Resources are ways to offer and discover ideas that help us make meaningful change. Use resources to share useful documents, videos, or websites, and search those of others.
+    %p{style: "padding-bottom: 10px;"}
+      = link_to "Share a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
 
-    %p= link_to "Share a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
-
-  .col-sm-4.search-section
     = form_tag(resources_path, method: :get) do
       %div.strong Filter by tag...
       %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
@@ -20,17 +18,16 @@
         - popular_resource_media_types(15).each do |name|
           - selected = @filters[:media_types].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
-      %div{style: "padding-top: 10px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px; padding-bottom: 30px;"}
+        = submit_tag "Filter", class: "btn btn-primary"
 
-.row{style: "margin-top: 20px;"}
+    .hidden-sm.hidden-xs
+      = image_tag "list_images/resources.jpg", style: "width: 100%;"
+
   .col-sm-8
     - @resources.each do |resource|
       .list-row
-        %div
-          %span.h4= link_to (resource.title), resource_path(resource)
-          &nbsp;
-          - if resource.current_url.present?
-            = link_to fa_icon("external-link"), resource.current_url, target: "_blank"
+        %span.h4= link_to resource.title, resource_path(resource)
         %div.nowrap= resource.description
         %div.nowrap
           %span.text-muted
@@ -41,7 +38,3 @@
             = link_to name, resources_path(tags: name), class: "btn btn-default btn-xs"
           - resource.media_type_list.each do |name|
             = link_to name, resources_path(media_types: name), class: "btn btn-default btn-xs"
-
-
-  .col-sm-4.hidden-xs.sidebar-image
-    = image_tag "list_images/resources.jpg"

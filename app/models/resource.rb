@@ -20,10 +20,6 @@ class Resource < ActiveRecord::Base
 
   before_save :ensure_current_url_has_protocol
 
-  def self.most_popular
-    all.sort_by{ |p| -p.received_like_flags.count }.take(5)
-  end
-
   private
 
   def require_ownership_if_uploaded

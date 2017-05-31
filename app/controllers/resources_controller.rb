@@ -4,6 +4,14 @@ class ResourcesController < ApplicationController
   before_action :load_target, only: [:new, :create]
   before_action :verify_ownership, only: [:edit, :update, :destroy]
 
+  def dashboard
+    @most_popular_resources = Resource.order("viewings DESC").limit(8)
+    @most_recent_activity = RecentEvent.latest_resource_activity(5)
+    @tag_counts = Resource.order("created_at DESC").limit(100)
+      .tag_counts_on(:tags)
+      .sort_by(&:name)
+  end
+
   def index
     @resources = Resource.all.order("updated_at DESC").includes(:creator, :target)
     @filters = params.slice(:tags, :media_types)
@@ -12,6 +20,7 @@ class ResourcesController < ApplicationController
   end
 
   def show
+    @resource.update!(viewings: @resource.viewings + 1)
   end
 
   def new
@@ -75,7 +84,7 @@ class ResourcesController < ApplicationController
     elsif params[:editing_user_profile].present?
       user_path(current_user)
     else
-      resources_path
+      dashboard_resources_path
     end
   end
 

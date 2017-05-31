@@ -22,9 +22,11 @@
         - @authors.each do |author|
           - selected = @filters[:author_id] == author.id.to_s
           %option{value: author.id, selected: selected}= author.full_name
-      %div{style: "padding-top: 10px; padding-bottom: 30px;"}= submit_tag "Filter", class: "btn btn-primary"
+      %div{style: "padding-top: 10px; padding-bottom: 30px;"}
+        = submit_tag "Filter", class: "btn btn-primary"
 
-    .hidden-sm.hidden-xs= image_tag "list_images/conversations.jpg", style: "width: 100%;"
+    .hidden-sm.hidden-xs
+      = image_tag "list_images/conversations.jpg", style: "width: 100%;"
 
   .col-sm-8
     - @posts.each do |post|

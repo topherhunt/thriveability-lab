@@ -4,8 +4,8 @@ class ResourcesTest < Capybara::Rails::TestCase
   test "user can create a resource" do
     @user = create(:user)
     login_as @user
-    visit resources_path
-    page.find(".add-new-resource-link").click
+    click_on "Resources"
+    page.find(".test-new-resource-button").click
     page.find("#resource_title").set("My climate presentation")
     page.find("#resource_description").set("A presentation on climate change")
     page.find("#resource_source_name").set("Elmer Fudd")
@@ -13,7 +13,7 @@ class ResourcesTest < Capybara::Rails::TestCase
     attach_file "resource[attachment]", "#{Rails.root}/public/test/leaders.pdf"
     check "resource[ownership_affirmed]"
     page.find(".submit-resource-button").click
-    assert_path resources_path
+    assert_path dashboard_resources_path
     assert_equals 1, @user.created_resources.count
     @resource = @user.created_resources.first
     assert_equals "My climate presentation", @resource.title

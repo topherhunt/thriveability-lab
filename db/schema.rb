@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170422193756) do
+ActiveRecord::Schema.define(version: 20170531071432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,10 +159,12 @@ ActiveRecord::Schema.define(version: 20170422193756) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "source_name"
+    t.integer  "viewings",                default: 0
   end
 
   add_index "resources", ["creator_id"], name: "index_resources_on_creator_id", using: :btree
   add_index "resources", ["target_type", "target_id"], name: "index_resources_on_target_type_and_target_id", using: :btree
+  add_index "resources", ["viewings"], name: "index_resources_on_viewings", using: :btree
 
   create_table "stay_informed_flags", force: :cascade do |t|
     t.integer  "user_id"
