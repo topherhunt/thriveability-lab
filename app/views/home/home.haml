@@ -45,29 +45,35 @@
 
   .row.row-padded-top
     .col-sm-6
-      %p= link_to "Meet all members", users_path, class: "btn btn-success"
+      %p.text-center= link_to "Meet people", users_path, class: "btn btn-success"
     .col-sm-6
-      %p= link_to "Browse all projects and get involved", projects_path, class: "btn btn-success"
+      %p.text-center= link_to "Discover projects", projects_path, class: "btn btn-success"
 
   %hr
 
   .row
 
     .col-sm-6
-      %h4.text-center #{@posts_count} conversations
-      %ul
-        - @featured_posts.each do |post|
-          %li= link_to post.title, post_path(post)
+
+      .row
+        .col-sm-5{style: "height: 150px; overflow: hidden;"}
+          = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -40px;"
+        .col-sm-7
+          %h4 #{@posts_count} conversations
+          %ul{style: "margin-left: -20px;"}
+            - @featured_posts.each do |post|
+              %li= link_to post.title, post_path(post)
+          %p= link_to "Join conversations", posts_path, class: "btn btn-success"
 
     .col-sm-6
-      %h4.text-center #{@resources_count} resources
-      %p Resources are aimed at supporting our members to discover ideas and tools that help them make meaningful change. You can add links or documents that you think may be useful to others, and explore those of others.
+      .row
+        .col-sm-5{style: "height: 150px; overflow: hidden;"}
+          = image_tag "list_images/resources.jpg", style: "width: 100%; margin-top: -40px;"
+        .col-sm-7
+          %h4 #{@resources_count} resources
+          %p Resources are aimed at supporting our members to discover ideas and tools that help them make meaningful change. You can add links or documents that you think may be useful to others, and explore those of others.
+          %p= link_to "Explore resources", resources_path, class: "btn btn-success"
 
-  .row.row-padded-top
-    .col-sm-6
-      %p= link_to "Explore all conversations", posts_path, class: "btn btn-success"
-    .col-sm-6
-      %p= link_to "Explore all resources", resources_path, class: "btn btn-success"
 
   %hr
 
