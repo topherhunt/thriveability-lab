@@ -31,7 +31,7 @@
       %div{style: 'position: relative;'}
         - @featured_users.each do |user|
           %div{style: 'float: left; width: 19.9%; padding: 0.5%;'}
-            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;", class: "js-popover", data: { toggle: "popover", trigger: "hover", placement: "top", content: user.full_name }), user_path(user)
+            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;", class: "js-popover img-rounded", data: { toggle: "popover", trigger: "hover", placement: "top", content: user.full_name }), user_path(user)
         .clear-float
 
     .col-sm-6
@@ -40,7 +40,7 @@
       %div{style: "position: relative;"}
         - @featured_projects.each do |project|
           %div{style: "float: left; width: 19.9%; padding: 0.5%; overflow: hidden;"}
-            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}), project_path(project)
+            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover img-rounded", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}), project_path(project)
         .clear-float
 
   .row.row-padded-top
@@ -78,7 +78,7 @@
       - @recent_events.each do |event|
         %div.clear-float
           %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
-            = link_to image_tag(event.user.image.url(:thumb), style: "width: 100%;"), user_path(event.user)
+            = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
           %div.small.text-muted= print_date event.datetime, time: true
           %div
             = link_to event.user.full_name, user_path(event.user)

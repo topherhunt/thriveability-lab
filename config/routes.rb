@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   delete 'users/omniauth_accounts/:provider' => 'users/omniauth_accounts#destroy', as: 'users_omniauth_account'
 
+  get "/users/dashboard", to: "users#dashboard", as: :dashboard_users
   resources :users, only: [:index, :show, :edit, :update]
   post "/users/:id/reset_password", to: "users#reset_password", as: :reset_password_user
 

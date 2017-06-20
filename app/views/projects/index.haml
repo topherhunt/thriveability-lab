@@ -21,7 +21,7 @@
   .col-sm-8
     - @projects.each do |project|
       .list-row
-        = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px;"), project_path(project)
+        = link_to image_tag(project.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), project_path(project)
         .project-text{style: "margin-left: 60px;"}
           %span.h4= link_to (project.title), project_path(project)
           %div= project.subtitle

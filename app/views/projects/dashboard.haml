@@ -13,7 +13,7 @@
         %h3 Most popular
         - @most_popular_projects.each do |project|
           .list-row
-            = link_to image_tag(project.image.url(:thumb), style: "float: left; width: 50px;"), project_path(project)
+            = link_to image_tag(project.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), project_path(project)
             .project-text{style: "margin-left: 60px;"}
               %span.h4= link_to project.title, project_path(project)
               %div.nowrap.text-muted= project.subtitle
@@ -30,7 +30,7 @@
         - @most_recent_activity.each do |event|
           %div.clear-float.list-row
             %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
-              = link_to image_tag(event.user.image.url(:thumb), style: "width: 100%;"), user_path(event.user)
+              = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
             %div.small.text-muted= print_date event.datetime, time: true
             %div
               = link_to event.user.full_name, user_path(event.user)
