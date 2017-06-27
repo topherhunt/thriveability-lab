@@ -21,7 +21,7 @@ class PostTest < ActiveSupport::TestCase
     set_popularity p1, 3
     set_popularity p2, 2
     set_popularity p3, 1
-    assert_equals [p5, p4, p1, p2, p3], Post.most_popular.to_a
+    assert_equals [p5, p4, p1, p2, p3], Post.most_popular(5).to_a
   end
 
   test "Creating or updating a comment updates the timestamp on the root" do

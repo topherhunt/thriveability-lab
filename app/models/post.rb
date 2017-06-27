@@ -43,9 +43,9 @@ class Post < ActiveRecord::Base
 
   after_save :touch_root
 
-  def self.most_popular
+  def self.most_popular(n)
     # TODO: Unperformant
-    published.roots.sort_by{ |p| -p.received_like_flags.count }.take(5)
+    published.roots.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
 
   def self.most_active(n)

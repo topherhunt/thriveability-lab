@@ -13,38 +13,22 @@ class ConversationsTest < Capybara::Rails::TestCase
     assert_path dashboard_posts_path
   end
 
+  # TODO: This is more than a proof-of-concept test. Pare it down so it only exercises the bare minimum of the happy path.
+  # tODO:
   test "User can create and publish a post" do
+    post_content = SecureRandom.hex(100)
     login_as @user
     click_on "Conversations"
-    assert_equals 0, Post.count
     page.find(".test-new-conversation-button").click
-    assert_equals 1, Post.count
-    @post = Post.first
-    assert_equals @user, @post.author
     fill_in "post[title]", with: "Gathering Acorns"
-    fill_in "post[draft_content]", with: "Test content " * 100
-    fill_in "post[tag_list]", with: "global warming, icebergs"
+    fill_in "post[draft_content]", with: post_content
     select "seek advice", from: "post[intention]"
-    click_on "Save draft"
-    assert_path dashboard_posts_path
-    assert_content "Your changes have been saved as a draft."
-    @post.reload
-    assert_equals "Gathering Acorns", @post.title
-    assert_equals "Test content " * 100, @post.draft_content
-    assert_equals nil, @post.published_content
-    assert_equals "seek advice", @post.intention
-    assert_equals ["global warming", "icebergs"].to_set, @post.tag_list.to_set
-    assert ! @post.published?
-    page.find(".test-my-drafts-link").click
-    page.find(".test-edit-draft-link").click
     click_on "Publish!"
-    assert_path post_path(@post)
     assert_content "This post has been published!"
-    @post.reload
-    assert_equals true, @post.published
-    assert_equals "Test content " * 100, @post.published_content
-    assert_equals nil, @post.draft_content
+    assert_content post_content
   end
+
+  # TODO: Pending: User can save a post as a draft
 
   test "User can write in a custom intention" do
     using_webkit do
@@ -54,7 +38,6 @@ class ConversationsTest < Capybara::Rails::TestCase
       visit edit_post_path(@post)
       select "- other -", from: "post[intention]"
       page.find(".js-intention-write-in").set("My custom intention statement")
-      sleep 0.1
       click_on "Publish changes"
       assert_path post_path(@post)
       assert_equals "My custom intention statement", @post.reload.intention
