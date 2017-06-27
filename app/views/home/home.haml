@@ -49,22 +49,26 @@
   .row
 
     .col-sm-6
+      %h4.text-center #{@posts_count} conversations exploring ideas
       .row
-        .col-sm-4{style: "height: 150px; overflow: hidden;"}
-          = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -40px;"
+        .col-sm-4{style: "padding-top: 10px;"}
+          %div{style: "height: 150px; overflow: hidden;"}
+            = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -40px;"
         .col-sm-8
-          %h4 #{@posts_count} conversations exploring ideas
+
           %ul{style: "margin-left: -20px;"}
             - @featured_posts.each do |post|
               %li= link_to post.title, post_path(post)
       %p.text-center= link_to "Join conversations", posts_path, class: "btn btn-success"
 
     .col-sm-6
+      %h4.text-center #{@resources_count} resources empowering transformation
       .row
-        .col-sm-4{style: "height: 150px; overflow: hidden;"}
-          = image_tag "list_images/resources.jpg", style: "width: 100%; margin-top: -40px;"
+        .col-sm-4{style: "padding-top: 10px;"}
+          %div{style: "height: 150px; overflow: hidden;"}
+            = image_tag "list_images/resources.jpg", style: "width: 100%; margin-top: -40px;"
         .col-sm-8
-          %h4 #{@resources_count} resources empowering transformation
+
           %ul{style: "margin-left: -20px;"}
             - @featured_resources.each do |resource|
               %li= link_to resource.title, resource_path(resource)
