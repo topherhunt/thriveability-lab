@@ -20,7 +20,8 @@ class ResourcesController < ApplicationController
   end
 
   def show
-    @resource.update!(viewings: @resource.viewings + 1)
+    @resource.viewings += 1
+    @resource.save(validate: false)
   end
 
   def new
