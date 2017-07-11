@@ -1,9 +1,9 @@
-require 'rails_helper'
+require "test_helper"
 
 # I almost never use controller specs. These are only here so I have an easy
 # template to copy from if I need to test some advanced controller logic.
 
-class HomeControllerTest < ActionController::TestCase do
+class HomeControllerTest < ActionController::TestCase
   tests HomeController
 
   context "#home" do

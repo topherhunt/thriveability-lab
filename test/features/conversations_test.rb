@@ -71,7 +71,7 @@ class ConversationsTest < Capybara::Rails::TestCase
     @post3 = create(:draft_post)
 
     visit posts_path
-    page.find(".test-all-conversations-link").click
+    page.find(".test-search-conversations-button").click
     assert_content @post1.title
     assert_content @post2.title
     refute_content @post3.title
@@ -97,13 +97,13 @@ class ConversationsTest < Capybara::Rails::TestCase
       tag_list: "apple, cat")
 
     visit posts_path
-    assert_content "Filter by"
+    assert_content "Search all conversations"
     assert_content @post1.title
     assert_content @post2.title
     assert_content @post3.title
     within(".test-filter-posts") {
       select @user1.full_name, from: "author_id"
-      click_button "Filter"
+      find(".test-search-conversations-button").click
     }
     assert_content @post1.title
     assert_content @post2.title
