@@ -8,7 +8,7 @@
         - popular_project_tags(15).each do |name|
           - selected = filters[:tags].to_s.split(", ").include?(name)
           %option{value: name, selected: selected}= name
-  .row.row-padded{style: "padding-bottom: 30px;"}
+  .row.row-padded
     .col-xs-2
     .col-xs-10
       = submit_tag "Search", class: "btn btn-primary"

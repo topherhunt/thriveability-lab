@@ -3,15 +3,15 @@
     %h1 All Conversations
     %p Conversations are powerful ways to connect, learn, collaborate, and innovate. Use conversations to share your ideas and questions, and respond to those of others.
 
-    %p{style: "padding-bottom: 10px;"}
-      = link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+    %p
+      = link_to "Start a conversation", posts_path, method: :post, class: "btn btn-success"
       - if @my_drafts_count and @my_drafts_count > 0
         &nbsp;
         = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "btn btn-default btn-sm"
 
     = render partial: "search", locals: {filters: @filters}
 
-    .hidden-sm.hidden-xs
+    .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
       = image_tag "list_images/conversations.jpg", style: "width: 100%;"
 
   .col-sm-8

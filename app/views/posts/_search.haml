@@ -16,7 +16,7 @@
         - @authors.each do |author|
           - selected = filters[:author_id] == author.id.to_s
           %option{value: author.id, selected: selected}= author.full_name
-  .row.row-padded{style: "padding-bottom: 30px;"}
+  .row.row-padded
     .col-xs-2
     .col-xs-10
       = submit_tag "Search", class: "btn btn-primary test-search-conversations-button"

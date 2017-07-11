@@ -21,7 +21,7 @@ class Notification < ActiveRecord::Base
     when :updated_profile   then "updated their profile page"
     when :created_project   then "listed the project"
     when :created_resource  then "added the resource"
-    when :published_post    then "started the new conversation"
+    when :published_post    then "started the conversation"
     when :commented_on_post then "commented on the conversation"
     when :liked_object      then "was inspired by"
     when :followed_object   then "is now following"
