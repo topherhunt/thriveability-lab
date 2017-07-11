@@ -1,20 +1,36 @@
 .row
-  .col-sm-4
-    %h1 All People
+  .col-md-4
+    %h1 People
     %p <strong>All people are part of our growing community of creative change-makers.</strong> Use this page to get to know others, and introduce yourself to them.
     %p{style: "padding-top: 10px; padding-bottom: 30px;"}
       - unless user_signed_in?
         = link_to "Join the community", new_user_registration_path, class: "test-signup-button btn btn-success"
+      = link_to "All people", search_users_path, class: "test-all-users-button btn btn-primary"
 
     .hidden-sm.hidden-xs
       = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
 
-  .col-sm-8
-    - @users.each do |user|
-      .list-row
-        = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
-        .user-text{style: "margin-left: 60px;"}
-          %span.h4= link_to user.full_name, user_path(user)
-          %div= user.tagline
-          - if user.location.present?
-            %div Based in #{user.location}
+  .col-md-8
+    .row
+      .col-sm-7
+        %h3 Recently active
+        - @most_active_users.each do |user|
+          .list-row
+            = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
+            %div{style: "margin-left: 60px;"}
+              %span.h4= link_to user.full_name, user_path(user)
+              %div.nowrap.text-muted= user.tagline
+
+      .col-sm-5
+        %h3 Recent activity
+        - @most_recent_activity.each do |event|
+          %div.clear-float.list-row
+            %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
+              = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
+            %div.small.text-muted
+              = print_date event.datetime, time: true
+            %div
+              = link_to event.user.full_name, user_path(event.user)
+              = event.action_description
+              = "the #{event.target.class.to_s.downcase}" unless event.target.is_a? User
+              = link_to event.target_description, url_for(event.target)

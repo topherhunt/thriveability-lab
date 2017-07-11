@@ -62,7 +62,7 @@
           &nbsp; published #{print_date post.published_at}
           %br
           - post.tag_list.each do |name|
-            = link_to name, posts_path(tags: name, author_id: @user.id), class: "small"
+            = link_to name, search_posts_path(tags: name), class: "small"
             &nbsp;
     - elsif @user.first_name.present?
       %p #{@user.first_name} hasn't written anything yet.

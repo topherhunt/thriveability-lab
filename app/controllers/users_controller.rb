@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: [:dashboard, :index, :show]
+  before_action :require_login, except: [:index, :search, :show]
 
-  def dashboard
+  def index
     @most_active_users = User.most_recent(8)
     @most_recent_activity = RecentEvent.latest(5)
   end
 
-  def index
+  def search
     @users = User.where("first_name IS NOT NULL OR last_name IS NOT NULL").order("updated_at DESC")
   end
 

@@ -1,0 +1,28 @@
+.row
+  .col-md-4
+    %h1 All Conversations
+    %p Conversations are powerful ways to connect, learn, collaborate, and innovate. Use conversations to share your ideas and questions, and respond to those of others.
+
+    %p{style: "padding-bottom: 10px;"}
+      = link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+      - if @my_drafts_count and @my_drafts_count > 0
+        &nbsp;
+        = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "btn btn-default btn-sm"
+
+    = render partial: "search", locals: {filters: @filters}
+
+    .hidden-sm.hidden-xs
+      = image_tag "list_images/conversations.jpg", style: "width: 100%;"
+
+  .col-sm-8
+    - @posts.each do |post|
+      .list-row
+        %span.h4= link_to post.title, post_path(post)
+        -# .intention Intention: #{post.intention}
+        %div.nowrap.text-muted
+          = ellipsify(sanitize(post.published_content, tags: []), 300)
+        %div.nowrap
+          - post.author_and_conversants.take(10).each do |user|
+            = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
+          - post.tag_list.each do |name|
+            = link_to name, search_posts_path(tags: name), class: "btn btn-default btn-xs"

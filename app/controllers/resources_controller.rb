@@ -4,7 +4,7 @@ class ResourcesController < ApplicationController
   before_action :load_target, only: [:new, :create]
   before_action :verify_ownership, only: [:edit, :update, :destroy]
 
-  def dashboard
+  def index
     @most_popular_resources = Resource.order("viewings DESC").limit(8)
     @most_recent_activity = RecentEvent.latest_resource_activity(5)
     @tag_counts = Resource.order("created_at DESC").limit(100)
@@ -12,7 +12,7 @@ class ResourcesController < ApplicationController
       .sort_by(&:name)
   end
 
-  def index
+  def search
     @resources = Resource.all.order("updated_at DESC").includes(:creator, :target)
     @filters = params.slice(:tags, :media_types)
     @resources = @resources.tagged_with(@filters[:tags]) if @filters[:tags].present?
@@ -84,7 +84,7 @@ class ResourcesController < ApplicationController
     elsif params[:editing_user_profile].present?
       user_path(current_user)
     else
-      dashboard_resources_path
+      resources_path
     end
   end
 

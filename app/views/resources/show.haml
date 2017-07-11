@@ -23,12 +23,12 @@
       %th Tags
       %td
         - @resource.tag_list.each do |name|
-          = link_to name, resources_path(tags: name), class: "btn btn-default btn-xs"
+          = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
     %tr
       %th Media type
       %td
         - @resource.media_type_list.each do |name|
-          = link_to name, resources_path(media_types: name)
+          = link_to name, search_resources_path(media_types: name)
           &nbsp;
     %tr
       %th Added by

@@ -10,7 +10,7 @@ class ConversationsTest < Capybara::Rails::TestCase
   test "Conversations dashboard renders correctly" do
     visit root_path
     click_on "Conversations"
-    assert_path dashboard_posts_path
+    assert_path posts_path
   end
 
   # TODO: This is more than a proof-of-concept test. Pare it down so it only exercises the bare minimum of the happy path.
@@ -52,7 +52,7 @@ class ConversationsTest < Capybara::Rails::TestCase
     @post5 = create(:draft_post, author: @user, created_at: 2.days.ago)
 
     login_as @user
-    visit dashboard_posts_path
+    visit posts_path
     page.find(".test-my-drafts-link").click
     assert_content @post1.title # I see my own drafts
     assert_content @post5.title # I see my own drafts
@@ -70,7 +70,7 @@ class ConversationsTest < Capybara::Rails::TestCase
     @post2 = create(:published_post)
     @post3 = create(:draft_post)
 
-    visit dashboard_posts_path
+    visit posts_path
     page.find(".test-all-conversations-link").click
     assert_content @post1.title
     assert_content @post2.title

@@ -21,7 +21,7 @@
         %th Tags
         %td
           - @project.tag_list.each do |name|
-            = link_to name, projects_path(tags: name), class: "label label-default"
+            = link_to name, search_projects_path(tags: name), class: "label label-default"
 
     %hr
 

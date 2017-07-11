@@ -1,26 +1,49 @@
 .row
   .col-md-4
-    %h1 All Resources
+    %h1 Resources
     %p Resources are ways to offer and discover ideas that help us make meaningful change. Use resources to share useful documents, videos, or websites, and search those of others.
-    %p{style: "padding-bottom: 10px;"}
-      = link_to "Share a resource", new_resource_path, class: "add-new-resource-link btn btn-success"
+    %p{style: "padding-top: 10px; padding-bottom: 20px;"}
+      = link_to "Share a resource", new_resource_path, class: "test-new-resource-button btn btn-success"
 
-    = render partial: "search", locals: {filters: @filters}
+    = render partial: "search", locals: {filters: {}}
 
     .hidden-sm.hidden-xs
       = image_tag "list_images/resources.jpg", style: "width: 100%;"
 
-  .col-sm-8
-    - @resources.each do |resource|
-      .list-row
-        %span.h4= link_to resource.title, resource_path(resource)
-        %div.nowrap= resource.description
-        %div.nowrap
-          %span.text-muted
-            = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)
-            Added on #{print_date(resource.created_at, abbreviated: true, year: true)}
+  .col-md-8
+    .row
+      .col-sm-7
+        %h3 Most popular
+        - @most_popular_resources.each do |resource|
+          .list-row
+            %span.h4= link_to resource.title, resource_path(resource)
+            %div.nowrap.text-muted
+              = ellipsify(resource.description, 300)
+            %div.nowrap
+              %span.text-muted
+                = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)
+                Added on #{print_date(resource.created_at, abbreviated: true, year: true)}
+                &nbsp;
+              - resource.tag_list.each do |name|
+                = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
+              - resource.media_type_list.each do |name|
+                = link_to name, search_resources_path(media_types: name), class: "btn btn-default btn-xs"
+
+      .col-sm-5
+        %h3 Recent activity
+        - @most_recent_activity.each do |event|
+          %div.clear-float.list-row
+            %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
+              = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
+            %div.small.text-muted= print_date event.datetime, time: true
+            %div
+              = link_to event.user.full_name, user_path(event.user)
+              = event.action_description
+              = "the #{event.target.class.to_s.downcase}" unless event.target.is_a? User
+              = link_to event.target_description, url_for(event.target)
+
+        %h3 Popular categories
+        %div
+          - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
+            = link_to "#{tag.name}", search_resources_path(tags: tag.name), class: "#{css_class}"
             &nbsp;
-          - resource.tag_list.each do |name|
-            = link_to name, resources_path(tags: name), class: "btn btn-default btn-xs"
-          - resource.media_type_list.each do |name|
-            = link_to name, resources_path(media_types: name), class: "btn btn-default btn-xs"

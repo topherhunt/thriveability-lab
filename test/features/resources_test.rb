@@ -13,7 +13,7 @@ class ResourcesTest < Capybara::Rails::TestCase
     attach_file "resource[attachment]", "#{Rails.root}/public/test/leaders.pdf"
     check "resource[ownership_affirmed]"
     page.find(".submit-resource-button").click
-    assert_path dashboard_resources_path
+    assert_path resources_path
     assert_equals 1, @user.created_resources.count
     @resource = @user.created_resources.first
     assert_equals "My climate presentation", @resource.title

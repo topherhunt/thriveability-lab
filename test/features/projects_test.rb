@@ -28,7 +28,7 @@ class ProjectsTest < Capybara::Rails::TestCase
     @project2 = create(:project, quadrant_ul: "Because it's art")
     @project3 = create(:project)
 
-    visit projects_path
+    visit search_projects_path
     assert_content @project.title
     assert_content @project2.title
     assert_content @project3.title

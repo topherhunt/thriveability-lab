@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :load_post, only: [:edit, :update, :show, :destroy]
   before_action :verify_authorship, only: [:edit, :update, :destroy]
 
-  def dashboard
+  def index
     @most_active_conversations = Post.most_active(8)
     @most_recent_activity = RecentEvent.latest_post_activity(5)
     @tag_counts = Post.roots.published.order("published_at DESC").limit(100)
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
       .order(:first_name)
   end
 
-  def index
+  def search
     @posts = Post.roots.published.order("published_at DESC")
     @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:first_name)
     @filters = params.slice(:author_id, :tags)
@@ -147,7 +147,7 @@ class PostsController < ApplicationController
     elsif @post.published?
       post_path(@post)
     else
-      dashboard_posts_path
+      posts_path
     end
   end
 

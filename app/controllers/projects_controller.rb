@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:edit, :update, :show]
   before_action :verify_ownership, only: [:edit, :update]
 
-  def dashboard
+  def index
     @most_popular_projects = Project.most_popular(8)
     @most_recent_activity = RecentEvent.latest_project_activity(5)
     @tag_counts = Project.order("updated_at DESC").limit(100)
@@ -11,7 +11,7 @@ class ProjectsController < ApplicationController
       .sort_by(&:name)
   end
 
-  def index
+  def search
     @projects = Project.all.order("updated_at DESC")
     @filters = params.slice(:tags)
     @projects = @projects.tagged_with(@filters[:tags]) if @filters[:tags].present?

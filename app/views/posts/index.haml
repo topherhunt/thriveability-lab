@@ -1,28 +1,52 @@
 .row
   .col-md-4
-    %h1 All Conversations
+    %h1 Conversations
     %p Conversations are powerful ways to connect, learn, collaborate, and innovate. Use conversations to share your ideas and questions, and respond to those of others.
-
-    %p{style: "padding-bottom: 10px;"}
-      = link_to "Start a new conversation", posts_path, method: :post, class: "btn btn-success"
+    %p{style: "padding-top: 10px; padding-bottom: 20px;"}
+      = link_to "Start a new conversation", posts_path, method: :post, class: "test-new-conversation-button btn btn-success"
       - if @my_drafts_count and @my_drafts_count > 0
         &nbsp;
-        = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "btn btn-default btn-sm"
+        = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "test-my-drafts-link btn btn-default btn-sm"
 
-    = render partial: "search", locals: {filters: @filters}
+    = render partial: "search", locals: {filters:{}}
 
     .hidden-sm.hidden-xs
       = image_tag "list_images/conversations.jpg", style: "width: 100%;"
 
-  .col-sm-8
-    - @posts.each do |post|
-      .list-row
-        %span.h4= link_to post.title, post_path(post)
-        -# .intention Intention: #{post.intention}
-        %div.nowrap.text-muted
-          = ellipsify(sanitize(post.published_content, tags: []), 300)
-        %div.nowrap
-          - post.author_and_conversants.take(10).each do |user|
-            = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
-          - post.tag_list.each do |name|
-            = link_to name, posts_path(tags: name), class: "btn btn-default btn-xs"
+  .col-md-8
+    .row
+      .col-sm-7
+        %h3 Most active
+        - @most_active_conversations.each do |post|
+          .list-row
+            %span.h4= link_to post.title, post_path(post)
+            -# .intention Intention: #{post.intention}
+            %div.nowrap.text-muted
+              = ellipsify(sanitize(post.published_content, tags: []), 300)
+            %div.nowrap
+              - post.author_and_conversants.take(10).each do |user|
+                = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
+              - post.tag_list.each do |name|
+                = link_to name, search_posts_path(tags: name), class: "btn btn-default btn-xs"
+            -# .attribution.text-muted
+            -#   Written by #{link_to post.author.full_name, user_path(post.author)}
+            -#   on #{print_date(post.published_at, time: true)}.
+
+      .col-sm-5
+        %h3 Recent activity
+        - @most_recent_activity.each do |event|
+          %div.clear-float.list-row
+            %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
+              = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
+            %div.small.text-muted= print_date event.datetime, time: true
+            %div
+              = link_to event.user.full_name, user_path(event.user)
+              = event.action_description
+              = "the #{event.target.class.to_s.downcase}" unless event.target.is_a? User
+              = link_to event.target_description, url_for(event.target)
+
+        %h3 Popular categories
+        %div
+          - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
+            = link_to "#{tag.name}", search_posts_path(tags: tag.name), class: "#{css_class}"
+            &nbsp;
