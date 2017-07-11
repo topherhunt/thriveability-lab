@@ -7,6 +7,9 @@
       - if @my_drafts_count and @my_drafts_count > 0
         &nbsp;
         = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "test-my-drafts-link btn btn-default btn-sm"
+
+    = render partial: "search", locals: {filters:{}}
+
     .hidden-sm.hidden-xs
       = image_tag "list_images/conversations.jpg", style: "width: 100%;"
 
@@ -28,8 +31,6 @@
             -# .attribution.text-muted
             -#   Written by #{link_to post.author.full_name, user_path(post.author)}
             -#   on #{print_date(post.published_at, time: true)}.
-        %p{style: "padding-top: 10px;"}
-          = link_to "All conversations", posts_path, class: "test-all-conversations-link btn btn-primary"
 
       .col-sm-5
         %h3 Recent activity

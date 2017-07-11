@@ -5,15 +5,7 @@
     %p{style: "padding-bottom: 10px;"}
       = link_to "Add your project", new_project_path, class: "btn btn-success"
 
-    = form_tag(projects_path, method: :get) do
-      %div.strong Filter by tag...
-      %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
-        %option
-        - popular_project_tags(15).each do |name|
-          - selected = @filters[:tags].to_s.split(", ").include?(name)
-          %option{value: name, selected: selected}= name
-      %div{style: "padding-top: 10px; padding-bottom: 30px;"}
-        = submit_tag "Filter", class: "btn btn-primary"
+    = render partial: "search", locals: {filters: @filters}
 
     .hidden-sm.hidden-xs
       = image_tag "list_images/projects.jpg", style: "width: 100%;"

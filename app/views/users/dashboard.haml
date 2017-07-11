@@ -2,9 +2,11 @@
   .col-md-4
     %h1 People
     %p <strong>All people are part of our growing community of creative change-makers.</strong> Use this page to get to know others, and introduce yourself to them.
-    - unless user_signed_in?
-      %p{style: "padding-top: 10px; padding-bottom: 20px;"}
+    %p{style: "padding-top: 10px; padding-bottom: 30px;"}
+      - unless user_signed_in?
         = link_to "Join the community", new_user_registration_path, class: "test-signup-button btn btn-success"
+      = link_to "All people", users_path, class: "test-all-users-button btn btn-primary"
+
     .hidden-sm.hidden-xs
       = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
 
@@ -18,8 +20,6 @@
             %div{style: "margin-left: 60px;"}
               %span.h4= link_to user.full_name, user_path(user)
               %div.nowrap.text-muted= user.tagline
-        %p{style: "padding-top: 10px;"}
-          = link_to "All people", users_path, class: "test-all-users-button btn btn-primary"
 
       .col-sm-5
         %h3 Recent activity

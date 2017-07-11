@@ -1,0 +1,22 @@
+= form_tag(posts_path, method: :get, class: "test-filter-posts") do
+  %h3 Search all conversations
+  .row.row-padded
+    .col-xs-2 <strong>Tag</strong>
+    .col-xs-10
+      %select.js-chosen{name: "tags", data: { placeholder: "All tags" }}
+        %option
+        - popular_post_tags(15).each do |name|
+          - selected = filters[:tags] == name
+          %option{value: name, selected: selected}= name
+  .row.row-padded
+    .col-xs-2 <strong>Author</strong>
+    .col-xs-10
+      %select.js-chosen{name: "author_id", data: { placeholder: "All authors" }}
+        %option
+        - @authors.each do |author|
+          - selected = filters[:author_id] == author.id.to_s
+          %option{value: author.id, selected: selected}= author.full_name
+  .row.row-padded{style: "padding-bottom: 30px;"}
+    .col-xs-2
+    .col-xs-10
+      = submit_tag "Search", class: "btn btn-primary"

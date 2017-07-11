@@ -2,8 +2,11 @@
   .col-md-4
     %h1 Projects
     %p Projects are all the colorful ways we are making the world more sustainable. Use projects to share what you're working on, and learn about the initiatives of others.
-    %p{style: "padding-top: 10px; padding-bottom: 20px;"}
+    %p{style: "padding-top: 10px; padding-bottom: 10px;"}
       = link_to "Add your project", new_project_path, class: "test-new-project-button btn btn-success"
+
+    = render partial: "search", locals: {filters: {}}
+
     .hidden-sm.hidden-xs
       = image_tag "list_images/projects.jpg", style: "width: 100%;"
 
@@ -22,8 +25,6 @@
                   = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
                 - project.tag_list.each do |name|
                   = link_to name, projects_path(tags: name), class: "btn btn-default btn-xs"
-        %p{style: "padding-top: 10px;"}
-          = link_to "All projects", projects_path, class: "test-all-projects-button btn btn-primary"
 
       .col-sm-5
         %h3 Recent activity

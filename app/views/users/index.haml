@@ -1,11 +1,14 @@
 .row
   .col-sm-4
-    %h1 People
-    %p <strong>All people are part of our growing community of creative change-makers.</strong><br> Use this page to get to know others, and introduce yourself to them.
-    - unless user_signed_in?
-      %p= link_to "Join the community", new_user_registration_path, class: "btn btn-success"
+    %h1 All People
+    %p <strong>All people are part of our growing community of creative change-makers.</strong> Use this page to get to know others, and introduce yourself to them.
+    %p{style: "padding-top: 10px; padding-bottom: 30px;"}
+      - unless user_signed_in?
+        = link_to "Join the community", new_user_registration_path, class: "test-signup-button btn btn-success"
+
     .hidden-sm.hidden-xs
       = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
+
   .col-sm-8
     - @users.each do |user|
       .list-row

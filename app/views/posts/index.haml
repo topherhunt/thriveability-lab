@@ -9,21 +9,7 @@
         &nbsp;
         = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "btn btn-default btn-sm"
 
-    = form_tag(posts_path, method: :get, class: "filter-posts") do
-      %div.strong Filter by tag...
-      %select.js-chosen{name: "tags", data: { placeholder: "Click to select a tag" }}
-        %option
-        - popular_post_tags(15).each do |name|
-          - selected = @filters[:tags].to_s.split(", ").include?(name)
-          %option{value: name, selected: selected}= name
-      %div.strong{style: "padding-top: 10px;"} Filter by author...
-      %select.js-chosen{name: "author_id", data: { placeholder: "Click to select an author" }}
-        %option
-        - @authors.each do |author|
-          - selected = @filters[:author_id] == author.id.to_s
-          %option{value: author.id, selected: selected}= author.full_name
-      %div{style: "padding-top: 10px; padding-bottom: 30px;"}
-        = submit_tag "Filter", class: "btn btn-primary"
+    = render partial: "search", locals: {filters: @filters}
 
     .hidden-sm.hidden-xs
       = image_tag "list_images/conversations.jpg", style: "width: 100%;"
@@ -40,7 +26,3 @@
             = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
           - post.tag_list.each do |name|
             = link_to name, posts_path(tags: name), class: "btn btn-default btn-xs"
-
-        -# .attribution.text-muted
-        -#   Written by #{link_to post.author.full_name, user_path(post.author)}
-        -#   on #{print_date(post.published_at, time: true)}.

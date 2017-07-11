@@ -4,6 +4,9 @@
     %p Resources are ways to offer and discover ideas that help us make meaningful change. Use resources to share useful documents, videos, or websites, and search those of others.
     %p{style: "padding-top: 10px; padding-bottom: 20px;"}
       = link_to "Share a resource", new_resource_path, class: "test-new-resource-button btn btn-success"
+
+    = render partial: "search", locals: {filters: {}}
+
     .hidden-sm.hidden-xs
       = image_tag "list_images/resources.jpg", style: "width: 100%;"
 
@@ -25,9 +28,6 @@
                 = link_to name, resources_path(tags: name), class: "btn btn-default btn-xs"
               - resource.media_type_list.each do |name|
                 = link_to name, resources_path(media_types: name), class: "btn btn-default btn-xs"
-
-        %p{style: "padding-top: 10px;"}
-          = link_to "All resources", resources_path, class: "test-all-resources-link btn btn-primary"
 
       .col-sm-5
         %h3 Recent activity

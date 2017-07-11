@@ -11,6 +11,8 @@ class PostsController < ApplicationController
       .tag_counts_on(:tags)
       .sort_by(&:name)
     @my_drafts_count = current_user.posts.roots.draft.count if current_user
+    @authors = User.where(id: Post.roots.published.pluck(:author_id).uniq)
+      .order(:first_name)
   end
 
   def index

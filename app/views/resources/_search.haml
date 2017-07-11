@@ -1,0 +1,22 @@
+= form_tag(resources_path, method: :get, class: "test-filter-resources") do
+  %h3 Search all resources
+  .row.row-padded
+    .col-xs-3 <strong>Tag</strong>
+    .col-xs-9
+      %select.js-chosen{name: "tags", data: { placeholder: "All tags" }}
+        %option
+        - popular_resource_tags(15).each do |name|
+          - selected = filters[:tags] == name
+          %option{value: name, selected: selected}= name
+  .row.row-padded
+    .col-xs-3.nowrap <strong>Media type</strong>
+    .col-xs-9
+      %select.js-chosen{name: "media_types", data: { placeholder: "All media types" }}
+        %option
+        - popular_resource_media_types(15).each do |name|
+          - selected = filters[:media_types] == name
+          %option{value: name, selected: selected}= name
+  .row.row-padded{style: "padding-bottom: 30px;"}
+    .col-xs-3
+    .col-xs-9
+      = submit_tag "Search", class: "btn btn-primary"
