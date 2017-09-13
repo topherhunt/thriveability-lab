@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
 
   def index
     @most_popular_projects = Project.most_popular(8)
-    @most_recent_activity = RecentEvent.latest_project_activity(5)
+    @recent_events = Event.where(target_type: "Project").latest(5)
     @tag_counts = Project.order("updated_at DESC").limit(100)
       .tag_counts_on(:tags)
       .sort_by(&:name)
@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
     @project.owner = current_user
 
     if @project.save
-      NotificationGenerator.new(current_user, :created_project, @project).run
+      Event.register(current_user, "create", @project)
       redirect_to project_path(@project), notice: "Your new project is now publicly listed."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

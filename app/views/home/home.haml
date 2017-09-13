@@ -23,7 +23,6 @@
           = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
           .carousel-caption A congregation point for the sustainability economy blah blah
 
-
   .row
 
     .col-sm-6
@@ -80,13 +79,4 @@
     .col-sm-3
     .col-sm-6
       %h4.text-center What's happening now
-      - @recent_events.each do |event|
-        %div.clear-float
-          %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
-            = link_to image_tag(event.user.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.user)
-          %div.small.text-muted= print_date event.datetime, time: true
-          %div
-            = link_to event.user.full_name, user_path(event.user)
-            = event.action_description
-            = "the #{event.target.class.to_s.downcase}" unless event.target.is_a? User
-            = link_to event.target_description, url_for(event.target)
+      = render partial: "shared/recent_events", locals: { events: @recent_events}

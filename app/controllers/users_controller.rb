@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @most_active_users = User.most_recent(8)
-    @most_recent_activity = RecentEvent.latest(5)
+    @recent_events = Event.latest(5)
   end
 
   def search
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-      NotificationGenerator.new(current_user, :updated_profile, current_user).run
+      Event.register(current_user, "update", current_user)
       redirect_to user_path(@user), notice: "Your profile has been updated."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

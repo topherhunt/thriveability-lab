@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531071432) do
+ActiveRecord::Schema.define(version: 20170912152340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.integer  "actor_id"
+    t.string   "action"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.datetime "created_at"
+  end
+
+  add_index "events", ["action"], name: "index_events_on_action", using: :btree
+  add_index "events", ["actor_id"], name: "index_events_on_actor_id", using: :btree
+  add_index "events", ["target_type", "target_id"], name: "index_events_on_target_type_and_target_id", using: :btree
 
   create_table "get_involved_flags", force: :cascade do |t|
     t.integer  "user_id"
@@ -55,18 +67,14 @@ ActiveRecord::Schema.define(version: 20170531071432) do
 
   create_table "notifications", force: :cascade do |t|
     t.integer  "notify_user_id"
-    t.integer  "actor_id"
-    t.string   "action"
-    t.string   "target_type"
-    t.integer  "target_id"
     t.boolean  "read",           default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "event_id"
   end
 
-  add_index "notifications", ["actor_id"], name: "index_notifications_on_actor_id", using: :btree
+  add_index "notifications", ["event_id"], name: "index_notifications_on_event_id", using: :btree
   add_index "notifications", ["notify_user_id"], name: "index_notifications_on_notify_user_id", using: :btree
-  add_index "notifications", ["target_type", "target_id"], name: "index_notifications_on_target_type_and_target_id", using: :btree
 
   create_table "omniauth_accounts", force: :cascade do |t|
     t.integer  "user_id"
@@ -231,7 +239,10 @@ ActiveRecord::Schema.define(version: 20170531071432) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "events", "users", column: "actor_id"
   add_foreign_key "messages", "projects"
   add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "messages", "users", column: "sender_id"
+  add_foreign_key "notifications", "events"
+  add_foreign_key "notifications", "users", column: "notify_user_id"
 end

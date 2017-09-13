@@ -2,16 +2,18 @@ class NotificationsController < ApplicationController
   before_action :require_login
 
   def index
-    @notifications = current_user.notifications.order("created_at DESC").limit(50)
+    @notifications = current_user.notifications.includes(:event)
+      .order("created_at DESC")
+      .limit(50)
   end
 
   def show
     @notification = current_user.notifications.find(params[:id])
     @notification.update!(read: true) unless @notification.read?
     if params[:redirect_to] == "actor"
-      redirect_to url_for(@notification.actor)
+      redirect_to url_for(@notification.event.actor)
     else # "target"
-      redirect_to url_for(@notification.target)
+      redirect_to url_for(@notification.event.target)
     end
   end
 

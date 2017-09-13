@@ -6,7 +6,7 @@ class PostsController < ApplicationController
 
   def index
     @most_active_conversations = Post.most_active(8)
-    @most_recent_activity = RecentEvent.latest_post_activity(5)
+    @recent_events = Event.where(target_type: "Post").latest(5)
     @tag_counts = Post.roots.published.order("published_at DESC").limit(100)
       .tag_counts_on(:tags)
       .sort_by(&:name)
@@ -173,10 +173,7 @@ class PostsController < ApplicationController
     @post.draft_content = nil
     @post.published_at ||= Time.now.utc
     @post.save!
-
-    if newly_published?
-      NotificationGenerator.new(current_user, :published_post, @post).run
-    end
+    Event.register(current_user, :publish, @post) if newly_published?
   end
 
   # On #update some publishing-related attributes must be set prior to updating

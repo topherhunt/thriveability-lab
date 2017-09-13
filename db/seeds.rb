@@ -1,3 +1,5 @@
+Notification.delete_all
+Event.delete_all
 Message.delete_all
 User.delete_all
 Project.delete_all
@@ -9,98 +11,126 @@ StayInformedFlag.delete_all
 GetInvolvedFlag.delete_all
 OmniauthAccount.delete_all
 
+@users = []
+@projects = []
+@posts = []
+@resources = []
+
 @topher = FactoryGirl.create(:user,
   first_name: "Topher",
   last_name: "Hunt",
   email: "hunt.topher@gmail.com"
 )
 
-puts "\nCreating 100 users..."
-@users = 100.times.map do |i|
+puts "\nCreating 50 users..."
+50.times do |i|
   print "."
-  uri = URI.parse('https://randomuser.me/api/')
-  response = Net::HTTP.get_response(uri)
-  json = JSON.parse(response.body)['results'].first
-  begin
-    params = {
-      email: json['email'].gsub(/\s/, ''),
-      first_name: json['name']['first'].capitalize,
-      last_name: json['name']['last'].capitalize,
-      image: json['picture']['large'],
-      location: json['location']['city'] + ' ' + json['location']['state']
-    }
-    FactoryGirl.create(:user, params)
-  rescue => e
-    puts "Failed to create user from params: #{params}. The error: #{e}. Skipping."
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+  email = "#{first_name}.#{last_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
+  user = FactoryGirl.create(:user, {
+    first_name: first_name,
+    last_name: last_name,
+    email: email,
+    location: Faker::LordOfTheRings.location
+  })
+  @users << user
+end
+@users = @users.sample(25) + [@topher]
+
+# Make people follow other people first so that they receive notifications of followee activity.
+puts "\nPeople following people..."
+100.times do |i|
+  print "."
+  follower = @users.sample
+  followee = @users.sample
+  # Tolerate failure in case of duplicates
+  if StayInformedFlag.create(user: follower, target: followee)
+    Event.register(follower, :follow, followee)
   end
-end.compact
-
-@users = @users.sample(50) + [@topher]
-
-puts "\nCreating 80 projects..."
-@projects = 80.times.map do |i|
+end
+3.times do |i|
   print "."
-  FactoryGirl.create(:project,
-    owner: @users.sample
-    # TODO: Add stock images... the lorempixel URL we were using, kept timing out
-  )
+  follower = @topher
+  followee = @users.sample
+  # Tolerate failure in case of duplicates
+  if StayInformedFlag.create(user: follower, target: followee)
+    Event.register(follower, :follow, followee)
+  end
 end
 
-puts "\nCreating 50 conversations..."
-@posts = 50.times.map do |i|
+puts "\nCreating 25 projects..."
+25.times do |i|
   print "."
-  post = FactoryGirl.create(:published_post, author: @users.sample)
+  user = @users.sample
+  # TODO: Add stock images... the lorempixel URL we were using, kept timing out
+  project = FactoryGirl.create(:project, owner: user)
+  Event.register(project.owner, :create, project)
+  @projects << project
+end
+
+puts "\nCreating 25 conversations..."
+25.times do |i|
+  print "."
+  post_author = @users.sample
+  post = FactoryGirl.create(:published_post, author: post_author)
+  Event.register(post_author, :publish, post)
   post_and_children = [post]
-  10.times do
-    user = @users.sample
-    FactoryGirl.build(:post_conversant, user: user, post: post).save # failure is OK
-    post_and_children << FactoryGirl.create(:published_post,
-      author: user,
-      parent: post_and_children.sample
-    )
+  (rand * 10).round.times do
+    commenter = @users.sample
+    FactoryGirl.build(:post_conversant, user: commenter, post: post).save # may fail
+    parent = post_and_children.sample
+    comment = FactoryGirl.create(:published_post, author: commenter, parent: parent)
+    Event.register(commenter, :publish, comment)
+    post_and_children << comment
   end
-  post
+  @posts << post
 end
 
-puts "\nCreating 100 resources..."
-@resources = 100.times.map do |i|
+puts "\nCreating 50 resources..."
+50.times do |i|
   print "."
-  FactoryGirl.create(:resource,
-    creator: @users.sample,
+  user = @users.sample
+  resource = FactoryGirl.create(:resource,
+    creator: user,
     target: [@posts.sample, @projects.sample, nil, nil, nil, nil].sample
   )
+  Event.register(user, :create, resource)
+  @resources << resource
 end
 
 puts "\nAdding like flags..."
-300.times do |i|
+150.times do |i|
   print "."
+  user = @users.sample
+  target = [@users, @posts, @projects, @resources].sample.sample
   # Tolerate failure in case of duplicates
-  LikeFlag.create(
-    user: @users.sample,
-    target: [@users, @posts, @projects, @resources].sample.sample
-  )
+  if LikeFlag.create(user: user, target: target)
+    Event.register(user, :like, target)
+  end
 end
 
-puts "\nAdding follow flags..."
-200.times do |i|
+puts "\nPeople follow posts / projects / resources..."
+150.times do |i|
   print "."
+  user = @users.sample
+  target = [@posts, @projects, @resources].sample.sample
   # Tolerate failure in case of duplicates
-  StayInformedFlag.create(
-    user: @users.sample,
-    target: [@users, @posts, @projects, @resources].sample.sample
-  )
+  if StayInformedFlag.create(user: user, target: target)
+    Event.register(user, :follow, target)
+  end
 end
 
 puts "\nAdding get involved flags..."
-50.times do |i|
+100.times do |i|
   print "."
+  user = @users.sample
+  project = @projects.sample
   # Tolerate failure in case of duplicates
-  GetInvolvedFlag.create(user: @users.sample, target: @projects.sample)
+  GetInvolvedFlag.create(user: user, target: project)
 end
 
 PredefinedTag.repopulate
-
-# TODO: Populate a few notifications for Topher so I can easily test the notification system from seed.
 
 puts "\nSeeding complete! Stats:"
 puts "- #{User.count} Users"

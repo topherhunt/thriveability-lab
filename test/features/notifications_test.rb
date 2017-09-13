@@ -16,7 +16,7 @@ class NotificationsTest < Capybara::Rails::TestCase
     assert_equals 1, Notification.count
     n = Notification.first
     assert_equals @follower, n.notify_user
-    assert_equals "#{@user.full_name} listed the project \"Project Name\"", n.sentence
+    assert_equals "#{@user.full_name} listed the project \"Project Name\"", n.event.sentence
   end
 
   test "User can view notifications, mark as read, and view his recent history page" do
@@ -26,9 +26,9 @@ class NotificationsTest < Capybara::Rails::TestCase
       project  = create(:project)
       post     = create(:published_post)
       resource = create(:resource)
-      add_notification_about project.owner, :created_project, project
-      add_notification_about post.author, :published_post, post
-      add_notification_about resource.creator, :created_resource, resource
+      add_notification_about project.owner, :create, project
+      add_notification_about post.author, :publish, post
+      add_notification_about resource.creator, :create, resource
     end
 
     login_as @user
@@ -52,6 +52,7 @@ class NotificationsTest < Capybara::Rails::TestCase
   def add_notification_about(actor, action, target)
     @minutes_ago ||= 1
     @minutes_ago += 1
-    @user.notifications.create!(actor: actor, action: action, target: target, created_at: @minutes_ago.minutes.ago)
+    event = Event.create!(actor: actor, action: action, target: target)
+    @user.notifications.create!(event: event, created_at: @minutes_ago.minutes.ago)
   end
 end

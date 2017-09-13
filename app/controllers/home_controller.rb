@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     @featured_projects = Project.most_popular(15)
     @featured_posts = Post.most_popular(5)
     @featured_resources = Resource.order("viewings DESC").limit(5)
-    @recent_events = RecentEvent.latest(5)
+    @recent_events = Event.latest(5)
     @users_count = User.count
     @projects_count = Project.count
     @posts_count = Post.published.roots.count

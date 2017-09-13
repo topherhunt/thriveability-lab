@@ -2,14 +2,15 @@
 
 %table.table.all-notifications-list
   - @notifications.each do |n|
+    - e = n.event
     %tr.notification{class: n.read? ? "read" : "unread"}
-      %td= print_date n.created_at, time: true
-      %td= image_tag(n.image_url, style: "width: 30px;")
+      %td.nowrap= print_date n.created_at, time: true, abbreviated: true
+      %td= image_tag(e.image_url, style: "width: 30px;")
       %td
         -# = link_to n.sentence, url_for(n.target)
-        = link_to n.actor.full_name, notification_path(n, redirect_to: "actor")
-        = n.action_description
-        = link_to "\"#{n.target_description}\"", notification_path(n, redirect_to: "target")
+        = link_to e.actor.full_name, notification_path(n, redirect_to: "actor")
+        = e.action_description
+        = link_to "\"#{e.target_description}\"", notification_path(n, redirect_to: "target")
   - if unread_notifications_count > 0
     %tr
       %td

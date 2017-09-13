@@ -6,7 +6,7 @@ class ResourcesController < ApplicationController
 
   def index
     @most_popular_resources = Resource.order("viewings DESC").limit(8)
-    @most_recent_activity = RecentEvent.latest_resource_activity(5)
+    @recent_events = Event.where(target_type: "Resource").latest(5)
     @tag_counts = Resource.order("created_at DESC").limit(100)
       .tag_counts_on(:tags)
       .sort_by(&:name)
@@ -33,7 +33,7 @@ class ResourcesController < ApplicationController
     @resource.creator = current_user
 
     if @resource.save
-      NotificationGenerator.new(current_user, :created_resource, @resource).run
+      Event.register(current_user, "create", @resource)
       redirect_to return_to_path, notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

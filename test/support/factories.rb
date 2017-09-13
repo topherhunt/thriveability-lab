@@ -67,4 +67,7 @@ FactoryGirl.define do
     association :user
     target { raise "Target must be specified!" }
   end
+
+  # It doesn't make sense to create factories for Events and Notifications.
+  # For these, just use Event.register or ActiveRecord#create.
 end

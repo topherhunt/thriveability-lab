@@ -5,7 +5,7 @@ class ResourcesTest < Capybara::Rails::TestCase
     @user = create(:user)
     login_as @user
     click_on "Resources"
-    page.find(".test-new-resource-button").click
+    page.find(".test-new-resource-link").click
     page.find("#resource_title").set("My climate presentation")
     page.find("#resource_description").set("A presentation on climate change")
     page.find("#resource_source_name").set("Elmer Fudd")

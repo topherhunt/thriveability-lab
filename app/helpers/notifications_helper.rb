@@ -4,6 +4,6 @@ module NotificationsHelper
   end
 
   def my_recent_notifications
-    current_user.notifications.order("created_at DESC").limit(10)
+    current_user.notifications.latest.limit(10)
   end
 end
