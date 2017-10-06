@@ -18,7 +18,7 @@
           .list-row
             %span.h4= link_to resource.title, resource_path(resource)
             %div.nowrap.text-muted
-              = ellipsify(resource.description, 300)
+              = ellipsify(resource.description, 100)
             %div.nowrap
               %span.text-muted
                 = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)

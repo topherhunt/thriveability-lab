@@ -33,11 +33,13 @@ table td { vertical-align: top; }
 ul.less-indent { padding-left: 25px; }
 
 // Bootstrap fixes
-
-.label a { color: #fff !important; }
 .text-info { color: #275972; } // original: #31708f
 .text-danger { color: #a94442 !important; }
 table.table { width: auto; }
+
+.label { font-weight: normal; }
+.label-default { background-color: #888; }
+.label a { color: #fff !important; }
 
 // Font Awesome fixes
 

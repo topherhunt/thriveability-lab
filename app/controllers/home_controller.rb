@@ -1,15 +1,13 @@
 class HomeController < ApplicationController
   def home
-    @featured_users = User.most_recent(15)
-    @featured_projects = Project.most_popular(15)
-    @featured_posts = Post.most_popular(5)
-    @featured_resources = Resource.order("viewings DESC").limit(5)
+    @users = User.most_recent(5).shuffle
+    @user_interests = UserData.interests_map(@users)
+    # @user_contributions = UserData.contributions_map(@users)
+    @projects = Project.most_popular(5).shuffle
+    @posts = Post.most_popular(5).shuffle
+    @resources = Resource.order("viewings DESC").limit(5).shuffle
     @recent_events = Event.latest(5)
-    @users_count = User.count
-    @projects_count = Project.count
-    @posts_count = Post.published.roots.count
-    @resources_count = Resource.count
-    render "home/home", layout: "home"
+    render "home/home.haml", layout: "home"
   end
 
   def about

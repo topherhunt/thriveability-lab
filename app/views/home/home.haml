@@ -1,77 +1,50 @@
 #main-container.container-fluid
-
-  .visible-sm.visible-xs
-    %h1.text-center Integral Climate is...
-  .hidden-sm.hidden-xs{style: "margin-top: -10px;"}
-    .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%;"}
-      .static-title
-        %h1.text-center Integral Climate is...
-      .carousel-inner{role: "listbox", style: "position: absolute; width: 100%;"}
-        .item.active
-          = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
-          .carousel-caption Helping nature do what it does best
-        .item
-          = image_tag("homepage_banner/bg2.jpg", style: "width: 100%;")
-          .carousel-caption Aligning our actions with each other and with the systems that surround us
-        .item
-          = image_tag("homepage_banner/bg3.jpg", style: "width: 100%;")
-          .carousel-caption A network of change initiatives that's more than the sum of its parts
-        .item
-          = image_tag("homepage_banner/bg4.jpg", style: "width: 100%;")
-          .carousel-caption Tools and resources for enacting our values in the world
-        .item
-          = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
-          .carousel-caption A congregation point for the sustainability economy blah blah
+  .row
+    .col-sm-6
+      %h1.text-center Integral Climate is...
+      %p.text-center Blah blah blah Annick's mission statement sentence
+    .col-sm-6
+      .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%; height: 200px;"}
+        .carousel-inner{role: "listbox", style: "position: absolute; width: 100%; height: 200px;"}
+          .item.active
+            = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
+          .item
+            = image_tag("homepage_banner/bg2.jpg", style: "width: 100%;")
+          .item
+            = image_tag("homepage_banner/bg3.jpg", style: "width: 100%;")
+          .item
+            = image_tag("homepage_banner/bg4.jpg", style: "width: 100%;")
+          .item
+            = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
 
   .row
+    .col-sm-6{style: "padding-bottom: 20px;"}
+      %h4.text-center People working towards a more sustainable society
+      -# TODO: Refactor the carousel templates to reduce duplication?
+      = render "users_carousel.haml"
+      %div{style: "position: relative"}
+        = link_to "Meet more people", users_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
 
-    .col-sm-6
-      %h4.text-center #{@users_count} people envisioning a sustainable society
-      %div{style: 'position: relative;'}
-        - @featured_users.each do |user|
-          %div{style: 'float: left; width: 19.9%; padding: 0.5%;'}
-            = link_to image_tag(user.image.url(:thumb), style: "width: 100%;", class: "js-popover img-rounded", data: { toggle: "popover", trigger: "hover", placement: "top", content: user.full_name }), user_path(user)
-        .clear-float
-      %p.text-center.row-padded-top= link_to "Meet people", users_path, class: "btn btn-success"
+    .col-sm-6{style: "padding-bottom: 20px;"}
+      %h4.text-center Projects for meaningful change
+      = render "projects_carousel.haml"
+      %div{style: "position: relative"}
+        = link_to "Discover more projects", projects_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
 
-    .col-sm-6
-      %h4.text-center #{@projects_count} projects creatively changing the world
+  .row
+    .col-sm-6{style: "padding-bottom: 20px;"}
+      %h4.text-center A space for supportive, inspiring dialogue
+      = render "conversations_carousel.haml"
       %div{style: "position: relative;"}
-        - @featured_projects.each do |project|
-          %div{style: "float: left; width: 19.9%; padding: 0.5%; overflow: hidden;"}
-            = link_to image_tag(project.image.url(:thumb), style: "width: 100%;", class: "js-popover img-rounded", data: {toggle: "popover", trigger: "hover", placement: "top", html: "true", content: content_for_project_popover(project)}), project_path(project)
-        .clear-float
-      %p.text-center.row-padded-top= link_to "Discover projects", projects_path, class: "btn btn-success"
+        %div.text-right{style: "position: absolute; right: -5px; top: -15px;"}
+          = link_to "See more topics", posts_path, class: "btn btn-success btn-sm"
+          = link_to "Start a conversation", posts_path, method: :post, class: "btn btn-success btn-sm"
 
-  %hr
-
-  .row
-
-    .col-sm-6
-      %h4.text-center #{@posts_count} conversations exploring ideas
-      .row
-        .col-sm-4{style: "padding-top: 10px;"}
-          %div{style: "height: 150px; overflow: hidden;"}
-            = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -40px;"
-        .col-sm-8
-
-          %ul{style: "margin-left: -20px;"}
-            - @featured_posts.each do |post|
-              %li= link_to post.title, post_path(post)
-      %p.text-center= link_to "Join conversations", posts_path, class: "btn btn-success"
-
-    .col-sm-6
-      %h4.text-center #{@resources_count} resources empowering transformation
-      .row
-        .col-sm-4{style: "padding-top: 10px;"}
-          %div{style: "height: 150px; overflow: hidden;"}
-            = image_tag "list_images/resources.jpg", style: "width: 100%; margin-top: -40px;"
-        .col-sm-8
-
-          %ul{style: "margin-left: -20px;"}
-            - @featured_resources.each do |resource|
-              %li= link_to resource.title, resource_path(resource)
-      %p.text-center= link_to "Explore resources", resources_path, class: "btn btn-success"
+    .col-sm-6{style: "padding-bottom: 20px;"}
+      %h4.text-center A growing library of tools and resources to move our work forward
+      = render "resources_carousel.haml"
+      %div{style: "position: relative"}
+        = link_to "Explore more resources", resources_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
 
   %hr
 

@@ -1,3 +1,5 @@
+# TODO: This class is doing too much - specifically the instance methods.
+# They should be extracted to a service class.
 class Event < ActiveRecord::Base
   belongs_to :actor, class_name: "User"
   belongs_to :target, polymorphic: true
@@ -8,7 +10,7 @@ class Event < ActiveRecord::Base
   validates :target_type, presence: true, inclusion: {in: %w(User Project Resource Post)}
   validates :target_id, presence: true
 
-  scope :latest, -> (n) { order("id DESC").limit(n) }
+  scope :latest, ->(n) { order("id DESC").limit(n) }
 
   class << self
     def register(actor, action, target)
@@ -16,7 +18,15 @@ class Event < ActiveRecord::Base
       event.notify_user_ids.each do |user_id|
         Notification.create!(event: event, notify_user_id: user_id)
       end
+      clear_caches(event)
       event
+    end
+
+    def clear_caches(event)
+      if event.action.to_s.in?(["create", "publish"])
+        SafeCacher.delete_matched("user_#{actor_id}_recent_contributions")
+      end
+      SafeCacher.delete_matched("user_#{actor_id}_interests")
     end
   end
 

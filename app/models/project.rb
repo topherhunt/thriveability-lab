@@ -35,6 +35,7 @@ class Project < ActiveRecord::Base
   end
 
   def involved_users
+    # TODO: This triggers N+1 queries.
     user_ids = [
       owner_id,
       received_like_flags.pluck(:user_id),
