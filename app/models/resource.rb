@@ -9,6 +9,8 @@ class Resource < ActiveRecord::Base
   has_many :received_like_flags, class_name: 'LikeFlag', as: :target
   has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
+  scope :latest, ->(n) { order("created_at DESC").limit(n) }
+
   validates :title, presence: true
   validates :source_name, presence: true
   validates :description, presence: true

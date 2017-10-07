@@ -1,16 +1,5 @@
-#home-projects-carousel.cards-carousel.carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "hover"}
+#home-projects-carousel.cards-carousel.carousel.slide.carousel-fade.well.well-sm{"data-ride": "carousel", "data-interval": 5000, "data-pause": "hover"}
   .carousel-inner{role: "listbox"}
     - @projects.each_with_index do |project, index|
       .item{class: (index == 0 ? "active" : "")}
-        = link_to image_tag(project.image.url(:thumb), class: "img-rounded", style: "float: left; width: 100px;"), project_path(project)
-        %div{style: "margin-left: 110px;"}
-          %span.h4= link_to project.title, project_path(project)
-          %div.nowrap.text-muted= project.subtitle
-          %div
-            - if project.tag_list.any?
-              Related to:
-              - project.tag_list.each do |tag_name|
-                %span.label.label-default= tag_name
-          %div.nowrap{style: "padding-top: 5px;"}
-            - project.involved_users.take(10).each do |user|
-              = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 30px;"), user_path(user)
+        = render partial: "shared/cards/project", locals: {project: project}

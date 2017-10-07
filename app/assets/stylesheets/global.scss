@@ -41,6 +41,8 @@ table.table { width: auto; }
 .label-default { background-color: #888; }
 .label a { color: #fff !important; }
 
+.well { overflow: hidden; }
+
 // Font Awesome fixes
 
 .fa.fa-spinner { -webkit-animation: spin 2s infinite linear; }

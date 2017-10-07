@@ -1,0 +1,10 @@
+= link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 100px;"), user_path(user)
+%div{style: "margin-left: 110px;"}
+  %span.strong.nowrap
+    = link_to user.full_name, user_path(user)
+  %div.nowrap.text-muted= user.tagline
+  %div
+    - if @user_interests.fetch(user.id).any?
+      Interests:
+      - @user_interests.fetch(user.id).each do |tag|
+        %span.label.label-default= tag.name

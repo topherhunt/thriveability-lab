@@ -40,6 +40,7 @@ class Post < ActiveRecord::Base
   scope :visible_to, ->(user){ where("author_id = ? OR published = TRUE", user.try(:id) || 0) }
   scope :not_roots,  ->{ where "parent_id IS NOT NULL" }
   scope :published_since, ->(datetime){ where("published_at >= ?", datetime) }
+  scope :latest, ->(n) { order("published_at DESC").limit(n) }
 
   after_save :touch_root
 

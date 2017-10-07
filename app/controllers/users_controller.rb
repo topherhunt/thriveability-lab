@@ -12,7 +12,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.published.order("published_at DESC").limit(10)
+    @projects = @user.projects.latest(5)
+    @resources = @user.created_resources.latest(5)
+    post_ids = PostConversant.where(user: @user).pluck(:post_id)
+    @posts = Post.where(id: post_ids).latest(5)
   end
 
   def edit
