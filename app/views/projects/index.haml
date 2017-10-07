@@ -25,6 +25,8 @@
                   = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
                 - project.tag_list.each do |name|
                   = link_to name, search_projects_path(tags: name), class: "btn btn-default btn-xs"
+        %hr
+        %p= link_to "See all", search_projects_path
 
       .col-sm-5
         %h3 Recent activity

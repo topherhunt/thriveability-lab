@@ -28,6 +28,8 @@
                 = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
               - resource.media_type_list.each do |name|
                 = link_to name, search_resources_path(media_types: name), class: "btn btn-default btn-xs"
+        %hr
+        %p= link_to "See all", search_resources_path
 
       .col-sm-5
         %h3 Recent activity

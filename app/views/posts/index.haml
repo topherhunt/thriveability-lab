@@ -20,7 +20,6 @@
         - @most_active_conversations.each do |post|
           .list-row
             %span.h4= link_to post.title, post_path(post)
-            -# .intention Intention: #{post.intention}
             %div.nowrap.text-muted
               = ellipsify(sanitize(post.published_content, tags: []), 300)
             %div.nowrap
@@ -28,9 +27,8 @@
                 = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
               - post.tag_list.each do |name|
                 = link_to name, search_posts_path(tags: name), class: "btn btn-default btn-xs"
-            -# .attribution.text-muted
-            -#   Written by #{link_to post.author.full_name, user_path(post.author)}
-            -#   on #{print_date(post.published_at, time: true)}.
+        %hr
+        %p= link_to "See all", search_posts_path
 
       .col-sm-5
         %h3 Recent activity
