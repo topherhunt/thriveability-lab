@@ -2,8 +2,7 @@
   = link_to resource.title, resource_path(resource)
 %div.nowrap.text-muted
   = ellipsify(resource.description, 80)
-%div
-  Categories:
+%div.nowrap{style: "padding-bottom: 5px;"}
   - resource.tag_list.each do |name|
     %span.label.label-default= name
   - resource.media_type_list.each do |name|

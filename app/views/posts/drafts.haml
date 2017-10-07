@@ -9,7 +9,7 @@
     - @drafts.each do |post|
       .list-row
         %div
-          %span.h4= link_to post.title, edit_post_path(post), class: "test-edit-draft-link"
+          %span.h4= link_to post.title.presence || "Untitled", edit_post_path(post), class: "test-edit-draft-link"
           &nbsp;
           = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
         .nowrap.text-muted Started on #{print_date(post.created_at, time: true)}

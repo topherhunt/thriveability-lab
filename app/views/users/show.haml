@@ -61,3 +61,5 @@
       - @posts.each do |post|
         .well.well-sm
           = render partial: "shared/cards/post", locals: {post: post.root}
+      - if @count_drafts and @count_drafts > 0
+        %p= link_to "#{pluralize @count_drafts, "draft"}", drafts_posts_path, class: "btn btn-default"

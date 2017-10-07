@@ -16,6 +16,7 @@ class UsersController < ApplicationController
     @resources = @user.created_resources.latest(5)
     post_ids = PostConversant.where(user: @user).pluck(:post_id)
     @posts = Post.where(id: post_ids).latest(5)
+    @count_drafts = @user.posts.roots.draft.count if @user == current_user
   end
 
   def edit
