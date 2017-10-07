@@ -24,9 +24,9 @@ class Event < ActiveRecord::Base
 
     def clear_caches(event)
       if event.action.to_s.in?(["create", "publish"])
-        SafeCacher.delete_matched("user_#{actor_id}_recent_contributions")
+        SafeCacher.delete_matched("user_#{event.actor_id}_recent_contributions")
       end
-      SafeCacher.delete_matched("user_#{actor_id}_interests")
+      SafeCacher.delete_matched("user_#{event.actor_id}_interests")
     end
   end
 
