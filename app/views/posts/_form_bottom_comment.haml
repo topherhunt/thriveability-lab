@@ -19,14 +19,7 @@
             = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
 
   .col-sm-5
-    .hint
-      %p
-        %strong Ways to support awesome conversation:
-      %ul
-        %li Ask someone for their perspective on an issue!
-        %li Clarify where you're coming from. What experiences led you to take the position you took?
-        %li TODO
-        %li TODO
+    = render partial: "sidebar_hint"
 
   :javascript
     $(function(){
