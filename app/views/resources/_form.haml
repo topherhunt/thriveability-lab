@@ -10,29 +10,37 @@
     = f.hidden_field :target_type, value: @target.class.to_s
     = f.hidden_field :target_id, value: @target.id
     %p  This resource will be linked to the #{@target.class.to_s} <strong>#{@target.title}</strong>.
+
   .row.row-padded
     .col-sm-3
       = f.label :title
       = required
+      .hint.small Make sure the title communicates why or how this resource is valuable to others!
     .col-sm-9= f.text_field :title, class: "form-control"
+
   .row.row-padded
     .col-sm-3
       = f.label :source_name
       = required
       .hint.small Who authored or created this resource?
     .col-sm-9= f.text_field :source_name, class: "form-control"
-  .row.row-padded
-    .col-sm-3
-      = f.label :current_url, "Current URL"
-      .hint.small Where can this resource be accessed online?
-    .col-sm-9= f.text_field :current_url, class: "form-control"
+
   .row.row-padded
     .col-sm-3
       = f.label :description
       = required
       .hint.small Please give a one-line description of what this resource contributes to the community.
     .col-sm-9= f.text_field :description, class: "form-control"
+
+  .row.row-padded
+    .col-sm-3
+      = f.label :relevant_to, "Relevant to"
+      .hint.small Which groups would particularly benefit from knowing about this, and why?
+    .col-sm-9= f.text_field :relevant_to, class: "form-control"
+
   = render partial: "shared/edit_tags", locals: { form: f, object: @resource }
+  -#
+
   .row.row-padded
     .col-sm-3
       = f.label :media_type_list, "Media type"
@@ -60,6 +68,11 @@
     .col-sm-9
       = f.check_box :ownership_affirmed, class: "form-control"
 
+  .row.row-padded
+    .col-sm-3
+      = f.label :current_url, "Current URL"
+      .hint.small Where can this resource be accessed online?
+    .col-sm-9= f.text_field :current_url, class: "form-control"
 
   .row.row-padded
     .col-sm-3

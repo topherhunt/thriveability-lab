@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170912152340) do
+ActiveRecord::Schema.define(version: 20171007154146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -168,6 +168,7 @@ ActiveRecord::Schema.define(version: 20170912152340) do
     t.datetime "updated_at"
     t.string   "source_name"
     t.integer  "viewings",                default: 0
+    t.text     "relevant_to"
   end
 
   add_index "resources", ["creator_id"], name: "index_resources_on_creator_id", using: :btree

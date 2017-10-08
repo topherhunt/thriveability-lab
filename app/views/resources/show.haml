@@ -1,48 +1,57 @@
 .centered-800
-  %h1 Resource: #{@resource.title}
+  %div Resource:
+  %div{style: "padding-bottom: 10px;"}
+    %span.h1 #{@resource.title}
+    - if current_user == @resource.creator
+      &nbsp;
+      = link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)
 
   %table.table
     %tr
-      %th Title
-      %td= @resource.title
-    %tr
       %th Source
-      %td= @resource.source_name
-    - if @resource.current_url.present?
-      %tr
-        %th.nowrap Current URL
-        %td= link_to fa_icon("external-link") + " #{@resource.current_url}", @resource.current_url, target: "_blank"
+      %td
+        - if @resource.current_url.present?
+          = link_to fa_icon("external-link") + " " + @resource.source_name, @resource.current_url, target: "_blank"
+        - else
+          = @resource.source_name
+
     %tr
       %th Description
       %td= @resource.description
-    - if @resource.attachment_file_name.present?
-      %tr
-        %th Uploaded file
-        %td= link_to @resource.attachment.url
+
+    %tr
+      %th Relevant to
+      %td= @resource.relevant_to
+
     %tr
       %th Tags
       %td
         - @resource.tag_list.each do |name|
           = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
+
     %tr
       %th Media type
       %td
         - @resource.media_type_list.each do |name|
           = link_to name, search_resources_path(media_types: name)
           &nbsp;
+
+    - if @resource.attachment_file_name.present?
+      %tr
+        %th Attached file
+        %td= link_to @resource.attachment.url
+
     %tr
       %th Added by
       %td
         = link_to image_tag(@resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(@resource.creator)
         = link_to @resource.creator.full_name, user_path(@resource.creator)
+
     - if @resource.target.present?
       %tr
         %th Linked to
         %td= link_to "#{@resource.target.class.to_s}: #{@resource.target.title}", url_for(@resource.target)
-    - if current_user == @resource.creator
-      %tr
-        %th
-        %td= link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)
+
     %tr
       %th
       %td
