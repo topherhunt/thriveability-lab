@@ -1,10 +1,10 @@
 $(function(){
 
-  $('.this-comment .js-show-on-hover').hide();
+  $('.this-comment .js-opaque-on-hover').css({opacity: 0.2});
   $('.this-comment').hover(function(){
-    $(this).find('.js-show-on-hover').stop().fadeIn(200);
+    $(this).find('.js-opaque-on-hover').css({opacity: 1});
   }, function(){
-    $(this).find('.js-show-on-hover').stop().fadeOut(200);
+    $(this).find('.js-opaque-on-hover').css({opacity: 0.2});
   });
 
   // JS-disabled functionality isn't a priority right now.

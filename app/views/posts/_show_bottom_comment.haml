@@ -10,7 +10,7 @@
       - else
         %strong.text-danger Draft reply
         = "- you started writing this on #{print_date(post.created_at, time: true)}"
-      %span.js-show-on-hover
+      %span.js-opaque-on-hover
         %i.fa.fa-spinner.loading.js-hidden
         - if current_user == post.author
           &nbsp;
