@@ -25,14 +25,21 @@ OmniauthAccount.delete_all
 puts "\nCreating 50 users..."
 50.times do |i|
   print "."
-  first_name = Faker::Name.first_name
-  last_name = Faker::Name.last_name
-  email = "#{first_name}.#{last_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
+  # first_name = Faker::Name.first_name
+  # last_name = Faker::Name.last_name
+  # email = "#{first_name}.#{last_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
+  # location = Faker::LordOfTheRings.location
+
+  uri = URI.parse('https://randomuser.me/api/')
+  response = Net::HTTP.get_response(uri)
+  json = JSON.parse(response.body)['results'].first
+
   user = FactoryGirl.create(:user, {
-    first_name: first_name,
-    last_name: last_name,
-    email: email,
-    location: Faker::LordOfTheRings.location
+    email: json['email'].gsub(/\s/, ''),
+    first_name: json['name']['first'].capitalize,
+    last_name: json['name']['last'].capitalize,
+    location: json['location']['city'] + ' ' + json['location']['state'],
+    image: json['picture']['large']
   })
   @users << user
 end
@@ -64,7 +71,10 @@ puts "\nCreating 25 projects..."
   print "."
   user = @users.sample
   # TODO: Add stock images... the lorempixel URL we were using, kept timing out
-  project = FactoryGirl.create(:project, owner: user)
+  project = FactoryGirl.create(:project,
+    owner: user,
+    image: "https://source.unsplash.com/random/200x200"
+  )
   Event.register(project.owner, :create, project)
   @projects << project
 end
