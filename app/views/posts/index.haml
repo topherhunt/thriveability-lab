@@ -6,7 +6,7 @@
       = link_to "Start a conversation", posts_path, method: :post, class: "test-new-conversation-button btn btn-success"
       - if @my_drafts_count and @my_drafts_count > 0
         &nbsp;
-        = link_to "#{pluralize @my_drafts_count, "draft"}", drafts_posts_path, class: "test-my-drafts-link btn btn-default btn-sm"
+        %span.em You have #{link_to pluralize(@my_drafts_count, "draft"), drafts_posts_path, class: "test-my-drafts-link"}.
 
     = render partial: "search", locals: {filters:{}}
 
