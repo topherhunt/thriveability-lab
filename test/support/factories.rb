@@ -28,18 +28,13 @@ FactoryGirl.define do
     association :author, factory: :user
     title         { Faker::Lorem.words(5).join(" ").capitalize }
     intention     { Post::INTENTION_PRESETS.take(8).sample }
-    draft_content { Faker::Lorem.paragraph }
+    draft_content { Gibberish.random_paragraphs(rand(1..5)) }
     tag_list      { PredefinedTag::PRESETS.sample(rand(0..3)) if parent.nil? and parent_id.nil? }
     created_at    { (rand * 400.0).days.ago }
 
     factory(:published_post) do
       draft_content nil
-      published_content {
-        "<p>" +
-        Faker::Lorem.sentences(rand(2..50))
-          .join([" ", " ", " ", "</p>\n<p>"].sample) +
-        "</p>"
-      }
+      published_content { Gibberish.random_paragraphs(rand(1..5)) }
       published true
       published_at { created_at + (rand * 24).hours }
     end
