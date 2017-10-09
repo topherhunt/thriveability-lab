@@ -5,6 +5,9 @@
         Edit post: "#{link_to @post.title, post_path(@post)}"
       - else
         New conversation
+    - if !@post.published? and current_user.posts.roots.draft.count > 1
+      - phrase = pluralize(current_user.posts.roots.draft.count - 1, "other draft")
+      %p.em You have #{link_to phrase, drafts_posts_path}.
     = render partial: "form_root", locals: { post: @post }
   .col-sm-4
     %div{style: "width: 100%; height: 300px; overflow: hidden;"}
