@@ -12,9 +12,9 @@
           %span.h4= link_to post.title.presence || "Untitled", edit_post_path(post), class: "test-edit-draft-link"
           &nbsp;
           = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft? You can't undo this action."
-        .nowrap.text-muted Started on #{print_date(post.created_at, time: true)}
-        .nowrap.text-muted
-          = ellipsify(sanitize(post.draft_content, tags: []), 300)
         .nowrap
-          - post.tag_list.each do |name|
-            = link_to name, search_posts_path(tags: name), class: "btn btn-default btn-xs"
+          = ellipsify(sanitize(post.draft_content, tags: []), 80)
+        .nowrap{style: "padding-bottom: 5px;"}
+          - post.tag_list.each do |tag_name|
+            %span.label.label-default= tag_name
+        .nowrap.text-muted.em Started on #{print_date(post.created_at, time: true, abbreviated: true)}

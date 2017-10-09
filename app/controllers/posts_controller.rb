@@ -147,7 +147,7 @@ class PostsController < ApplicationController
     elsif @post.published?
       post_path(@post)
     else
-      posts_path
+      drafts_posts_path
     end
   end
 

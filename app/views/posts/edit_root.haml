@@ -2,9 +2,11 @@
   .col-sm-8
     %h1
       - if @post.published?
-        Edit post: "#{link_to @post.title, post_path(@post)}"
+        Edit post
+      - elsif @post.title.present?
+        Edit draft
       - else
-        New conversation
+        New draft conversation
     - if !@post.published? and current_user.posts.roots.draft.count > 1
       - phrase = pluralize(current_user.posts.roots.draft.count - 1, "other draft")
       %p.em You have #{link_to phrase, drafts_posts_path}.
