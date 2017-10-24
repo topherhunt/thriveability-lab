@@ -1,11 +1,13 @@
 #main-container.container-fluid
   .row
-    .col-sm-6
-      %h1.text-center Integral Climate is...
-      %p.text-center Blah blah blah Annick's mission statement sentence
-    .col-sm-6
-      .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%; height: 200px;"}
-        .carousel-inner{role: "listbox", style: "position: absolute; width: 100%; height: 200px;"}
+    .col-sm-4
+      %h1 Integral Climate is...
+      %div{style: "padding-bottom: 10px;"}
+      %p Integral Climate Hub is a platform where anybody with interest in climate and sustainability can come to be informed, inspired, and empowered.
+      %p Its aim is to support people to connect, share, learn, and grow together, as well as bring more visibility, collaboration, and impact to their initiatives.
+    .col-sm-8
+      .carousel.slide.carousel-fade{"data-ride": "carousel", "data-interval": 5000, "data-pause": "", style: "position: relative; width: 100%; height: 300px;"}
+        .carousel-inner{role: "listbox", style: "position: absolute; width: 100%; height: 300px;"}
           .item.active
             = image_tag("homepage_banner/bg1.jpg", style: "width: 100%;")
           .item
@@ -17,23 +19,23 @@
           .item
             = image_tag("homepage_banner/bg5.jpg", style: "width: 100%;")
 
-  .row
+  .row{style: "padding-top: 10px;"}
     .col-sm-6{style: "padding-bottom: 20px;"}
-      %h4.text-center People working towards a more sustainable society
+      %h3.text-center People working towards sustainability
       -# TODO: Refactor the carousel templates to reduce duplication?
       = render "users_carousel.haml"
       %div{style: "position: relative"}
         = link_to "Meet more people", users_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
 
     .col-sm-6{style: "padding-bottom: 20px;"}
-      %h4.text-center Projects for meaningful change
+      %h3.text-center Projects for meaningful change
       = render "projects_carousel.haml"
       %div{style: "position: relative"}
         = link_to "Discover more projects", projects_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
 
   .row
     .col-sm-6{style: "padding-bottom: 20px;"}
-      %h4.text-center A space for supportive, inspiring dialogue
+      %h3.text-center A space for generative dialogue
       = render "conversations_carousel.haml"
       %div{style: "position: relative;"}
         %div.text-right{style: "position: absolute; right: -5px; top: -15px;"}
@@ -41,7 +43,7 @@
           = link_to "Start a conversation", posts_path, method: :post, class: "btn btn-success btn-sm"
 
     .col-sm-6{style: "padding-bottom: 20px;"}
-      %h4.text-center A growing library of tools and resources to move our work forward
+      %h3.text-center A growing library of tools and resources
       = render "resources_carousel.haml"
       %div{style: "position: relative"}
         = link_to "Explore more resources", resources_path, class: "btn btn-success btn-sm", style: "position: absolute; right: -5px; top: -15px;"
@@ -50,5 +52,5 @@
   .row
     .col-sm-3
     .col-sm-6
-      %h4.text-center What's happening now
+      %h3.text-center What's happening now
       = render partial: "shared/recent_events", locals: { events: @recent_events}

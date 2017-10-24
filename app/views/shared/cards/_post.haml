@@ -1,9 +1,9 @@
 %div
   %span.strong.nowrap
     = link_to post.title, post_path(post)
-  %div.nowrap.text-muted
-    = ellipsify(sanitize(post.published_content, tags: []), 80)
-  %div.nowrap{style: "padding-bottom: 5px;"}
+  %div.nowrap.text-muted.text-ellipsis
+    = sanitize(post.published_content, tags: [])
+  %div.nowrap.text-ellipsis{style: "padding-bottom: 5px; color: #fff;"}
     - post.tag_list.each do |tag_name|
       %span.label.label-default= tag_name
   %div.nowrap

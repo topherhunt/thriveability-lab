@@ -2,8 +2,9 @@
 %div{style: "margin-left: 110px;"}
   %span.strong.nowrap
     = link_to project.title, project_path(project)
-  %div.nowrap.text-muted= project.subtitle
-  %div.nowrap{style: "padding-bottom: 5px;"}
+  %div.nowrap.text-muted.text-ellipsis
+    = project.subtitle
+  %div.nowrap.text-ellipsis{style: "padding-bottom: 5px; color: #fff;"}
     - project.tag_list.each do |tag_name|
       %span.label.label-default= tag_name
   %div.nowrap

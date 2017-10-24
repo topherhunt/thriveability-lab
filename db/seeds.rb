@@ -11,6 +11,8 @@ StayInformedFlag.delete_all
 GetInvolvedFlag.delete_all
 OmniauthAccount.delete_all
 
+raise "Warn Annick first!" unless ENV["ANNICK_WARNED"] == "true"
+
 @users = []
 @projects = []
 @posts = []

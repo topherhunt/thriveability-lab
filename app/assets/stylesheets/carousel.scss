@@ -17,6 +17,7 @@
 
 .carousel-fade {
   .carousel-inner {
+    padding-right: 18px; // ensure the inner div doesn't overflow the right margin
 
     .item {
       transition-property: opacity;
