@@ -3,4 +3,4 @@
   - next if key == :timedout
   .alert.alert-dismissable{class: "alert-#{bootstrap_flash_class(key)}"}
     %button.close{'data-dismiss'=>'alert', 'aria-hidden'=>'true'} &times;
-    = value
+    = value.html_safe
