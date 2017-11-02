@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171007154146) do
+ActiveRecord::Schema.define(version: 20171102122821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -240,10 +240,10 @@ ActiveRecord::Schema.define(version: 20171007154146) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  add_foreign_key "events", "users", column: "actor_id"
-  add_foreign_key "messages", "projects"
-  add_foreign_key "messages", "users", column: "recipient_id"
-  add_foreign_key "messages", "users", column: "sender_id"
-  add_foreign_key "notifications", "events"
-  add_foreign_key "notifications", "users", column: "notify_user_id"
+  add_foreign_key "events", "users", column: "actor_id", on_delete: :cascade
+  add_foreign_key "messages", "projects", on_delete: :nullify
+  add_foreign_key "messages", "users", column: "recipient_id", on_delete: :cascade
+  add_foreign_key "messages", "users", column: "sender_id", on_delete: :cascade
+  add_foreign_key "notifications", "events", on_delete: :cascade
+  add_foreign_key "notifications", "users", column: "notify_user_id", on_delete: :cascade
 end

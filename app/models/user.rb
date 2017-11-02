@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :received_like_flags, class_name: 'LikeFlag', as: :target
   has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
   has_many :notifications, foreign_key: "notify_user_id"
+  has_many :events, foreign_key: "actor_id"
 
   # Include default devise modules. Others available are: :lockable, :timeoutable
   devise :registerable, :confirmable, :database_authenticatable,

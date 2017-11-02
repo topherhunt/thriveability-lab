@@ -10,6 +10,7 @@ class Message < ActiveRecord::Base
 
   validates_presence_of :sender
   validates_presence_of :recipient
+  # Note that if a user account is deleted, all sent and received messages are deleted
   # Project is NOT required
   validates_presence_of :subject
   validates_presence_of :body
