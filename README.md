@@ -8,3 +8,11 @@
 ## Todo
 
 - App renders times in terms of US EST; make this sensitive to where the user is
+
+## Social media login
+
+Dashboards for managing settings:
+
+- https://console.developers.google.com/apis/credentials?project=integral-climate
+- https://developers.facebook.com/apps/1772130993029813/settings/
+- [LinkedIn: Todo]
