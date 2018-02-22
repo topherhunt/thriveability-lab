@@ -8,6 +8,7 @@ gem 'figaro'
 gem 'pg'
 gem 'rollbar'
 gem 'unicorn'
+gem 'elasticsearch-model'
 
 # Domain logic
 gem 'acts-as-taggable-on'
@@ -60,4 +61,5 @@ end
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout' # for easier debugging of timed-out requests
+  gem 'bonsai-elasticsearch-rails'
 end

@@ -2,6 +2,10 @@
 # TODO: It's probably a code smell that I combined both top-level posts and child
 # posts into the same model. Granted closure_tree makes it irresistibly easy to do so.
 class Post < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  __elasticsearch__.index_name "ic-#{Rails.env}-posts"
+
   INTENTION_PRESETS = [
     "share about facts, events, or objective knowledge",
     "share about a personal experience or perspective",
@@ -68,6 +72,17 @@ class Post < ActiveRecord::Base
     else
       order("updated_at DESC").limit(n)
     end
+  end
+
+  def as_indexed_json(options={}) # Elasticsearch integration
+    {
+      title: title,
+      published_content: published_content,
+      author_name: author.full_name,
+      tags: tag_list.join(", "),
+      descendants: descendants.map(&:published_content),
+      visible: root_and_published?
+    }
   end
 
   def author_and_conversants

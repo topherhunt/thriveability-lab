@@ -1,4 +1,8 @@
 class Resource < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  __elasticsearch__.index_name "ic-#{Rails.env}-resources"
+
   DEFAULT_MEDIA_TYPES = ['video', 'lecture', 'audio', 'image', 'book', 'research article', 'in press', 'unpublished', 'essay', 'popular media', 'brochure', 'website', 'course']
 
   acts_as_taggable_on :tags
@@ -21,6 +25,17 @@ class Resource < ActiveRecord::Base
   do_not_validate_attachment_file_type :attachment
 
   before_save :ensure_current_url_has_protocol
+
+  def as_indexed_json(options={}) # ElasticSearch integration
+    {
+      title: title,
+      description: description,
+      current_url: current_url,
+      source_name: source_name,
+      tags: tag_list.join(", "),
+      visible: true
+    }
+  end
 
   private
 

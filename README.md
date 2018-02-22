@@ -17,6 +17,18 @@ Dashboards for managing settings:
 - https://developers.facebook.com/apps/1772130993029813/settings/
 - [LinkedIn: Todo]
 
+## Search
+
+- Full-text search uses the Bonsai ElasticSearch add-on.
+- We use [`elasticsearch-model`](https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model) for Rails integration.
+- In development, run `elasticsearch` to allow indexing and querying.
+
+Sample commands:
+
+- `Project.__elasticsearch__.client.cluster.health`
+- `Project.__elasticsearch__.import(force: true)`
+- `Project.__elasticsearch__.search('psychology')`
+
 ## Tests
 
 I'm moving away from "full-coverage" integration tests. My current testing philosophy is:

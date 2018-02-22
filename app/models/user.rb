@@ -1,4 +1,8 @@
 class User < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  __elasticsearch__.index_name "ic-#{Rails.env}-users"
+
   has_many :omniauth_accounts, dependent: :delete_all
   has_many :projects, foreign_key: :owner_id
   # TODO: This can be renamed to just `resources`; the risk of confusion is low
@@ -95,6 +99,17 @@ class User < ActiveRecord::Base
     like_flags.update_all(user_id: to_user.id)
     stay_informed_flags.update_all(user_id: to_user.id)
     self.destroy!
+  end
+
+  def as_indexed_json(options={}) # ElasticSearch integration
+    {
+      full_name: full_name,
+      tagline: tagline,
+      location: location,
+      bio_interior: bio_interior,
+      bio_exterior: bio_exterior,
+      visible: true
+    }
   end
 
   def create_omniauth_account(auth)

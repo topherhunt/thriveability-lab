@@ -1,4 +1,8 @@
 class Project < ActiveRecord::Base
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+  __elasticsearch__.index_name("ic-#{Rails.env}-projects")
+
   STAGES = ["idea", "developing", "mature"]
 
   belongs_to :owner, class_name: 'User'
@@ -34,6 +38,19 @@ class Project < ActiveRecord::Base
     # - Custom SQL query on the like_flags table to get the most liked project_id
     # - Add received_like_flags_count cache column so we can sort by that
     all.sort_by{ |p| -p.received_like_flags.count }.take(n)
+  end
+
+  def as_indexed_json(options={}) # ElasticSearch integration
+    {
+      title: title,
+      subtitle: subtitle,
+      introduction: introduction,
+      stage: stage,
+      location: location,
+      owner: owner.full_name,
+      tags: tag_list.join(", "),
+      visible: true
+    }
   end
 
   def involved_users
