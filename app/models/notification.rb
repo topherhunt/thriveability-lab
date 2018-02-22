@@ -7,5 +7,5 @@ class Notification < ActiveRecord::Base
 
   scope :unread, ->{ where read: false }
   scope :read, ->{ where read: true }
-  scope :latest, ->{ order("read ASC, created_at DESC") }
+  scope :latest, ->{ order("created_at DESC") }
 end

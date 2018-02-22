@@ -7,7 +7,6 @@
       %td.nowrap= print_date n.created_at, time: true, abbreviated: true
       %td= image_tag(e.image_url, style: "width: 30px;")
       %td
-        -# = link_to n.sentence, url_for(n.target)
         = link_to e.actor.full_name, notification_path(n, redirect_to: "actor")
         = e.action_description
         = link_to "\"#{e.target_description}\"", notification_path(n, redirect_to: "target")

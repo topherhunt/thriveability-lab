@@ -11,7 +11,9 @@ StayInformedFlag.delete_all
 GetInvolvedFlag.delete_all
 OmniauthAccount.delete_all
 
-raise "Warn Annick first!" unless ENV["ANNICK_WARNED"] == "true"
+unless ENV["ANNICK_WARNED"].present? or Rails.env.development?
+  raise "Warn Annick first!"
+end
 
 @users = []
 @projects = []

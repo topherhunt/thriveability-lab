@@ -1,0 +1,1 @@
+I'm moving away from "full-coverage" integration tests. Most functionality and logic will now be covered in controller tests; I'll only write the bare minimum of "regression" integration tests to cover functionality that can't be tested via controller tests (e.g. JS and forms).

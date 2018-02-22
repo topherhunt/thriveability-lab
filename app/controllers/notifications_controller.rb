@@ -10,15 +10,18 @@ class NotificationsController < ApplicationController
   def show
     @notification = current_user.notifications.find(params[:id])
     @notification.update!(read: true) unless @notification.read?
-    if params[:redirect_to] == "actor"
-      redirect_to url_for(@notification.event.actor)
-    else # "target"
-      redirect_to url_for(@notification.event.target)
-    end
+    redirect_to notification_redirect_path
   end
 
   def mark_all_read
     current_user.notifications.where(read: false).update_all(read: true)
-    redirect_to request.referer
+    redirect_to request.referer || root_path
+  end
+
+  private
+
+  def notification_redirect_path
+    destination = params[:redirect_to] == "actor" ? "actor" : "target"
+    url_for @notification.event.send(destination)
   end
 end
