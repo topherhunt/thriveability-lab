@@ -23,6 +23,7 @@ $(function(){
 
   $('.js-chosen').chosen({
     allow_single_deselect: true,
+    search_contains: true,
     width: '100%'
   });
 
