@@ -10,16 +10,20 @@
         %span.icon-bar
 
     .navbar-collapse.collapse
+      %form.navbar-form.navbar-left{action: search_path, method: "GET", role: "search"}
+        .input-group
+          %input.form-control.test-navbar-search-input{type: "text", placeholder: "Search", name: "query"}
+          .input-group-btn
+            %button.btn.btn-default.test-navbar-search-submit{type: "submit"}
+              %i.fa.fa-search
       %ul.nav.navbar-nav.navbar-right
-        %li{class: active_if_current(about_path)}
-          = link_to "About", about_path
-        %li{class: active_if_current(users_path)}
+        %li.hidden-sm{class: active_if_current(users_path)}
           = link_to "People", users_path, class: "orange"
-        %li{class: active_if_current(projects_path)}
+        %li.hidden-sm{class: active_if_current(projects_path)}
           = link_to "Projects", projects_path, class: "orange"
-        %li{class: active_if_current(posts_path)}
+        %li.hidden-sm{class: active_if_current(posts_path)}
           = link_to "Conversations", posts_path, class: "orange"
-        %li{class: active_if_current(resources_path)}
+        %li.hidden-sm{class: active_if_current(resources_path)}
           = link_to "Resources", resources_path, class: "orange"
 
         - if user_signed_in?

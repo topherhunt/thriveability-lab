@@ -5,8 +5,34 @@ class Capybara::Rails::TestCase
     config.block_unknown_urls
   end
 
+  def assert_html(text_or_html)
+    if page.body.include?(text_or_html)
+      assert true
+    else
+      assert false, "Expected page html to include this text, but it wasn't found.\n" +
+        response_comparison(text_or_html)
+    end
+  end
+
+  def assert_no_html(text_or_html)
+    if page.body.include?(text_or_html)
+      assert false, "Expected page html NOT to include this text, but it was found.\n" +
+        response_comparison(text_or_html)
+    else
+      assert true
+    end
+  end
+
+  def response_comparison(text_or_html)
+    "The expected text:\n"\
+    "  \"#{text_or_html}\"\n"\
+    "The full response body:\n"\
+    "  #{page.body.gsub("\n", "")}"
+  end
+
   def login_as(user, password = 'password')
-    visit new_user_session_path
+    visit root_path
+    click_on "Log in"
     fill_in "Email", with: user.email
     fill_in "Password", with: password
     click_button "Log in"

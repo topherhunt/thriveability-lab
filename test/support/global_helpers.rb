@@ -8,7 +8,6 @@ class ActiveSupport::TestCase
     end
   end
 
-
   def emails
     ActionMailer::Base.deliveries
   end

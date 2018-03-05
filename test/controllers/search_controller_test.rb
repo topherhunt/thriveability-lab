@@ -1,0 +1,76 @@
+require "test_helper"
+
+# I almost never use controller specs. These are only here so I have an easy
+# template to copy from if I need to test some advanced controller logic.
+
+class SearchControllerTest < ActionController::TestCase
+  tests SearchController
+
+  context "#search" do
+    def assert_shown(records)
+      records.each do |r|
+        assert response.body.include?(expected_text(r)),
+          "Results should include #{expected_text(r).inspect} (for #{debug(r)}), but I don't see it.\nFull response:\n#{response.body}"
+      end
+    end
+
+    def assert_not_shown(records)
+      records.each do |r|
+        assert !response.body.include?(expected_text(r)),
+          "Results should NOT include #{expected_text(r).inspect} (for #{debug(r)}), but it's there.\nFull response:\n#{response.body}"
+      end
+    end
+
+    def expected_text(record)
+      record.try(:title) || record.full_name
+    end
+
+    def debug(record)
+      "#{record.class} #{record.id}"
+    end
+
+    it "lists all matching results" do
+      user1 = create :user, first_name: "Bear", last_name: "McCreary"
+      project1 = create :project, title: "Apple Bear"
+      resource1 = create :resource, title: "Bear Cat"
+      post1 = create :published_post, title: "Cat Dog Bear"
+      user2 = create :user
+      project2 = create :project
+      resource2 = create :resource
+      post2 = create :published_post
+      reindex_elasticsearch!
+
+      get :search, query: "bear"
+      assert_shown([user1, project1, resource1, post1])
+      assert_not_shown([user2, project2, resource2, post2])
+    end
+
+    it "can limit results to certain models" do
+      user = create :user
+      project = create :project
+      resource = create :resource
+      reindex_elasticsearch!
+
+      get :search, query: "", models: "User,Resource"
+      assert_shown([user, resource])
+      assert_not_shown([project])
+    end
+
+    it "limits to the first 20 results" do
+      create_list :user, 26
+      reindex_elasticsearch!
+
+      get :search, query: ""
+      assert_select "div.search-result", count: 20
+    end
+
+    it "can return the requested page of results" do
+      create_list :user, 26
+      reindex_elasticsearch!
+
+      total_num_records = Searcher.new(string: "").run.records.count
+      get :search, query: "", page: 2
+      assert_select "div.search-result", count: 6
+    end
+  end
+end
