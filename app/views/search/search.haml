@@ -1,36 +1,35 @@
-.well
-  %form.form-horizontal{action: search_path, method: :get}
-    .form-group
-      = label_tag "query", "Search for text:", class: "col-sm-3 control-label"
-      .col-sm-9
-        = text_field_tag "query", @search_params[:query], class: "form-control test-search-input"
-    .form-group
-      = label_tag "models", "Result types:", class: "col-sm-3 control-label"
-      .col-sm-9
-        %select.js-chosen.js-trigger-search{name: "models", "data-placeholder": "Select some", multiple: true}
-          - Searcher::SEARCHABLE_MODELS.each do |model|
-            %option{value: model.to_s, selected: (@search_params[:models].include?(model))}
-              = model.to_s
-    .row
-      .col-sm-3
-      .col-sm-9
-        = button_tag "Search", class: "btn btn-primary test-search-submit"
+.centered-800
 
-%h4 #{@search.results.total} results
+  .well
+    %form.form-horizontal{action: search_path, method: :get}
+      .form-group
+        = label_tag "query", "Search for text:", class: "col-sm-3 control-label"
+        .col-sm-9
+          = text_field_tag "query", @search_params[:query], class: "form-control test-search-input"
+      .form-group
+        = label_tag "models", "Result types:", class: "col-sm-3 control-label"
+        .col-sm-9
+          %select.js-chosen.js-trigger-search{name: "models", "data-placeholder": "Select some", multiple: true}
+            - Searcher::SEARCHABLE_MODELS.each do |model|
+              %option{value: model.to_s, selected: (@search_params[:models].include?(model))}
+                = model.to_s
+      .row
+        .col-sm-3
+        .col-sm-9
+          = button_tag "Search", class: "btn btn-primary test-search-submit"
 
-- @search.records.each do |record|
-  - case record.class.to_s
-  - when "User"
-    %div.search-result
-      %h4= link_to record.full_name, user_path(record.id)
-  - when "Project"
-    %div.search-result
-      %h4= link_to record.title, project_path(record.id)
-  - when "Post"
-    %div.search-result
-      %h4= link_to record.title, post_path(record.id)
-  - when "Resource"
-    %div.search-result
-      %h4= link_to record.title, resource_path(record.id)
-  - else
-    - raise "Don't know how to render search result of class #{record.class}!"
+  %h4 #{@search.results.total} results
+
+  - @search.records.each do |record|
+    .test-search-result
+      - case record.class.to_s
+      - when "User"
+        = render partial: "users/list_row", locals: {user: record, opts: {in_search: true}}
+      - when "Project"
+        = render partial: "projects/list_row", locals: {project: record, opts: {in_search: true}}
+      - when "Post"
+        = render partial: "posts/list_row", locals: {post: record, opts: {in_search: true}}
+      - when "Resource"
+        = render partial: "resources/list_row", locals: {resource: record, opts: {in_search: true}}
+      - else
+        - raise "Don't know how to render search result of class #{record.class}!"

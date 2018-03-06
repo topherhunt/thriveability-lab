@@ -1,11 +1,12 @@
 - events.each do |event|
-  %div.clear-float.list-row
-    %div{style: "width: 50px; height: 50px; float: left; padding-right: 10px;"}
+  .list-row
+    %div{style: "float: left; width: 50px;"}
       = link_to image_tag(event.actor.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.actor)
-    %div.small.text-muted
-      = print_date event.created_at, time: true
-    %div
-      = link_to event.actor.full_name, user_path(event.actor)
-      = event.action_description
-      = "the #{event.target_type.downcase}" unless event.target_type == "User"
-      = link_to event.target_description, url_for(event.adjusted_target)
+    %div{style: "margin-left: 60px;"}
+      %div.small.text-muted
+        = print_date event.created_at, time: true
+      %div
+        = link_to event.actor.full_name, user_path(event.actor)
+        = event.action_description
+        = "the #{event.target_type.downcase}" unless event.target_type == "User"
+        = link_to ellipsify(event.target_description, 25), url_for(event.adjusted_target)

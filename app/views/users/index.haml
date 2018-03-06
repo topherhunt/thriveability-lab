@@ -15,11 +15,7 @@
       .col-sm-7
         %h3 Recently active
         - @most_active_users.each do |user|
-          .list-row
-            = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
-            %div{style: "margin-left: 60px;"}
-              %span.h4= link_to user.full_name, user_path(user)
-              %div.nowrap.text-muted= user.tagline
+          = render partial: "list_row", locals: {user: user, opts: {}}
         %hr
         %p= link_to "See all", search_users_path
 

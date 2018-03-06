@@ -61,7 +61,7 @@ class SearchControllerTest < ActionController::TestCase
       reindex_elasticsearch!
 
       get :search, query: ""
-      assert_select "div.search-result", count: 20
+      assert_select "div.test-search-result", count: 20
     end
 
     it "can return the requested page of results" do
@@ -70,7 +70,7 @@ class SearchControllerTest < ActionController::TestCase
 
       total_num_records = Searcher.new(string: "").run.records.count
       get :search, query: "", page: 2
-      assert_select "div.search-result", count: 6
+      assert_select "div.test-search-result", count: 6
     end
   end
 end

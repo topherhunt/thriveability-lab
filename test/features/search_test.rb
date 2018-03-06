@@ -3,11 +3,11 @@ require "test_helper"
 class SearchTest < Capybara::Rails::TestCase
   setup do
     @user1 = create :user
-    @project1 = create :project, title: "Apple Bear"
-    @resource1 = create :resource, title: "Bear Cat"
-    @post1 = create :published_post, title: "Cat Dog"
+    @project1 = create :project, title: "Apple Horse"
+    @resource1 = create :resource, title: "Horse Kitten"
+    @post1 = create :published_post, title: "Kitten Dog"
     @post2 = create :published_post, title: "Dog Elephant"
-    @draft = create :draft_post, title: "Bear bear"
+    @draft = create :draft_post, title: "Horse Horse"
     reindex_elasticsearch!
   end
 
@@ -15,7 +15,7 @@ class SearchTest < Capybara::Rails::TestCase
     visit root_path
 
     # searching from navbar
-    page.find(".test-navbar-search-input").set("bear")
+    page.find(".test-navbar-search-input").set("horse")
     page.find(".test-navbar-search-submit").click
     assert_path search_path
     assert_content @project1.title
@@ -27,7 +27,7 @@ class SearchTest < Capybara::Rails::TestCase
     assert_no_content @draft.title
 
     # searching from the results page form
-    page.find(".test-search-input").set("cat")
+    page.find(".test-search-input").set("kitten")
     page.find(".test-search-submit").click
     assert_content @post1.title
     assert_content @resource1.title

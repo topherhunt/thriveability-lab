@@ -1,0 +1,19 @@
+.list-row
+  %div{style: "float: left; width: 50px; height: 50px;"}
+    = link_to image_tag(project.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), project_path(project)
+  %div{style: "margin-left: 60px;"}
+    - if opts[:in_search]
+      .text-muted.small PROJECT
+    .nowrap.text-ellipsis
+      %span.h4= link_to project.title, project_path(project)
+    .nowrap.text-ellipsis.text-muted
+      = project.subtitle
+    .nowrap
+      - community = project.involved_users
+      - community.take(5).each do |user|
+        = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "width: 20px;"), user_path(user)
+      - if community.count > 5
+        = "+#{community.count - 5}"
+      &nbsp;
+      - project.tag_list.each do |name|
+        %span.label.label-default= name

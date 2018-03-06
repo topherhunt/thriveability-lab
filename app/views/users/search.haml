@@ -11,10 +11,4 @@
 
   .col-sm-8
     - @users.each do |user|
-      .list-row
-        = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
-        .user-text{style: "margin-left: 60px;"}
-          %span.h4= link_to user.full_name, user_path(user)
-          %div= user.tagline
-          - if user.location.present?
-            %div Based in #{user.location}
+      = render partial: "list_row", locals: {user: user, opts: {}}

@@ -15,19 +15,7 @@
       .col-sm-7
         %h3 Most popular
         - @most_popular_resources.each do |resource|
-          .list-row
-            %span.h4= link_to resource.title, resource_path(resource)
-            %div.nowrap.text-muted
-              = ellipsify(resource.description, 100)
-            %div.nowrap
-              %span.text-muted
-                = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)
-                Added on #{print_date(resource.created_at, abbreviated: true, year: true)}
-                &nbsp;
-              - resource.tag_list.each do |name|
-                = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
-              - resource.media_type_list.each do |name|
-                = link_to name, search_resources_path(media_types: name), class: "btn btn-default btn-xs"
+          = render partial: "list_row", locals: {resource: resource, opts: {}}
         %hr
         %p= link_to "See all", search_resources_path
 

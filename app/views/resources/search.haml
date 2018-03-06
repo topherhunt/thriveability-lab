@@ -10,17 +10,6 @@
     .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
       = image_tag "list_images/resources.jpg", style: "width: 100%;"
 
-  .col-sm-8
+  .col-md-8
     - @resources.each do |resource|
-      .list-row
-        %span.h4= link_to resource.title, resource_path(resource)
-        %div.nowrap= resource.description
-        %div.nowrap
-          %span.text-muted
-            = link_to image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(resource.creator)
-            Added on #{print_date(resource.created_at, abbreviated: true, year: true)}
-            &nbsp;
-          - resource.tag_list.each do |name|
-            = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
-          - resource.media_type_list.each do |name|
-            = link_to name, search_resources_path(media_types: name), class: "btn btn-default btn-xs"
+      = render partial: "list_row", locals: {resource: resource, opts: {}}
