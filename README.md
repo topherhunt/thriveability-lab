@@ -29,6 +29,13 @@ Sample commands:
 - `Project.__elasticsearch__.import(force: true)`
 - `Project.__elasticsearch__.search('psychology')`
 
+Reindex all content, e.g. after changing the indexed schema:
+```
+[Project, Post, Resource, User].each do |klass|
+  klass.__elasticsearch__.import(force: true)
+end
+```
+
 ## Tests
 
 I'm moving away from "full-coverage" integration tests. My current testing philosophy is:

@@ -22,7 +22,7 @@ class Searcher
             {term: {visible: true}}
           ],
           must: [
-            (@string.present? ? match_string_in_any_field : match_all_documents)
+            (@string.present? ? match_string : match_all_documents)
           ]
         }
       },
@@ -31,10 +31,11 @@ class Searcher
     }
   end
 
-  def match_string_in_any_field
+  def match_string
     {
       multi_match: {
         query: @string,
+        fields: SEARCHABLE_FIELDS,
         # :fields defaults to all. Don't set fields to ["*"], that's buggy.
         operator: "or", # defaults to "and". "or" is more permissive.
         fuzziness: "AUTO" # (default) allows near-matches.
