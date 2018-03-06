@@ -2,6 +2,7 @@
 # See https://github.com/laserlemon/figaro#required-keys
 
 Figaro.require_keys(
+  "BONSAI_URL",
   "HOSTNAME",
   "SUPPORT_EMAIL",
   "SMTP_HOST",
