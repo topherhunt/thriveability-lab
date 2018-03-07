@@ -108,6 +108,7 @@ class User < ActiveRecord::Base
       location: location,
       bio_interior: bio_interior,
       bio_exterior: bio_exterior,
+      interests: interests,
       visible: true
     }
   end
@@ -120,5 +121,28 @@ class User < ActiveRecord::Base
     if persisted? and encrypted_password_changed? and ! has_set_password?
       self.has_set_password = true
     end
+  end
+
+  # TODO: Cache this for performance, and figure out when to bust the cache.
+  def interests
+    interested_objects = [
+      projects.latest(2),
+      posts.published.latest(2).map(&:root),
+      created_resources.latest(2),
+      created_like_flags.latest(2).where("target_type != 'User'").map(&:target),
+      created_stay_informed_flags.latest(2).map(&:target),
+      created_get_involved_flags.latest(2).map(&:target),
+    ].map(&:to_a).flatten.uniq
+
+    tags_with_counts = interested_objects
+      .map { |object| object.try(:tag_list) || [] }
+      .flatten
+      .inject({}) { |hash, tag| hash[tag] ||= 0; hash[tag] += 1; hash }
+      .map { |tag, count| {tag: tag, count: count} }
+
+    tags_with_counts
+      .sort_by { |hash| -hash[:count] }
+      .take(3)
+      .map { |hash| hash[:tag] }
   end
 end
