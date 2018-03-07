@@ -9,8 +9,6 @@ $(function(){
     });
   });
 
-  $('.js-popover').popover(); // each popover's data attrs will specify options
-
   // TODO: Unperformant?
   $('.js-show-on-parent-hover').each(function(){
     $(this).hide();
