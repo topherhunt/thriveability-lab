@@ -9,10 +9,11 @@
       .form-group
         = label_tag "models", "Result types:", class: "col-sm-3 control-label"
         .col-sm-9
-          %select.js-chosen.js-trigger-search{name: "models", "data-placeholder": "Select some", multiple: true}
-            - Searcher::SEARCHABLE_MODELS.each do |model|
-              %option{value: model.to_s, selected: (@search_params[:models].include?(model))}
-                = model.to_s
+          %select.js-chosen.js-search-models-selector{"data-placeholder": "(All content)", multiple: true}
+            - Searcher::SEARCHABLE_MODELS.map(&:to_s).each do |model|
+              %option{value: model, selected: (@search_params[:models].include?(model))}
+                = label_for_model(model)
+          = hidden_field_tag "models", @search_params[:models].join(","), class: "js-search-models-target"
       .row
         .col-sm-3
         .col-sm-9

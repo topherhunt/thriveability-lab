@@ -1,5 +1,5 @@
 class Searcher
-  SEARCHABLE_MODELS = [Post, Project, Resource, User]
+  SEARCHABLE_MODELS = [User, Project, Post, Resource]
   SEARCHABLE_FIELDS = ["full_name^3", "title^3", "tagline^1.5", "subtitle^1.5", "description", "location", "bio_interior", "bio_exterior", "current_url", "source_name", "tags", "published_content", "author_name", "descendants^0.5", "introduction", "stage"]
 
   def initialize(string:, models: nil, from: 0, size: 100)

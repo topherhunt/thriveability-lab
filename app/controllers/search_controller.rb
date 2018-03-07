@@ -9,7 +9,7 @@ class SearchController < ApplicationController
     ).run
     @search_params = {
       query: params[:query],
-      models: models_to_search
+      models: models_to_search.map(&:to_s)
     }
   end
 
@@ -21,9 +21,19 @@ class SearchController < ApplicationController
 
   def models_to_search
     searchable_model_names = Searcher::SEARCHABLE_MODELS.map(&:to_s)
-    params[:models].to_s.split(",")
+    param_as_array(params[:models])
       .select { |name| name.in?(searchable_model_names) }
       .map(&:constantize)
+  end
+
+  def param_as_array(param)
+    if param.is_a?(Array)
+      param
+    elsif param.is_a?(String)
+      param.split(",")
+    else
+      []
+    end
   end
 
   def page
