@@ -64,7 +64,7 @@ class SearcherTest < ActiveSupport::TestCase
     end
   end
 
-  test "SEARCHABLE_FIELDS contains a list of all indexed fields" do
+  it "SEARCHABLE_FIELDS contains a list of all indexed fields" do
     known_fields = Searcher::SEARCHABLE_FIELDS.map { |f| f.sub(/[\^\d\.]+/, "") }
     known_but_ignored = ["visible", "owner"]
 

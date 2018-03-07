@@ -33,6 +33,7 @@ class Resource < ActiveRecord::Base
       current_url: current_url,
       source_name: source_name,
       tags: tag_list.join(", "),
+      media_types: media_type_list.join(", "),
       visible: true
     }
   end
