@@ -11,6 +11,6 @@
       = resource.description
     .nowrap
       - resource.tag_list.each do |name|
-        %span.label.label-default= name
+        = link_to name, search_path(query: name), class: "label label-default"
       - resource.media_type_list.each do |name|
-        %span.label.label-default= name
+        = link_to name, search_path(query: name), class: "label label-default"

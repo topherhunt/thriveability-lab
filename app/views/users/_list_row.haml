@@ -13,4 +13,4 @@
         %span.text-muted Based in #{user.location}
       &nbsp;
       - user.interests.each do |name|
-        %span.label.label-default= name
+        = link_to name, search_path(query: name), class: "label label-default"

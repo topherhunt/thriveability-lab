@@ -29,6 +29,9 @@ class SearchControllerTest < ActionController::TestCase
       "#{record.class} #{record.id}"
     end
 
+    # TODO: There's no need to do ElasticSearch indexing here. We should stub out
+    # the Searcher module instead.
+
     it "lists all matching results" do
       user1 = create :user, first_name: "Bear", last_name: "McCreary"
       project1 = create :project, title: "Apple Bear"
