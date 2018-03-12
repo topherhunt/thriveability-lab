@@ -21,6 +21,10 @@
 
   %h4 #{@search.results.total} results
 
+  - if @page > 1 and @last_page > 1
+    = render partial: "pagination"
+    .blank-space
+
   - @search.records.each do |record|
     .test-search-result
       - case record.class.to_s
@@ -34,3 +38,7 @@
         = render partial: "resources/list_row", locals: {resource: record, opts: {in_search: true}}
       - else
         - raise "Don't know how to render search result of class #{record.class}!"
+
+  - if @last_page > 1
+    .blank-space
+    = render partial: "pagination"

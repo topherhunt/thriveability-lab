@@ -59,16 +59,16 @@ class SearchControllerTest < ActionController::TestCase
       assert_not_shown([project])
     end
 
-    it "limits to the first 20 results" do
+    it "limits to the first 10 results" do
       create_list :user, 26
       Searcher.rebuild_es_index!
 
       get :search, query: ""
-      assert_select "div.test-search-result", count: 20
+      assert_select "div.test-search-result", count: 10
     end
 
     it "can return the requested page of results" do
-      create_list :user, 26
+      create_list :user, 16
       Searcher.rebuild_es_index!
 
       total_num_records = Searcher.new(string: "").run.records.count

@@ -25,6 +25,7 @@
         - @users.in_groups(2) do |group|
           .col-sm-6
             - group.each do |user|
+              - next unless user
               = render partial: "users/list_row", locals: {user: user, opts: {}}
       = link_to "+ #{User.count - @users.count} more", users_path
     .col-sm-3
@@ -45,6 +46,7 @@
         - @projects.in_groups(2) do |group|
           .col-sm-6
             - group.each do |project|
+              - next unless project
               = render partial: "projects/list_row", locals: {project: project, opts: {}}
       = link_to "+ #{Project.count - @projects.count} more", projects_path
 
@@ -61,6 +63,7 @@
         - @posts.in_groups(2) do |group|
           .col-sm-6
             - group.each do |post|
+              - next unless post
               = render partial: "posts/list_row", locals: {post: post, opts: {}}
       = link_to "+ #{Post.roots.count - @posts.count} more", posts_path
     .col-sm-3
@@ -81,5 +84,6 @@
         - @resources.in_groups(2) do |group|
           .col-sm-6
             - group.each do |resource|
+              - next unless resource
               = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
       = link_to "+ #{Resource.count - @resources.count} more", resources_path

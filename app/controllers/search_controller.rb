@@ -1,16 +1,20 @@
 class SearchController < ApplicationController
 
+  PER_PAGE = 10
+
   def search
     @search = Searcher.new(
       string: query,
       models: models_to_search,
-      from: ((page-1) * 20),
-      size: 20
+      from: ((page-1) * PER_PAGE),
+      size: PER_PAGE
     ).run
     @search_params = {
       query: params[:query],
       models: models_to_search.map(&:to_s)
     }
+    @page = page
+    @last_page = (@search.results.total * 1.0 / PER_PAGE).ceil
   end
 
   private

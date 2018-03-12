@@ -1,5 +1,9 @@
 $(function(){
 
+  $('a[disabled]').click(function(e){
+    e.preventDefault();
+  });
+
   $('.js-tooltip').each(function(){
     var target = $(this);
     target.tooltip({
