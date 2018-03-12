@@ -30,9 +30,10 @@
           = render partial: "layouts/notifications_menu"
           %li.dropdown
             %a.dropdown-toggle{'data-toggle' => 'dropdown'}
-              = current_user.email
+              = image_tag(current_user.image.url(:thumb), class: "img-circle", style: "width: 20px; margin-top: -3px;")
               %span.caret
             %ul.dropdown-menu
+              %li.dropdown-header= current_user.full_name
               %li= link_to "My Profile", user_path(current_user)
               %li= link_to "Account settings", edit_user_registration_path
               %li= link_to "Log out", destroy_user_session_path, method: :delete, class: "text-danger"

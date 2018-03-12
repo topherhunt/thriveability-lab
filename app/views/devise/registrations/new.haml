@@ -5,9 +5,19 @@
 
     .row.row-padded
       .col-sm-4
+        = f.label :first_name
+        = required
+      .col-sm-8= f.text_field :first_name, autofocus: true, class: "form-control"
+    .row.row-padded
+      .col-sm-4
+        = f.label :last_name
+        = required
+      .col-sm-8= f.text_field :last_name, class: "form-control"
+    .row.row-padded
+      .col-sm-4
         = f.label :email
         = required
-      .col-sm-8= f.email_field :email, autofocus: true, class: "form-control"
+      .col-sm-8= f.email_field :email, class: "form-control"
     .row.row-padded
       .col-sm-4
         = f.label :password

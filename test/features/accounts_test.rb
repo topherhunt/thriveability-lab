@@ -7,6 +7,8 @@ class AccountsTest < Capybara::Rails::TestCase
     # user registration
     assert_equals 0, User.count
     click_on "Sign up"
+    fill_in "user_first_name",            with: "Elmer"
+    fill_in "user_last_name",             with: "Fudd"
     fill_in "user_email",                 with: "elmer.fudd@gmail.com"
     fill_in "user_password",              with: "foobar01"
     fill_in "user_password_confirmation", with: "foobar01"
