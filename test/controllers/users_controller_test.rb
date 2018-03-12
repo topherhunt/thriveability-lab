@@ -7,6 +7,14 @@ class UsersControllerTest < ActionController::TestCase
   tests UsersController
 
   context "#show" do
-    it "works"
+    it "renders the user profile correctly" do
+      user = create :user
+      create :project, owner: user
+      create :published_post, author: user
+      create :resource, creator: user
+
+      get :show, id: user.id
+      assert_content user.full_name
+    end
   end
 end

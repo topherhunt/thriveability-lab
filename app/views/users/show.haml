@@ -45,21 +45,18 @@
     .col-sm-4
       %h4 Projects
       - @projects.each do |project|
-        .well.well-sm
-          = render partial: "shared/cards/project", locals: {project: project}
+        = render partial: "projects/list_row", locals: {project: project, opts: {in_search: true}}
 
   - if @resources.any? or true
     .col-sm-4
       %h4 Resources
       - @resources.each do |resource|
-        .well.well-sm
-          = render partial: "shared/cards/resource", locals: {resource: resource}
+        = render partial: "resources/list_row", locals: {resource: resource, opts: {in_search: true}}
 
   - if @posts.any? or true
     .col-sm-4
       %h4 Discussions
       - @posts.each do |post|
-        .well.well-sm
-          = render partial: "shared/cards/post", locals: {post: post.root}
+        = render partial: "posts/list_row", locals: {post: post.root, opts: {in_search: true}}
       - if @count_drafts and @count_drafts > 0
         %p= link_to "#{pluralize @count_drafts, "draft"}", drafts_posts_path, class: "btn btn-default"
