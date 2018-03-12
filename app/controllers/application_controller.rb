@@ -38,8 +38,29 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def requester_is_robot?
+    ["AhrefsBot", "DotBot", "Googlebot"]
+      .any? { |string| string.in?(request.env['HTTP_USER_AGENT'] || '') }
+  end
+
   rescue_from ActionController::InvalidAuthenticityToken do
     session[:return_to] = request.referer
     redirect_to new_user_session_path, alert: "You must be logged in to take that action."
+  end
+
+  rescue_from ActionController::RoutingError do |e|
+    if requester_is_robot?
+      render nothing: true, status: 404
+    else
+      raise e
+    end
+  end
+
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    if requester_is_robot?
+      render nothing: true, status: 404
+    else
+      raise e
+    end
   end
 end
