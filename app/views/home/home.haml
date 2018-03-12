@@ -15,59 +15,71 @@
   %h2.text-center Integral Climate is...
 
   .row
-    .col-sm-7
+    .col-sm-9
       %h3.text-center People working towards sustainability
-    .col-sm-5
+    .col-sm-3
       / spacer above image
   .row
-    .col-sm-7
-      - @users.each do |user|
-        = render partial: "users/list_row", locals: {user: user, opts: {}}
-      = link_to "+ #{User.count - @users.count} more", users_path, class: "btn btn-default"
-    .col-sm-5
+    .col-sm-9
+      .row
+        - @users.in_groups(2) do |group|
+          .col-sm-6
+            - group.each do |user|
+              = render partial: "users/list_row", locals: {user: user, opts: {}}
+      = link_to "+ #{User.count - @users.count} more", users_path
+    .col-sm-3
       = image_tag "homepage/people1.jpg", style: "width: 100%;", class: "hidden-xs"
 
   .blank-space
 
   .row
-    .col-sm-5
+    .col-sm-3
       / spacer above image
-    .col-sm-7
+    .col-sm-9
       %h3.text-center Projects for meaningful change
   .row
-    .col-sm-5
+    .col-sm-3
       = image_tag "homepage/projects1.jpg", style: "width: 100%;", class: "hidden-xs"
-    .col-sm-7
-      - @projects.each do |project|
-        = render partial: "projects/list_row", locals: {project: project, opts: {}}
-      = link_to "+ #{Project.count - @projects.count} more", projects_path, class: "btn btn-default"
+    .col-sm-9
+      .row
+        - @projects.in_groups(2) do |group|
+          .col-sm-6
+            - group.each do |project|
+              = render partial: "projects/list_row", locals: {project: project, opts: {}}
+      = link_to "+ #{Project.count - @projects.count} more", projects_path
 
   .blank-space
 
   .row
-    .col-sm-7
+    .col-sm-9
       %h3.text-center A space for generative dialogue
-    .col-sm-5
+    .col-sm-3
       / spacer above image
   .row
-    .col-sm-7
-      - @posts.each do |post|
-        = render partial: "posts/list_row", locals: {post: post, opts: {}}
-      = link_to "+ #{Post.roots.count - @posts.count} more", posts_path, class: "btn btn-default"
-    .col-sm-5
+    .col-sm-9
+      .row
+        - @posts.in_groups(2) do |group|
+          .col-sm-6
+            - group.each do |post|
+              = render partial: "posts/list_row", locals: {post: post, opts: {}}
+      = link_to "+ #{Post.roots.count - @posts.count} more", posts_path
+    .col-sm-3
       = image_tag "homepage/conversations1.jpg", style: "width: 100%;", class: "hidden-xs"
 
   .blank-space
 
   .row
-    .col-sm-5
+    .col-sm-3
       / spacer above image
-    .col-sm-7
+    .col-sm-9
       %h3.text-center A growing library of tools and resources
   .row
-    .col-sm-5
+    .col-sm-3
       = image_tag "homepage/resources1.jpg", style: "width: 100%;", class: "hidden-xs"
-    .col-sm-7
-      - @resources.each do |resource|
-        = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
-      = link_to "+ #{Resource.count - @resources.count} more", resources_path, class: "btn btn-default"
+    .col-sm-9
+      .row
+        - @resources.in_groups(2) do |group|
+          .col-sm-6
+            - group.each do |resource|
+              = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
+      = link_to "+ #{Resource.count - @resources.count} more", resources_path
