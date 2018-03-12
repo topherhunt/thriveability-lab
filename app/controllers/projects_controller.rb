@@ -11,12 +11,6 @@ class ProjectsController < ApplicationController
       .sort_by(&:name)
   end
 
-  def search
-    @projects = Project.all.order("updated_at DESC")
-    @filters = params.slice(:tags)
-    @projects = @projects.tagged_with(@filters[:tags]) if @filters[:tags].present?
-  end
-
   def new
     @project = Project.new
   end

@@ -5,7 +5,8 @@
     %p
       - unless user_signed_in?
         = link_to "Join the community", new_user_registration_path, class: "test-signup-button btn btn-success"
-      = link_to "All people", search_users_path, class: "test-all-users-button btn btn-primary"
+
+    = render partial: "shared/simple_search_form", locals: {model_name: "User"}
 
     .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
       = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
@@ -17,7 +18,7 @@
         - @most_active_users.each do |user|
           = render partial: "list_row", locals: {user: user, opts: {}}
         %hr
-        %p= link_to "See all", search_users_path
+        %p= link_to "See all", search_path(models: "User")
 
       .col-sm-5
         %h3 Recent activity

@@ -6,10 +6,6 @@ class UsersController < ApplicationController
     @recent_events = Event.latest(5)
   end
 
-  def search
-    @users = User.where("first_name IS NOT NULL OR last_name IS NOT NULL").order("updated_at DESC")
-  end
-
   def show
     @user = User.find(params[:id])
     @projects = @user.projects.latest(5)

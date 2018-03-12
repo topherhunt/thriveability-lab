@@ -18,36 +18,6 @@ class PostsControllerTest < ActionController::TestCase
     it "works"
   end
 
-  context "#search" do
-    setup do
-      @user1 = create(:user)
-      @user2 = create(:user)
-      @post1 = create(:published_post, author: @user1, tag_list: "apple, bear")
-      @post2 = create(:published_post, author: @user1, tag_list: "bear, cat")
-      @post3 = create(:published_post, author: @user2, tag_list: "apple, cat")
-      @post4 = create(:published_post, author: @user2, tag_list: "bear, apple, dog")
-      @draft = create(:draft_post, author: @user1, tag_list: "apple, bear")
-    end
-
-    it "lists all published content (no drafts)" do
-      get :search
-      assert_visible [@post1, @post2, @post3, @post4]
-      assert_not_visible [@draft]
-    end
-
-    it "allows filtering by tag and author" do
-      get :search, tags: "cat", author_id: @user1.id
-      assert_visible [@post2]
-      assert_not_visible [@post1, @post3, @post4]
-    end
-
-    it "allows filtering by multiple tags" do
-      get :search, tags: "bear, apple"
-      assert_visible [@post1, @post4]
-      assert_not_visible [@post2, @post3]
-    end
-  end
-
   context "#drafts" do
     it "lists my drafts (and nothing else)" do
       post1 = create :published_post, author: @user

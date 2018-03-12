@@ -5,7 +5,7 @@
     %p
       = link_to "Share a resource", new_resource_path, class: "test-new-resource-link btn btn-success"
 
-    = render partial: "search", locals: {filters: {}}
+    = render partial: "shared/simple_search_form", locals: {model_name: "Resource"}
 
     .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
       = image_tag "list_images/resources.jpg", style: "width: 100%;"
@@ -17,7 +17,7 @@
         - @most_popular_resources.each do |resource|
           = render partial: "list_row", locals: {resource: resource, opts: {}}
         %hr
-        %p= link_to "See all", search_resources_path
+        %p= link_to "See all", search_path(models: "Resource")
 
       .col-sm-5
         %h3 Recent activity
@@ -26,5 +26,5 @@
         %h3 Popular categories
         %div
           - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
-            = link_to "#{tag.name}", search_resources_path(tags: tag.name), class: "#{css_class}"
+            = link_to "#{tag.name}", search_path(query: tag.name, models: "Resource"), class: "#{css_class}"
             &nbsp;

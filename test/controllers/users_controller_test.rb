@@ -6,6 +6,10 @@ require "test_helper"
 class UsersControllerTest < ActionController::TestCase
   tests UsersController
 
+  context "#index" do
+    it "works"
+  end
+
   context "#show" do
     it "renders the user profile correctly" do
       user = create :user

@@ -12,13 +12,6 @@ class ResourcesController < ApplicationController
       .sort_by(&:name)
   end
 
-  def search
-    @resources = Resource.all.order("updated_at DESC").includes(:creator, :target)
-    @filters = params.slice(:tags, :media_types)
-    @resources = @resources.tagged_with(@filters[:tags]) if @filters[:tags].present?
-    @resources = @resources.tagged_with(@filters[:media_types]) if @filters[:media_types].present?
-  end
-
   def show
     @resource.viewings += 1
     @resource.save(validate: false)

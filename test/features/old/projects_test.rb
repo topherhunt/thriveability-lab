@@ -24,11 +24,12 @@ class ProjectsTest < Capybara::Rails::TestCase
     assert_equals "developing", @project.stage
   end
 
-  test "Visitor can browse and view existing projects" do
+  test "Visitor can explore existing projects" do
     @project2 = create(:project, quadrant_ul: "Because it's art")
     @project3 = create(:project)
 
-    visit search_projects_path
+    visit root_path
+    click_on "Projects"
     assert_content @project.title
     assert_content @project2.title
     assert_content @project3.title

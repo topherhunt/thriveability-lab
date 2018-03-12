@@ -15,14 +15,6 @@ class PostsController < ApplicationController
       .order(:first_name)
   end
 
-  def search
-    @posts = Post.roots.published.order("published_at DESC")
-    @authors = User.where(id: @posts.pluck(:author_id).uniq).order(:first_name)
-    @filters = params.slice(:author_id, :tags)
-    filter_posts
-    @my_drafts_count = current_user.posts.roots.draft.count if current_user
-  end
-
   def drafts
     # TODO: Consider also listing non-root (comment reply) Posts here. The trick is how to link back to the context...
     @drafts = Post.roots.draft.where(author: current_user).order("created_at DESC")
@@ -152,15 +144,6 @@ class PostsController < ApplicationController
   end
 
   # === Mutators ===
-
-  def filter_posts
-    if @filters[:author_id].present?
-      @posts = @posts.where(author_id: @filters[:author_id])
-    end
-    if @filters[:tags].present?
-      @posts = @posts.tagged_with(@filters[:tags])
-    end
-  end
 
   # Need to set some publish-related values prior to running validations
   def prepare_publishable_post_for_validation

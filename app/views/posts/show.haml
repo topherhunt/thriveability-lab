@@ -11,7 +11,7 @@
     %p
       Tags:
       - @post.tag_list.each do |name|
-        = link_to name, search_posts_path(tags: name), class: "btn btn-xs btn-default"
+        = link_to name, search_path(query: name), class: "btn btn-xs btn-default"
 
   %hr
   = sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
