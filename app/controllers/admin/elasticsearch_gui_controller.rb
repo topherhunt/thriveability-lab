@@ -7,8 +7,6 @@ class Admin::ElasticsearchGuiController < ApplicationController
 
   def query
     begin
-      # results = Elasticsearch::Model.search(params[:query], [Post, Project, Resource, User])
-      client = Elasticsearch::Client.new(log: true)
       response = client.search({
         index: params[:indexes],
         body: params[:query]
@@ -26,8 +24,11 @@ class Admin::ElasticsearchGuiController < ApplicationController
 
   private
 
+  def client
+    Elasticsearch::Model.client
+  end
+
   def all_indexes
-    client = Elasticsearch::Client.new(log: true)
     response = client.perform_request('GET', '_aliases')
     response.as_json['body'].keys.sort
   rescue => e
