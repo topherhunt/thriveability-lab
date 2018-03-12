@@ -16,7 +16,7 @@ class SearcherTest < ActiveSupport::TestCase
       @post2 = create :published_post, title: "My study of Omnivores"
       @draft = create :draft_post
       @comment = create :published_post, parent: @post2
-      reindex_elasticsearch!
+      Searcher.rebuild_es_index!
     end
 
     it "searches across all indexed models by default" do

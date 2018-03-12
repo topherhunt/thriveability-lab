@@ -8,7 +8,7 @@ class SearchTest < Capybara::Rails::TestCase
     @post1 = create :published_post, title: "Kitten Dog"
     @post2 = create :published_post, title: "Dog Elephant"
     @draft = create :draft_post, title: "Horse Horse"
-    reindex_elasticsearch!
+    Searcher.rebuild_es_index!
   end
 
   test "search interface works" do

@@ -41,7 +41,7 @@ class SearchControllerTest < ActionController::TestCase
       project2 = create :project
       resource2 = create :resource
       post2 = create :published_post
-      reindex_elasticsearch!
+      Searcher.rebuild_es_index!
 
       get :search, query: "bear"
       assert_shown([user1, project1, resource1, post1])
@@ -52,7 +52,7 @@ class SearchControllerTest < ActionController::TestCase
       user = create :user
       project = create :project
       resource = create :resource
-      reindex_elasticsearch!
+      Searcher.rebuild_es_index!
 
       get :search, query: "", models: "User,Resource"
       assert_shown([user, resource])
@@ -61,7 +61,7 @@ class SearchControllerTest < ActionController::TestCase
 
     it "limits to the first 20 results" do
       create_list :user, 26
-      reindex_elasticsearch!
+      Searcher.rebuild_es_index!
 
       get :search, query: ""
       assert_select "div.test-search-result", count: 20
@@ -69,7 +69,7 @@ class SearchControllerTest < ActionController::TestCase
 
     it "can return the requested page of results" do
       create_list :user, 26
-      reindex_elasticsearch!
+      Searcher.rebuild_es_index!
 
       total_num_records = Searcher.new(string: "").run.records.count
       get :search, query: "", page: 2

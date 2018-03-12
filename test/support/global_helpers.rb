@@ -23,16 +23,4 @@ class ActiveSupport::TestCase
       .gsub(/\s+/, ' ')
     assert_includes(haystack_text, needle)
   end
-
-  def reindex_elasticsearch!
-    unless `ps aux | grep elasticsearch | grep java | grep -v grep`.present?
-      raise "`elasticsearch` doesn't seem to be running. Start it before running this test."
-    end
-
-    [Project, Post, Resource, User].each do |klass|
-      klass.__elasticsearch__.import(force: true)
-    end
-
-    sleep 2 # Give ES time to finish indexing
-  end
 end
