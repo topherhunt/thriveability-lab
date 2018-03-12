@@ -1,6 +1,6 @@
 class Searcher
   SEARCHABLE_MODELS = [User, Project, Post, Resource]
-  SEARCHABLE_FIELDS = ["full_name^3", "title^3", "tagline^1.5", "subtitle^1.5", "interests", "description", "location", "bio_interior", "bio_exterior", "current_url", "source_name", "tags", "media_types", "published_content", "author_name", "descendants^0.5", "introduction", "stage"]
+  SEARCHABLE_FIELDS = ["full_name^3", "title^3", "tagline^1.5", "subtitle^1.5", "interests", "description", "location", "bio_interior", "bio_exterior", "current_url", "source_name", "tags", "media_types", "published_content", "author_name", "owner", "descendants^0.5", "introduction", "stage"]
 
   def self.rebuild_es_index!
     unless `ps aux | grep elasticsearch | grep java | grep -v grep`.present?
