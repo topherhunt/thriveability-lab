@@ -16,7 +16,7 @@
 
   .row
     .col-sm-6
-      %h3.text-center People working towards sustainability
+      %h3 People working towards sustainability
       .row
         .col-sm-9
           - @users.each do |user|
@@ -25,7 +25,7 @@
         .col-sm-3
           = image_tag "homepage/people1.jpg", style: "width: 100%;", class: "hidden-xs"
     .col-sm-6
-      %h3.text-center Projects for meaningful change
+      %h3 Projects for meaningful change
       .row
         .col-sm-9
           - @projects.each do |project|
@@ -36,7 +36,7 @@
   .blank-space
   .row
     .col-sm-6
-      %h3.text-center A space for generative dialogue
+      %h3 A space for generative dialogue
       .row
         .col-sm-9
           - @posts.each do |post|
@@ -45,7 +45,7 @@
         .col-sm-3
           = image_tag "homepage/conversations1.jpg", style: "width: 100%;", class: "hidden-xs"
     .col-sm-6
-      %h3.text-center A growing library of tools and resources
+      %h3 Resources for impact-makers
       .row
         .col-sm-9
           - @resources.each do |resource|
