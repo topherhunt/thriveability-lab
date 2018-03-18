@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
   def requester_is_robot?
     ["AhrefsBot", "DotBot", "Googlebot"]
-      .any? { |string| string.in?(request.env['HTTP_USER_AGENT'] || '') }
+      .any? { |string| string.in?(request.user_agent || '') }
   end
 
   rescue_from ActionController::InvalidAuthenticityToken do
@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
     if requester_is_robot?
       render nothing: true, status: 404
     else
+      Rails.logger.warn "Got ActionController::RoutingError from an unknown useragent. The useragent: #{request.user_agent.inspect}"
       raise e
     end
   end
@@ -54,6 +55,7 @@ class ApplicationController < ActionController::Base
     if requester_is_robot?
       render nothing: true, status: 404
     else
+      Rails.logger.warn "Got ActiveRecord::RecordNotFound from an unknown useragent. The useragent: #{request.user_agent.inspect}"
       raise e
     end
   end
