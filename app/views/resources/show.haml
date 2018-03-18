@@ -26,14 +26,14 @@
     %tr
       %th Tags
       %td
-        - @resource.tag_list.each do |name|
-          = link_to name, search_resources_path(tags: name), class: "btn btn-default btn-xs"
+        - @resource.tag_list.each do |tag|
+          = link_to tag, search_path(models: "Resource", query: tag), class: "btn btn-default btn-xs"
 
     %tr
       %th Media type
       %td
-        - @resource.media_type_list.each do |name|
-          = link_to name, search_resources_path(media_types: name)
+        - @resource.media_type_list.each do |tag|
+          = link_to tag, search_path(models: "Resource", query: tag)
           &nbsp;
 
     - if @resource.attachment_file_name.present?
