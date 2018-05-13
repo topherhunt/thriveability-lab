@@ -10,6 +10,12 @@
 
     = render partial: "shared/simple_search_form", locals: {model_name: "Post"}
 
+    .alert.alert-info{style: "margin-top: 20px;"}
+      %p
+        %span.h3 #{fa_icon("bullhorn")} Got something to say?
+      %p This site is about connecting minds and ideas to spark meaningful change. We want as many people as possible to benefit from your experience! Consider writing a Medium article on what you've learned, then adding a link here so fellow Integral Hubbers can find it.
+      %p= link_to fa_icon("pencil") + " Start writing your story", "https://medium.com/new-story", target: "_blank", class: "btn btn-primary"
+
     .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
       = image_tag "list_images/conversations.jpg", style: "width: 100%;"
 
