@@ -14,6 +14,8 @@ class Message < ActiveRecord::Base
   # Project is NOT required
   validates_presence_of :subject
   validates_presence_of :body
+  validates :subject, length: {maximum: 100}
+  validates :body, length: {maximum: 1000}
 
   def full_subject
     "New message from #{sender.full_name}: \"#{subject}\""

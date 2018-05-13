@@ -22,11 +22,14 @@ class User < ActiveRecord::Base
          omniauth_providers: [:facebook, :google_oauth2, :linkedin]
 
   # See https://github.com/thoughtbot/paperclip#quick-start
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, presence: true, length: {maximum: 100}
+  validates :last_name, presence: true, length: {maximum: 100}
+  validates :email, length: {maximum: 100}
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
     default_url: "/missing_user.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+  validates :bio_interior, length: {maximum: 1000}
+  validates :bio_exterior, length: {maximum: 1000}
   validates :tagline, length: { maximum: 120 }
   validates :location, length: { maximum: 255 }
 

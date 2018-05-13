@@ -26,9 +26,15 @@ class Project < ActiveRecord::Base
   validates_presence_of :subtitle
   validates_presence_of :stage
 
-  validates :title, length: { maximum: 255 }
-  validates :subtitle, length: { maximum: 255 }
-  validates :location, length: { maximum: 255 }
+  validates :title, length: {maximum: 255}
+  validates :subtitle, length: {maximum: 255}
+  validates :introduction, length: {maximum: 2000}
+  validates :location, length: {maximum: 255}
+  validates :quadrant_ul, length: {maximum: 1000}
+  validates :quadrant_ur, length: {maximum: 1000}
+  validates :quadrant_ll, length: {maximum: 1000}
+  validates :quadrant_lr, length: {maximum: 1000}
+  validates :call_to_action, length: {maximum: 1000}
   validates :stage, inclusion: { in: STAGES }
 
   def self.most_popular(n)

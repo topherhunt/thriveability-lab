@@ -15,9 +15,11 @@ class Resource < ActiveRecord::Base
 
   scope :latest, ->(n) { order("created_at DESC").limit(n) }
 
-  validates :title, presence: true
-  validates :source_name, presence: true
-  validates :description, presence: true
+  validates :title, presence: true, length: {maximum: 255}
+  validates :description, presence: true, length: {maximum: 1000}
+  validates :current_url, length: {maximum: 255}
+  validates :source_name, presence: true, length: {maximum: 100}
+  validates :relevant_to, length: {maximum: 255}
   validate :require_ownership_if_uploaded
 
   has_attached_file :attachment
