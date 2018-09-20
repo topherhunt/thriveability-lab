@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:title, :subtitle, :introduction, :location, :quadrant_ul, :quadrant_ur, :quadrant_ll, :quadrant_lr, :call_to_action, :stage, :image, :tag_list, :need_list)
+    params.require(:project).permit(:title, :subtitle, :partners, :video_url, :image, :desired_impact, :contribution_to_world, :location_of_home, :location_of_impact, :stage, :help_needed, :q_background, :q_meaning, :q_community, :q_goals, :q_how_make_impact, :q_how_measure_impact, :q_potential_barriers, :q_project_assets, :q_larger_vision)
   end
 
   def load_project

@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
   include Elasticsearch::Model::Callbacks
   __elasticsearch__.index_name("ic-#{Rails.env}-projects")
 
-  STAGES = ["idea", "developing", "mature"]
+  STAGES = ["idea", "developing", "< 1 year", "1-5 years", "5-10 years", "> 10 years"]
 
   belongs_to :owner, class_name: 'User'
   has_many :resources, as: :target
@@ -16,26 +16,33 @@ class Project < ActiveRecord::Base
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
   acts_as_taggable_on :tags
 
+  validates :owner, presence: true
+  validates :title, presence: true, length: {maximum: 100}
+  validates :subtitle, presence: true, length: {maximum: 255}
+  validates :partners, length: {maximum: 500}
+  validates :video_url, length: {maximum: 255}
+  validate :video_url_is_youtube
+  validates :image_file_name, presence: true, length: {maximum: 255}
+  validates :desired_impact, presence: true, length: {maximum: 500}
+  validates :contribution_to_world, presence: true, length: {maximum: 500}
+  validates :location_of_home, presence: true, length: {maximum: 100}
+  validates :location_of_impact, presence: true, length: {maximum: 100}
+  validates :stage, presence: true, inclusion: { in: STAGES }
+  validates :help_needed, length: {maximum: 500}
+  validates :q_background, length: {maximum: 500}
+  validates :q_meaning, length: {maximum: 500}
+  validates :q_community, length: {maximum: 500}
+  validates :q_goals, length: {maximum: 500}
+  validates :q_how_make_impact, length: {maximum: 500}
+  validates :q_how_measure_impact, length: {maximum: 500}
+  validates :q_potential_barriers, length: {maximum: 500}
+  validates :q_project_assets, length: {maximum: 500}
+  validates :q_larger_vision, length: {maximum: 500}
+
   # See https://github.com/thoughtbot/paperclip#quick-start
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
     default_url: "/missing_project.png"
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-
-  validates_presence_of :owner
-  validates_presence_of :title
-  validates_presence_of :subtitle
-  validates_presence_of :stage
-
-  validates :title, length: {maximum: 255}
-  validates :subtitle, length: {maximum: 255}
-  validates :introduction, length: {maximum: 2000}
-  validates :location, length: {maximum: 255}
-  validates :quadrant_ul, length: {maximum: 1000}
-  validates :quadrant_ur, length: {maximum: 1000}
-  validates :quadrant_ll, length: {maximum: 1000}
-  validates :quadrant_lr, length: {maximum: 1000}
-  validates :call_to_action, length: {maximum: 1000}
-  validates :stage, inclusion: { in: STAGES }
 
   def self.most_popular(n)
     # TODO: This triggers N+1 queries.
@@ -57,6 +64,12 @@ class Project < ActiveRecord::Base
       tags: tag_list.join(", "),
       visible: true
     }
+  end
+
+  def video_url_is_youtube
+    if video_url and !video_url.match(/youtube\.com|youtu\.be/)
+      errors.add(:video_url, "must be a YouTube video URL (for now)")
+    end
   end
 
   def involved_users

@@ -1,64 +1,162 @@
+%p Please tell us about your project!
+%p The foundational questions are required, and aim to help you articulate the most relevant information about your project in a succinct way.
+%p The deepening questions are optional, allowing you to share more, and potentially rethink or clarify (elements of) your project.
+
 = form_for(@project, html: { style: "max-width: 800px;" }) do |f|
   = show_errors_for @project
+
+  %h3 Foundational Questions <span class="text-danger">(required)</span>
 
   .row.row-padded
     .col-sm-3
       = f.label :title
       = required
-    .col-sm-9= f.text_field :title, class: "form-control"
+      .hint.small Choose a clear & catchy project title!
+    .col-sm-9
+      = f.text_field :title, class: "form-control"
+      = warn_of_length_limit("#project_title", 100)
   .row.row-padded
     .col-sm-3
       = f.label :subtitle
       = required
-      .hint.small A one-line description of this project's mission
-    .col-sm-9= f.text_field :subtitle, class: "form-control"
-  .row.row-padded
-    .col-sm-3= f.label :image
-    .col-sm-9= f.file_field :image, class: "form-control"
-  .row.row-padded
-    .col-sm-3
-      = f.label :introduction
-      .hint.small In a few sentences, what do you want the world to know about this project?
-    .col-sm-9= f.text_area :introduction, class: "form-control"
+      .hint.small Describe in one line the central purpose of this project
+    .col-sm-9
+      = f.text_field :subtitle, class: "form-control"
+      = warn_of_length_limit("#project_subtitle", 255)
   .row.row-padded
     .col-sm-3
-      = f.label :location, "Where is it based?"
-      %br
-      .hint.small eg. Chico, CA
-    .col-sm-9= f.text_field :location, class: "form-control"
+      = f.label :partners, "Project partners and/or partnering organizations"
+      .hint.small Here you can include the people or organizations you are collaborating with
+    .col-sm-9
+      = f.text_area :partners, class: "form-control"
+      = warn_of_length_limit("#project_partners", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :stage
+      = f.label :video_url, "Short intro video"
+      .hint.small A short video tells your story in an engaging and personable way. Paste in a YouTube video link here and viewers will be able to watch that video on the project's page.
+    .col-sm-9
+      = f.text_field :video_url, class: "form-control"
+      = warn_of_length_limit("#project_video_url", 255)
+  .row.row-padded
+    .col-sm-3
+      = f.label :image, "Image"
       = required
-    .col-sm-9= f.select :stage, ["idea", "developing", "mature"], { include_blank: "- select one -" }, { class: "form-control" }
+      .hint.small Upload a cover photo for this project.
+    .col-sm-9
+      = f.file_field :image, class: "form-control"
+  .row.row-padded
+    .col-sm-3
+      = f.label :desired_impact
+      .hint.small Briefly describe what you try to accomplish with this project. What is the (societal) problem you hope to contribute to? What is the kind of change or impact you strive for?
+    .col-sm-9
+      = f.text_area :desired_impact, class: "form-control"
+      = warn_of_length_limit("#project_desired_impact", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :contribution_to_world, "How does your project contribute to a more 'integral' (thriving) world?"
+      .hint.small How do your activities contribute to a more conscious, inclusive, sustainable, happy world?
+    .col-sm-9
+      = f.text_area :contribution_to_world, class: "form-control"
+      = warn_of_length_limit("#project_contribution_to_world", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :location_of_home, "Home base"
+      %br
+      .hint.small Out of which location, area, country, or region is the project being undertaken?
+    .col-sm-9
+      = f.text_field :location_of_home, class: "form-control"
+      = warn_of_length_limit("#project_title", 100)
+  .row.row-padded
+    .col-sm-3
+      = f.label :location_of_impact, "Zone of impact "
+      %br
+      .hint.small Which location, area, country, or region is the project trying to impact?
+    .col-sm-9
+      = f.text_field :location_of_impact, class: "form-control"
+      = warn_of_length_limit("#project_title", 100)
+  .row.row-padded
+    .col-sm-3
+      = f.label :stage, "Years in operation"
+      = required
+    .col-sm-9
+      = f.select :stage, Project::STAGES, { include_blank: "- select one -" }, { class: "form-control" }
+
   = render partial: "shared/edit_tags", locals: { form: f, object: @project }
 
   .row.row-padded
     .col-sm-3
-      = f.label :quadrant_ul, "What's your vision for this project?"
+      = f.label :help_needed, "What can others do to help?"
+      .hint.small Describe what forms of help you'd be grateful for! Other members may contact you in response to what you write here.
     .col-sm-9
-      = f.text_area :quadrant_ul, class: "form-control"
+      = f.text_area :help_needed, class: "form-control"
+      = warn_of_length_limit("#project_help_needed", 500)
+
+  %h3 Deepening questions (optional)
+
   .row.row-padded
     .col-sm-3
-      = f.label :quadrant_ur, "What are some concrete goals?"
+      = f.label :q_background, "What's the background of the project?"
+      .hint.small Give us the two-line origin story of your project! Is there a personal experience or history that made you create this project?
     .col-sm-9
-      = f.text_area :quadrant_ur, class: "form-control"
+      = f.text_area :q_background, class: "form-control"
+      = warn_of_length_limit("#project_q_background", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :quadrant_ll, "Who is taking part? Who will be affected?"
+      = f.label :q_meaning, "What is most meaningful or exciting to you about this project?"
+      .hint.small Why does it get you out of bed in the morning? What keeps you "on fire" for it?
     .col-sm-9
-      = f.text_area :quadrant_ll, class: "form-control"
+      = f.text_area :q_meaning, class: "form-control"
+      = warn_of_length_limit("#project_q_meaning", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :quadrant_lr, "What contexts or systems are you affected by?"
-      .hint.small (e.g., funding, legislation, institutions)
+      = f.label :q_community, "What is the community you are working for and/or with?"
+      .hint.small Who are affected by your project? Who is supporting your project?
     .col-sm-9
-      = f.text_area :quadrant_lr, class: "form-control"
+      = f.text_area :q_community, class: "form-control"
+      = warn_of_length_limit("#project_q_community", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :call_to_action, "What can others do to help?"
-      .hint.small Describe what forms of help you'd be grateful for. Other members may contact you in response to what you write here.
-    .col-sm-9= f.text_area :call_to_action, class: "form-control"
+      = f.label :q_goals, "What are your concrete goals?"
+      .hint.small What do you need to achieve – in tangible terms - for your project to be a success?
+    .col-sm-9
+      = f.text_area :q_goals, class: "form-control"
+      = warn_of_length_limit("#project_q_goals", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :q_how_make_impact, "How do you make impact, and what are the kinds of impacts you strive for? "
+      .hint.small How do your activities lead to results, and what are the impacts of those results on stakeholders or society as a whole? (The <a href="https://www.metaintegral.com/" target="_blank">MetaImpact framework</a> might be useful inspiration)
+    .col-sm-9
+      = f.text_area :q_how_make_impact, class: "form-control"
+      = warn_of_length_limit("#project_q_how_make_impact", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :q_how_measure_impact, "How do you measure your impact, either in quantitative or qualitative terms?"
+      .hint.small How do you measure or describe and report the (social) changes you aspire to? (The <a href="https://www.metaintegral.com/" target="_blank">MetaImpact framework</a> might be useful inspiration)
+    .col-sm-9
+      = f.text_area :q_how_measure_impact, class: "form-control"
+      = warn_of_length_limit("#project_q_how_measure_impact", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :q_potential_barriers, "What are potential barriers to your success? What needs attention or support? "
+      .hint.small In what ways do you think your project’s success could be hampered (e.g., having to do with funding, legislation, institutions, outreach)?
+    .col-sm-9
+      = f.text_area :q_potential_barriers, class: "form-control"
+      = warn_of_length_limit("#project_q_potential_barriers", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :q_project_assets, "What makes your project stand out? What assets may lead to success?"
+      .hint.small What is different, unique, or special about your project? How is your project different from similar projects?
+    .col-sm-9
+      = f.text_area :q_project_assets, class: "form-control"
+      = warn_of_length_limit("#project_q_project_assets", 500)
+  .row.row-padded
+    .col-sm-3
+      = f.label :q_larger_vision, "What's your larger (future) vision for this project?"
+      .hint.small What are your wildest aspirations for this project? Where do you hope it to be in five years?
+    .col-sm-9
+      = f.text_area :q_larger_vision, class: "form-control"
+      = warn_of_length_limit("#project_q_larger_vision", 500)
+
   .row.row-padded
     .col-sm-3
     .col-sm-9

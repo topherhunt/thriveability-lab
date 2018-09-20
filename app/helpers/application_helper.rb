@@ -26,6 +26,13 @@ module ApplicationHelper
     end
   end
 
+  def warn_of_length_limit(field_selector, max_length)
+    "<div class='js-length-limit-warning' data-target-field='#{field_selector}' data-max-length='#{max_length}'>
+      <div class='js-length-90pct text-warning js-hidden'>Close to the maximum length</div>
+      <div class='js-length-exceeded text-danger js-hidden'>Text is too long</div>
+    </div>".html_safe
+  end
+
   def required
     '<em class="small text-danger">required</em>'.html_safe
   end

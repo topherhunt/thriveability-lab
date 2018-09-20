@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102122821) do
+ActiveRecord::Schema.define(version: 20180612144602) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 20171102122821) do
     t.integer  "author_id"
     t.string   "title"
     t.text     "published_content"
-    t.string   "intention"
     t.boolean  "published",              default: false
     t.datetime "published_at"
     t.datetime "created_at"
@@ -134,13 +133,8 @@ ActiveRecord::Schema.define(version: 20171102122821) do
     t.integer  "owner_id"
     t.string   "title"
     t.string   "subtitle"
-    t.text     "introduction"
-    t.string   "location"
-    t.text     "quadrant_ul"
-    t.text     "quadrant_ur"
-    t.text     "quadrant_ll"
-    t.text     "quadrant_lr"
-    t.text     "call_to_action"
+    t.string   "location_of_home"
+    t.text     "help_needed"
     t.string   "stage"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -148,6 +142,20 @@ ActiveRecord::Schema.define(version: 20171102122821) do
     t.datetime "image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "partners"
+    t.string   "video_url"
+    t.text     "desired_impact"
+    t.text     "contribution_to_world"
+    t.text     "location_of_impact"
+    t.text     "q_background"
+    t.text     "q_meaning"
+    t.text     "q_community"
+    t.text     "q_goals"
+    t.text     "q_how_make_impact"
+    t.text     "q_how_measure_impact"
+    t.text     "q_potential_barriers"
+    t.text     "q_project_assets"
+    t.text     "q_larger_vision"
   end
 
   add_index "projects", ["owner_id"], name: "index_projects_on_owner_id", using: :btree
