@@ -31,9 +31,7 @@ class Post < ActiveRecord::Base
 
   validates :author,    presence: true
   validates :title,     length: { maximum: 255 }
-  validates :intention, length: { maximum: 255 }
   validates :title,     presence: true, if: :root_and_published?
-  validates :intention, presence: true, if: :root_and_published?
   validates :published_content, presence: true, if: :published?
 
   # The `published` column is somewhat redundant (if published, then published_content will be NOT NULL) but a boolean is much more efficient to query I think.

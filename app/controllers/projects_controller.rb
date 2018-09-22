@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
 
     if @project.save
       Event.register(current_user, "create", @project)
-      redirect_to project_path(@project), notice: "Your new project is now publicly listed."
+      redirect_to project_path(@project), notice: "Your project was added successfully!"
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "new"
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
-      redirect_to project_path(@project), notice: "Project updated."
+      redirect_to project_path(@project), notice: "Your project was updated successfully."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "edit"
@@ -43,10 +43,13 @@ class ProjectsController < ApplicationController
   def show
   end
 
+  def resources
+  end
+
   private
 
   def project_params
-    params.require(:project).permit(:title, :subtitle, :partners, :video_url, :image, :desired_impact, :contribution_to_world, :location_of_home, :location_of_impact, :stage, :help_needed, :q_background, :q_meaning, :q_community, :q_goals, :q_how_make_impact, :q_how_measure_impact, :q_potential_barriers, :q_project_assets, :q_larger_vision)
+    params.require(:project).permit(:title, :subtitle, :partners, :video_url, :image, :desired_impact, :contribution_to_world, :location_of_home, :location_of_impact, :stage, :tag_list, :help_needed, :q_background, :q_meaning, :q_community, :q_goals, :q_how_make_impact, :q_how_measure_impact, :q_potential_barriers, :q_project_assets, :q_larger_vision)
   end
 
   def load_project

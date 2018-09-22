@@ -38,6 +38,7 @@ class Project < ActiveRecord::Base
   validates :q_potential_barriers, length: {maximum: 500}
   validates :q_project_assets, length: {maximum: 500}
   validates :q_larger_vision, length: {maximum: 500}
+  validate :has_at_least_one_tag
 
   # See https://github.com/thoughtbot/paperclip#quick-start
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
@@ -55,21 +56,44 @@ class Project < ActiveRecord::Base
 
   def as_indexed_json(options={}) # ElasticSearch integration
     {
-      title: title,
-      subtitle: subtitle,
-      introduction: introduction,
-      stage: stage,
-      location: location,
       owner: owner.full_name,
       tags: tag_list.join(", "),
+      title: title,
+      subtitle: subtitle,
+      partners: partners,
+      desired_impact: desired_impact,
+      contribution_to_world: contribution_to_world,
+      location_of_home: location_of_home,
+      location_of_impact: location_of_impact,
+      stage: stage,
+      help_needed: help_needed,
+      q_background: q_background,
+      q_meaning: q_meaning,
+      q_community: q_community,
+      q_goals: q_goals,
+      q_how_make_impact: q_how_make_impact,
+      q_how_measure_impact: q_how_measure_impact,
+      q_potential_barriers: q_potential_barriers,
+      q_project_assets: q_project_assets,
+      q_larger_vision: q_larger_vision,
       visible: true
     }
   end
 
   def video_url_is_youtube
-    if video_url and !video_url.match(/youtube\.com|youtu\.be/)
+    if video_url.present? and !youtube_video_guid.present?
       errors.add(:video_url, "must be a YouTube video URL (for now)")
     end
+  end
+
+  def has_at_least_one_tag
+    if tag_list.empty?
+      errors.add(:tag_list, "must specify at least 1 tag")
+    end
+  end
+
+  def youtube_video_guid
+    video_url.match(/youtube\.com\/watch\?v=([^&]+)/)&.captures&.first
   end
 
   def involved_users

@@ -1,7 +1,7 @@
 require "test_helper"
 
 class AccountsTest < Capybara::Rails::TestCase
-  test "user registration & account management works" do
+  test "user can register an account, log in & out, and update their password" do
     visit root_path
 
     # user registration

@@ -18,7 +18,11 @@ FactoryGirl.define do
     association :owner, factory: :user
     title        { Faker::Lorem.words(3).join(" ").capitalize }
     subtitle     { Faker::Lorem.words(10).join(" ").capitalize }
-    introduction { Faker::Lorem.sentences(rand(1..4)).join(" ") }
+    desired_impact { Faker::Lorem.sentences(rand(1..4)).join(" ") }
+    contribution_to_world { Faker::Lorem.sentences(rand(1..4)).join(" ") }
+    location_of_home { Faker::Lorem.words(rand(2..3)).join(" ") }
+    location_of_impact { Faker::Lorem.words(rand(2..3)).join(" ") }
+    image_file_name "some_random_image.jpg"
     stage        { Project::STAGES.sample }
     tag_list     { PredefinedTag::PRESETS.sample(rand(0..3)) }
     created_at   { (rand * 400.0).days.ago }

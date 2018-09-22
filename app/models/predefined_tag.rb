@@ -1,5 +1,5 @@
 class PredefinedTag < ActiveRecord::Base
-  PRESETS = ["personal development & psychology", "organizational development", "community development", "culture & worldviews", "climate change", "education", "energy & resource management", "deforestation", "pollution", "politics", "activism", "science & research", "philosophy & metatheory", "spirituality"]
+  PRESETS = ["water / nature / agriculture", "mobility & energy", "food & drink", "health / lifestyle / wellbeing", "education & knowledge generation", "psychology & inner development", "culture & worldviews", "sharing & social movements", "business & organizational change", "politics & institutions", "law & order", "economy & jobs", "minorities & empowerment"]
 
   def self.repopulate
     self.delete_all
@@ -8,5 +8,5 @@ class PredefinedTag < ActiveRecord::Base
     end
   end
 
-  validates :name, presence: true, length: {maximum: 30}
+  validates :name, presence: true, length: {maximum: 50}
 end

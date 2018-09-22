@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :resources
 
+  get "/projects/resources" => "projects#resources", as: "projects_resources"
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
   get "/posts/drafts", to: "posts#drafts", as: "drafts_posts"

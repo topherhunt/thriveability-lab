@@ -4,7 +4,7 @@
       %span.h1= @project.title
       - if @project.owner == current_user
         &nbsp;
-        = link_to fa_icon("pencil"), edit_project_path(@project), class: "edit-project"
+        = link_to fa_icon("pencil"), edit_project_path(@project), class: "test-edit-link"
     %h4= @project.subtitle
 
     %table.table
@@ -12,8 +12,11 @@
         %th Owner
         %td= link_to @project.owner.full_name, user_path(@project.owner)
       %tr
-        %th Based in
-        %td= @project.location
+        %th Home base
+        %td= @project.location_of_home
+      %tr
+        %th Zone of impact
+        %td= @project.location_of_impact
       %tr
         %th Stage
         %td= @project.stage
@@ -25,30 +28,10 @@
 
     %hr
 
-    %h4 Introduction
-    %p
-      - if @project.introduction.present?
-        = @project.introduction
-      - else
-        No introduction yet.
-        - if @project.owner == current_user
-          = link_to "Write one", edit_project_path(@project)
-
-    %h4 Quadrants
-    .row
-      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
-        %strong Vision:
-        = @project.quadrant_ul
-      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
-        %strong Goals:
-        = @project.quadrant_ur
-    .row{style: "padding-top: 10px;"}
-      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
-        %strong Community:
-        = @project.quadrant_ll
-      .col-sm-6{style: "max-height: 100px; overflow: auto;"}
-        %strong Context:
-        = @project.quadrant_lr
+    - {desired_impact: "Desired impact", contribution_to_world: "Contribution to the world", help_needed: "How you can help", q_background: "Project background", q_meaning: "Why it's exciting", q_community: "Community", q_goals: "Goals", q_how_make_impact: "How it works", q_how_measure_impact: "How we measure impact", q_potential_barriers: "Potential barriers", q_project_assets: "Why this project stands out", q_larger_vision: "Future vision"}.each do |k, v|
+      - if @project.send(k).present?
+        %h4= v
+        = simple_format(@project.send(k))
 
     %h4 Resources & links
     - if @project.resources.any?
@@ -64,7 +47,10 @@
           Use this space to add any links or documents relevant to this project, that could be useful to other community members. #{link_to "Add a resource", new_resource_path(resource: { target_type: "Project", target_id: @project.id })}
 
   .col-sm-4
-    = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;"
+    - if @project.video_url.present?
+      <iframe width="100%" height="200" src="http://www.youtube.com/embed/#{@project.youtube_video_guid}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    - else
+      = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;"
 
     %hr
 
@@ -74,8 +60,3 @@
       = render partial: "shared/get_involved_flags_section", locals: { target: @project, link_wording: "I want to get involved" }
       - unless current_user == @project.owner
         %span= link_to fa_icon("envelope"), new_message_path(message: { project_id: @project.id, recipient_id: @project.owner_id }), class: "new-project-message-link btn btn-info js-tooltip", title: "Send #{@project.owner.first_name} an email"
-
-    - if @project.call_to_action.present?
-      %hr
-      %h4 How you can help
-      %p= @project.call_to_action

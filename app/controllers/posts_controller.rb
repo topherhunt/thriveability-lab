@@ -44,8 +44,16 @@ class PostsController < ApplicationController
   # TODO: Get rid of the 2-format support. Add PostAutosaveController for the JS.
   # TODO: Posting comments should be a different (albeit similar) controller.
   #       The logic is different enough that it's a code smell to combine them.
+  # This multi-branching logic will simplify quickly once we split out the
+  # initial "thread" creation / CRUD from the comment CRUD.
   def update
     prepare_publishable_post_for_validation if publishing?
+    if @post.conversants.where(user: current_user).empty?
+      intention = params[:post][:intention].presence ||
+        raise("Intention is required when updating post #{@post.id}; it's blank")
+      @post.conversants.where(user: current_user).create!(intention: intention)
+    end
+
     if @post.update(post_params)
       complete_publishing_post if publishing?
       respond_to do |format|
