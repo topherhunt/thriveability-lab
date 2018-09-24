@@ -19,7 +19,7 @@
             &nbsp;
             = link_to fa_icon("trash"), post_path(post), method: :delete, class: "text-danger", "data-confirm": "Really delete this draft reply?"
         - elsif post.published?
-          - if current_user.in? @conversants
+          - if current_user.present?
             &nbsp;
             = link_to fa_icon("pencil") + " Reply", "#", class: "js-new-reply btn btn-xs btn-default", "data-post-id": post.id
 

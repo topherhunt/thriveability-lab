@@ -3,6 +3,15 @@
     = form_for(post, html: { class: "new-bottom-comment" }) do |f|
       = show_errors_for post
 
+      - if post.root.conversant_records.where(user: current_user).count == 0
+        .row.row-padded
+          .col-sm-12
+            = label_tag "post[intention]", "I'm writing this post to..."
+            = required
+            .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
+            = select_tag "post[intention]", options_for_select([["- select one -", ""]] + Post::INTENTION_PRESETS), { class: "js-intention-select form-control" }
+            = text_field_tag "post[intention_write_in]", "", class: "js-intention-write-in js-hidden form-control", placeholder: "Write your own intention..."
+
       = f.label :draft_content, "Comment by #{current_user.full_name}"
       = f.text_area :draft_content, class: "form-control", style: "height: 200px;", "data-toolbar": "brief"
       .hint.js-autosave-indicator

@@ -24,7 +24,7 @@ class PostsTest < Capybara::Rails::TestCase
       page.find(".js-intention-write-in").set("some custom intention")
       click_on "Publish!"
       assert_content "This post has been published!"
-      assert_equals "some custom intention", @user.posts.last.intention
+      assert_equals "some custom intention", Post.last.author_conversant_record.intention
     end
   end
 

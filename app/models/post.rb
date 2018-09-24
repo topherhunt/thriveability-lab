@@ -19,8 +19,8 @@ class Post < ActiveRecord::Base
   ]
 
   belongs_to :author, class_name: :User, inverse_of: :posts
-  has_many :post_conversant_joins, class_name: :PostConversant
-  has_many :conversants, through: :post_conversant_joins, source: :user
+  has_many :conversant_records, class_name: :PostConversant
+  has_many :conversants, through: :conversant_records, source: :user
   has_many :received_like_flags, class_name: 'LikeFlag', as: :target
   has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
 
@@ -81,6 +81,10 @@ class Post < ActiveRecord::Base
       descendants: descendants.map(&:published_content),
       visible: root_and_published?
     }
+  end
+
+  def author_conversant_record
+    conversant_records.find_by(user_id: author_id)
   end
 
   def author_and_conversants

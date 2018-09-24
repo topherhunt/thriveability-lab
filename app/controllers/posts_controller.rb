@@ -48,10 +48,14 @@ class PostsController < ApplicationController
   # initial "thread" creation / CRUD from the comment CRUD.
   def update
     prepare_publishable_post_for_validation if publishing?
-    if @post.conversants.where(user: current_user).empty?
-      intention = params[:post][:intention].presence ||
-        raise("Intention is required when updating post #{@post.id}; it's blank")
-      @post.conversants.where(user: current_user).create!(intention: intention)
+
+    # On first creating or contributing to this conversation, the creator /
+    # participant must state their intention, which registers them as a
+    # conversant. This desperately needs refactoring.
+    conversant_scope = @post.root.conversant_records.where(user: current_user)
+    if publishing? and conversant_scope.count == 0 and get_post_intention
+      Rails.logger.warn("WARNING: Post #{@post.id} user #{current_user.id} conversant record skipped because intention was blank.")
+      conversant_scope.create!(intention: get_post_intention)
     end
 
     if @post.update(post_params)
@@ -80,8 +84,6 @@ class PostsController < ApplicationController
 
   def show
     raise ActiveRecord::RecordNotFound unless @post.published?
-    @conversants = @post.conversants.to_a + [@post.author]
-    @post_conversant = PostConversant.new
   end
 
   def destroy
@@ -111,7 +113,7 @@ class PostsController < ApplicationController
   # === Queries & calculators ===
 
   def post_params
-    params.require(:post).permit(:title, :draft_content, :intention, :tag_list)
+    params.require(:post).permit(:title, :draft_content, :tag_list)
   end
 
   def publishing? # either the first time, or re-publishing
@@ -120,6 +122,11 @@ class PostsController < ApplicationController
 
   def newly_published?
     ! @previously_published and publishing?
+  end
+
+  def get_post_intention
+    params[:post][:intention_write_in].presence ||
+    params[:post][:intention].gsub("- other -", "").presence
   end
 
   def template_variant

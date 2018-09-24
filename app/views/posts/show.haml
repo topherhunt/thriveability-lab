@@ -6,7 +6,7 @@
     - if current_user == @post.author
       &nbsp;
       = link_to fa_icon("pencil") + " Edit", edit_post_path(@post), class: "edit-post-link btn btn-default btn-sm"
-  %p Intention: <em>#{@post.intention}</em>
+  %p Intention: <em>#{@post.conversant_records.find_by(user_id: @post.author_id)&.intention}</em>
   - if @post.tag_list.any?
     %p
       Tags:
@@ -23,26 +23,16 @@
   %hr
   - if @post.published?
     %h3 Discussion
+    .js-post-comments-container
+      - if current_user.present?
+        %div{style: "padding-bottom: 10px;"}
+          = link_to fa_icon("pencil") + " Add comment", "#", class: "js-new-reply btn btn-default btn-sm", "data-post-id": @post.id
+          %i.fa.fa-spinner.loading.js-hidden
+        .new-reply-container.js-hidden{ "data-parent-id": @post.id }
 
-    - if current_user.in? @conversants
-      %div{style: "padding-bottom: 10px;"}
-        = link_to fa_icon("pencil") + " Add comment", "#", class: "js-new-reply btn btn-default btn-sm", "data-post-id": @post.id
-        %i.fa.fa-spinner.loading.js-hidden
-      .new-reply-container.js-hidden{ "data-parent-id": @post.id }
-    - else
-      %p= link_to "Join the conversation!", "#", class: "btn btn-default", data: { toggle: "modal", target: "#join-conversation-modal" }
-      .modal.fade#join-conversation-modal
-        .modal-dialog
-          .modal-content
-            .modal-header
-              %button.close{"data-dismiss": "modal"} &times;
-              %h4.modal-title Join conversation: "#{@post.title}"
-            .modal-body
-              = render partial: "post_conversants/form", locals: { post_conversant: PostConversant.new }
-
-    - if @post.children.visible_to(current_user).not_inline.any?
-      %div{style: "margin-left: -10px;"}
-        - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
-          = render partial: "show_bottom_comment", locals: { post: reply }
-    - else
-      %p No comments yet.
+      - if @post.children.visible_to(current_user).not_inline.any?
+        %div{style: "margin-left: -10px;"}
+          - @post.children.visible_to(current_user).not_inline.order("created_at ASC").each do |reply|
+            = render partial: "show_bottom_comment", locals: { post: reply }
+      - else
+        %p No comments yet.

@@ -22,8 +22,6 @@ Rails.application.routes.draw do
 
   get "/search", to: "search#search", as: "search"
 
-  resources :post_conversants, only: [:new, :create]
-
   resources :messages, only: [:new, :create]
 
   resources :notifications, only: [:index, :show]

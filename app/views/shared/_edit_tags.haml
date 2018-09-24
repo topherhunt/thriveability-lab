@@ -2,6 +2,8 @@
 .row.row-padded
   .col-sm-3
     = form.label :tag_list, "Tags"
+    - if object.is_a?(Project)
+      = required
     .hint.small Specify up to 3 brief, general labels that help other people discover your #{object_name} based on the topics or fields it’s relevant to.
   .col-sm-9
     = form.text_field :tag_list, value: object.tag_list.sort.join(","), class: "js-hidden"

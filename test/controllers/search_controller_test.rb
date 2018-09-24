@@ -33,17 +33,17 @@ class SearchControllerTest < ActionController::TestCase
     # the Searcher module instead.
 
     it "lists all matching results" do
-      user1 = create :user, first_name: "Bear", last_name: "McCreary"
-      project1 = create :project, title: "Apple Bear"
-      resource1 = create :resource, title: "Bear Cat"
-      post1 = create :published_post, title: "Cat Dog Bear"
+      user1 = create :user, first_name: "Antelope", last_name: "McCreary"
+      project1 = create :project, title: "Apple Antelope"
+      resource1 = create :resource, title: "Antelope Cat"
+      post1 = create :published_post, title: "Cat Dog Antelope"
       user2 = create :user
       project2 = create :project
       resource2 = create :resource
       post2 = create :published_post
       Searcher.rebuild_es_index!
 
-      get :search, query: "bear"
+      get :search, query: "antelope"
       assert_shown([user1, project1, resource1, post1])
       assert_not_shown([user2, project2, resource2, post2])
     end

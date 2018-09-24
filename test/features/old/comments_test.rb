@@ -10,27 +10,7 @@ class CommentsTest < Capybara::Rails::TestCase
     create_list(:post_conversant, 3, post: @post)
   end
 
-  test "User can join the conversation on a post" do
-    login_as @user
-    visit post_path(@post)
-    assert_content sanitize(@comment1.published_content, tags: [])
-    refute_content "Reply"
-    click_on "Join the conversation!"
-    assert_equals 3, @post.conversants.count
-    assert_content "I'm joining this conversation to..."
-    click_button "Join in!"
-    # Not yet joined because I didn't submit all required info
-    assert_path post_conversants_path
-    assert_equals 3, @post.conversants.count
-    assert_content "Intention can't be blank"
-    select "offer advice", from: "post_conversant[intention]"
-    click_button "Join in!"
-    assert_path post_path(@post)
-    assert_content "We're glad you've joined the discussion! Reply to this post at the bottom of the page."
-    assert_content "Reply" # now can add a reply
-    assert_equals 4, @post.conversants.count
-    assert @post.conversants.include?(@user)
-  end
+  # test "TODO: User is asked to state their intention the first time they join a convo"
 
   test "User can add comments and reply to others' comments" do
     using_webkit do

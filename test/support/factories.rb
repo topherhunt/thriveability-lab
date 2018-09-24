@@ -1,3 +1,5 @@
+include ActionDispatch::TestProcess
+
 FactoryGirl.define do
   factory(:user) do
     first_name { Faker::Name.first_name.gsub("'", "") }
@@ -22,16 +24,15 @@ FactoryGirl.define do
     contribution_to_world { Faker::Lorem.sentences(rand(1..4)).join(" ") }
     location_of_home { Faker::Lorem.words(rand(2..3)).join(" ") }
     location_of_impact { Faker::Lorem.words(rand(2..3)).join(" ") }
-    image_file_name "some_random_image.jpg"
+    image { fixture_file_upload(Rails.root.join('test', 'fixtures', 'test.png'), 'image/png') }
     stage        { Project::STAGES.sample }
-    tag_list     { PredefinedTag::PRESETS.sample(rand(0..3)) }
+    tag_list     { PredefinedTag::PRESETS.sample(rand(1..3)).join(",") }
     created_at   { (rand * 400.0).days.ago }
   end
 
   factory(:draft_post, class: :Post) do
     association :author, factory: :user
     title         { Faker::Lorem.words(5).join(" ").capitalize }
-    intention     { Post::INTENTION_PRESETS.take(8).sample }
     draft_content { Gibberish.random_paragraphs(rand(1..5)) }
     tag_list      { PredefinedTag::PRESETS.sample(rand(0..3)) if parent.nil? and parent_id.nil? }
     created_at    { (rand * 400.0).days.ago }

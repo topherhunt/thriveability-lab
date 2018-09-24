@@ -47,6 +47,7 @@
   .row.row-padded
     .col-sm-3
       = f.label :desired_impact
+      = required
       .hint.small Briefly describe what you try to accomplish with this project. What is the (societal) problem you hope to contribute to? What is the kind of change or impact you strive for?
     .col-sm-9
       = f.text_area :desired_impact, class: "form-control"
@@ -54,6 +55,7 @@
   .row.row-padded
     .col-sm-3
       = f.label :contribution_to_world, "How does your project contribute to a more 'integral' (thriving) world?"
+      = required
       .hint.small How do your activities contribute to a more conscious, inclusive, sustainable, happy world?
     .col-sm-9
       = f.text_area :contribution_to_world, class: "form-control"
@@ -61,6 +63,7 @@
   .row.row-padded
     .col-sm-3
       = f.label :location_of_home, "Home base"
+      = required
       %br
       .hint.small Out of which location, area, country, or region is the project being undertaken?
     .col-sm-9
@@ -68,7 +71,8 @@
       = warn_of_length_limit("#project_title", 100)
   .row.row-padded
     .col-sm-3
-      = f.label :location_of_impact, "Zone of impact "
+      = f.label :location_of_impact, "Zone of impact"
+      = required
       %br
       .hint.small Which location, area, country, or region is the project trying to impact?
     .col-sm-9

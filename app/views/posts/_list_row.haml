@@ -9,7 +9,7 @@
     .nowrap.text-ellipsis.text-muted
       = sanitize(post.published_content, tags: [])
     .nowrap
-      - community = post.author_and_conversants
+      - community = post.conversants
       - community.take(5).each do |user|
         = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
       - if community.count > 5

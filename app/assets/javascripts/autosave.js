@@ -84,6 +84,7 @@ $(function(){
   // Init autosave for each matching element found on page load.
   // You can alsoa init autosave manually for AJAX-loaded elements.
   $('.js-autosave').each(function(){
-    init_autosave($(this));
+    // TODO: Rip out all this code (separate commit plz)
+    // init_autosave($(this));
   });
 });

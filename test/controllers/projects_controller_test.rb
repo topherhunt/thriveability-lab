@@ -12,7 +12,11 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   context "#create" do
-    it "creates the project"
+    it "creates the project" do
+      post :create, project: attributes_for(:project)
+      assert_equals 1, @user.projects.count
+      assert_redirected_to project_path(Project.last)
+    end
 
     it "returns you to the form if validation errors"
 
