@@ -48,7 +48,7 @@
 
   .col-sm-4
     - if @project.video_url.present?
-      <iframe width="100%" height="200" src="http://www.youtube.com/embed/#{@project.youtube_video_guid}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe width="100%" height="200" src="//www.youtube.com/embed/#{@project.youtube_video_guid}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     - else
       = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;"
 
