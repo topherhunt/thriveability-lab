@@ -47,6 +47,7 @@ group :development, :test do
   gem 'pry'
   gem 'binding_of_caller'
   gem 'quiet_assets'
+  gem 'bullet'
 end
 
 group :test do

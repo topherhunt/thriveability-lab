@@ -30,26 +30,16 @@ FactoryGirl.define do
     created_at   { (rand * 400.0).days.ago }
   end
 
-  factory(:draft_post, class: :Post) do
-    association :author, factory: :user
-    title         { Faker::Lorem.words(5).join(" ").capitalize }
-    draft_content { Gibberish.random_paragraphs(rand(1..5)) }
-    tag_list      { PredefinedTag::PRESETS.sample(rand(0..3)) if parent.nil? and parent_id.nil? }
-    created_at    { (rand * 400.0).days.ago }
-
-    factory(:published_post) do
-      draft_content nil
-      published_content { Gibberish.random_paragraphs(rand(1..5)) }
-      published true
-      published_at { created_at + (rand * 24).hours }
-    end
+  factory(:conversation) do
+    association :creator, factory: :user
+    title { Faker::Lorem.words(5).join(" ").capitalize }
+    tag_list { PredefinedTag::PRESETS.sample(rand(0..3)) }
   end
 
-  factory(:post_conversant) do
-    association :post
-    association :user
-    intention  { Post::INTENTION_PRESETS.take(8).sample }
-    created_at { (rand * 400.0).days.ago }
+  factory(:comment) do
+    context { raise "context must be specified!" }
+    association :author, factory: :user
+    body { Gibberish.random_paragraphs(rand(1..5)) }
   end
 
   factory(:resource) do

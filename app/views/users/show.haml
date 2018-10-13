@@ -47,10 +47,8 @@
       - @resources.each do |resource|
         = render partial: "resources/list_row", locals: {resource: resource, opts: {in_search: true}}
 
-  - if @posts.any? or true
+  - if @participating_in_conversations.any? or true
     .col-sm-4
-      %h4 Discussions
-      - @posts.each do |post|
-        = render partial: "posts/list_row", locals: {post: post.root, opts: {in_search: true}}
-      - if @count_drafts and @count_drafts > 0
-        %p= link_to "#{pluralize @count_drafts, "draft"}", drafts_posts_path, class: "btn btn-default"
+      %h4 Conversations
+      - @participating_in_conversations.each do |conversation|
+        = render partial: "conversations/list_row", locals: {conversation: conversation, opts: {in_search: true}}

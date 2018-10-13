@@ -6,8 +6,8 @@ class Event < ActiveRecord::Base
   has_many :notifications
 
   validates :actor_id, presence: true
-  validates :action, presence: true, inclusion: {in: %w(create update publish like follow)}
-  validates :target_type, presence: true, inclusion: {in: %w(User Project Resource Post)}
+  validates :action, presence: true, inclusion: {in: %w(create update comment like follow)}
+  validates :target_type, presence: true, inclusion: {in: %w(User Project Conversation Resource)}
   validates :target_id, presence: true
 
   scope :latest, ->(n) { order("id DESC").limit(n) }
@@ -40,14 +40,13 @@ class Event < ActiveRecord::Base
       case target_type
       when "Project" then "listed the project"
       when "Resource" then "added the resource"
+      when "Conversation" then "started the conversation"
       end
-    when "update"
-      target_type == "User" ? "updated their profile page" : nil
-    when "publish"
-      target.root? ? "started the conversation" : "commented on the conversation"
+    when "update" then (target_type == "User" ? "updated their profile page" : nil)
+    when "comment" then "commented on the conversation"
     when "like" then "was inspired by"
     when "follow" then "is now following"
-    end || raise("Don't know how to describe event #{id}!")
+    end || raise("Don't know how to describe event #{id} (#{action} #{target_type})!")
   end
 
   def target_description
@@ -64,19 +63,12 @@ class Event < ActiveRecord::Base
 
   def notify_user_ids
     user_ids = case action.to_s
-    when "create" then follower_ids_for(actor)
-    when "update" then follower_ids_for(actor)
-    when "publish"
-      if target.root?
-        follower_ids_for(actor)
-      else
-        [follower_ids_for(actor),
-          follower_ids_for(target.root),
-          target.ancestors.pluck(:author_id)]
-      end
-    when "like" then target_owner_id
-    when "follow" then target_owner_id
-    end || raise("Can't determine who to notify about event #{id}!")
+    when "create"  then follower_ids_for(actor)
+    when "update"  then follower_ids_for(actor)
+    when "comment" then [follower_ids_for(actor), follower_ids_for(target)]
+    when "like"    then target_owner_id
+    when "follow"  then target_owner_id
+    end || raise("Can't determine who to notify about event #{id} (#{action} #{target_type})!")
     [user_ids].flatten.uniq.reject{ |id| id == actor_id }
   end
 
@@ -86,10 +78,10 @@ class Event < ActiveRecord::Base
 
   def target_owner_id
     case target_type.to_s
-    when "User"     then target.id
-    when "Project"  then target.owner_id
-    when "Post"     then target.author_id
-    when "Resource" then target.creator_id
+    when "User"         then target.id
+    when "Project"      then target.owner_id
+    when "Conversation" then target.creator_id
+    when "Resource"     then target.creator_id
     else raise "Don't know how to look up the owner for #{target_type} #{target_id}!"
     end
   end

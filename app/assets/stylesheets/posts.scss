@@ -1,25 +1,7 @@
-.bottom-comment {
-  font-size: 95%;
-  padding-left: 10px;
-
-  > .this-comment {
-    line-height: 1em;
-    border-radius: 3px;
-    margin-top: 10px;
-    padding: 10px;
-    box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.2);
-    background-color: #fff;
-    min-height: 70px;
-  }
-}
-
-.new-reply-container {
-  clear: both;
-  margin-top: 10px;
+.comment {
+  line-height: 1em;
   border-radius: 3px;
   margin-top: 10px;
   padding: 10px;
-  box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
   min-height: 70px;
 }

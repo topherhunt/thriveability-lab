@@ -1,0 +1,25 @@
+.row
+  .col-sm-8
+    %h1 Edit conversation settings
+
+    = form_tag do
+      = show_errors_for @conversation
+
+      .row.row-padded
+        .col-sm-3
+          = label_tag "conversation[title]", "Title"
+          = required
+        .col-sm-9
+          = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
+      = render partial: "shared/edit_tags", locals: {object: @conversation}
+      .row.row-padded
+        .col-sm-3
+        .col-sm-9
+          %hr
+          = monitor_connection
+          = submit_tag "Save changes", class: "btn btn-primary"
+
+  .col-sm-4
+    %div{style: "width: 100%; height: 300px; overflow: hidden;"}
+      = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -100px;"
+    = render partial: "sidebar_hint"

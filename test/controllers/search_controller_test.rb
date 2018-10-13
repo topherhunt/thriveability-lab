@@ -36,16 +36,16 @@ class SearchControllerTest < ActionController::TestCase
       user1 = create :user, first_name: "Antelope", last_name: "McCreary"
       project1 = create :project, title: "Apple Antelope"
       resource1 = create :resource, title: "Antelope Cat"
-      post1 = create :published_post, title: "Cat Dog Antelope"
+      convo1 = create :conversation, title: "Cat Dog Antelope"; create :comment, context: convo1
       user2 = create :user
       project2 = create :project
       resource2 = create :resource
-      post2 = create :published_post
+      convo2 = create :conversation; create :comment, context: convo2
       Searcher.rebuild_es_index!
 
       get :search, query: "antelope"
-      assert_shown([user1, project1, resource1, post1])
-      assert_not_shown([user2, project2, resource2, post2])
+      assert_shown([user1, project1, resource1, convo1])
+      assert_not_shown([user2, project2, resource2, convo2])
     end
 
     it "can limit results to certain models" do

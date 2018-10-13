@@ -10,9 +10,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @projects = @user.projects.latest(5)
     @resources = @user.created_resources.latest(5)
-    post_ids = PostConversant.where(user: @user).pluck(:post_id)
-    @posts = Post.where(id: post_ids).latest(5)
-    @count_drafts = @user.posts.roots.draft.count if @user == current_user
+    @participating_in_conversations = @user.participating_in_conversations.latest(5)
   end
 
   def edit

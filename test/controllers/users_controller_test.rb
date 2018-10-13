@@ -13,8 +13,9 @@ class UsersControllerTest < ActionController::TestCase
   context "#show" do
     it "renders the user profile correctly" do
       user = create :user
+      # Populate some sample content
       create :project, owner: user
-      create :published_post, author: user
+      create :conversation, creator: user
       create :resource, creator: user
 
       get :show, id: user.id

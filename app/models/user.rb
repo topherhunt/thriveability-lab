@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
   has_many :projects, foreign_key: :owner_id
   # TODO: This can be renamed to just `resources`; the risk of confusion is low
   has_many :created_resources, class_name: 'Resource', foreign_key: :creator_id, inverse_of: :creator
-  has_many :posts, foreign_key: :author_id, inverse_of: :author
+  has_many :conversations, foreign_key: "creator_id", inverse_of: :creator
+  has_many :comments, foreign_key: "author_id", inverse_of: :author
+  has_many :conversation_participant_joins, foreign_key: "participant_id", inverse_of: :participant
+  has_many :participating_in_conversations, through: :conversation_participant_joins, source: :conversation
   has_many :created_like_flags, class_name: "LikeFlag" # as the originator
   has_many :created_stay_informed_flags, class_name: 'StayInformedFlag'
   has_many :created_get_involved_flags, class_name: 'GetInvolvedFlag'
@@ -37,10 +40,6 @@ class User < ActiveRecord::Base
 
   def self.most_recent(n)
     order('current_sign_in_at DESC').limit(n)
-  end
-
-  def full_name
-    [first_name, last_name].select{ |s| s.present? }.join(' ').presence
   end
 
   # TODO: Move this to a Handler class
@@ -94,16 +93,20 @@ class User < ActiveRecord::Base
     return if to_user.id == self.id
 
     # TODO: This shouldn't just blow up in the code, it should blow up in a unit test (that I actually run because the test suite should be maintained, right?)
-    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :posts, :like_flags, :stay_informed_flags].to_set
+    unless User.reflect_on_all_associations.map(&:name).to_set == [:omniauth_accounts, :created_resources, :conversations, :like_flags, :stay_informed_flags].to_set
       raise "ERROR: Refusing to perform .merge!, it looks like I've forgotten to set up additional associations."
     end
 
     omniauth_accounts.update_all(user_id: to_user.id)
     created_resources.update_all(creator_id: to_user.id)
-    posts.update_all(author_id: to_user.id)
+    conversations.update_all(creator_id: to_user.id)
     like_flags.update_all(user_id: to_user.id)
     stay_informed_flags.update_all(user_id: to_user.id)
     self.destroy!
+  end
+
+  def full_name
+    [first_name, last_name].select{ |s| s.present? }.join(' ').presence
   end
 
   def as_indexed_json(options={}) # ElasticSearch integration
@@ -129,10 +132,12 @@ class User < ActiveRecord::Base
   end
 
   # TODO: Cache this for performance, and figure out when to bust the cache.
+  # Maybe this should be a service object that caches and returns the list of interests.
   def interests
     interested_objects = [
       projects.latest(2),
-      posts.published.latest(2).map(&:root),
+      conversations.latest(2),
+      comments.latest(2).map(&:context),
       created_resources.latest(2),
       created_like_flags.latest(2).where("target_type != 'User'").map(&:target),
       created_stay_informed_flags.latest(2).map(&:target),

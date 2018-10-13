@@ -1,0 +1,47 @@
+.row
+  .col-sm-8
+    %h1 New conversation
+
+    = form_for @conversation do |f|
+      - if @errors.present?
+        .alert.alert-warning
+          %h3 Your changes weren't saved due to the following errors:
+          %ul
+            - @errors.each do |error|
+              %li= error
+
+      .row.row-padded
+        .col-sm-3
+          = label_tag "conversation[title]", "Title"
+          = required
+        .col-sm-9
+          = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
+
+      = render partial: "shared/edit_tags", locals: {object: @conversation}
+
+      .row.row-padded
+        .col-sm-3
+          = label_tag "intention", "I'm writing this post to..."
+          = required
+          .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
+        .col-sm-9
+          = select_tag "intention_prepopulator", options_for_select([["- pick one -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "js-populate-value form-control", data: {target: "#participant_join_intention"}}
+          = text_field_tag "intention", params[:intention], class: "form-control"
+
+      .row.row-padded
+        .col-sm-3
+          = label_tag "comment[body]", "Your opening comments"
+        .col-sm-9
+          = text_area_tag "comment[body]", @comment.body, class: "form-control js-ckeditor", style: "height: 200px;"
+
+      .row.row-padded
+        .col-sm-3
+        .col-sm-9
+          %hr
+          = monitor_connection
+          = submit_tag "Start this conversation!", class: "btn btn-primary"
+
+  .col-sm-4
+    %div{style: "width: 100%; height: 300px; overflow: hidden;"}
+      = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -100px;"
+    = render partial: "sidebar_hint"

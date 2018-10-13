@@ -12,16 +12,15 @@ class SearcherTest < ActiveSupport::TestCase
       @user1 = create :user, first_name: "Mackenzie", last_name: "Platypus"
       @project1 = create :project, title: "Omnivore's Dilemma"
       @resource1 = create :resource, title: "Mackenzie's Study"
-      @post1 = create :published_post, title: "Platypus is an Omnivore"
-      @post2 = create :published_post, title: "My study of Omnivores"
-      @draft = create :draft_post
-      @comment = create :published_post, parent: @post2
+      @convo1 = create :conversation, title: "Platypus is an Omnivore"
+      @convo2 = create :conversation, title: "My study of Omnivores"
+      @comment1 = create :comment, context: @convo1
       Searcher.rebuild_es_index!
     end
 
     it "searches across all indexed models by default" do
       search1 = Searcher.new(string: "omniVORE").run
-      expected1 = [@project1, @post1, @post2]
+      expected1 = [@project1, @convo1, @convo2]
       assert_equals debug(expected1).sort, debug(search1.records).sort
 
       search2 = Searcher.new(string: "mackenzie").run
@@ -34,7 +33,8 @@ class SearcherTest < ActiveSupport::TestCase
 
     it "includes all results when query is blank" do
       search_all = Searcher.new(string: "").run
-      assert_equals 11, search_all.count
+      expected_results = %w(Conversation Conversation Project Resource User User User User User User)
+      assert_equals expected_results, search_all.records.map { |r| r.class.to_s }.sort
     end
 
     it "can limit results to specific models" do
@@ -45,22 +45,20 @@ class SearcherTest < ActiveSupport::TestCase
 
     it "can paginate results" do
       search_all = Searcher.new(string: "").run
-      assert_equals 11, search_all.count
+      assert_equals 10, search_all.count
 
       search1 = Searcher.new(string: "", from: 0, size: 10).run
       assert_equals 10, search1.count
       assert_equals debug(search_all.records[0..9]), debug(search1.records)
 
-      search2 = Searcher.new(string: "", from: 10, size: 10).run
-      assert_equals 1, search2.count
-      assert_equals debug(search_all.records[10..-1]), debug(search2.records)
+      search2 = Searcher.new(string: "", from: 8, size: 10).run
+      assert_equals 2, search2.count
     end
 
-    it "returns published posts, but not drafts or comments" do
-      draft = create :draft_post
-      search_posts = Searcher.new(string: "", models: [Post]).run
-      expected = [@post1, @post2]
-      assert_equals debug(expected).sort, debug(search_posts.records).sort
+    it "returns all conversations" do
+      search_convos = Searcher.new(string: "", models: [Conversation]).run
+      expected = [@convo1, @convo2]
+      assert_equals debug(expected).sort, debug(search_convos.records).sort
     end
   end
 
@@ -70,7 +68,7 @@ class SearcherTest < ActiveSupport::TestCase
 
     [
       create(:user),
-      create(:published_post),
+      create(:conversation),
       create(:project),
       create(:resource)
     ].each do |record|

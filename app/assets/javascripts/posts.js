@@ -43,28 +43,4 @@ $(function(){
       '/posts/' + container.data('id') + '/edit.js', {},
       function() { loadIntentionSelectListeners(); });
   });
-
-  function loadIntentionSelectListeners() {
-    $('.js-intention-select').on('change', function(){
-      var select = $(this);
-      if (select.val() == '- other -'){
-        console.log('Value is "other". Showing the write-in field.');
-        select.parent().find('.js-intention-write-in').show();
-      } else {
-        console.log('Hiding the write-in field.');
-        select.parent().find('.js-intention-write-in').val('').hide();
-      }
-    });
-
-    $('.js-intention-write-in').on('keyup change', function(){
-      // TODO: I think I can remove this, no need to write in the value anymore
-      // var writein_field = $(this);
-      // writein_field.parent().find('.js-intention-select')
-      //   .children('option:last')
-      //   .val(writein_field.val());
-    });
-  }
-
-  loadIntentionSelectListeners();
-
 });

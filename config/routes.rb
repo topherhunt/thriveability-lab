@@ -12,13 +12,13 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update]
   post "/users/:id/reset_password", to: "users#reset_password", as: "reset_password_user"
 
+  resources :conversations, only: [:index, :new, :create, :edit, :update, :show]
+  resources :comments, only: [:create, :edit, :update, :destroy]
+
   resources :resources
 
   get "/projects/resources" => "projects#resources", as: "projects_resources"
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
-
-  get "/posts/drafts", to: "posts#drafts", as: "drafts_posts"
-  resources :posts, only: [:index, :show, :create, :edit, :update, :destroy]
 
   get "/search", to: "search#search", as: "search"
 

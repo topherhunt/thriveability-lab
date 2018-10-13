@@ -1,0 +1,20 @@
+.comment
+  .float-left
+    = image_tag(comment.author.image.url(:thumb), style: "width: 60px; padding-right: 10px; padding-bottom: 10px;")
+
+  %p.text-muted{style: "margin-top: 0.5em; line-height: 25px;"}
+    = link_to comment.author.full_name, user_path(comment.author)
+    on #{print_date(comment.updated_at, time: true)}
+    - if comment.updated_at > comment.created_at
+      (edited)
+    - if current_user == comment.author
+      &nbsp;
+      = link_to fa_icon("pencil"), edit_comment_path(comment), class: "test-edit-comment"
+      &nbsp;
+      = link_to fa_icon("trash"), comment_path(comment), method: :delete, class: "text-danger test-delete-comment", "data-confirm": "Really delete this comment?"
+
+    - if intention.present?
+      %br
+      %em= intention
+
+  = sanitize(comment.body, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))

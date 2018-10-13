@@ -73,6 +73,9 @@ GEM
     bootstrap-will_paginate (0.0.10)
       will_paginate
     builder (3.2.2)
+    bullet (5.7.6)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11.0)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -302,6 +305,7 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    uniform_notifier (1.11.0)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (3.3.0)
@@ -326,6 +330,7 @@ DEPENDENCIES
   bonsai-elasticsearch-rails
   bootstrap-sass
   bootstrap-will_paginate
+  bullet
   capybara-screenshot (>= 1.0.13)
   capybara-webkit
   chosen-rails
@@ -367,4 +372,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.14.6
+   1.16.0

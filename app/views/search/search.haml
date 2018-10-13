@@ -32,8 +32,8 @@
         = render partial: "users/list_row", locals: {user: record, opts: {in_search: true}}
       - when "Project"
         = render partial: "projects/list_row", locals: {project: record, opts: {in_search: true}}
-      - when "Post"
-        = render partial: "posts/list_row", locals: {post: record, opts: {in_search: true}}
+      - when "Conversation"
+        = render partial: "conversations/list_row", locals: {conversation: record, opts: {in_search: true}}
       - when "Resource"
         = render partial: "resources/list_row", locals: {resource: record, opts: {in_search: true}}
       - else

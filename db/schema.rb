@@ -11,10 +11,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612144602) do
+ActiveRecord::Schema.define(version: 20181002111805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "context_type", null: false
+    t.integer  "context_id",   null: false
+    t.integer  "author_id",    null: false
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["author_id"], name: "index_comments_on_author_id", using: :btree
+  add_index "comments", ["context_type", "context_id"], name: "index_comments_on_context_type_and_context_id", using: :btree
+
+  create_table "conversation_participant_joins", force: :cascade do |t|
+    t.integer  "conversation_id", null: false
+    t.integer  "participant_id",  null: false
+    t.string   "intention",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "conversation_participant_joins", ["conversation_id"], name: "index_conversation_participant_joins_on_conversation_id", using: :btree
+  add_index "conversation_participant_joins", ["participant_id"], name: "index_conversation_participant_joins_on_participant_id", using: :btree
+
+  create_table "conversations", force: :cascade do |t|
+    t.integer  "creator_id", null: false
+    t.string   "title",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "conversations", ["creator_id"], name: "index_conversations_on_creator_id", using: :btree
 
   create_table "events", force: :cascade do |t|
     t.integer  "actor_id"
@@ -87,17 +119,6 @@ ActiveRecord::Schema.define(version: 20180612144602) do
   add_index "omniauth_accounts", ["provider", "uid"], name: "index_omniauth_accounts_on_provider_and_uid", using: :btree
   add_index "omniauth_accounts", ["user_id"], name: "index_omniauth_accounts_on_user_id", using: :btree
 
-  create_table "post_conversants", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "post_id"
-    t.string   "intention"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "post_conversants", ["post_id"], name: "index_post_conversants_on_post_id", using: :btree
-  add_index "post_conversants", ["user_id"], name: "index_post_conversants_on_user_id", using: :btree
-
   create_table "post_hierarchies", id: false, force: :cascade do |t|
     t.integer "ancestor_id",   null: false
     t.integer "descendant_id", null: false
@@ -106,22 +127,6 @@ ActiveRecord::Schema.define(version: 20180612144602) do
 
   add_index "post_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "post_anc_desc_idx", unique: true, using: :btree
   add_index "post_hierarchies", ["descendant_id"], name: "post_desc_idx", using: :btree
-
-  create_table "posts", force: :cascade do |t|
-    t.integer  "author_id"
-    t.string   "title"
-    t.text     "published_content"
-    t.boolean  "published",              default: false
-    t.datetime "published_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent_id"
-    t.integer  "reply_at_char_position"
-    t.text     "draft_content"
-  end
-
-  add_index "posts", ["author_id"], name: "index_posts_on_author_id", using: :btree
-  add_index "posts", ["parent_id"], name: "index_posts_on_parent_id", using: :btree
 
   create_table "predefined_tags", force: :cascade do |t|
     t.string   "name"
@@ -248,6 +253,10 @@ ActiveRecord::Schema.define(version: 20180612144602) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "comments", "users", column: "author_id"
+  add_foreign_key "conversation_participant_joins", "conversations"
+  add_foreign_key "conversation_participant_joins", "users", column: "participant_id"
+  add_foreign_key "conversations", "users", column: "creator_id"
   add_foreign_key "events", "users", column: "actor_id", on_delete: :cascade
   add_foreign_key "messages", "projects", on_delete: :nullify
   add_foreign_key "messages", "users", column: "recipient_id", on_delete: :cascade

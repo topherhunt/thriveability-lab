@@ -1,12 +1,12 @@
 - object_name = object.class.to_s.downcase
 .row.row-padded
   .col-sm-3
-    = form.label :tag_list, "Tags"
+    = label_tag "#{object_name}[tag_list]", "Tags"
     - if object.is_a?(Project)
       = required
     .hint.small Specify up to 3 brief, general labels that help other people discover your #{object_name} based on the topics or fields it’s relevant to.
   .col-sm-9
-    = form.text_field :tag_list, value: object.tag_list.sort.join(","), class: "js-hidden"
+    = text_field_tag "#{object_name}[tag_list]", object.tag_list.sort.join(","), class: "js-hidden"
     %ul.js-tagit{ id: "#{object_name}-tags-tagit", data: { "tagit-target": "##{object_name}_tag_list", "tag-limit": 3, "available-tags": self.send("popular_#{object_name}_tags", 30) }}
     .small.js-hide-if-tagit-limit-exceeded
       %strong Common tags:

@@ -19,30 +19,25 @@ class EventTest < ActiveSupport::TestCase
       assert_notified event, [follower]
     end
 
-    test "when publishing a post: notifies the actor's followers" do
+    test "when starting a conversation: notifies the actor's followers" do
       actor = create(:user)
       follower = create(:user); create_follow(follower, actor)
-      post = create(:published_post, author: actor)
+      convo = create(:conversation, creator: actor)
 
-      event = Event.register(actor, :publish, post)
+      event = Event.register(actor, :create, convo)
       assert_notified event, [follower]
     end
 
-    test "when commenting on a post: notifies the actor's followers, the post's followers, and the comment's parents' authors" do
+    test "when commenting on a conversation: notifies the actor's followers and the conversation's followers" do
       actor = create(:user)
       actor_follower = create(:user); create_follow(actor_follower, actor)
-      post = create(:published_post)
-      post_follower = create(:user); create_follow(post_follower, post)
-      parent_comment = create(:published_post, parent: post)
-      new_comment = create(:published_post, author: actor, parent: parent_comment)
+      convo = create(:conversation)
+      convo_follower = create(:user); create_follow(convo_follower, convo)
+      first_comment = create(:comment, context: convo)
+      new_comment = create(:comment, author: actor, context: convo)
 
-      event = Event.register(actor, :publish, new_comment)
-      assert_notified event, [
-        actor_follower,
-        post_follower,
-        post.author,
-        parent_comment.author
-      ]
+      event = Event.register(actor, :comment, convo)
+      assert_notified event, [actor_follower, convo_follower]
     end
 
     test "when liking something: notifies the target's owner / creator" do
