@@ -9,7 +9,7 @@ class HomeControllerTest < ActionController::TestCase
   context "#home" do
     it "renders the homepage" do
       get :home
-      assert response.body.include?("Integral Climate")
+      assert response.body.include?("Thrivability Lab")
     end
   end
 

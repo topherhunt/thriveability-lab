@@ -9,13 +9,13 @@ class HomeTest < Capybara::Rails::TestCase
     create :like_flag, target: resource, created_at: 1.days.ago
 
     visit root_path
-    assert_content "Integral Climate"
+    assert_content "Thrivability Lab"
   end
 
   test "#about renders" do
     visit root_path
     click_on "About"
-    assert_content "We're Integral Climate"
+    assert_content "Welcome to the Thrivability Lab"
   end
 
   test "#throwup raises an error for testing" do

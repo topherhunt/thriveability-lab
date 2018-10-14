@@ -22,4 +22,4 @@ def secure_token
   end
 end
 
-IntegralClimateAction::Application.config.secret_key_base = secure_token
+ThrivabilityLab::Application.config.secret_key_base = secure_token

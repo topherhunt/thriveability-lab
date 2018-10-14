@@ -58,7 +58,7 @@ class ConsolidateUserBioFields < ActiveRecord::Migration
   def exterior_bio_for(user)
     {
       self_skills: "I'm good at",
-      self_looking_for: "I'm part of Integral Climate because I'm looking for",
+      self_looking_for: "I'm part of Thrivability Lab because I'm looking for",
       self_work_at: "I currently work at/as",
       self_professional_goals: "My professional goal is",
       self_fields_of_expertise: "I have expertise / experience in"

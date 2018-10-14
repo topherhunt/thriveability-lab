@@ -1,4 +1,4 @@
-# App: Integral Climate Hub
+# Thrivability Lab
 
 ## Code principles
 

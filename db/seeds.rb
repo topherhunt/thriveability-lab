@@ -3,8 +3,9 @@ Event.delete_all
 Message.delete_all
 User.delete_all
 Project.delete_all
-Post.delete_all
-PostConversant.delete_all
+Comment.delete_all
+ConversationParticipantJoin.delete_all
+Conversation.delete_all
 Resource.delete_all
 LikeFlag.delete_all
 StayInformedFlag.delete_all
@@ -17,7 +18,7 @@ end
 
 @users = []
 @projects = []
-@posts = []
+@conversations = []
 @resources = []
 
 @topher = FactoryGirl.create(:user,
@@ -86,19 +87,16 @@ end
 puts "\nCreating 25 conversations..."
 25.times do |i|
   print "."
-  post_author = @users.sample
-  post = FactoryGirl.create(:published_post, author: post_author)
-  Event.register(post_author, :publish, post)
-  post_and_children = [post]
-  (rand * 10).round.times do
+  convo_author = @users.sample
+  convo = FactoryGirl.create(:conversation, author: convo_author)
+  Event.register(convo_author, :create, convo)
+  rand(1..10).times do
     commenter = @users.sample
-    FactoryGirl.build(:post_conversant, user: commenter, post: post).save # may fail
-    parent = post_and_children.sample
-    comment = FactoryGirl.create(:published_post, author: commenter, parent: parent)
-    Event.register(commenter, :publish, comment)
-    post_and_children << comment
+    comment = FactoryGirl.create(:comment, context: convo, author: commenter)
+    ConversationParticipantJoin.where(conversation: convo, participant: commenter).first_or_create!
+    Event.register(commenter, :comment, convo)
   end
-  @posts << post
+  @conversations << convo
 end
 
 puts "\nCreating 50 resources..."
