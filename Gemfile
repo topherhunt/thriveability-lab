@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 
 # Server
-gem 'rails', '4.2.6'
+gem 'rails', '4.2.10'
 gem 'figaro'
 gem 'pg'
 gem 'rollbar'
