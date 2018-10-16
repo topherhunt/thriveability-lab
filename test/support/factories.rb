@@ -42,6 +42,12 @@ FactoryGirl.define do
     body { Gibberish.random_paragraphs(rand(1..5)) }
   end
 
+  factory(:conversation_participant_join) do
+    association :conversation
+    association :participant, factory: :user
+    intention { Faker::Lorem.words(rand(2..15)).join(" ").capitalize }
+  end
+
   factory(:resource) do
     association :creator, factory: :user
     title           { Faker::Lorem.words(rand(2..15)).join(" ").capitalize }

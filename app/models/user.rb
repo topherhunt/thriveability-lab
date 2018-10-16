@@ -135,13 +135,13 @@ class User < ActiveRecord::Base
   # Maybe this should be a service object that caches and returns the list of interests.
   def interests
     interested_objects = [
-      projects.latest(2),
-      conversations.latest(2),
-      comments.latest(2).map(&:context),
-      created_resources.latest(2),
-      created_like_flags.latest(2).where("target_type != 'User'").map(&:target),
-      created_stay_informed_flags.latest(2).map(&:target),
-      created_get_involved_flags.latest(2).map(&:target),
+      projects.latest(2).includes(:taggings),
+      conversations.latest(2).includes(:taggings),
+      comments.latest(2).includes(:context).map(&:context),
+      created_resources.latest(2).includes(:taggings),
+      created_like_flags.latest(2).where("target_type != 'User'").includes(:target).map(&:target),
+      created_stay_informed_flags.latest(2).includes(:target).map(&:target),
+      created_get_involved_flags.latest(2).includes(:target).map(&:target),
     ].map(&:to_a).flatten.uniq
 
     tags_with_counts = interested_objects
