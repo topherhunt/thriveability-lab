@@ -35,8 +35,8 @@
                 = link_to comment.author.full_name, user_path(comment.author)
                 = "@"
                 = print_date comment.created_at, abbreviated: true
-              %div
-                = link_to ellipsify(comment.body, 100), url_for(controller: comment.context_type.downcase.pluralize, action: "show", id: comment.context_id)
+              %div.small{style: "height: 60px; text-overflow: ellipsis; overflow: hidden;"}
+                = link_to ellipsify(sanitize(comment.body, tags: []), 100), url_for(controller: comment.context_type.downcase.pluralize, action: "show", id: comment.context_id)
 
         %h3 Popular categories
         %div

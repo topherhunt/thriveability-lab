@@ -1,4 +1,4 @@
-#main-container.container
+#main-container.container-fluid
 
   %div{style: "width: 400px; margin-left: auto; margin-right: auto;"}
     %h2.text-center.text-info What do you care about?
@@ -22,8 +22,8 @@
           - @users.each do |user|
             = render partial: "users/list_row", locals: {user: user, opts: {}}
           = link_to "+ #{User.count - @users.count} more", users_path
-        .col-sm-3
-          = image_tag "homepage/people1.jpg", style: "width: 100%;", class: "hidden-xs"
+        .col-sm-3{style: "overflow: hidden;"}
+          = image_tag "homepage/people1.jpg", style: "width: 150px; margin-left: auto; margin-right: auto;", class: "hidden-xs"
     .col-sm-6
       %h3 Projects for meaningful change
       .row
@@ -31,8 +31,8 @@
           - @projects.each do |project|
             = render partial: "projects/list_row", locals: {project: project, opts: {}}
           = link_to "+ #{Project.count - @projects.count} more", projects_path
-        .col-sm-3
-          = image_tag "homepage/projects1.jpg", style: "width: 100%;", class: "hidden-xs"
+        .col-sm-3{style: "overflow: hidden;"}
+          = image_tag "homepage/projects1.jpg", style: "width: 150px; margin-left: auto; margin-right: auto;", class: "hidden-xs"
   .blank-space
   .row
     .col-sm-6
@@ -42,8 +42,8 @@
           - @conversations.each do |c|
             = render partial: "conversations/list_row", locals: {conversation: c, opts: {}}
           = link_to "+ #{Conversation.count - @conversations.count} more", conversations_path
-        .col-sm-3
-          = image_tag "homepage/conversations1.jpg", style: "width: 100%;", class: "hidden-xs"
+        .col-sm-3{style: "overflow: hidden;"}
+          = image_tag "homepage/conversations1.jpg", style: "width: 150px; margin-left: auto; margin-right: auto;", class: "hidden-xs"
     .col-sm-6
       %h3 Resources for impact-makers
       .row
@@ -51,5 +51,5 @@
           - @resources.each do |resource|
             = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
           = link_to "+ #{Resource.count - @resources.count} more", resources_path
-        .col-sm-3
-          = image_tag "homepage/resources1.jpg", style: "width: 100%;", class: "hidden-xs"
+        .col-sm-3{style: "overflow: hidden;"}
+          = image_tag "homepage/resources1.jpg", style: "width: 150px; margin-left: auto; margin-right: auto;", class: "hidden-xs"

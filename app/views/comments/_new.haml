@@ -13,9 +13,6 @@
       = text_field_tag "intention", params[:intention], class: "form-control"
 
   = f.text_area :body, class: "form-control js-ckeditor", style: "height: 200px;"
-  .row.row-padded
-    .col-sm-3
-    .col-sm-9
-      %hr
-      = monitor_connection
-      = f.submit "Post comment", class: "btn btn-primary"
+  .row-padded
+    = monitor_connection
+    = f.submit "Post comment", class: "btn btn-primary"
