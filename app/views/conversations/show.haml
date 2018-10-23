@@ -2,7 +2,7 @@
   %span.h1= @conversation.title
   - if current_user == @conversation.creator
     &nbsp;
-    = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link btn btn-default btn-sm"
+    = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link"
 %p
   - @conversation.tag_list.each do |name|
     = link_to name, search_path(query: name), class: "btn btn-xs btn-default"

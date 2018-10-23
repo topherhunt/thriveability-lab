@@ -19,14 +19,7 @@
 
       = render partial: "shared/edit_tags", locals: {object: @conversation}
 
-      .row.row-padded
-        .col-sm-3
-          = label_tag "intention", "I'm writing this post to..."
-          = required
-          .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
-        .col-sm-9
-          = select_tag "intention_prepopulator", options_for_select([["- pick one -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "js-populate-value form-control", data: {target: "#participant_join_intention"}}
-          = text_field_tag "intention", params[:intention], class: "form-control"
+      = render partial: "conversations/form_intention"
 
       .row.row-padded
         .col-sm-3

@@ -34,7 +34,7 @@ module ApplicationHelper
   end
 
   def required
-    '<em class="small text-danger">required</em>'.html_safe
+    '<div class="em small text-danger" style="margin-top: -5px; padding-bottom: 3px;">required</div>'.html_safe
   end
 
   def monitor_connection
