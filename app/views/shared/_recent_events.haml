@@ -9,4 +9,4 @@
         = link_to event.actor.full_name, user_path(event.actor)
         = event.action_description
         = "the #{event.target_type.downcase}" unless event.target_type == "User"
-        = link_to ellipsify(event.target_description, 25), url_for(event.adjusted_target)
+        = link_to ellipsify(event.target_description, 25), url_for(event.target)

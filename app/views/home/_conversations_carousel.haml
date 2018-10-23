@@ -1,5 +1,0 @@
-#home-conversations-carousel.cards-carousel.carousel.slide.carousel-fade.well.well-sm{"data-ride": "carousel", "data-interval": 5000, "data-pause": "hover"}
-  .carousel-inner{role: "listbox"}
-    - @posts.each_with_index do |post, index|
-      .item{class: (index == 0 ? "active" : "")}
-        = render partial: "shared/cards/post", locals: {post: post}

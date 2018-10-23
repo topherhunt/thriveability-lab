@@ -1,5 +1,0 @@
-#home-projects-carousel.cards-carousel.carousel.slide.carousel-fade.well.well-sm{"data-ride": "carousel", "data-interval": 5000, "data-pause": "hover"}
-  .carousel-inner{role: "listbox"}
-    - @projects.each_with_index do |project, index|
-      .item{class: (index == 0 ? "active" : "")}
-        = render partial: "shared/cards/project", locals: {project: project}

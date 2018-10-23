@@ -50,11 +50,7 @@ class Event < ActiveRecord::Base
   end
 
   def target_description
-    target_type.to_s == "User" ? adjusted_target.full_name : adjusted_target.title
-  end
-
-  def adjusted_target
-    target_type.to_s == "Post" ? target.root : target
+    target_type.to_s == "User" ? target.full_name : target.title
   end
 
   def image_url

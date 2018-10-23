@@ -1,3 +1,8 @@
+# e.g. `heroku run ANNICK_WARNED=true rake db:seed`
+unless ENV["ANNICK_WARNED"].present? or Rails.env.development?
+  raise "Warn Annick first!"
+end
+
 Notification.delete_all
 Event.delete_all
 Message.delete_all
@@ -11,10 +16,6 @@ StayInformedFlag.delete_all
 GetInvolvedFlag.delete_all
 OmniauthAccount.delete_all
 User.delete_all
-
-unless ENV["ANNICK_WARNED"].present? or Rails.env.development?
-  raise "Warn Annick first!"
-end
 
 @users = []
 @projects = []

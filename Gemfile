@@ -14,7 +14,6 @@ gem 'elasticsearch-model'
 gem 'acts-as-taggable-on'
 gem 'aws-sdk', '>= 2.0.34'
 gem 'bcrypt-ruby'
-gem 'closure_tree' # performant hierarchy tree storage for Posts
 gem 'devise'
 gem 'factory_girl'
 gem 'faker'

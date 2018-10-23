@@ -1,5 +1,0 @@
-#home-users-carousel.cards-carousel.carousel.slide.carousel-fade.well.well-sm{"data-ride": "carousel", "data-interval": 5000, "data-pause": "hover"}
-  .carousel-inner{role: "listbox"}
-    - @users.each_with_index do |user, index|
-      .item{class: (index == 0 ? "active" : "")}
-        = render partial: "shared/cards/user", locals: {user: user}
