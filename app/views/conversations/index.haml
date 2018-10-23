@@ -25,6 +25,12 @@
         %p= link_to "See all", search_path(models: "Conversation")
 
       .col-sm-5
+        %h3 Popular categories
+        %div
+          - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
+            = link_to "#{tag.name}", search_path(query: tag.name, models: "Conversation"), class: "#{css_class}"
+            &nbsp;
+
         %h3 Recent comments
         - @recent_comments.each do |comment|
           .list-row
@@ -35,11 +41,5 @@
                 = link_to comment.author.full_name, user_path(comment.author)
                 = "@"
                 = print_date comment.created_at, abbreviated: true
-              %div.small{style: "height: 60px; text-overflow: ellipsis; overflow: hidden;"}
-                = link_to ellipsify(sanitize(comment.body, tags: []), 100), url_for(controller: comment.context_type.downcase.pluralize, action: "show", id: comment.context_id)
-
-        %h3 Popular categories
-        %div
-          - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
-            = link_to "#{tag.name}", search_path(query: tag.name, models: "Conversation"), class: "#{css_class}"
-            &nbsp;
+              %div.small{style: "height: 48px; text-overflow: ellipsis; overflow: hidden;"}
+                = link_to ellipsify(sanitize(comment.body, tags: []), 100), url_for(controller: comment.context_type.downcase.pluralize, action: "show", id: comment.context_id), class: "text-default"
