@@ -1,8 +1,11 @@
-%h3 Edit comment
+.centered-800
+  %h3 Edit comment
 
-= form_for(comment) do |f|
-  = hidden_field_tag "context_type", context.class.to_s
-  = hidden_field_tag "context_id", context.id
-  = f.text_area :body, class: "form-control js-ckeditor", style: "height: 200px;"
-  = monitor_connection
-  = f.submit "Save", class: "btn btn-primary"
+  = form_for(comment) do |f|
+    = hidden_field_tag "context_type", context.class.to_s
+    = hidden_field_tag "context_id", context.id
+    .row-padded
+      = f.text_area :body, class: "form-control js-ckeditor", style: "height: 200px;"
+    .row-padded
+      = monitor_connection
+      = f.submit "Save", class: "btn btn-primary"
