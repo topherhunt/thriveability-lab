@@ -1,19 +1,20 @@
-%div
-  %span.h1= @conversation.title
-  - if current_user == @conversation.creator
-    &nbsp;
-    = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link"
-%p
-  - @conversation.tag_list.each do |name|
-    = link_to name, search_path(query: name), class: "btn btn-xs btn-default"
+.centered-800
+  %div
+    %span.h1= @conversation.title
+    - if current_user == @conversation.creator
+      &nbsp;
+      = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link"
+  %p
+    - @conversation.tag_list.each do |name|
+      = link_to name, search_path(query: name), class: "btn btn-xs btn-default"
 
-/ %p Intention: <em>#{@post.conversant_records.find_by(user_id: @post.author_id)&.intention}</em>
-/ = sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
+  / %p Intention: <em>#{@post.conversant_records.find_by(user_id: @post.author_id)&.intention}</em>
+  / = sanitize(@post.published_content || @post.draft_content, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
 
-- @comments.each do |comment|
-  = render partial: "comments/show", locals: {comment: comment, intention: @intentions[comment.author_id]}
+  - @comments.each do |comment|
+    = render partial: "comments/show", locals: {comment: comment, intention: @intentions[comment.author_id]}
 
-- if current_user
-  = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
-- else
-  %p #{link_to "Log in", new_user_session_path} to join the conversation.
+  - if current_user
+    = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
+  - else
+    %p #{link_to "Log in", new_user_session_path} to join the conversation.
