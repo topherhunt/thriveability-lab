@@ -5,4 +5,5 @@
 //= require bootstrap
 //= require jquery.tagit
 //= require chosen-jquery
+//= require trix
 //= require_tree .

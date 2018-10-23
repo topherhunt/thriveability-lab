@@ -25,7 +25,8 @@
         .col-sm-3
           = label_tag "comment[body]", "Your opening comments"
         .col-sm-9
-          = text_area_tag "comment[body]", @comment.body, class: "form-control js-ckeditor", style: "height: 200px;"
+          = hidden_field_tag "comment[body]", @comment.body
+          <trix-editor input="comment_body"></trix-editor>
 
       .row.row-padded
         .col-sm-3

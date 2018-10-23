@@ -14,7 +14,7 @@ class CommentsTest < Capybara::Rails::TestCase
     find(".test-new-conversation-link").click
     fill_in "conversation[title]", with: "Convo title"
     fill_in "intention", with: "My first intention statement"
-    fill_in "comment[body]", with: "Some body"
+    find("#comment_body", visible: false).set("Some body")
     click_on "Start this conversation!"
     conversation = @user.conversations.last
     assert conversation.present?
@@ -37,7 +37,7 @@ class CommentsTest < Capybara::Rails::TestCase
     assert_content "A second comment"
     # Adding a comment
     fill_in "intention", with: "New commenter intention statement"
-    fill_in "comment[body]", with: "A third comment body"
+    find("#comment_body", visible: false).set("A third comment body")
     click_on "Post comment"
     assert_content "Your comment was posted!"
     assert_equals 1, @user.comments.count
@@ -47,7 +47,7 @@ class CommentsTest < Capybara::Rails::TestCase
     # Editing my comment
     find(".test-edit-comment").click
     assert_path edit_comment_path(@user.comments.last)
-    fill_in "comment[body]", with: "New body text"
+    find("#comment_body", visible: false).set("New body text")
     click_on "Save"
     assert_equals "New body text", my_comment.reload.body
     # Deleting my comment
@@ -56,7 +56,7 @@ class CommentsTest < Capybara::Rails::TestCase
     assert_no_content "New body text"
     assert_equals 0, @user.comments.count
     # I can add a second comment, and am not asked my intention this time
-    fill_in "comment[body]", with: "A second comment"
+    find("#comment_body", visible: false).set("A second comment")
     click_on "Post comment"
     assert_equals 1, @user.comments.count
   end

@@ -5,7 +5,8 @@
     = hidden_field_tag "context_type", context.class.to_s
     = hidden_field_tag "context_id", context.id
     .row-padded
-      = f.text_area :body, class: "form-control js-ckeditor", style: "height: 200px;"
+      = f.hidden_field :body
+      <trix-editor input="comment_body"></trix-editor>
     .row-padded
       = monitor_connection
       = f.submit "Save", class: "btn btn-primary"
