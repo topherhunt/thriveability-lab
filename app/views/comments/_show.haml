@@ -3,7 +3,7 @@
     = image_tag(comment.author.image.url(:thumb), class: "img-rounded", style: "width: 60px;")
   %div
     %p.text-muted
-      = link_to comment.author.full_name, user_path(comment.author)
+      = link_to comment.author.full_name, user_path(comment.author), class: "js-tooltip", data: {tooltip: "#{comment.author.first_name}'s intention in this dialogue: #{intention}"}
       on #{print_date(comment.updated_at, time: true)}
       - if comment.updated_at > comment.created_at
         (edited)
@@ -12,10 +12,6 @@
         = link_to fa_icon("pencil"), edit_comment_path(comment), class: "test-edit-comment"
         &nbsp;
         = link_to fa_icon("trash"), comment_path(comment), method: :delete, class: "text-danger test-delete-comment", "data-confirm": "Really delete this comment?"
-
-      - if intention.present?
-        = " - "
-        = intention
 
     = sanitize(comment.body, tags: %w(h1 h2 h3 p blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
 %div{style: "clear: both;"}

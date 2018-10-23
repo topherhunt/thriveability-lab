@@ -13,14 +13,14 @@ class CommentsTest < Capybara::Rails::TestCase
     click_on "Conversations"
     find(".test-new-conversation-link").click
     fill_in "conversation[title]", with: "Convo title"
-    fill_in "intention", with: "Some intent"
+    fill_in "intention", with: "My first intention statement"
     fill_in "comment[body]", with: "Some body"
     click_on "Start this conversation!"
     conversation = @user.conversations.last
     assert conversation.present?
     assert_path conversation_path(conversation)
     assert_content "Convo title"
-    assert_content "Some intent"
+    assert_html "My first intention statement"
     assert_content "Some body"
     visit conversations_path
     assert_selector ".test-conversation-link", text: "Convo title"
@@ -36,13 +36,13 @@ class CommentsTest < Capybara::Rails::TestCase
     assert_content conversation.creator.full_name
     assert_content "A second comment"
     # Adding a comment
-    fill_in "intention", with: "Clear intent"
+    fill_in "intention", with: "New commenter intention statement"
     fill_in "comment[body]", with: "A third comment body"
     click_on "Post comment"
     assert_content "Your comment was posted!"
     assert_equals 1, @user.comments.count
     my_comment = @user.comments.last
-    assert_content "Clear intent"
+    assert_html "New commenter intention statement"
     assert_content "A third comment body"
     # Editing my comment
     find(".test-edit-comment").click
