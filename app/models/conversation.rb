@@ -1,7 +1,5 @@
 class Conversation < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  __elasticsearch__.index_name "ic-#{Rails.env}-conversations"
+  include Searchable
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage
   acts_as_taggable_on :tags
@@ -26,7 +24,7 @@ class Conversation < ActiveRecord::Base
       .limit(n)
   end
 
-  def as_indexed_json(options={}) # ElasticSearch integration
+  def es_index_json(options={})
     {
       creator: creator.full_name,
       title: title,

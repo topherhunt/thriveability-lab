@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  __elasticsearch__.index_name "ic-#{Rails.env}-users"
+  include Searchable
 
   has_many :omniauth_accounts, dependent: :delete_all
   has_many :projects, foreign_key: :owner_id
@@ -109,7 +107,7 @@ class User < ActiveRecord::Base
     [first_name, last_name].select{ |s| s.present? }.join(' ').presence
   end
 
-  def as_indexed_json(options={}) # ElasticSearch integration
+  def es_index_json(options={})
     {
       full_name: full_name,
       tagline: tagline,

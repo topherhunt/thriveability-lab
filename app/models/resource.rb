@@ -1,7 +1,5 @@
 class Resource < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  __elasticsearch__.index_name "ic-#{Rails.env}-resources"
+  include Searchable
 
   DEFAULT_MEDIA_TYPES = ['video', 'lecture', 'audio', 'image', 'book', 'research article', 'in press', 'unpublished', 'essay', 'popular media', 'brochure', 'website', 'course']
 
@@ -28,7 +26,7 @@ class Resource < ActiveRecord::Base
 
   before_save :ensure_current_url_has_protocol
 
-  def as_indexed_json(options={}) # ElasticSearch integration
+  def es_index_json(opts={})
     {
       title: title,
       description: description,

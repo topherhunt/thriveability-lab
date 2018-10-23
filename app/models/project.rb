@@ -1,7 +1,5 @@
 class Project < ActiveRecord::Base
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  __elasticsearch__.index_name("ic-#{Rails.env}-projects")
+  include Searchable
 
   STAGES = ["idea", "developing", "< 1 year", "1-5 years", "5-10 years", "> 10 years"]
 
@@ -54,7 +52,7 @@ class Project < ActiveRecord::Base
     all.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
 
-  def as_indexed_json(options={}) # ElasticSearch integration
+  def es_index_json(options={})
     {
       owner: owner.full_name,
       tags: tag_list.join(", "),

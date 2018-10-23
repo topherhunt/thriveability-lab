@@ -6,4 +6,14 @@ unless Rails.env.production?
       request: {timeout: 5}
     }
   )
+
+  # Test that the ES server is running; disable indexing if it isn't
+  begin
+    Elasticsearch::Model.client.cluster.health
+  rescue Faraday::ConnectionFailed => e
+    msg = "WARNING: Can't access the ES server; disabling ES indexing for this session."
+    Rails.logger.warn(msg)
+    puts msg
+    ENV['ES_INDEXING_DISABLED'] = 'true'
+  end
 end

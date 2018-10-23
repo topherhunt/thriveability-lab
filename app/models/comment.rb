@@ -18,6 +18,6 @@ class Comment < ActiveRecord::Base
   end
 
   def reindex_context
-    context.__elasticsearch__.index_document
+    context.update_es_document
   end
 end

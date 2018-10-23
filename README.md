@@ -31,9 +31,7 @@ Sample commands:
 
 Reindex all content, e.g. after changing the indexed schema:
 ```
-[Project, Post, Resource, User].each do |klass|
-  klass.__elasticsearch__.import(force: true)
-end
+[Project, Conversation, Resource, User].each { |c| c.__elasticsearch__.import(force: true) }
 ```
 
 ## Tests
