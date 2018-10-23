@@ -42,6 +42,7 @@
 
   %p
     - if current_user.omniauth_accounts.find_by(provider: :facebook).present?
+      = fa_icon("facebook-official")
       You've linked your Facebook account.
       = link_to "Unlink", users_omniauth_account_path(:facebook), method: :delete, class: "text-danger", "data-confirm": "Really unlink your Facebook account?"
     - else
@@ -49,6 +50,7 @@
 
   %p
     - if current_user.omniauth_accounts.find_by(provider: :google_oauth2).present?
+      = fa_icon("google")
       You've linked your Google account.
       = link_to "Unlink", users_omniauth_account_path(:google_oauth2), method: :delete, class: "text-danger", "data-confirm": "Really unlink your Google account?"
     - else
@@ -56,6 +58,7 @@
 
   %p
     - if current_user.omniauth_accounts.find_by(provider: :linkedin).present?
+      = fa_icon("linkedin-square")
       You've linked your LinkedIn account.
       = link_to "Unlink", users_omniauth_account_path(:linkedin), method: :delete, class: "text-danger", "data-confirm": "Really unlink your LinkedIn account?"
     - else

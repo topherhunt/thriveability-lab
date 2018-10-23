@@ -18,8 +18,8 @@ gem 'closure_tree' # performant hierarchy tree storage for Posts
 gem 'devise'
 gem 'factory_girl'
 gem 'faker'
-gem 'omniauth', '1.3.2'
-gem 'omniauth-oauth2', '~> 1.3.1' # LinkedIn auth breaks on version 1.4
+gem 'omniauth', '1.8.1'
+gem 'omniauth-oauth2' # LinkedIn auth breaks on version 1.4
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
