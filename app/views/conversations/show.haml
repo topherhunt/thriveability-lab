@@ -11,7 +11,13 @@
   - @comments.each do |comment|
     = render partial: "comments/show", locals: {comment: comment, intention: @intentions[comment.author_id]}
 
-  - if current_user
-    = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
-  - else
-    %p #{link_to "Log in", new_user_session_path} to join the conversation.
+- if current_user
+  .row
+    .col-sm-8
+      = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
+    .col-sm-4
+      = render partial: "conversations/sidebar_hint"
+- else
+  .centered-800
+    %div{style: "padding-top: 10px;"}
+      #{link_to "Log in", new_user_session_path} to join the conversation.
