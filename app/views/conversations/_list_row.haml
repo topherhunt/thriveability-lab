@@ -7,7 +7,7 @@
     .nowrap.text-ellipsis
       %span.h4= link_to conversation.title, conversation_path(conversation), class: "test-conversation-link"
     .nowrap.text-ellipsis.text-muted
-      = sanitize(conversation.comments.first.body, tags: [])
+      = sanitize(conversation.comments.first&.body, tags: [])
     .nowrap
       - conversation.participants.limit(5).each do |user|
         = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
