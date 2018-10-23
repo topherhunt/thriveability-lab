@@ -31,7 +31,6 @@ class ConversationsController < ApplicationController
     end
     redirect_to conversation_path(@conversation), info: "Great, you've started the conversation!"
   rescue ActiveRecord::RecordInvalid => e
-    # TODO: Will this work? is @conversation etc. still accessible?
     @conversation ||= Conversation.new
     @comment ||= Comment.new
     @participant ||= ConversationParticipantJoin.new

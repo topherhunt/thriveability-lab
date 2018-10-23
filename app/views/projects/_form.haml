@@ -85,9 +85,9 @@
       = f.label :stage, "Years in operation"
       = required
     .col-sm-9
-      = f.select :stage, Project::STAGES, { include_blank: "- select one -" }, { class: "form-control" }
+      = f.select :stage, Project::STAGES, {include_blank: "- select one -"}, {class: "form-control"}
 
-  = render partial: "shared/edit_tags", locals: { form: f, object: @project }
+  = render partial: "shared/edit_tags", locals: {object: @project}
 
   .row.row-padded
     .col-sm-3

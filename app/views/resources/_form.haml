@@ -36,7 +36,7 @@
       .hint.small Which groups would particularly benefit from knowing about this, and why?
     .col-sm-9= f.text_field :relevant_to, class: "form-control"
 
-  = render partial: "shared/edit_tags", locals: { form: f, object: @resource }
+  = render partial: "shared/edit_tags", locals: {object: @resource}
   -#
 
   .row.row-padded
