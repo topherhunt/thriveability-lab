@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params.merge(context: @context, author: current_user))
     add_participant_to_conversation if user_is_new_to_conversation?
     if @comment.errors.empty? && @comment.save
+      Event.register(current_user, "comment", @context)
       redirect_to @context, notice: "Your comment was posted!"
     else
       flash.now.alert = "Unable to save your changes: "\

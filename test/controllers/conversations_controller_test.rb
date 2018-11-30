@@ -4,7 +4,8 @@ class ConversationsControllerTest < ActionController::TestCase
   tests ConversationsController
 
   setup do
-    @user = create :user; sign_in @user
+    @user = create :user
+    sign_in @user
   end
 
   describe "before filters" do
@@ -61,14 +62,23 @@ class ConversationsControllerTest < ActionController::TestCase
     end
 
     it "creates the convo, comment, and participant if valid params" do
-      pre_count = Conversation.count
       post :create, @create_params
+
       c = Conversation.last
       assert_redirected_to conversation_path(c)
-      assert_equals pre_count+1, Conversation.count
+      assert_equals 1, Conversation.count
       assert_equals @user, c.creator
       assert_equals 1, c.comments.count
       assert_equals [@user], c.participants
+    end
+
+    it "notifies followers of this event" do
+      @user2 = create :user
+      StayInformedFlag.where(user: @user2, target: @user).create!
+
+      post :create, @create_params
+
+      assert_notified @user2, [@user, :create, @user.conversations.last]
     end
   end
 

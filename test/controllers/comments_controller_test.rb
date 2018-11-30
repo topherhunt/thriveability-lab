@@ -6,13 +6,13 @@ class CommentsControllerTest < ActionController::TestCase
   setup do
     @user = create :user
     sign_in @user
-    @conversation = create :conversation, creator: @user
+    @conversation = create :conversation, creator: create(:user) # (someone else)
 
     @create_params = {
       context_type: "Conversation",
       context_id: @conversation.id,
       intention: "blah",
-      comment: {body: "blah"}
+      comment: {body: "comment body"}
     }
   end
 
@@ -46,10 +46,21 @@ class CommentsControllerTest < ActionController::TestCase
     end
 
     it "creates the comment and redirects if valid params" do
-      pre_count = Comment.count
       post :create, @create_params
+      assert_equals 1, @conversation.comments.count
+      assert_equals "comment body", @conversation.comments.last.body
       assert_redirected_to conversation_path(@conversation)
-      assert_equals pre_count+1, Comment.count
+    end
+
+    # TODO: I feel like the notification system should be covered in unit tests
+    # rather than controller tests.
+    it "notifies followers of this event" do
+      @user2 = create :user
+      StayInformedFlag.where(user: @user2, target: @user).create!
+
+      post :create, @create_params
+
+      assert_notified @user2, [@user, :comment, @conversation]
     end
   end
 

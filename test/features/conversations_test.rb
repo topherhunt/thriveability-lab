@@ -26,7 +26,7 @@ class CommentsTest < Capybara::Rails::TestCase
     assert_selector ".test-conversation-link", text: "Convo title"
   end
 
-  test "User view a conversation, add a comment, edit it, and delete it" do
+  test "User view a conversation, then add, edit, and delete a comment" do
     conversation = create :conversation
     comment1 = create :comment, context: conversation, author: conversation.creator
     comment2 = create :comment, context: conversation, body: "A second comment"

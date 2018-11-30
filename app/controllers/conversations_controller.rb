@@ -29,7 +29,9 @@ class ConversationsController < ApplicationController
         participant: current_user,
         intention: params[:intention])
     end
-    redirect_to conversation_path(@conversation), info: "Great, you've started the conversation!"
+    Event.register(current_user, "create", @conversation)
+    redirect_to conversation_path(@conversation),
+      info: "Great, you've started the conversation!"
   rescue ActiveRecord::RecordInvalid => e
     @conversation ||= Conversation.new
     @comment ||= Comment.new

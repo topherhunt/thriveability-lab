@@ -60,7 +60,7 @@ class Event < ActiveRecord::Base
   def notify_user_ids
     user_ids = case action.to_s
     when "create"  then follower_ids_for(actor)
-    when "update"  then follower_ids_for(actor)
+    when "update"  then [follower_ids_for(actor), follower_ids_for(target)]
     when "comment" then [follower_ids_for(actor), follower_ids_for(target)]
     when "like"    then target_owner_id
     when "follow"  then target_owner_id

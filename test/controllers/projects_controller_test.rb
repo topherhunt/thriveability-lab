@@ -21,14 +21,12 @@ class ProjectsControllerTest < ActionController::TestCase
     it "returns you to the form if validation errors"
 
     it "notifies followers of this event" do
-      @follower = create :user
-      StayInformedFlag.where(user: @follower, target: @user).create!
-      assert_equals 0, @follower.notifications.count
+      @user2 = create :user
+      StayInformedFlag.where(user: @user2, target: @user).create!
+
       post :create, project: attributes_for(:project)
-      assert_equals 1, @follower.notifications.count
-      n = @follower.notifications.last
-      assert_equals @user, n.event.actor
-      assert_equals @user.projects.last, n.event.target
+
+      assert_notified @user2, [@user, :create, Project.last]
     end
   end
 end
