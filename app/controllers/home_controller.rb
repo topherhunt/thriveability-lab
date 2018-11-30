@@ -11,6 +11,7 @@ class HomeController < ApplicationController
 
   def about
     @team = User.where(email: ENV.fetch('TEAM_USER_EMAILS').split(',')).to_a.shuffle
+    render "home/about.haml", layout: "application" # (default is "home")
   end
 
   def throwup

@@ -8,8 +8,22 @@ class HomeControllerTest < ActionController::TestCase
 
   context "#home" do
     it "renders the homepage" do
+      # Populate some sample content
+      create :project, created_at: 5.days.ago
+      create :conversation, created_at: 4.days.ago
+      resource = create :resource, created_at: 2.days.ago
+      create :like_flag, target: resource, created_at: 1.days.ago
+
       get :home
+
       assert response.body.include?("Thrivability Lab")
+    end
+  end
+
+  context "#about" do
+    it "renders correctly" do
+      get :about
+      assert_content "What is Thriveability Lab?"
     end
   end
 
