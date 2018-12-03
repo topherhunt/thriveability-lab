@@ -34,6 +34,13 @@ class HomeControllerTest < ActionController::TestCase
     end
   end
 
+  context "#how_you_can_help" do
+    it "renders correctly" do
+      get :how_you_can_help
+      assert_content "How you can help the Thrivability project"
+    end
+  end
+
   context "#throwup" do
     it "raises an exception for testing" do
       assert_raises(RuntimeError) { get :throwup }

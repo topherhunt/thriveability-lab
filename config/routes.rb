@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  root to: 'home#home'
-  get 'home'  => 'home#home'
-  get 'about' => 'home#about'
-  get 'guiding_principles' => 'home#guiding_principles'
-  get 'throwup' => 'home#throwup'
-  get 'ping' => 'home#ping'
+  root to: "home#home"
+  get "home"  => "home#home"
+  get "about" => "home#about"
+  get "guiding_principles" => "home#guiding_principles"
+  get "how_you_can_help" => "home#how_you_can_help"
+  get "throwup" => "home#throwup"
+  get "ping" => "home#ping"
 
   # Thanks to https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
