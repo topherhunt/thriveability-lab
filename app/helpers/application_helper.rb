@@ -40,4 +40,8 @@ module ApplicationHelper
   def monitor_connection
     "<div class='js-monitor-connection js-hidden alert alert-danger'><strong>Your connection might be unstable!</strong> Please copy and paste any important changes to somewhere safe before submitting.</div>".html_safe
   end
+
+  def feedback_form_url
+    "https://goo.gl/forms/D5v9vsIB3aE4j1kg2"
+  end
 end

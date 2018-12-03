@@ -14,6 +14,10 @@ class HomeController < ApplicationController
     render "home/about.haml", layout: "application" # (default is "home")
   end
 
+  def guiding_principles
+    render "home/guiding_principles.haml", layout: "application" # (default is "home")
+  end
+
   def throwup
     raise "Threw up!"
   end

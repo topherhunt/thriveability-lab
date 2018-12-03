@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'home#home'
   get 'home'  => 'home#home'
   get 'about' => 'home#about'
+  get 'guiding_principles' => 'home#guiding_principles'
   get 'throwup' => 'home#throwup'
   get 'ping' => 'home#ping'
 

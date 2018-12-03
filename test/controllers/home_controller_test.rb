@@ -27,6 +27,13 @@ class HomeControllerTest < ActionController::TestCase
     end
   end
 
+  context "#guiding_principles" do
+    it "renders correctly" do
+      get :guiding_principles
+      assert_content "Principles of Thriveability Lab"
+    end
+  end
+
   context "#throwup" do
     it "raises an exception for testing" do
       assert_raises(RuntimeError) { get :throwup }
