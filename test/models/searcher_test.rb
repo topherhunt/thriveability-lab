@@ -15,7 +15,7 @@ class SearcherTest < ActiveSupport::TestCase
       @convo1 = create :conversation, title: "Platypus is an Omnivore"
       @convo2 = create :conversation, title: "My study of Omnivores"
       @comment1 = create :comment, context: @convo1
-      Searcher.rebuild_es_index!
+      ElasticsearchWrapper.rebuild_all_indexes!
     end
 
     it "searches across all indexed models by default" do

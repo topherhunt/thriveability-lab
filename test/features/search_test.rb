@@ -9,7 +9,9 @@ class SearchTest < Capybara::Rails::TestCase
     @comment1 = create :comment, context: @convo1
     @convo2 = create :conversation, title: "Dog Elephant"
     @comment2 = create :comment, context: @convo2
-    Searcher.rebuild_es_index!
+    # TODO: This should stub out Searcher responses, instead of actually making
+    # ES calls.
+    ElasticsearchWrapper.rebuild_all_indexes!
   end
 
   test "search interface works" do

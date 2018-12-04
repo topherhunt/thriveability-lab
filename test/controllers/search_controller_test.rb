@@ -41,7 +41,9 @@ class SearchControllerTest < ActionController::TestCase
       project2 = create :project
       resource2 = create :resource
       convo2 = create :conversation; create :comment, context: convo2
-      Searcher.rebuild_es_index!
+      # TODO: We shouldn't do this. Instead stub out Searcher so the controller
+      # doesn't rely on ES running.
+      ElasticsearchWrapper.rebuild_all_indexes!
 
       get :search, query: "antelope"
       assert_shown([user1, project1, resource1, convo1])
@@ -52,7 +54,7 @@ class SearchControllerTest < ActionController::TestCase
       user = create :user
       project = create :project
       resource = create :resource
-      Searcher.rebuild_es_index!
+      ElasticsearchWrapper.rebuild_all_indexes!
 
       get :search, query: "", models: "User,Resource"
       assert_shown([user, resource])
@@ -61,7 +63,7 @@ class SearchControllerTest < ActionController::TestCase
 
     it "limits to the first 10 results" do
       create_list :user, 26
-      Searcher.rebuild_es_index!
+      ElasticsearchWrapper.rebuild_all_indexes!
 
       get :search, query: ""
       assert_select "div.test-search-result", count: 10
@@ -69,7 +71,7 @@ class SearchControllerTest < ActionController::TestCase
 
     it "can return the requested page of results" do
       create_list :user, 16
-      Searcher.rebuild_es_index!
+      ElasticsearchWrapper.rebuild_all_indexes!
 
       total_num_records = Searcher.new(string: "").run.records.count
       get :search, query: "", page: 2

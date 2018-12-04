@@ -4,6 +4,9 @@ module Searchable
   included do
     include Elasticsearch::Model
 
+    # Only give each index 1 shard so we don't exceed Bonsai limit of 10 shards
+    __elasticsearch__.settings(index: {number_of_shards: 1})
+
     __elasticsearch__.index_name "thrivability-#{Rails.env}-#{self.to_s.downcase.pluralize}"
 
     after_create :create_es_document

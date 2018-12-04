@@ -2,7 +2,7 @@ class Admin::ElasticsearchGuiController < ApplicationController
   http_basic_authenticate_with name: "topher", password: "esgui"
 
   def page
-    @all_indexes = all_indexes
+    @all_indexes = ElasticsearchWrapper.all_indexes
   end
 
   def query
@@ -27,12 +27,4 @@ class Admin::ElasticsearchGuiController < ApplicationController
   def client
     Elasticsearch::Model.client
   end
-
-  def all_indexes
-    response = client.perform_request('GET', '_aliases')
-    response.as_json['body'].keys.sort
-  rescue => e
-    []
-  end
-
 end
