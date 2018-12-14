@@ -12,9 +12,9 @@ class UserProfileTest < Capybara::Rails::TestCase
     # editing my profile
     click_on "My Profile"
     page.find(".test-edit-user").click
-    fill_in "user_first_name", with: "Elmer"
+    fill_in "user_name", with: "Elmer Fudd"
     page.find(".test-submit-user-profile").click
-    assert_equals "Elmer", @user.reload.first_name
+    assert_equals "Elmer Fudd", @user.reload.name
 
     # viewing my profile
     # TODO

@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
   end
 
   def sentence
-    "#{actor.full_name} #{action_description} #{target_description}"
+    "#{actor.name} #{action_description} #{target_description}"
   end
 
   def action_description
@@ -50,7 +50,7 @@ class Event < ActiveRecord::Base
   end
 
   def target_description
-    target_type.to_s == "User" ? target.full_name : target.title
+    target_type.to_s == "User" ? target.name : target.title
   end
 
   def image_url

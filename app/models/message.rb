@@ -18,7 +18,7 @@ class Message < ActiveRecord::Base
   validates :body, length: {maximum: 1000}
 
   def full_subject
-    "New message from #{sender.full_name}: \"#{subject}\""
+    "New message from #{sender.name}: \"#{subject}\""
   end
 
   def send!

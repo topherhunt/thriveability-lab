@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get "auth/oauth2/login_callback" => "auth0#login_callback"
   get "auth/failure" => "auth0#failure"
+  get "auth/logout" => "auth0#logout", as: :logout
 
   resources :users, only: [:index, :show, :edit, :update]
   resources :conversations, only: [:index, :new, :create, :edit, :update, :show]

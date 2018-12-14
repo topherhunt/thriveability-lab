@@ -16,7 +16,7 @@
           %div
             = link_to image_tag(e.image_url, class: "notification-icon"), notification_path(n, redirect_to: "actor")
             -# %span.datetime #{print_date n.created_at, time: true} -
-            = link_to e.actor.full_name, notification_path(n, redirect_to: "actor"), class: "notification-actor-link"
+            = link_to e.actor.name, notification_path(n, redirect_to: "actor"), class: "notification-actor-link"
             = e.action_description
             = link_to "\"#{ellipsify e.target_description, 80}\"", notification_path(n, redirect_to: "target"), class: "notification-target-link"
       .divider{role: "separator"}

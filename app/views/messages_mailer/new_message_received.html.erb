@@ -1,9 +1,9 @@
-<p>Howdy <%= @message.recipient.first_name %>!</p>
+<p>Howdy <%= @message.recipient.name %>!</p>
 
 <% if @message.project %>
-  <p>Thrivability Lab member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+  <p>Thrivability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
 <% else %>
-  <p>Thrivability Lab member <%= link_to @message.sender.full_name, user_url(@message.sender) %> has sent you a message.</p>
+  <p>Thrivability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message.</p>
 <% end %>
 
 <p>Subject: <%= @message.subject %></p>
@@ -13,4 +13,4 @@
 <%= simple_format(@message.body) %>
 <hr>
 
-<p>To write back to <%= @message.sender.first_name %>, simply reply to this email.</p>
+<p>To write back to <%= @message.sender.name %>, simply reply to this email.</p>

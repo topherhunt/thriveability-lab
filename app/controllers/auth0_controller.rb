@@ -20,13 +20,13 @@ class Auth0Controller < ApplicationController
     end
   end
 
-  def logout_callback
-    raise "TODO: Figure out what data is provided with it. Request.env is: #{request.env}"
-    redirect_to root_path, notice: "You're logged out."
-  end
-
   def failure
     raise "TODO: Figure out when is this called, and what data is provided with it. Request.env is: #{request.env}"
+  end
+
+  def logout
+    reset_session
+    redirect_to root_path
   end
 
   private
@@ -40,29 +40,18 @@ class Auth0Controller < ApplicationController
       # TODO: Consider updating the user based on their latest account settings
       user
     else
-      first_name = auth.extra&.raw_info&.given_name
-      first_name = auth.info.first_name || auth.info.name || raise("Name is required")
-      last_name = auth.info.last_name # may be blank
+      name = auth.info.name || raise("Name is required")
       image = auth.info.image
-      User.create!(
-        auth0_uid: uid,
-        first_name: first_name,
-        last_name: last_name,
-        image: image)
+      User.create!(auth0_uid: uid, name: name, image: image)
     end
   rescue => e
     raise "Failed to validate Auth0 auth data: #{e}. The full auth data provided by Auth0 was: #{auth.to_json}"
   end
 
-  def first_name(auth)
-    if fn = auth.extra&.raw_info&.given_name
-
-  end
-
   def sign_in!(user)
     # We don't expire session. You stay logged in until you log out or close browser.
     session[:user_id] = user.id
-    user.update!(last_sign_in_at: Time.current)
+    user.update!(last_signed_in_at: Time.current)
     @current_user = user
   end
 

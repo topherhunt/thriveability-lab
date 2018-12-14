@@ -50,11 +50,11 @@ class ProjectMessagesTest < Capybara::Rails::TestCase
     assert_equals [project.owner.email], mail_to_recipient.to
     assert_equals [sender.email], mail_to_recipient.reply_to
     assert_equals nil, mail_to_recipient.cc
-    assert mail_to_recipient.subject.include?("New message from #{sender.full_name}")
+    assert mail_to_recipient.subject.include?("New message from #{sender.name}")
     mail_to_sender = ActionMailer::Base.deliveries.second
     assert_equals [sender.email], mail_to_sender.to
     assert_equals nil, mail_to_sender.reply_to
     assert_equals nil, mail_to_sender.cc
-    assert mail_to_sender.subject.include?("Your message has been sent to #{project.owner.full_name}")
+    assert mail_to_sender.subject.include?("Your message has been sent to #{project.owner.name}")
   end
 end

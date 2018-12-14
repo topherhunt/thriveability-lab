@@ -27,6 +27,6 @@ class MessagesController < ApplicationController
 
   def handle_redirect
     path = @message.project.present? ? project_path(@message.project) : root_path
-    redirect_to path, notice: "Your message has been sent to #{@message.recipient.first_name}!"
+    redirect_to path, notice: "Your message has been sent to #{@message.recipient.name}!"
   end
 end

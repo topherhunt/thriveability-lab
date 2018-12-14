@@ -1,7 +1,7 @@
 .row
   .col-sm-8
     %div{style: "padding-bottom: 10px;"}
-      %span.h1= @user.full_name || "Nameless Cool Person"
+      %span.h1= @user.name || "Nameless Cool Person"
       - if current_user == @user
         &nbsp;
         = link_to fa_icon("pencil") + " Edit my profile", edit_user_path(@user), class: "test-edit-user"
@@ -28,10 +28,10 @@
     %hr
 
     %div
-      = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.first_name} inspires me" }
-      = render partial: "shared/stay_informed_flags_section", locals: { target: @user, link_wording: "Follow #{@user.first_name}" }
+      = render partial: "shared/likes_section", locals: { target: @user, link_wording: "#{@user.name} inspires me" }
+      = render partial: "shared/stay_informed_flags_section", locals: { target: @user, link_wording: "Follow #{@user.name}" }
       - unless current_user == @user
-        %span= link_to fa_icon("envelope"), new_message_path(message: {recipient_id: @user.id}), class: "btn btn-info js-tooltip", title: "Send #{@user.first_name} a message"
+        %span= link_to fa_icon("envelope"), new_message_path(message: {recipient_id: @user.id}), class: "btn btn-info js-tooltip", title: "Send #{@user.name} a message"
 
 %h3 My contributions
 .row

@@ -1,9 +1,9 @@
-Howdy <%= @message.sender.first_name %>!
+Howdy <%= @message.sender.name %>!
 
 <% if @message.project %>
-This email confirms that your message has been sent to <%= @message.recipient.full_name %> regarding their project, <%= @message.project.title %>.
+This email confirms that your message has been sent to <%= @message.recipient.name %> regarding their project, <%= @message.project.title %>.
 <% else %>
-This email confirms that your message has been sent to <%= @message.recipient.full_name %>.
+This email confirms that your message has been sent to <%= @message.recipient.name %>.
 <% end %>
 
 Subject: <%= @message.subject %>
@@ -13,4 +13,4 @@ The message:
 <%= @message.body %>
 ----------
 
-If <%= @message.recipient.first_name %> replies to your message, the reply will be sent directly to your email inbox.
+If <%= @message.recipient.name %> replies to your message, the reply will be sent directly to your email inbox.

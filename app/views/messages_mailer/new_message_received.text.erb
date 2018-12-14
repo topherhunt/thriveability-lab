@@ -1,9 +1,9 @@
-Howdy <%= @message.recipient.first_name %>!
+Howdy <%= @message.recipient.name %>!
 
 <% if @message.project %>
-Thrivability Lab member <%= @message.sender.full_name %> has sent you a message relating to your project, <%= @message.project.title %>.
+Thrivability Lab member <%= @message.sender.name %> has sent you a message relating to your project, <%= @message.project.title %>.
 <% else %>
-Thrivability Lab member <%= @message.sender.full_name %> has sent you a message.
+Thrivability Lab member <%= @message.sender.name %> has sent you a message.
 <% end %>
 
 Subject: <%= @message.subject %>
@@ -13,4 +13,4 @@ The message:
 <%= @message.body %>
 ----------
 
-To write back to <%= @message.sender.first_name %>, simply reply to this email.
+To write back to <%= @message.sender.name %>, simply reply to this email.

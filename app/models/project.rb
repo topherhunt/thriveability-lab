@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
 
   def es_index_json(options={})
     {
-      owner: owner.full_name,
+      owner: owner.name,
       tags: tag_list.join(", "),
       title: title,
       subtitle: subtitle,

@@ -22,7 +22,7 @@ class SearchControllerTest < ActionController::TestCase
     end
 
     def expected_text(record)
-      record.try(:title) || record.first_name
+      record.try(:title) || record.name
     end
 
     def debug(record)

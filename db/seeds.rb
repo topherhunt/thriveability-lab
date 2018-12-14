@@ -23,19 +23,17 @@ User.delete_all
 @resources = []
 
 @topher = FactoryGirl.create(:user,
-  first_name: "Topher",
-  last_name: "Hunt",
-  email: "hunt.topher@gmail.com"
-)
+  name: "Topher Hunt",
+  email: "hunt.topher@gmail.com")
 
 SCALE=1 # default: 5
 
 puts "\nCreating users..."
 (SCALE*10).times do |i|
   print "."
-  # first_name = Faker::Name.first_name
-  # last_name = Faker::Name.last_name
-  # email = "#{first_name}.#{last_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
+  # name = Faker::Name.name
+  # sanitized_name = name.downcase.gsub(/^\w/, "")
+  # email = "#{sanitized_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
   # location = Faker::LordOfTheRings.location
 
   uri = URI.parse('https://randomuser.me/api/')
@@ -44,8 +42,7 @@ puts "\nCreating users..."
 
   user = FactoryGirl.create(:user, {
     email: json['email'].gsub(/\s/, ''),
-    first_name: json['name']['first'].capitalize,
-    last_name: json['name']['last'].capitalize,
+    name: json['name']['first'].capitalize + " " + json['name']['last'].capitalize,
     location: json['location']['city'] + ' ' + json['location']['state'],
     image: json['picture']['large']
   })

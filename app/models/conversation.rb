@@ -26,7 +26,7 @@ class Conversation < ActiveRecord::Base
 
   def es_index_json(options={})
     {
-      creator: creator.full_name,
+      creator: creator.name,
       title: title,
       tags: tag_list.join(", "),
       comments: comments.pluck(:body).join(" "),

@@ -24,7 +24,7 @@ class SearchTest < Capybara::Rails::TestCase
     assert_content @project1.title
     assert_html project_path(@project1)
     assert_content @resource1.title
-    assert_no_content @user1.full_name
+    assert_no_content @user1.name
     assert_no_content @convo1.title
     assert_no_content @convo2.title
 
@@ -34,7 +34,7 @@ class SearchTest < Capybara::Rails::TestCase
     assert_content @convo1.title
     assert_content @resource1.title
     assert_no_content @convo2.title
-    assert_no_content @user1.full_name
+    assert_no_content @user1.name
     assert_no_content @project1.title
   end
 end

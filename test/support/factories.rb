@@ -2,8 +2,8 @@ include ActionDispatch::TestProcess
 
 FactoryGirl.define do
   factory(:user) do
-    name { Faker::Name.first_name.gsub("'", "") + " " + Faker::Name.last_name.gsub("'", "") }
-    email      { "#{full_name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
+    name { Faker::Name.name.gsub("'", "") }
+    email      { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
     # These are overkill for most test users, but useful in the dev environment

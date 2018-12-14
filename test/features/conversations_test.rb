@@ -33,7 +33,7 @@ class CommentsTest < Capybara::Rails::TestCase
 
     visit conversation_path(conversation)
     assert_content conversation.title
-    assert_content conversation.creator.full_name
+    assert_content conversation.creator.name
     assert_content "A second comment"
     # Adding a comment
     fill_in "intention", with: "New commenter intention statement"

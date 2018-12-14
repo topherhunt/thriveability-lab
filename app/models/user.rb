@@ -23,8 +23,7 @@ class User < ActiveRecord::Base
   # See https://github.com/thoughtbot/paperclip#quick-start
   validates :auth0_uid, presence: true
   validates :email, length: {maximum: 255}
-  validates :first_name, presence: true, length: {maximum: 255}
-  validates :last_name, length: {maximum: 255}
+  validates :name, presence: true, length: {maximum: 255}
   validates :tagline, length: { maximum: 120 }
   validates :location, length: { maximum: 255 }
   validates :bio_interior, length: {maximum: 1000}
@@ -36,7 +35,7 @@ class User < ActiveRecord::Base
 
   def es_index_json(options={})
     {
-      full_name: full_name,
+      name: name,
       tagline: tagline,
       location: location,
       bio_interior: bio_interior,
@@ -44,10 +43,6 @@ class User < ActiveRecord::Base
       interests: interests,
       visible: true
     }
-  end
-
-  def full_name
-    "#{first_name} #{last_name}".strip
   end
 
   # TODO: Cache this for performance, and figure out when to bust the cache.

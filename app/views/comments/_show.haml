@@ -3,7 +3,7 @@
     = image_tag(comment.author.image.url(:thumb), class: "img-rounded", style: "width: 60px;")
   %div
     %p.text-muted
-      = link_to comment.author.full_name, user_path(comment.author), class: "js-tooltip", data: {tooltip: "#{comment.author.first_name}'s intention in this dialogue: #{intention}"}
+      = link_to comment.author.name, user_path(comment.author), class: "js-tooltip", data: {tooltip: "#{comment.author.name}'s intention in this dialogue: #{intention}"}
       on #{print_date(comment.updated_at, time: true)}
       - if comment.updated_at > comment.created_at
         (edited)

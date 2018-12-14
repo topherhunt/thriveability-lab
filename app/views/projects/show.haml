@@ -10,7 +10,7 @@
     %table.table
       %tr
         %th Owner
-        %td= link_to @project.owner.full_name, user_path(@project.owner)
+        %td= link_to @project.owner.name, user_path(@project.owner)
       %tr
         %th Home base
         %td= @project.location_of_home
@@ -59,4 +59,4 @@
       = render partial: "shared/stay_informed_flags_section", locals: { target: @project, link_wording: "Keep me informed" }
       = render partial: "shared/get_involved_flags_section", locals: { target: @project, link_wording: "I want to get involved" }
       - unless current_user == @project.owner
-        %span= link_to fa_icon("envelope"), new_message_path(message: { project_id: @project.id, recipient_id: @project.owner_id }), class: "new-project-message-link btn btn-info js-tooltip", title: "Send #{@project.owner.first_name} an email"
+        %span= link_to fa_icon("envelope"), new_message_path(message: { project_id: @project.id, recipient_id: @project.owner_id }), class: "new-project-message-link btn btn-info js-tooltip", title: "Send #{@project.owner.name} an email"

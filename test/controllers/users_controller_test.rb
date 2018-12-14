@@ -19,7 +19,7 @@ class UsersControllerTest < ActionController::TestCase
       create :resource, creator: user
 
       get :show, id: user.id
-      assert_content user.full_name
+      assert_content user.name
     end
   end
 end

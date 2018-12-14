@@ -215,12 +215,11 @@ ActiveRecord::Schema.define(version: 20181214090529) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "first_name"
-    t.string   "last_name"
     t.text     "bio_interior"
     t.text     "bio_exterior"
     t.text     "tagline"
     t.string   "location"
+    t.string   "name",               null: false
     t.string   "auth0_uid",          null: false
     t.datetime "last_signed_in_at"
     t.string   "email"
