@@ -3,15 +3,31 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_filter :configure_permitted_devise_params, if: :devise_controller?
+  before_filter :load_current_user
 
-  def configure_permitted_devise_params
-    devise_parameter_sanitizer.permit(:sign_up) do |u|
-      u.permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  helper_method :current_user
+
+  #
+  # Auth helpers
+  #
+
+  def load_current_user
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
     end
   end
 
-  def require_login
+  def current_user
+    @current_user
+  end
+
+  def require_not_logged_in
+    if current_user
+      redirect_to root_path, alert: "You are already logged in."
+    end
+  end
+
+  def require_logged_in
     unless current_user
       if request.method == "GET"
         session[:return_to] = request.original_url
@@ -19,16 +35,6 @@ class ApplicationController < ActionController::Base
         session[:return_to] = request.referer
       end
       redirect_to new_user_session_path, alert: "You must be logged in to take that action."
-    end
-  end
-
-  def after_sign_in_path_for(user)
-    if session[:return_to]
-      session.delete(:return_to)
-    elsif user.first_name.present?
-      root_path
-    else
-      user_path(user)
     end
   end
 

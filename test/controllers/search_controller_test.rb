@@ -22,7 +22,7 @@ class SearchControllerTest < ActionController::TestCase
     end
 
     def expected_text(record)
-      record.try(:title) || record.full_name
+      record.try(:title) || record.first_name
     end
 
     def debug(record)
@@ -33,7 +33,7 @@ class SearchControllerTest < ActionController::TestCase
     # the Searcher module instead.
 
     it "lists all matching results" do
-      user1 = create :user, first_name: "Antelope", last_name: "McCreary"
+      user1 = create :user, name: "Antelope McCreary"
       project1 = create :project, title: "Apple Antelope"
       resource1 = create :resource, title: "Antelope Cat"
       convo1 = create :conversation, title: "Cat Dog Antelope"; create :comment, context: convo1

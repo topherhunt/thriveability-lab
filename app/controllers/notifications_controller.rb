@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  before_action :require_login
+  before_action :require_logged_in
 
   def index
     @notifications = current_user.notifications.includes(:event)

@@ -2,16 +2,17 @@
 # See https://github.com/laserlemon/figaro#required-keys
 
 Figaro.require_keys(
+  "AUTH0_DOMAIN",
+  "AUTH0_CLIENT_ID",
+  "AUTH0_CLIENT_SECRET",
   "BONSAI_URL",
   "HOSTNAME",
-  "SUPPORT_EMAIL",
+  "ROLLBAR_ACCESS_TOKEN",
+  "S3_BUCKET",
+  "S3_ACCESS_KEY_ID",
+  "S3_SECRET_ACCESS_KEY",
   "SMTP_HOST",
   "SMTP_USERNAME",
   "SMTP_PASSWORD",
-  "ROLLBAR_ACCESS_TOKEN",
-  "DEVISE_SECRET_KEY",
-  "DEVISE_PEPPER",
-  "S3_BUCKET",
-  "S3_ACCESS_KEY_ID",
-  "S3_SECRET_ACCESS_KEY"
+  "SUPPORT_EMAIL"
 )

@@ -1,5 +1,5 @@
 class StayInformedFlagsController < ApplicationController
-  before_action :require_login
+  before_action :require_logged_in
 
   def create
     @target = params[:target_type].constantize.find(params[:target_id])

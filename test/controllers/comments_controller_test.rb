@@ -17,7 +17,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   describe "before filters" do
-    test "#require_login redirects if unauthenticated" do
+    test "#require_logged_in redirects if unauthenticated" do
       sign_out @user
       post :create, @create_params
       assert_redirected_to new_user_session_path

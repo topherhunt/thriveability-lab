@@ -2,8 +2,7 @@ include ActionDispatch::TestProcess
 
 FactoryGirl.define do
   factory(:user) do
-    first_name { Faker::Name.first_name.gsub("'", "") }
-    last_name  { Faker::Name.last_name.gsub("'", "")  }
+    name { Faker::Name.first_name.gsub("'", "") + " " + Faker::Name.last_name.gsub("'", "") }
     email      { "#{full_name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     password              "password"
     password_confirmation "password"
@@ -13,7 +12,7 @@ FactoryGirl.define do
     bio_exterior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
     created_at   { (rand * 400.0).days.ago }
     confirmed_at { created_at + (rand * 10).hours }
-    current_sign_in_at { (rand * 30).days.ago }
+    last_signed_in_at { (rand * 30).days.ago }
   end
 
   factory(:project) do

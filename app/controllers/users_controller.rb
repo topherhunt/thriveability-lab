@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_login, except: [:index, :search, :show]
+  before_action :require_logged_in, except: [:index, :search, :show]
 
   def index
     @most_active_users = User.most_recent(8)
@@ -28,18 +28,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password
-    @user = current_user
-    @user.send_reset_password_instructions
-    sign_out # Devise's pw reset mechanism won't work if I'm signed in
-    redirect_to root_path, notice: "We've emailed a password reset link to <#{@user.email}>. Please check your email for the link."
-  end
-
   private
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :tagline, :image, :location, :bio_interior, :bio_exterior)
-
+    params.require(:user).permit(:first_name, :last_name, :tagline, :location, :bio_interior, :bio_exterior, :image, :email)
   end
 
 end

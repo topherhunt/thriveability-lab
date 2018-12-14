@@ -26,7 +26,7 @@
         %li.hidden-sm{class: active_if_current(resources_path)}
           = link_to "Resources", resources_path, class: "orange"
 
-        - if user_signed_in?
+        - if current_user
           = render partial: "layouts/notifications_menu"
           %li.dropdown
             %a.dropdown-toggle{'data-toggle' => 'dropdown'}
@@ -38,5 +38,4 @@
               %li= link_to "Account settings", edit_user_registration_path
               %li= link_to "Log out", destroy_user_session_path, method: :delete, class: "text-danger"
         - else
-          %li= link_to "Log in", new_user_session_path
-          %li= link_to "Sign up", new_user_registration_path
+          %li= link_to "Log in", auth0_login_url

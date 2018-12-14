@@ -1,5 +1,5 @@
 class ResourcesController < ApplicationController
-  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
+  before_action :require_logged_in, only: [:new, :create, :edit, :update, :destroy]
   before_action :load_resource, only: [:show, :edit, :update, :destroy]
   before_action :load_target, only: [:new, :create]
   before_action :verify_ownership, only: [:edit, :update, :destroy]

@@ -14,6 +14,11 @@
       .col-sm-8= f.text_field :last_name, class: "form-control"
     .row.row-padded
       .col-sm-4
+        = f.label :email, "Where should we email you notifications?"
+        .hint.small Where should we send notifications about activity in your network? (optional) Your email address isn't visible to anyone and we won't share it.
+      .col-sm-8= f.text_field :email, class: "form-control"
+    .row.row-padded
+      .col-sm-4
         = f.label :image, "A photo of me"
         %span.small.em.text-danger required
         .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.

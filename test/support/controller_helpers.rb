@@ -1,5 +1,7 @@
 class ActionController::TestCase
-  include Devise::Test::ControllerHelpers
+  # TODO: Write new user session signin & signout helpers:
+  # - sign_in(user)
+  # - sign_out(user)
 
   def assert_content(text_or_html)
     if response.body.include?(text_or_html)

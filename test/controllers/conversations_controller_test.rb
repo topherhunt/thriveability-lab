@@ -13,7 +13,7 @@ class ConversationsControllerTest < ActionController::TestCase
       @c = create :conversation, creator: @user
     end
 
-    test "#require_login redirects if unauthenticated" do
+    test "#require_logged_in redirects if unauthenticated" do
       sign_out @user
       get :edit, id: @c.id
       assert_redirected_to new_user_session_path

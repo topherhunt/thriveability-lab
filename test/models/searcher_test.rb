@@ -4,12 +4,12 @@ require "test_helper"
 class SearcherTest < ActiveSupport::TestCase
 
   def debug(records)
-    records.map { |r| "#{r.class}: #{r.try(:title) || r.full_name}" }
+    records.map { |r| "#{r.class}: #{r.try(:title) || r.first_name}" }
   end
 
   describe "running searches" do
     setup do
-      @user1 = create :user, first_name: "Mackenzie", last_name: "Platypus"
+      @user1 = create :user, first_name: "Mackenzie"
       @project1 = create :project, title: "Omnivore's Dilemma"
       @resource1 = create :resource, title: "Mackenzie's Study"
       @convo1 = create :conversation, title: "Platypus is an Omnivore"

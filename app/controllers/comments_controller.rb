@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :require_login
+  before_action :require_logged_in
   before_action :load_context, only: [:create]
   before_action :load_comment, only: [:edit, :update, :destroy]
 

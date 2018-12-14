@@ -1,5 +1,5 @@
 .centered-600
-  %h1 Send #{@message.recipient.first_name} a message
+  %h1 Send #{@message.recipient.full_name} a message
 
   %p Write your message below, then click <strong>Send</strong>. We'll email #{@message.recipient.first_name} with your message, and CC a copy to you as well. If #{@message.recipient.first_name} replies, you'll receive the reply directly in your email inbox.
 
