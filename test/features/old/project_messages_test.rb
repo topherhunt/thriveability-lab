@@ -17,7 +17,7 @@ class ProjectMessagesTest < Capybara::Rails::TestCase
   test "Visitor is required to log in before sending a message" do
     visit project_path(@project)
     page.find('.new-project-message-link').click
-    assert_path new_user_session_path
+    assert_path root_path
   end
 
   # === Helpers ===

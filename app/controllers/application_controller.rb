@@ -13,7 +13,13 @@ class ApplicationController < ActionController::Base
 
   def load_current_user
     if session[:user_id]
-      @current_user = User.find(session[:user_id])
+      if @current_user = User.find_by(id: session[:user_id])
+        # Great, you're logged in.
+      else
+        Rails.logger.warn "Resetting invalid session user_id #{session[:user_id]}."
+        reset_session
+        redirect_to root_path
+      end
     end
   end
 
@@ -34,7 +40,7 @@ class ApplicationController < ActionController::Base
       else
         session[:return_to] = request.referer
       end
-      redirect_to new_user_session_path, alert: "You must be logged in to take that action."
+      redirect_to root_path, alert: "You must be logged in to take that action."
     end
   end
 
@@ -45,7 +51,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::InvalidAuthenticityToken do
     session[:return_to] = request.referer
-    redirect_to new_user_session_path, alert: "You must be logged in to take that action."
+    redirect_to root_path, alert: "You must be logged in to take that action."
   end
 
   rescue_from ActionController::RoutingError do |e|

@@ -37,7 +37,7 @@ class ResourcesControllerTest < ActionController::TestCase
 
     it "requires login" do
       get :new
-      assert_redirected_to new_user_session_path
+      assert_redirected_to root_path
     end
   end
 

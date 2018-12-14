@@ -16,7 +16,7 @@ class ConversationsControllerTest < ActionController::TestCase
     test "#require_logged_in redirects if unauthenticated" do
       sign_out @user
       get :edit, id: @c.id
-      assert_redirected_to new_user_session_path
+      assert_redirected_to root_path
     end
 
     test "#load_conversation raises RecordNotFound if conversation isn't found" do
