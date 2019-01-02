@@ -53,6 +53,13 @@ class ApplicationController < ActionController::Base
   # Other helpers
   #
 
+  # Add request metadata to Lograge payload (see config/initializers/lograge.rb)
+  def append_info_to_payload(payload)
+    super
+    payload[:ip] = request.remote_ip
+    payload[:user] = current_user ? "#{current_user.id} (#{current_user.name})" : "none"
+  end
+
   def requester_is_robot?
     ["AhrefsBot", "DotBot", "Googlebot"]
       .any? { |string| string.in?(request.user_agent || '') }

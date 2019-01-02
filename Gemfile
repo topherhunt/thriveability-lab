@@ -9,6 +9,7 @@ gem 'pg'
 gem 'rollbar'
 gem 'unicorn'
 gem 'elasticsearch-model'
+gem 'lograge'
 
 # Domain logic
 gem 'acts-as-taggable-on'
