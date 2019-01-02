@@ -17,7 +17,7 @@ class NotificationsControllerTest < ActionController::TestCase
       get :index
       assert_select "tr.notification.unread", count: 2
       assert_select "tr.notification.read", count: 1
-      assert_content notification_path(@user.notifications.first)
+      assert response.body.include? notification_path(@user.notifications.first)
     end
   end
 

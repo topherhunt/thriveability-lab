@@ -16,10 +16,14 @@ class RebuildUserWithAuth0Fields < ActiveRecord::Migration
     remove_column :users, :has_set_password
     remove_column :users, :first_name
     remove_column :users, :last_name
+    remove_column :users, :email
 
-    add_column :users, :name, :string, null: false
     add_column :users, :auth0_uid, :string, null: false
+    add_column :users, :name, :string, null: false
+    add_column :users, :email, :string, null: false # not necessarily unique
     add_column :users, :last_signed_in_at, :datetime
+
+    add_index :users, :auth0_uid, unique: true
   end
 
   def down

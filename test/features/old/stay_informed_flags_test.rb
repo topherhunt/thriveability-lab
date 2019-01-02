@@ -8,7 +8,7 @@ class StayInformedFlagsTest < Capybara::Rails::TestCase
   end
 
   test "User can ask to stay informed on a project (and remove that setting)" do
-    login_as @user
+    sign_in @user
     visit project_path(@project)
     assert_equals 0, @user.created_stay_informed_flags.count
     page.find('.stay-informed a').click

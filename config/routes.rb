@@ -8,12 +8,15 @@ Rails.application.routes.draw do
   get "ping" => "home#ping"
 
   get "auth/oauth2/login_callback" => "auth0#login_callback"
-  get "auth/failure" => "auth0#failure"
-  get "auth/logout" => "auth0#logout", as: :logout
+  get "auth/logout" => "auth0#logout", as: "logout"
+  get "auth/force_login/:user_id" => "auth0#force_login", as: "force_login"
 
   resources :users, only: [:index, :show, :edit, :update]
+
   resources :conversations, only: [:index, :new, :create, :edit, :update, :show]
+
   resources :comments, only: [:create, :edit, :update, :destroy]
+
   resources :resources
 
   get "/projects/resources" => "projects#resources", as: "projects_resources"

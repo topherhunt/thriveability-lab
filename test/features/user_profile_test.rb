@@ -7,7 +7,7 @@ class UserProfileTest < Capybara::Rails::TestCase
 
   test "user profile viewing & editing works" do
     visit root_path
-    login_as @user
+    sign_in @user
 
     # editing my profile
     click_on "My Profile"
@@ -15,8 +15,5 @@ class UserProfileTest < Capybara::Rails::TestCase
     fill_in "user_name", with: "Elmer Fudd"
     page.find(".test-submit-user-profile").click
     assert_equals "Elmer Fudd", @user.reload.name
-
-    # viewing my profile
-    # TODO
   end
 end

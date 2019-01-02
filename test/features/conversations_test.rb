@@ -5,7 +5,7 @@ class CommentsTest < Capybara::Rails::TestCase
 
   setup do
     @user = create(:user)
-    login_as @user
+    sign_in @user
   end
 
   test "User can start a conversation" do

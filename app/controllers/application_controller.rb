@@ -2,14 +2,19 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-
   before_filter :load_current_user
-
   helper_method :current_user
 
   #
   # Auth helpers
   #
+
+  def sign_in!(user)
+    # We don't expire session. You stay logged in until you log out or close browser.
+    session[:user_id] = user.id
+    user.update!(last_signed_in_at: Time.current)
+    @current_user = user
+  end
 
   def load_current_user
     if session[:user_id]
@@ -44,30 +49,49 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  #
+  # Other helpers
+  #
+
   def requester_is_robot?
     ["AhrefsBot", "DotBot", "Googlebot"]
       .any? { |string| string.in?(request.user_agent || '') }
   end
 
+  def log(sev, message)
+    raise "Unknown severity #{sev}!" unless sev.in? [:info, :warn, :error]
+    Rails.logger.send(sev, "#{self.class}: #{message}")
+  end
+
+  #
+  # Rescues
+  #
+
+  # We can assume that most CSRF violations are due to login timeouts.
+  # TODO: Review how MAPP does this. Anything to improve here?
   rescue_from ActionController::InvalidAuthenticityToken do
     session[:return_to] = request.referer
     redirect_to root_path, alert: "You must be logged in to take that action."
   end
 
+  # Silence complaints about crawlers requesting nonexistent routes,
+  # but warn if we don't recognize that type of bot.
   rescue_from ActionController::RoutingError do |e|
     if requester_is_robot?
       render nothing: true, status: 404
     else
-      Rails.logger.warn "Got ActionController::RoutingError from an unknown useragent. The useragent: #{request.user_agent.inspect}"
+      log :warn, "Got ActionController::RoutingError from an unknown useragent. The useragent: #{request.user_agent.inspect}"
       raise e
     end
   end
 
+  # Silence complaints about crawlers requesting nonexistent resources,
+  # but warn if we don't recognize that type of bot.
   rescue_from ActiveRecord::RecordNotFound do |e|
     if requester_is_robot?
       render nothing: true, status: 404
     else
-      Rails.logger.warn "Got ActiveRecord::RecordNotFound from an unknown useragent. The useragent: #{request.user_agent.inspect}"
+      log :warn, "Got ActiveRecord::RecordNotFound from an unknown useragent. The useragent: #{request.user_agent.inspect}"
       raise e
     end
   end

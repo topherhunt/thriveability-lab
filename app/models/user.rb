@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
 
   # See https://github.com/thoughtbot/paperclip#quick-start
   validates :auth0_uid, presence: true
-  validates :email, length: {maximum: 255}
   validates :name, presence: true, length: {maximum: 255}
+  validates :email, presence: true, length: {maximum: 255} # not necessarily unique
   validates :tagline, length: { maximum: 120 }
   validates :location, length: { maximum: 255 }
   validates :bio_interior, length: {maximum: 1000}

@@ -1,4 +1,5 @@
 .centered-1000
+  %h1 Update my profile
   = form_for @user do |f|
     = show_errors_for(@user)
 
@@ -7,11 +8,6 @@
         = f.label :name
         %span.small.em.text-danger required
       .col-sm-8= f.text_field :name, class: "form-control"
-    .row.row-padded
-      .col-sm-4
-        = f.label :email
-        .hint.small Where should we send notifications about activity in your network? (optional) Your email address isn't visible to anyone and we won't share it.
-      .col-sm-8= f.text_field :email, class: "form-control"
     .row.row-padded
       .col-sm-4
         = f.label :image, "A photo of me"

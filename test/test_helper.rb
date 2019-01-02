@@ -6,7 +6,6 @@ require "minitest/rails/capybara"
 require "capybara-screenshot/minitest"
 require "mocha/mini_test"
 require "maxitest/autorun"
-require "bcrypt"
 require "support/factories"
 require 'support/global_helpers'
 require 'support/controller_helpers'

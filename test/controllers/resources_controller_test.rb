@@ -61,7 +61,7 @@ class ResourcesControllerTest < ActionController::TestCase
 
       post :create, resource: attributes_for(:resource, title: "")
       assert_equals 0, @user.created_resources.count
-      assert_content "Unable to save your changes"
+      assert_text "Unable to save your changes"
     end
   end
 

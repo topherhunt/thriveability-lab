@@ -8,7 +8,7 @@ class ProjectMessagesTest < Capybara::Rails::TestCase
 
   test "User can send a message to another user" do
     assert_equals 0, Message.count
-    login_as @user
+    sign_in @user
     send_message_about_project(@project)
     assert_message_record_saved(@user, @project)
     assert_message_emails_sent(@user, @project)

@@ -26,6 +26,11 @@ User.delete_all
   name: "Topher Hunt",
   email: "hunt.topher@gmail.com")
 
+# No reason to seed Annick, since she'll need to create a new Auth0 acct anyway
+# @annick = FactoryGirl.create(:user,
+#   name: "Annick DeWitt",
+#   email: "annickdewitt@gmail.com")
+
 SCALE=1 # default: 5
 
 puts "\nCreating users..."
@@ -48,7 +53,7 @@ puts "\nCreating users..."
   })
   @users << user
 end
-@users = @users.sample(25) + [@topher]
+@users = @users.sample(24) + [@topher]
 
 # Make people follow other people first so that they receive notifications of followee activity.
 puts "\nPeople following people..."

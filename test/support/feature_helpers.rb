@@ -29,15 +29,11 @@ class Capybara::Rails::TestCase
     "  #{page.body.gsub("\n", "")}"
   end
 
-  def login_as(user, password = 'password')
-    visit root_path
-    click_on "Log in"
-    fill_in "Email", with: user.email
-    fill_in "Password", with: password
-    click_button "Log in"
+  def sign_in(user)
+    visit force_login_path(user.id, password: ENV["FORCE_LOGIN_PASSWORD"])
   end
 
-  def logout
+  def sign_out
     visit "/logout"
   end
 
@@ -76,7 +72,7 @@ class Capybara::Rails::TestCase
   def assert_users_cant_access_pages(opts)
     opts.fetch(:users).each do |user|
       logout
-      login_as(user)
+      sign_in user
       opts.fetch(:pages).each do |path|
         visit path
         assert_text "not authorized"

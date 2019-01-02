@@ -13,7 +13,6 @@ gem 'elasticsearch-model'
 # Domain logic
 gem 'acts-as-taggable-on'
 gem 'aws-sdk', '>= 2.0.34'
-gem 'bcrypt-ruby'
 gem 'factory_girl'
 gem 'faker'
 gem 'omniauth', '1.8.1'

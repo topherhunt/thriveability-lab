@@ -23,21 +23,21 @@ class HomeControllerTest < ActionController::TestCase
   context "#about" do
     it "renders correctly" do
       get :about
-      assert_content "What is Thriveability Lab?"
+      assert_text "What is Thriveability Lab?"
     end
   end
 
   context "#guiding_principles" do
     it "renders correctly" do
       get :guiding_principles
-      assert_content "Principles of Thriveability Lab"
+      assert_text "Principles of Thriveability Lab"
     end
   end
 
   context "#how_you_can_help" do
     it "renders correctly" do
       get :how_you_can_help
-      assert_content "How you can help the Thrivability project"
+      assert_text "How you can help the Thrivability project"
     end
   end
 

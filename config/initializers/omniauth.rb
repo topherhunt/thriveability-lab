@@ -5,6 +5,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     ENV["AUTH0_CLIENT_SECRET"],
     ENV["AUTH0_DOMAIN"],
     callback_path: "/auth/oauth2/login_callback",
-    authorize_params: {scope: "openid profile"}
+    # OpenID scopes - see https://auth0.com/docs/scopes/current/oidc-scopes
+    authorize_params: {scope: "openid profile email"}
   )
 end

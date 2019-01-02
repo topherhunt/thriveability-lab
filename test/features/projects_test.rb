@@ -3,7 +3,7 @@ require "test_helper"
 class ProjectsTest < Capybara::Rails::TestCase
   test "user can create a project, view it, and edit its details" do
     @user = create(:user)
-    login_as @user
+    sign_in @user
     visit root_path
     click_on "Projects"
     page.find(".test-new-project-button").click
@@ -34,7 +34,7 @@ class ProjectsTest < Capybara::Rails::TestCase
   test "user can browse & view a project created by another, but not edit it" do
     @project = create :project
     @user = create(:user)
-    login_as @user
+    sign_in @user
     visit root_path
     click_on "Projects"
     assert_text @project.title

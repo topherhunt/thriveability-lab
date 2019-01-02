@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181214090529) do
+ActiveRecord::Schema.define(version: 20181204142011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,12 +219,13 @@ ActiveRecord::Schema.define(version: 20181214090529) do
     t.text     "bio_exterior"
     t.text     "tagline"
     t.string   "location"
-    t.string   "name",               null: false
     t.string   "auth0_uid",          null: false
+    t.string   "name",               null: false
+    t.string   "email",              null: false
     t.datetime "last_signed_in_at"
-    t.string   "email"
-    t.datetime "email_confirmed_at"
   end
+
+  add_index "users", ["auth0_uid"], name: "index_users_on_auth0_uid", unique: true, using: :btree
 
   add_foreign_key "comments", "users", column: "author_id"
   add_foreign_key "conversation_participant_joins", "conversations"

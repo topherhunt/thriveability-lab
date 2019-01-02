@@ -1,31 +1,42 @@
 class ActionController::TestCase
-  # TODO: Write new user session signin & signout helpers:
-  # - sign_in(user)
-  # - sign_out(user)
+  include ActionView::Helpers::SanitizeHelper
 
-  def assert_content(text_or_html)
-    if response.body.include?(text_or_html)
+  def sign_in(user)
+    session[:user_id] = user.id
+  end
+
+  def sign_out
+    session[:user_id] = nil
+  end
+
+  def assert_text(text)
+    if response.body.include?(text)
       assert true
     else
       assert false, "Expected response to include text, but it wasn't found.\n" +
-        response_comparison(text_or_html)
+        compare_response_text(text)
     end
   end
 
-  def assert_no_content(text_or_html)
-    if response.body.include?(text_or_html)
+  def assert_no_text(text)
+    if response.body.include?(text)
       assert false, "Expected response NOT to include text, but it was found.\n" +
-        response_comparison(text_or_html)
+        compare_response_text(text)
     else
       assert true
     end
   end
 
-  def response_comparison(text_or_html)
+  def compare_response_text(text)
     "The expected text:\n"\
-    "  \"#{text_or_html}\"\n"\
-    "The full response body:\n"\
-    "  #{response.body.gsub("\n", "")}"
+    "  \"#{text}\"\n"\
+    "The full response text:\n"\
+    "  #{full_response_text}"
+  end
+
+  def full_response_text
+    sanitize(response.body, tags: [])
+      .gsub(/\n+/, "   ")
   end
 
   def assert_notified(notify_user, event)

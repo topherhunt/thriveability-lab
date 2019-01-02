@@ -2,16 +2,14 @@ include ActionDispatch::TestProcess
 
 FactoryGirl.define do
   factory(:user) do
-    name { Faker::Name.name.gsub("'", "") }
-    email      { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
-    password              "password"
-    password_confirmation "password"
-    # These are overkill for most test users, but useful in the dev environment
+    auth0_uid    { "google-oauth2|" + SecureRandom.hex }
+    name         { Faker::Name.name.gsub("'", "") }
+    email        { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
+    # These are overkill for most tests, but useful in the dev seeded db
     tagline      { Faker::Lorem.words(rand(2..12)).join(" ").capitalize }
     bio_interior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
     bio_exterior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
     created_at   { (rand * 400.0).days.ago }
-    confirmed_at { created_at + (rand * 10).hours }
     last_signed_in_at { (rand * 30).days.ago }
   end
 

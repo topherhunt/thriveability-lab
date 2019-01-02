@@ -3,7 +3,7 @@ require "test_helper"
 class ResourcesTest < Capybara::Rails::TestCase
   setup do
     @user = create(:user)
-    login_as @user
+    sign_in @user
   end
 
   test "resource creation form works" do

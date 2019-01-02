@@ -14,7 +14,7 @@ class ConversationsControllerTest < ActionController::TestCase
     end
 
     test "#require_logged_in redirects if unauthenticated" do
-      sign_out @user
+      sign_out
       get :edit, id: @c.id
       assert_redirected_to root_path
     end
@@ -31,7 +31,7 @@ class ConversationsControllerTest < ActionController::TestCase
 
   describe "#index" do
     it "renders the dashboard even when signed out" do
-      sign_out @user
+      sign_out
       3.times { c = create :conversation; create :comment, context: c }
       get :index
       assert_response 200
@@ -57,7 +57,7 @@ class ConversationsControllerTest < ActionController::TestCase
     it "rejects changes if invalid params" do
       pre_count = Conversation.count
       post :create, @create_params.merge(intention: "")
-      assert_content "Unable to save your changes."
+      assert_text "Unable to save your changes."
       assert_equals pre_count, Conversation.count
     end
 
@@ -94,7 +94,7 @@ class ConversationsControllerTest < ActionController::TestCase
     it "rejects changes if invalid params" do
       c = create :conversation, creator: @user
       patch :update, id: c.id, conversation: {title: ""}
-      assert_content "Unable to save your changes."
+      assert_text "Unable to save your changes."
     end
 
     it "updates the convo if valid params" do
@@ -108,7 +108,7 @@ class ConversationsControllerTest < ActionController::TestCase
 
   describe "#show" do
     it "renders the conversation even when signed out" do
-      sign_out @user
+      sign_out
       c = create :conversation
       create :comment, context: c
       get :show, id: c

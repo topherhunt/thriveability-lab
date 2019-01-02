@@ -18,7 +18,7 @@ class CommentsControllerTest < ActionController::TestCase
 
   describe "before filters" do
     test "#require_logged_in redirects if unauthenticated" do
-      sign_out @user
+      sign_out
       post :create, @create_params
       assert_redirected_to root_path
     end
@@ -41,7 +41,7 @@ class CommentsControllerTest < ActionController::TestCase
     it "rejects and re-renders form if invalid params" do
       pre_count = Comment.count
       post :create, @create_params.merge(intention: "")
-      assert_content "Unable to save your changes"
+      assert_text "Unable to save your changes"
       assert_equals pre_count, Comment.count
     end
 
@@ -80,7 +80,7 @@ class CommentsControllerTest < ActionController::TestCase
     it "rejects and re-renders form if invalid params" do
       pre_body = @comment.body
       patch :update, id: @comment.id, comment: {body: ""}
-      assert_content "Unable to save your changes"
+      assert_text "Unable to save your changes"
       assert_equals pre_body, @comment.reload.body
     end
 

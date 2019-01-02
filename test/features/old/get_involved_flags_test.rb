@@ -8,7 +8,7 @@ class GetInvolvedFlagsTest < Capybara::Rails::TestCase
   end
 
   test "User can ask to get involved in a project (and remove that setting)" do
-    login_as @user
+    sign_in @user
     visit project_path(@project)
     assert_equals 0, @user.created_get_involved_flags.count
     page.find('.get-involved a').click
