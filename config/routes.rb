@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   get "throwup" => "home#throwup"
   get "ping" => "home#ping"
 
-  get "auth/oauth2/login_callback" => "auth0#login_callback"
-  get "auth/logout" => "auth0#logout", as: "logout"
-  get "auth/force_login/:user_id" => "auth0#force_login", as: "force_login"
+  get "auth/auth0_callback" => "auth#auth0_callback"
+  get "auth/logout" => "auth#logout", as: "logout"
+  get "auth/force_login/:user_id" => "auth#force_login", as: "force_login"
 
   resources :users, only: [:index, :show, :edit, :update]
 

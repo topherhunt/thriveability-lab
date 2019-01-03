@@ -3,17 +3,17 @@ require "test_helper"
 # I almost never use controller specs. These are only here so I have an easy
 # template to copy from if I need to test some advanced controller logic.
 
-class Auth0ControllerTest < ActionController::TestCase
-  tests Auth0Controller
+class AuthControllerTest < ActionController::TestCase
+  tests AuthController
 
-  context "#login_callback" do
+  context "#auth0_callback" do
     # TODO: This test doesn't cover Omniauth's logic, which uses the provided
     # Auth0 token to look up and provide the info on the logged-in user.
     it "logs in the user found or created by the service" do
       user = create :user
       Services::FindOrCreateUserFromAuth.stubs(call: user)
 
-      get :login_callback
+      get :auth0_callback
 
       assert_equals user.id, session[:user_id]
       assert_redirected_to root_path
@@ -29,9 +29,8 @@ class Auth0ControllerTest < ActionController::TestCase
       get :logout
 
       assert_equals nil, session[:user_id]
-      assert_redirected_to root_path
+      assert_redirected_to /topherhunt.auth0.com/
     end
-    # Behavior is identical if you're not logged in for some reason.
   end
 
   context "#force_login" do
