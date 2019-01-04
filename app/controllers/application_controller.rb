@@ -32,12 +32,6 @@ class ApplicationController < ActionController::Base
     @current_user
   end
 
-  def require_not_logged_in
-    if current_user
-      redirect_to root_path, alert: "You are already logged in."
-    end
-  end
-
   def require_logged_in
     unless current_user
       if request.method == "GET"

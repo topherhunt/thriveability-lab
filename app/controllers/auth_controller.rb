@@ -1,8 +1,4 @@
-# This logic might be applicable to any oauth2 adapter, but we use Auth0.
-# TODO: Rename to AuthController
 class AuthController < ApplicationController
-  before_filter :require_not_logged_in, only: [:auth0_callback]
-
   # On successful auth, Auth0 redirects the user back here. The Omniauth gem
   # registers a magical middleware that exchanges the auth token for the userinfo
   # (see config/initializers/omniauth.rb) and puts the userinfo in request.env.

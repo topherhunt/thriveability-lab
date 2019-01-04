@@ -1,3 +1,4 @@
+# Note: May need to restart app when file is changed
 module Services
   class BaseService
     def self.call(*args)
