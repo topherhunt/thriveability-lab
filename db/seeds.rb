@@ -1,8 +1,3 @@
-# e.g. `heroku run ANNICK_WARNED=true rake db:seed`
-unless ENV["ANNICK_WARNED"].present? or Rails.env.development?
-  raise "Warn Annick first!"
-end
-
 Notification.delete_all
 Event.delete_all
 Message.delete_all
@@ -21,12 +16,7 @@ User.delete_all
 @conversations = []
 @resources = []
 
-# No reason to seed Annick, since she'll need to create a new Auth0 acct anyway
-# @annick = FactoryGirl.create(:user,
-#   name: "Annick DeWitt",
-#   email: "annickdewitt@gmail.com")
-
-SCALE=1 # default: 5
+SCALE=5 # default: 5
 
 puts "\nCreating users..."
 (SCALE*10).times do |i|
