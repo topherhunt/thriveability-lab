@@ -3,9 +3,10 @@
 %table.table.all-notifications-list
   - @notifications.each do |n|
     - e = n.event
+    - next if e.target.nil?
     %tr.notification{class: n.read? ? "read" : "unread"}
       %td.nowrap= print_date n.created_at, time: true, abbreviated: true
-      %td= image_tag(e.image_url, style: "width: 30px;")
+      %td= image_tag(e.image_url, class: "img-circle", style: "width: 30px;")
       %td
         = link_to e.actor.name, notification_path(n, redirect_to: "actor")
         = e.action_description

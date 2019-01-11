@@ -5,7 +5,6 @@ Figaro.require_keys(
   "AUTH0_DOMAIN",
   "AUTH0_CLIENT_ID",
   "AUTH0_CLIENT_SECRET",
-  "BONSAI_URL",
   "HOSTNAME",
   "ROLLBAR_ACCESS_TOKEN",
   "S3_BUCKET",

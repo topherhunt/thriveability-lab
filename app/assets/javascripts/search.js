@@ -1,8 +1,8 @@
 $(function(){
 
-  $('.js-search-models-selector').on('change', function(event, params){
-    var models_string = ($(event.target).val() || []).join(",");
-    $('.js-search-models-target').val(models_string);
+  $('.js-search-classes-selector').on('change', function(event, params){
+    var classes_string = ($(event.target).val() || []).join(",");
+    $('.js-search-classes-target').val(classes_string);
   });
 
 });

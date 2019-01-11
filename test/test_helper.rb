@@ -26,3 +26,5 @@ module Minitest
     end # def
   end # module
 end # module
+
+ENV['ES_INDEXING_DISABLED'] = 'true'

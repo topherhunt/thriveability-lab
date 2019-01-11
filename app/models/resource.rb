@@ -26,19 +26,13 @@ class Resource < ActiveRecord::Base
 
   before_save :ensure_current_url_has_protocol
 
-  def es_index_json(opts={})
+  def to_elasticsearch_document
     {
-      title: title,
-      description: description,
-      current_url: current_url,
-      source_name: source_name,
-      tags: tag_list.join(", "),
-      media_types: media_type_list.join(", "),
-      visible: true
+      full_text_primary: [title, source_name].join(" "),
+      full_text_secondary: [tag_list, media_type_list, description, current_url]
+        .join(" ")
     }
   end
-
-  private
 
   def require_ownership_if_uploaded
     if attachment.present? and ! ownership_affirmed?

@@ -5,5 +5,6 @@ module NotificationsHelper
 
   def my_recent_notifications
     current_user.notifications.latest.limit(10)
+      .reject { |n| n.event.target.nil? }
   end
 end

@@ -4,7 +4,11 @@ class UsersControllerTest < ActionController::TestCase
   tests UsersController
 
   context "#index" do
-    it "works"
+    it "works" do
+      3.times { create :user }
+      get :index
+      assert_response 200
+    end
   end
 
   context "#show" do

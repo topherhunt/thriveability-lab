@@ -1,27 +1,29 @@
 %li.dropdown
-  - if unread_notifications_count > 0
-    %a.dropdown-toggle{"data-toggle": "dropdown"}
-      = fa_icon("bell")
+  %a.dropdown-toggle{"data-toggle": "dropdown"}
+    = fa_icon("bell")
+    - if unread_notifications_count > 0
       .label.label-danger #{unread_notifications_count}
-      %span.caret
-  - else
-    %a.dropdown-toggle.text-muted{"data-toggle": "dropdown"}
-      = fa_icon("bell")
-      %span.caret
-  %ul.dropdown-menu.notifications-list
-    - if my_recent_notifications.any?
-      - my_recent_notifications.each do |n|
-        - e = n.event
-        %li.notification{class: n.read? ? "read" : "unread"}
-          %div
-            = link_to image_tag(e.image_url, class: "notification-icon"), notification_path(n, redirect_to: "actor")
-            -# %span.datetime #{print_date n.created_at, time: true} -
-            = link_to e.actor.name, notification_path(n, redirect_to: "actor"), class: "notification-actor-link"
-            = e.action_description
-            = link_to "\"#{ellipsify e.target_description, 80}\"", notification_path(n, redirect_to: "target"), class: "notification-target-link"
-      .divider{role: "separator"}
+    %span.caret
+  %ul.dropdown-menu.notifications-list{style: "padding-left: 5px; min-width: 400px;"}
+    %div.strong Notifications
+
+    - if my_recent_notifications.count == 0
+      %p Nothing to report lately!
+
+    - my_recent_notifications.each do |n|
+      -# TODO: Obviously inline styling isn't good hygiene, this would be a good place to test out BEM (or ABEM?) classes
+      %div.notification{style: "min-height: 45px; padding: 3px; padding-left: 0px; border: 1px solid #eee; margin: 3px;", class: (n.read? ? "read" : "unread")}
+        %a{href: notification_path(n, redirect_to: "target"), style: "display: block; padding-left: 40px;"}
+          - e = n.event
+          - next if e.target.nil?
+          = image_tag(e.image_url, class: "notification-icon img-circle")
+          -# %span.datetime #{print_date n.created_at, time: true} -
+          %strong= e.actor.name
+          = e.action_description
+          %strong= ellipsify e.target_description, 80
+
+    %div.text-center
+      = link_to "See all", notifications_path, class: "see-all-notifications"
+      &nbsp;
       - if unread_notifications_count > 0
-        %li= link_to "Mark all as read", mark_all_read_notifications_path, method: :post, class: "mark-all-notifications-as-read"
-      %li= link_to "See all notifications", notifications_path, class: "see-all-notifications"
-    - else
-      %li.dropdown-header Nothing to report lately!
+        = link_to "Mark all as read", mark_all_read_notifications_path, method: :post, class: "mark-all-notifications-as-read"

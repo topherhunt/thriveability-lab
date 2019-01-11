@@ -1,17 +1,9 @@
-# In production, use the config provided by bonsai-elasticsearch-rails.
-unless Rails.env.production?
-  Elasticsearch::Model.client = Elasticsearch::Client.new(
-    host: "http://localhost:9200",
-    transport_options: {
-      request: {timeout: 5}
-    }
-  )
-
-  # Test that the ES server is running; disable indexing if it isn't
+if Rails.env.development?
   begin
-    Elasticsearch::Model.client.cluster.health
+    # Verify that Elasticsearch is running and reachable
+    ElasticsearchWrapper.new.check_health
   rescue Faraday::ConnectionFailed => e
-    msg = "WARNING: Can't access the ES server; disabling ES indexing for this session."
+    msg = "WARNING: Elasticsearch isn't reachable; disabling indexing."
     Rails.logger.warn(msg)
     puts msg
     ENV['ES_INDEXING_DISABLED'] = 'true'

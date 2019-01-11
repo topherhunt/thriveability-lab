@@ -52,29 +52,16 @@ class Project < ActiveRecord::Base
     all.sort_by{ |p| -p.received_like_flags.count }.take(n)
   end
 
-  def es_index_json(options={})
+  def to_elasticsearch_document
     {
-      owner: owner.name,
-      tags: tag_list.join(", "),
-      title: title,
-      subtitle: subtitle,
-      partners: partners,
-      desired_impact: desired_impact,
-      contribution_to_world: contribution_to_world,
-      location_of_home: location_of_home,
-      location_of_impact: location_of_impact,
-      stage: stage,
-      help_needed: help_needed,
-      q_background: q_background,
-      q_meaning: q_meaning,
-      q_community: q_community,
-      q_goals: q_goals,
-      q_how_make_impact: q_how_make_impact,
-      q_how_measure_impact: q_how_measure_impact,
-      q_potential_barriers: q_potential_barriers,
-      q_project_assets: q_project_assets,
-      q_larger_vision: q_larger_vision,
-      visible: true
+      full_text_primary: [title, subtitle].join(" "),
+      full_text_secondary: [
+        tag_list, owner.name, partners, desired_impact, contribution_to_world,
+        location_of_home, location_of_impact, stage, help_needed,
+        q_background, q_meaning, q_community, q_goals,
+        q_how_make_impact, q_how_measure_impact, q_potential_barriers,
+        q_project_assets, q_larger_vision
+      ].join(" ")
     }
   end
 

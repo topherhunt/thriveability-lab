@@ -24,13 +24,10 @@ class Conversation < ActiveRecord::Base
       .limit(n)
   end
 
-  def es_index_json(options={})
+  def to_elasticsearch_document
     {
-      creator: creator.name,
-      title: title,
-      tags: tag_list.join(", "),
-      comments: comments.pluck(:body).join(" "),
-      visible: true
+      full_text_primary: [title].join(" "),
+      full_text_secondary: [tag_list, creator.name, comments.pluck(:body)].join(" ")
     }
   end
 

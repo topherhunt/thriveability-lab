@@ -3,8 +3,8 @@
     %h1 People
     %p All people are part of our growing community of creative change-makers. Use this page to get to know others, and introduce yourself to them.
     %p
-      - unless user_signed_in?
-        = link_to "Join the community", new_user_registration_path, class: "test-signup-button btn btn-success"
+      - unless current_user.present?
+        = link_to "Join the community", login_url, class: "test-signup-button btn btn-success"
 
     = render partial: "shared/simple_search_form", locals: {model_name: "User"}
 

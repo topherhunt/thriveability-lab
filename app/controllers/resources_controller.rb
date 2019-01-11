@@ -39,7 +39,7 @@ class ResourcesController < ApplicationController
 
   def update
     if @resource.update(update_params)
-      redirect_to return_to_path, notice: "Your changes have been saved."
+      redirect_to resource_path(@resource), notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "edit"

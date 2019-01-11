@@ -12,7 +12,7 @@
     .navbar-collapse.collapse
       %form.navbar-form.navbar-left{action: search_path, method: "GET", role: "search"}
         .input-group
-          %input.form-control.test-navbar-search-input{type: "text", placeholder: "Search", name: "query"}
+          %input.form-control.test-navbar-search-input{type: "text", placeholder: "Search", name: "string"}
           .input-group-btn
             %button.btn.btn-default.test-navbar-search-submit{type: "submit"}
               %i.fa.fa-search
@@ -37,4 +37,4 @@
               %li= link_to "My Profile", user_path(current_user)
               %li= link_to "Log out", logout_url, class: "text-danger"
         - else
-          %li= link_to "Log in", auth0_login_url
+          %li= link_to "Log in", login_url

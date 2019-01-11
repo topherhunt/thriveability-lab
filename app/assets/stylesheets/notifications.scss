@@ -1,26 +1,13 @@
 ul.notifications-list {
-  li.notification {
-    border-top: 1px solid #eee;
-  }
-
-  li.notification div {
-    display: block;
-    min-width: 450px;
-    white-space: normal; // navbar links want to `nowrap` by default
-    margin-left: 40px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-
-  .notification.unread .description {
-    color: #2f6f9f; }
-  .notification.read a {
-    color: #466; }
+  .notification a { text-decoration: none; }
+  // .notification.unread a { color: #339; }
+  .notification.read a { color: #777; }
   .notification-icon {
     float: left;
     width: 30px;
     margin-left: -35px;
-    margin-top: 5px; }
+    margin-top: 5px;
+  }
 }
 
 .all-notifications-list {

@@ -33,15 +33,10 @@ class User < ActiveRecord::Base
     order('last_signed_in_at DESC').limit(n)
   end
 
-  def es_index_json(options={})
+  def to_elasticsearch_document
     {
-      name: name,
-      tagline: tagline,
-      location: location,
-      bio_interior: bio_interior,
-      bio_exterior: bio_exterior,
-      interests: interests,
-      visible: true
+      full_text_primary: [name].join(" "),
+      full_text_secondary: [tagline, interests, location, bio_interior, bio_exterior].join(" ")
     }
   end
 

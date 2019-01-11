@@ -3,29 +3,29 @@
   .well
     %form.form-horizontal{action: search_path, method: :get}
       .form-group
-        = label_tag "query", "Search for text:", class: "col-sm-3 control-label"
+        = label_tag "string", "Search for text:", class: "col-sm-3 control-label"
         .col-sm-9
-          = text_field_tag "query", @search_params[:query], class: "form-control test-search-input"
+          = text_field_tag "string", @search_params[:string], class: "form-control test-search-input"
       .form-group
-        = label_tag "models", "Result types:", class: "col-sm-3 control-label"
+        = label_tag "classes", "Result types:", class: "col-sm-3 control-label"
         .col-sm-9
-          %select.js-chosen.js-search-models-selector{"data-placeholder": "(All content)", multiple: true}
-            - Searcher::SEARCHABLE_MODELS.map(&:to_s).each do |model|
-              %option{value: model, selected: (@search_params[:models].include?(model))}
-                = label_for_model(model)
-          = hidden_field_tag "models", @search_params[:models].join(","), class: "js-search-models-target"
+          %select.js-chosen.js-search-classes-selector{"data-placeholder": "(All content)", multiple: true}
+            - ElasticsearchIndexHelper::SEARCHABLE_CLASSES.map(&:to_s).each do |klass|
+              %option{value: klass, selected: (@search_params[:classes].include?(klass))}
+                = label_for_class(klass)
+          = hidden_field_tag "classes", @search_params[:classes].join(","), class: "js-search-classes-target"
       .row
         .col-sm-3
         .col-sm-9
           = button_tag "Search", class: "btn btn-primary test-search-submit"
 
-  %h4 #{@search.results.total} results
+  %h4 #{@results.total} results
 
   - if @page > 1 and @last_page > 1
     = render partial: "pagination"
     .blank-space
 
-  - @search.records.each do |record|
+  - @results.loaded_records.each do |record|
     .test-search-result
       - case record.class.to_s
       - when "User"

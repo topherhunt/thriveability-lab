@@ -4,75 +4,48 @@ class SearchControllerTest < ActionController::TestCase
   tests SearchController
 
   context "#search" do
-    def assert_shown(records)
-      records.each do |r|
-        assert response.body.include?(expected_text(r)),
-          "Results should include #{expected_text(r).inspect} (for #{debug(r)}), but I don't see it.\nFull response:\n#{response.body}"
-      end
+    before do
+      @user = create(:user)
+      @project = create(:project)
+      @resource = create(:resource)
+      @convo = create(:conversation)
+
+      @mock_results = stub(
+        total: 4,
+        loaded_records: [@user, @project, @resource, @convo])
     end
 
-    def assert_not_shown(records)
-      records.each do |r|
-        assert !response.body.include?(expected_text(r)),
-          "Results should NOT include #{expected_text(r).inspect} (for #{debug(r)}), but it's there.\nFull response:\n#{response.body}"
-      end
+    it "renders correctly when no search was submitted" do
+      Services::RunSearch.expects(:call)
+        .with(classes: [], string: "", from: 0, size: 10)
+        .returns(@mock_results)
+
+      get :search
+
+      assert_response 200
+      assert_text "4 results"
+      assert_text @project.title
     end
 
-    def expected_text(record)
-      record.try(:title) || record.name
+    it "passes all params to the RunSearch service" do
+      Services::RunSearch.expects(:call)
+        .with(classes: ["User", "Resource"], string: "monkey", from: 40, size: 10)
+        .returns(@mock_results)
+
+      get :search, classes: "User,Resource", string: "monkey", page: 5
+
+      assert_response 200
     end
 
-    def debug(record)
-      "#{record.class} #{record.id}"
-    end
+    it "handles empty result sets" do
+      mock_empty_results = stub(total: 0, loaded_records: [])
+      Services::RunSearch.stubs(call: mock_empty_results)
 
-    # TODO: There's no need to do ElasticSearch indexing here. We should stub out
-    # the Searcher module instead.
+      get :search
 
-    it "lists all matching results" do
-      user1 = create :user, name: "Antelope McCreary"
-      project1 = create :project, title: "Apple Antelope"
-      resource1 = create :resource, title: "Antelope Cat"
-      convo1 = create :conversation, title: "Cat Dog Antelope"; create :comment, context: convo1
-      user2 = create :user
-      project2 = create :project
-      resource2 = create :resource
-      convo2 = create :conversation; create :comment, context: convo2
-      # TODO: We shouldn't do this. Instead stub out Searcher so the controller
-      # doesn't rely on ES running.
-      ElasticsearchWrapper.rebuild_all_indexes!
-
-      get :search, query: "antelope"
-      assert_shown([user1, project1, resource1, convo1])
-      assert_not_shown([user2, project2, resource2, convo2])
-    end
-
-    it "can limit results to certain models" do
-      user = create :user
-      project = create :project
-      resource = create :resource
-      ElasticsearchWrapper.rebuild_all_indexes!
-
-      get :search, query: "", models: "User,Resource"
-      assert_shown([user, resource])
-      assert_not_shown([project])
-    end
-
-    it "limits to the first 10 results" do
-      create_list :user, 26
-      ElasticsearchWrapper.rebuild_all_indexes!
-
-      get :search, query: ""
-      assert_select "div.test-search-result", count: 10
-    end
-
-    it "can return the requested page of results" do
-      create_list :user, 16
-      ElasticsearchWrapper.rebuild_all_indexes!
-
-      total_num_records = Searcher.new(string: "").run.records.count
-      get :search, query: "", page: 2
-      assert_select "div.test-search-result", count: 6
+      assert_response 200
+      assert_text "0 results"
+      assert_no_text @project.title
     end
   end
 end

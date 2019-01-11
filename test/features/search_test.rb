@@ -2,39 +2,30 @@ require "test_helper"
 
 class SearchTest < Capybara::Rails::TestCase
   setup do
-    @user1 = create :user
-    @project1 = create :project, title: "Apple Horse"
-    @resource1 = create :resource, title: "Horse Kitten"
-    @convo1 = create :conversation, title: "Kitten Dog"
-    @comment1 = create :comment, context: @convo1
-    @convo2 = create :conversation, title: "Dog Elephant"
-    @comment2 = create :comment, context: @convo2
-    # TODO: This should stub out Searcher responses, instead of actually making
-    # ES calls.
-    ElasticsearchWrapper.rebuild_all_indexes!
+    user1 = create(:user)
+    project1 = create(:project)
+    resource1 = create(:resource)
+    convo1 = create(:conversation)
+
+    mock_results = stub(
+      total: 4,
+      loaded_records: [user1, project1, resource1, convo1])
+
+    Services::RunSearch.stubs(call: mock_results)
   end
 
-  test "search interface works" do
+  test "user can search from the navbar" do
     visit root_path
-
-    # searching from navbar
     page.find(".test-navbar-search-input").set("horse")
     page.find(".test-navbar-search-submit").click
     assert_path search_path
-    assert_content @project1.title
-    assert_html project_path(@project1)
-    assert_content @resource1.title
-    assert_no_content @user1.name
-    assert_no_content @convo1.title
-    assert_no_content @convo2.title
+    assert_content "4 results"
+  end
 
-    # searching from the results page form
+  test "user can search from the on-page form" do
+    visit search_path
     page.find(".test-search-input").set("kitten")
     page.find(".test-search-submit").click
-    assert_content @convo1.title
-    assert_content @resource1.title
-    assert_no_content @convo2.title
-    assert_no_content @user1.name
-    assert_no_content @project1.title
+    assert_content "4 results"
   end
 end

@@ -1,6 +1,7 @@
 class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   ActiveRecord::Migration.check_pending!
+
   # Make all database transactions use the same thread
   ActiveRecord::ConnectionAdapters::ConnectionPool.class_eval do
     def current_connection_id
@@ -22,5 +23,11 @@ class ActiveSupport::TestCase
       .encode('ASCII', undef: :replace, replace: '')
       .gsub(/\s+/, ' ')
     assert_includes(haystack_text, needle)
+  end
+
+  def assert_elasticsearch_running
+    ElasticsearchWrapper.new.check_health
+  rescue Faraday::ConnectionFailed
+    raise "It looks like elasticsearch isn't available. Is it running?"
   end
 end

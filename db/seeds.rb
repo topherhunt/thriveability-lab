@@ -14,17 +14,12 @@ Resource.delete_all
 LikeFlag.delete_all
 StayInformedFlag.delete_all
 GetInvolvedFlag.delete_all
-OmniauthAccount.delete_all
 User.delete_all
 
 @users = []
 @projects = []
 @conversations = []
 @resources = []
-
-@topher = FactoryGirl.create(:user,
-  name: "Topher Hunt",
-  email: "hunt.topher@gmail.com")
 
 # No reason to seed Annick, since she'll need to create a new Auth0 acct anyway
 # @annick = FactoryGirl.create(:user,
@@ -53,22 +48,13 @@ puts "\nCreating users..."
   })
   @users << user
 end
-@users = @users.sample(24) + [@topher]
+@users = @users.sample(25)
 
 # Make people follow other people first so that they receive notifications of followee activity.
 puts "\nPeople following people..."
 (SCALE*20).times do |i|
   print "."
   follower = @users.sample
-  followee = @users.sample
-  # Tolerate failure in case of duplicates
-  if StayInformedFlag.create(user: follower, target: followee)
-    Event.register(follower, :follow, followee)
-  end
-end
-SCALE.times do |i|
-  print "."
-  follower = @topher
   followee = @users.sample
   # Tolerate failure in case of duplicates
   if StayInformedFlag.create(user: follower, target: followee)

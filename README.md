@@ -5,36 +5,28 @@
 - Simpler is better. Resist overcomplexifying. Prefer duplication over imperfect abstraction.
 - HTML classes for CSS, JS, and test selection should be namespaced and kept strictly separate. For example, any class used for selecting elements in tests should start with `test-`.
 
-## Todo
+## Areas of the code to know about
 
-- App renders times in terms of US EST; make this sensitive to where the user is
+### Auth0
 
-## Social media login
+I abandoned Devise in favor of Auth0 managed user auth. See AuthController. Also see https://github.com/topherhunt/cheatsheets/blob/master/rails/auth0.md. Features include:
 
-Dashboards for managing settings:
+- Google and FB login
+- Force login for admins (see auth.rake)
 
-- https://console.developers.google.com/apis/credentials?project=integral-climate
-- https://developers.facebook.com/apps/1772130993029813/settings/
-- [LinkedIn: Todo]
+### ElasticSearch
 
-## Search
+We use ElasticSearch for a simple full-text search index. I tried `elasticsearch-rails` but found I needed to customize it a lot, so I ditched it and wrote my own wrapper that directly makes calls using the low-level driver. See `ElasticsearchWrapper`, `ElasticsearchIndexHelper`, and `Searchable`.
 
-- Full-text search uses the Bonsai ElasticSearch add-on.
-- We use [`elasticsearch-model`](https://github.com/elastic/elasticsearch-rails/tree/master/elasticsearch-model) for Rails integration.
-- In development, run `elasticsearch` to allow indexing and querying.
+- In development, run `elasticsearch` or indexing & searching will be disabled. (`brew install elasticsearch`)
+- In production, we use the Bonsai Heroku add-on, but any ES server will work as long as we provide the full URL in `ENV['ELASTICSEARCH_URL']`.
+- To do a full reindex: `ElasticsearchIndexHelper.new.delete_and_rebuild_index!`
 
-Sample commands:
+Errors:
 
-- `Project.__elasticsearch__.client.cluster.health`
-- `Project.__elasticsearch__.import(force: true)`
-- `Project.__elasticsearch__.search('psychology')`
+- Transport exceptions usually mean that the ES service isn’t running / isn’t reachable.
 
-Reindex all content, e.g. after changing the indexed schema:
-```
-[Project, Conversation, Resource, User].each { |c| c.__elasticsearch__.import(force: true) }
-```
-
-## Tests
+### Tests
 
 I'm moving away from "full-coverage" integration tests. My current testing philosophy is:
 

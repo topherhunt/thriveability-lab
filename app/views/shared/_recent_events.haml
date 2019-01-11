@@ -1,4 +1,5 @@
 - events.each do |event|
+  - next if event.target.nil?
   .list-row
     %div{style: "float: left; width: 50px;"}
       = link_to image_tag(event.actor.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(event.actor)
