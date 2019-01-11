@@ -15,7 +15,7 @@ class SearchController < ApplicationController
   private
 
   def run_search
-    Services::RunSearch.call(
+    RunSearch.call(
       classes: @search_params[:classes],
       string: @search_params[:string],
       from: ((current_page-1) * PER_PAGE),

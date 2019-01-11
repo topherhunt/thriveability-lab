@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Services::RunSearchTest < ActiveSupport::TestCase
+class RunSearchTest < ActiveSupport::TestCase
   def assert_results_equal(result, expected)
     # First compare the identifiers
     assert_equals(
@@ -28,28 +28,28 @@ class Services::RunSearchTest < ActiveSupport::TestCase
     ElasticsearchIndexHelper.new.delete_and_rebuild_index!
 
     # a broad search returning all kinds of content
-    result = Services::RunSearch.call(string: "apple")
+    result = RunSearch.call(string: "apple")
     assert_equals 5, result.total
     assert_results_equal(result, [@user1, @project1, @resource1, @convo1, @convo2])
 
     # a blank search (match all)
-    result = Services::RunSearch.call(string: "")
+    result = RunSearch.call(string: "")
     assert_equals 16, result.total
 
     # a search with no results
-    result = Services::RunSearch.call(string: "gobbledygook")
+    result = RunSearch.call(string: "gobbledygook")
     assert_equals 0, result.total
     assert_equals [], result.loaded_records
 
     # a paginated search
-    all_results = Services::RunSearch.call(string: "").identifiers
-    page3_results = Services::RunSearch.call(string: "", from: 6, size: 3)
+    all_results = RunSearch.call(string: "").identifiers
+    page3_results = RunSearch.call(string: "", from: 6, size: 3)
     assert_equals 16, page3_results.total
     assert_equals 3, page3_results.identifiers.count
     assert_equals all_results[6..8], page3_results.identifiers
 
     # a search that limits based on result type
-    result = Services::RunSearch.call(string: "", classes: ["Project", "Resource"])
+    result = RunSearch.call(string: "", classes: ["Project", "Resource"])
     assert_equals 4, result.total
     expected = [@project1, @project2, @resource1, @resource2]
     assert_results_equal result, [@project1, @project2, @resource1, @resource2]

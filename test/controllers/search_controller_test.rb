@@ -16,7 +16,7 @@ class SearchControllerTest < ActionController::TestCase
     end
 
     it "renders correctly when no search was submitted" do
-      Services::RunSearch.expects(:call)
+      RunSearch.expects(:call)
         .with(classes: [], string: "", from: 0, size: 10)
         .returns(@mock_results)
 
@@ -28,7 +28,7 @@ class SearchControllerTest < ActionController::TestCase
     end
 
     it "passes all params to the RunSearch service" do
-      Services::RunSearch.expects(:call)
+      RunSearch.expects(:call)
         .with(classes: ["User", "Resource"], string: "monkey", from: 40, size: 10)
         .returns(@mock_results)
 
@@ -39,7 +39,7 @@ class SearchControllerTest < ActionController::TestCase
 
     it "handles empty result sets" do
       mock_empty_results = stub(total: 0, loaded_records: [])
-      Services::RunSearch.stubs(call: mock_empty_results)
+      RunSearch.stubs(call: mock_empty_results)
 
       get :search
 

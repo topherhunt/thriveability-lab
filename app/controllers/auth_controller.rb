@@ -3,7 +3,7 @@ class AuthController < ApplicationController
   # registers a magical middleware that exchanges the auth token for the userinfo
   # (see config/initializers/omniauth.rb) and puts the userinfo in request.env.
   def auth0_callback
-    user = Services::FindOrCreateUserFromAuth.call(auth: request.env["omniauth.auth"])
+    user = FindOrCreateUserFromAuth.call(auth: request.env["omniauth.auth"])
     sign_in! user
     redirect_to session.delete(:return_to) || root_path
   end

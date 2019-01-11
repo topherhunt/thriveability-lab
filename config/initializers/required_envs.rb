@@ -1,10 +1,11 @@
-# Won't allow app to start if these keys aren't defined
+# Won't allow app to start if these keys aren't defined.
 # See https://github.com/laserlemon/figaro#required-keys
 
 Figaro.require_keys(
   "AUTH0_DOMAIN",
   "AUTH0_CLIENT_ID",
   "AUTH0_CLIENT_SECRET",
+  "ELASTICSEARCH_URL",
   "HOSTNAME",
   "ROLLBAR_ACCESS_TOKEN",
   "S3_BUCKET",

@@ -8,7 +8,7 @@ class AuthControllerTest < ActionController::TestCase
     # Auth0 token to look up and provide the info on the logged-in user.
     it "logs in the user found or created by the service" do
       user = create :user
-      Services::FindOrCreateUserFromAuth.stubs(call: user)
+      FindOrCreateUserFromAuth.stubs(call: user)
 
       get :auth0_callback
 

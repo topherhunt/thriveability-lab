@@ -11,7 +11,7 @@ class SearchTest < Capybara::Rails::TestCase
       total: 4,
       loaded_records: [user1, project1, resource1, convo1])
 
-    Services::RunSearch.stubs(call: mock_results)
+    RunSearch.stubs(call: mock_results)
   end
 
   test "user can search from the navbar" do
