@@ -43,9 +43,4 @@ Rails.application.routes.draw do
   post   "get_involved_flags/:target_type/:target_id" => "get_involved_flags#create",
          as: "get_involved_flag"
   delete "get_involved_flags/:target_type/:target_id" => "get_involved_flags#destroy"
-
-  namespace :admin do
-    get "elasticsearch_gui" => "elasticsearch_gui#page", as: "elasticsearch_gui"
-    post "elasticsearch_gui/query" => "elasticsearch_gui#query"
-  end
 end
