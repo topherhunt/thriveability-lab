@@ -29,7 +29,7 @@
         %h3 Popular categories
         %div
           - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
-            = link_to "#{tag.name}", search_path(query: tag.name, classes: "Resource"), class: "#{css_class}"
+            = link_to "#{tag.name}", search_path(string: tag.name, classes: "Resource"), class: "#{css_class}"
             &nbsp;
 
         %h3 Recent activity

@@ -6,7 +6,7 @@
       = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link"
   %p
     - @conversation.tag_list.each do |name|
-      = link_to name, search_path(query: name), class: "btn btn-xs btn-default"
+      = link_to name, search_path(string: name), class: "btn btn-xs btn-default"
 
   - @comments.each do |comment|
     = render partial: "comments/show", locals: {comment: comment, intention: @intentions[comment.author_id]}

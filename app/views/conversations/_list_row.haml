@@ -15,4 +15,4 @@
         = "+#{conversation.participants.length - 5}"
       &nbsp;
       - conversation.tag_list.each do |name|
-        = link_to name, search_path(query: name), class: "label label-default"
+        = link_to name, search_path(string: name), class: "label label-default"
