@@ -1,14 +1,15 @@
 .row
   .col-md-4
     %h1 People
-    %p All people are part of our growing community of creative change-makers. Use this page to get to know others, and introduce yourself to them.
+    %p Use this page to check out our growing community of creative change-makers, get to know others, and introduce yourself.
     %p
       - unless current_user.present?
         = link_to "Join the community", login_url, class: "test-signup-button btn btn-success"
 
     = render partial: "shared/simple_search_form", locals: {model_name: "User"}
+    = render partial: "shared/write_medium_article"
 
-    .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
+    .hidden-sm.hidden-xs
       = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
 
   .col-md-8

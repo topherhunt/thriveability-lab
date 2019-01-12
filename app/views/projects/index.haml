@@ -1,15 +1,16 @@
 .row
   .col-md-4
     %h1 Projects
-    %p Projects are all the colorful ways we are making the world more sustainable. Use projects to share what you're working on, and learn about the initiatives of others.
+    %p Projects are the colorful ways we are working towards a flourishing world. Use projects to share what you're working on, and learn about the initiatives of others.
 
     %p
       = link_to "Add your project", new_project_path, class: "test-new-project-button btn btn-success"
       = link_to "Helpful resources", projects_resources_path, class: "btn btn-default"
 
     = render partial: "shared/simple_search_form", locals: {model_name: "Project"}
+    = render partial: "shared/write_medium_article"
 
-    .hidden-sm.hidden-xs{style: "padding-top: 30px;"}
+    .hidden-sm.hidden-xs
       = image_tag "list_images/projects.jpg", style: "width: 100%;"
 
   .col-md-8
