@@ -22,13 +22,13 @@
         - @most_active_conversations.each do |conversation|
           = render partial: "list_row", locals: {conversation: conversation, opts: {}}
         %hr
-        %p= link_to "See all", search_path(models: "Conversation")
+        %p= link_to "See all", search_path(classes: "Conversation")
 
       .col-sm-5
         %h3 Popular categories
         %div
           - tag_cloud(@tag_counts, %w(tag-cloud-1 tag-cloud-2 tag-cloud-3 tag-cloud-4)) do |tag, css_class|
-            = link_to "#{tag.name}", search_path(query: tag.name, models: "Conversation"), class: "#{css_class}"
+            = link_to "#{tag.name}", search_path(query: tag.name, classes: "Conversation"), class: "#{css_class}"
             &nbsp;
 
         %h3 Recent comments
