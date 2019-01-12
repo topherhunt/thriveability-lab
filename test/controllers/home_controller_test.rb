@@ -34,7 +34,7 @@ class HomeControllerTest < ActionController::TestCase
   context "#how_you_can_help" do
     it "renders correctly" do
       get :how_you_can_help
-      assert_text "How you can help the Thriveability project"
+      assert_text "How you can help"
     end
   end
 
