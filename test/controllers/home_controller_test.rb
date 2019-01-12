@@ -13,7 +13,7 @@ class HomeControllerTest < ActionController::TestCase
 
       get :home
 
-      assert response.body.include?("Thrivability Lab")
+      assert response.body.include?("Thriveability Lab")
     end
   end
 
@@ -34,7 +34,7 @@ class HomeControllerTest < ActionController::TestCase
   context "#how_you_can_help" do
     it "renders correctly" do
       get :how_you_can_help
-      assert_text "How you can help the Thrivability project"
+      assert_text "How you can help the Thriveability project"
     end
   end
 

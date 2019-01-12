@@ -1,9 +1,9 @@
 Howdy <%= @message.recipient.name %>!
 
 <% if @message.project %>
-Thrivability Lab member <%= @message.sender.name %> has sent you a message relating to your project, <%= @message.project.title %>.
+Thriveability Lab member <%= @message.sender.name %> has sent you a message relating to your project, <%= @message.project.title %>.
 <% else %>
-Thrivability Lab member <%= @message.sender.name %> has sent you a message.
+Thriveability Lab member <%= @message.sender.name %> has sent you a message.
 <% end %>
 
 Subject: <%= @message.subject %>

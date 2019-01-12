@@ -1,4 +1,4 @@
-# Thrivability Lab
+# Thriveability Lab
 
 ## Code principles
 

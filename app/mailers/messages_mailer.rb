@@ -10,6 +10,6 @@ class MessagesMailer < ApplicationMailer
   end
 
   def app_name
-    "Thrivability Lab"
+    "Thriveability Lab"
   end
 end

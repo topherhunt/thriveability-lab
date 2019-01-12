@@ -22,4 +22,4 @@ def secure_token
   end
 end
 
-ThrivabilityLab::Application.config.secret_key_base = secure_token
+ThriveabilityLab::Application.config.secret_key_base = secure_token

@@ -1,9 +1,9 @@
 <p>Howdy <%= @message.recipient.name %>!</p>
 
 <% if @message.project %>
-  <p>Thrivability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
+  <p>Thriveability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message relating to your project, <%= link_to @message.project.title, project_url(@message.project) %>.</p>
 <% else %>
-  <p>Thrivability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message.</p>
+  <p>Thriveability Lab member <%= link_to @message.sender.name, user_url(@message.sender) %> has sent you a message.</p>
 <% end %>
 
 <p>Subject: <%= @message.subject %></p>
