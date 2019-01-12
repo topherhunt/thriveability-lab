@@ -35,3 +35,11 @@ I'm moving away from "full-coverage" integration tests. My current testing philo
 - Integration tests:
   - `test/integration/regression/` - bare-minimum coverage of client-side functionality that can't be covered in controller tests (e.g. complex forms and JS)
   - `test/integration/tdd/` - a place to write high-level specs to drive out new features. Most of these tests are temporary and will be replaced by controller and regression integration tests in the future.
+
+## Deploying
+
+An incomplete checklists list of considerations when deploying:
+
+- Ensure Auth0 callbacks are allowed
+- Is ELASTICSEARCH_URL set?
+- Does ES index need to be (re)built?

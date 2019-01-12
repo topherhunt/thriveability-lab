@@ -73,7 +73,7 @@ class RunSearch < BaseService
   end
 
   def match_string_if_present(string)
-    if string.present? && false
+    if string.present?
       {
         multi_match: {
           query: string,
