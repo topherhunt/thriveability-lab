@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181204142011) do
+ActiveRecord::Schema.define(version: 20190113125549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,15 +107,6 @@ ActiveRecord::Schema.define(version: 20181204142011) do
 
   add_index "notifications", ["event_id"], name: "index_notifications_on_event_id", using: :btree
   add_index "notifications", ["notify_user_id"], name: "index_notifications_on_notify_user_id", using: :btree
-
-  create_table "post_hierarchies", id: false, force: :cascade do |t|
-    t.integer "ancestor_id",   null: false
-    t.integer "descendant_id", null: false
-    t.integer "generations",   null: false
-  end
-
-  add_index "post_hierarchies", ["ancestor_id", "descendant_id", "generations"], name: "post_anc_desc_idx", unique: true, using: :btree
-  add_index "post_hierarchies", ["descendant_id"], name: "post_desc_idx", using: :btree
 
   create_table "predefined_tags", force: :cascade do |t|
     t.string   "name"
