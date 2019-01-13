@@ -1,8 +1,7 @@
 class Capybara::Rails::TestCase
-  Capybara.javascript_driver = :webkit
-  Capybara::Webkit.configure do |config|
-    config.block_unknown_urls
-  end
+  Capybara.javascript_driver = :poltergeist
+  # TODO: Configure Poltergeist to block unknown URLs.
+  # See https://github.com/teampoltergeist/poltergeist#customization
 
   def assert_html(text_or_html)
     if page.body.include?(text_or_html)
@@ -37,14 +36,6 @@ class Capybara::Rails::TestCase
     visit "/logout"
   end
 
-  def page!
-    save_and_open_page
-  end
-
-  def image! # Only works when using webkit!
-    Capybara::Screenshot.screenshot_and_open_image
-  end
-
   def assert_path(path)
     10.times do
       if path.is_a? Regexp
@@ -55,39 +46,6 @@ class Capybara::Rails::TestCase
       sleep 0.2
     end
     raise "Expected current_path to match \"#{path}\", but was \"#{current_path}\"!"
-  end
-
-  def expect_attributes(object, hash)
-    hash.each do |k, v|
-      assert_equals v, object.send(k)
-    end
-  end
-
-  def fill_fields(hash)
-    hash.each do |k, v|
-      fill_in k, with: v
-    end
-  end
-
-  def assert_users_cant_access_pages(opts)
-    opts.fetch(:users).each do |user|
-      logout
-      sign_in user
-      opts.fetch(:pages).each do |path|
-        visit path
-        assert_text "not authorized"
-        assert_not_equal path, current_path
-      end
-    end
-  end
-
-  def using_webkit(&block)
-    begin
-      Capybara.current_driver = :webkit
-      yield
-    ensure
-      Capybara.use_default_driver
-    end
   end
 
   # Use Jquery to force display a hidden element. Useful for getting at links

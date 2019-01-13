@@ -43,3 +43,12 @@ An incomplete checklists list of considerations when deploying:
 - Ensure Auth0 callbacks are allowed
 - Is ELASTICSEARCH_URL set?
 - Does ES index need to be (re)built?
+
+
+## Heroku
+
+Tips for managing a Heroku deploy:
+
+- The online dashboard will indicate the last deploy time & git commit id
+- Tail the production logs: `heroku logs --tail | grep "app\["`
+

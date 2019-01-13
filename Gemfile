@@ -1,6 +1,6 @@
 
 source 'https://rubygems.org'
-ruby '2.3.0'
+ruby '2.5.3'
 
 # Server
 gem 'rails', '4.2.10'
@@ -47,7 +47,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'capybara-screenshot', '>= 1.0.13'
   gem 'maxitest'
   gem 'minitest-rails-capybara'
