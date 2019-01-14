@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.5.3'
 
 # Server
-gem 'rails', '~> 5.0.7'
+gem 'rails', '~> 5.1.6'
 gem 'figaro'
 gem 'pg', '~> 0.18' # Rails needs pre-1.0, else you get vague conflict errors
 gem 'rollbar'
@@ -21,7 +21,6 @@ gem 'omniauth-auth0'
 # TODO: This is deprecated, replace with ActiveStorage.
 # See https://github.com/thoughtbot/paperclip/blob/master/MIGRATING.md
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
-gem 'will_paginate'
 
 # Frontend
 gem 'bootstrap-sass'
@@ -33,6 +32,7 @@ gem 'haml-rails'
 gem 'jquery-rails'
 gem 'sass-rails' # NOTE: `sass` is sunsetting, but `sass-rails` still requires it
 gem 'uglifier'
+gem 'will_paginate'
 
 group :development do
   gem 'web-console'
