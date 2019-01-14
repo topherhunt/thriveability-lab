@@ -30,7 +30,7 @@ puts "\nCreating users..."
   response = Net::HTTP.get_response(uri)
   json = JSON.parse(response.body)['results'].first
 
-  user = FactoryGirl.create(:user, {
+  user = FactoryBot.create(:user, {
     email: json['email'].gsub(/\s/, ''),
     name: json['name']['first'].capitalize + " " + json['name']['last'].capitalize,
     location: json['location']['city'] + ' ' + json['location']['state'],
@@ -57,7 +57,7 @@ puts "\nCreating projects..."
   print "."
   user = @users.sample
   # TODO: Add stock images... the lorempixel URL we were using, kept timing out
-  project = FactoryGirl.create(:project,
+  project = FactoryBot.create(:project,
     owner: user,
     image: "https://source.unsplash.com/random/200x200"
   )
@@ -69,13 +69,13 @@ puts "\nCreating conversations..."
 (SCALE*5).times do |i|
   print "."
   convo_creator = @users.sample
-  convo = FactoryGirl.create(:conversation, creator: convo_creator)
+  convo = FactoryBot.create(:conversation, creator: convo_creator)
   Event.register(convo_creator, :create, convo)
   rand(1..10).times do
     commenter = @users.sample
-    comment = FactoryGirl.create(:comment, context: convo, author: commenter)
+    comment = FactoryBot.create(:comment, context: convo, author: commenter)
     ConversationParticipantJoin.where(conversation: convo, participant: commenter).first ||
-      FactoryGirl.create(:conversation_participant_join, conversation: convo, participant: commenter)
+      FactoryBot.create(:conversation_participant_join, conversation: convo, participant: commenter)
     Event.register(commenter, :comment, convo)
   end
   @conversations << convo
@@ -85,7 +85,7 @@ puts "\nCreating resources..."
 (SCALE*10).times do |i|
   print "."
   user = @users.sample
-  resource = FactoryGirl.create(:resource,
+  resource = FactoryBot.create(:resource,
     creator: user,
     target: [@conversations.sample, @projects.sample, nil, nil, nil, nil].sample
   )

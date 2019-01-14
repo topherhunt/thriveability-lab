@@ -32,7 +32,7 @@ class SearchControllerTest < ActionController::TestCase
         .with(classes: ["User", "Resource"], string: "monkey", from: 40, size: 10)
         .returns(@mock_results)
 
-      get :search, classes: "User,Resource", string: "monkey", page: 5
+      get :search, params: {classes: "User,Resource", string: "monkey", page: 5}
 
       assert_response 200
     end

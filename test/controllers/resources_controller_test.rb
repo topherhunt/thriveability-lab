@@ -20,7 +20,7 @@ class ResourcesControllerTest < ActionController::TestCase
   context "#show" do
     it "renders properly" do
       resource = create :resource
-      get :show, id: resource.id
+      get :show, params: {id: resource.id}
       assert_equals 200, response.status
     end
   end
@@ -46,7 +46,7 @@ class ResourcesControllerTest < ActionController::TestCase
       assert_equals 0, @user.created_resources.count
       assert_equals 0, @follower.notifications.count
 
-      post :create, resource: attributes_for(:resource)
+      post :create, params: {resource: attributes_for(:resource)}
 
       assert_equals 1, @user.created_resources.count
       assert_redirected_to resources_path
@@ -56,7 +56,7 @@ class ResourcesControllerTest < ActionController::TestCase
     it "returns you to the form if validation errors" do
       @user = create_logged_in_user
 
-      post :create, resource: attributes_for(:resource, title: "")
+      post :create, params: {resource: attributes_for(:resource, title: "")}
       assert_equals 0, @user.created_resources.count
       assert_text "Unable to save your changes"
     end
@@ -66,23 +66,23 @@ class ResourcesControllerTest < ActionController::TestCase
     it "renders properly" do
       @user = create_logged_in_user
       resource = create :resource, creator: @user
-      get :edit, id: resource.id
+      get :edit, params: {id: resource.id}
       assert_equals 200, response.status
     end
 
     it "rejects you if you don't have permission" do
       @user = create_logged_in_user
       resource = create :resource
-      get :edit, id: resource.id
+      get :edit, params: {id: resource.id}
       assert_redirected_to resource_path(resource)
     end
   end
 
   context "#update" do
-    # TODO
+    it "works"
   end
 
   context "#destroy" do
-    # TODO
+    it "works"
   end
 end

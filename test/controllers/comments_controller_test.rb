@@ -19,20 +19,20 @@ class CommentsControllerTest < ActionController::TestCase
   describe "before filters" do
     test "#require_logged_in redirects if unauthenticated" do
       sign_out
-      post :create, @create_params
+      post :create, params: @create_params
       assert_redirected_to root_path
     end
 
     test "#load_context raises RecordNotFound if context isn't found" do
       assert_raises(ActiveRecord::RecordNotFound) do
-        post :create, @create_params.merge(context_id: 9999)
+        post :create, params: @create_params.merge(context_id: 9999)
       end
     end
 
     test "#load_comment raises RecordNotFound if I don't own this comment" do
       @comment = create :comment, author: create(:user), context: @conversation
       assert_raises(ActiveRecord::RecordNotFound) do
-        get :edit, id: @comment.id
+        get :edit, params: {id: @comment.id}
       end
     end
   end
@@ -40,13 +40,13 @@ class CommentsControllerTest < ActionController::TestCase
   describe "#create" do
     it "rejects and re-renders form if invalid params" do
       pre_count = Comment.count
-      post :create, @create_params.merge(intention: "")
+      post :create, params: @create_params.merge(intention: "")
       assert_text "Unable to save your changes"
       assert_equals pre_count, Comment.count
     end
 
     it "creates the comment and redirects if valid params" do
-      post :create, @create_params
+      post :create, params: @create_params
       assert_equals 1, @conversation.comments.count
       assert_equals "comment body", @conversation.comments.last.body
       assert_redirected_to conversation_path(@conversation)
@@ -58,7 +58,7 @@ class CommentsControllerTest < ActionController::TestCase
       @user2 = create :user
       StayInformedFlag.where(user: @user2, target: @user).create!
 
-      post :create, @create_params
+      post :create, params: @create_params
 
       assert_notified @user2, [@user, :comment, @conversation]
     end
@@ -67,7 +67,7 @@ class CommentsControllerTest < ActionController::TestCase
   describe "#edit" do
     it "renders the edit form" do
       comment = create :comment, context: @conversation, author: @user
-      get :edit, id: comment.id
+      get :edit, params: {id: comment.id}
       assert_response 200
     end
   end
@@ -79,13 +79,13 @@ class CommentsControllerTest < ActionController::TestCase
 
     it "rejects and re-renders form if invalid params" do
       pre_body = @comment.body
-      patch :update, id: @comment.id, comment: {body: ""}
+      patch :update, params: {id: @comment.id, comment: {body: ""}}
       assert_text "Unable to save your changes"
       assert_equals pre_body, @comment.reload.body
     end
 
     it "updates the comment and redirects if valid params" do
-      patch :update, id: @comment.id, comment: {body: "new body"}
+      patch :update, params: {id: @comment.id, comment: {body: "new body"}}
       assert_redirected_to conversation_path(@conversation)
       assert_equals "new body", @comment.reload.body
     end
@@ -94,7 +94,7 @@ class CommentsControllerTest < ActionController::TestCase
   describe "#destroy" do
     it "destroys the comment and redirects" do
       comment = create :comment, context: @conversation, author: @user
-      delete :destroy, id: comment.id
+      delete :destroy, params: {id: comment.id}
     end
   end
 end

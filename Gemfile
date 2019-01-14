@@ -14,10 +14,12 @@ gem 'lograge'
 # Domain logic
 gem 'acts-as-taggable-on'
 gem 'aws-sdk'
-gem 'factory_girl'
+gem 'factory_bot'
 gem 'faker'
 gem 'omniauth'
 gem 'omniauth-auth0'
+# TODO: This is deprecated, replace with ActiveStorage.
+# See https://github.com/thoughtbot/paperclip/blob/master/MIGRATING.md
 gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
 gem 'will_paginate'
 
@@ -29,7 +31,7 @@ gem 'coffee-rails'
 gem 'font-awesome-rails'
 gem 'haml-rails'
 gem 'jquery-rails'
-gem 'sass-rails'
+gem 'sass-rails' # NOTE: `sass` is sunsetting, but `sass-rails` still requires it
 gem 'uglifier'
 
 group :development do

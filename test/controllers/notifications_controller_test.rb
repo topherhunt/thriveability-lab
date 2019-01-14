@@ -24,17 +24,17 @@ class NotificationsControllerTest < ActionController::TestCase
     end
 
     it "marks the notification as read" do
-      get :show, id: @notification.id
+      get :show, params: {id: @notification.id}
       assert @notification.reload.read?
     end
 
     it "redirects to actor if specified" do
-      get :show, id: @notification.id, redirect_to: "actor"
+      get :show, params: {id: @notification.id, redirect_to: "actor"}
       assert_redirected_to user_path(@notification.event.actor)
     end
 
     it "redirects to target if specified" do
-      get :show, id: @notification.id, redirect_to: "target"
+      get :show, params: {id: @notification.id, redirect_to: "target"}
       assert_redirected_to user_path(@notification.event.target)
     end
   end

@@ -25,7 +25,7 @@ class AuthControllerTest < ActionController::TestCase
 
       get :logout
 
-      assert_equals nil, session[:user_id]
+      assert_nil session[:user_id]
       assert_redirected_to /topherhunt.auth0.com/
     end
   end
@@ -34,7 +34,7 @@ class AuthControllerTest < ActionController::TestCase
     it "works if you give a valid password" do
       user = create :user
 
-      get :force_login, user_id: user.id, password: ENV['FORCE_LOGIN_PASSWORD']
+      get :force_login, params: {user_id: user.id, password: ENV['FORCE_LOGIN_PASSWORD']}
 
       assert_equals user.id, session[:user_id]
       assert_redirected_to root_path
@@ -44,7 +44,7 @@ class AuthControllerTest < ActionController::TestCase
       user = create :user
 
       assert_raise(RuntimeError) do
-        get :force_login, user_id: user.id, password: ENV['FORCE_LOGIN_PASSWORD'] + 'z'
+        get :force_login, params: {user_id: user.id, password: ENV['FORCE_LOGIN_PASSWORD'] + 'z'}
       end
     end
   end

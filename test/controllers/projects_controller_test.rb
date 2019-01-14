@@ -10,7 +10,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   context "#create" do
     it "creates the project" do
-      post :create, project: attributes_for(:project)
+      post :create, params: {project: attributes_for(:project)}
       assert_equals 1, @user.projects.count
       assert_redirected_to project_path(Project.last)
     end
@@ -21,7 +21,7 @@ class ProjectsControllerTest < ActionController::TestCase
       @user2 = create :user
       StayInformedFlag.where(user: @user2, target: @user).create!
 
-      post :create, project: attributes_for(:project)
+      post :create, params: {project: attributes_for(:project)}
 
       assert_notified @user2, [@user, :create, Project.last]
     end

@@ -15,17 +15,17 @@ class ConversationsControllerTest < ActionController::TestCase
 
     test "#require_logged_in redirects if unauthenticated" do
       sign_out
-      get :edit, id: @c.id
+      get :edit, params: {id: @c.id}
       assert_redirected_to root_path
     end
 
     test "#load_conversation raises RecordNotFound if conversation isn't found" do
-      assert_raises(ActiveRecord::RecordNotFound) { get :edit, id: 9999 }
+      assert_raises(ActiveRecord::RecordNotFound) { get :edit, params: {id: 9999} }
     end
 
     test "#verify_ownership raises RuntimeError if I'm not the creator" do
       @c.update!(creator: create(:user))
-      assert_raises(RuntimeError) { get :edit, id: @c.id }
+      assert_raises(RuntimeError) { get :edit, params: {id: @c.id} }
     end
   end
 
@@ -56,13 +56,13 @@ class ConversationsControllerTest < ActionController::TestCase
 
     it "rejects changes if invalid params" do
       pre_count = Conversation.count
-      post :create, @create_params.merge(intention: "")
+      post :create, params: @create_params.merge(intention: "")
       assert_text "Unable to save your changes."
       assert_equals pre_count, Conversation.count
     end
 
     it "creates the convo, comment, and participant if valid params" do
-      post :create, @create_params
+      post :create, params: @create_params
 
       c = Conversation.last
       assert_redirected_to conversation_path(c)
@@ -76,7 +76,7 @@ class ConversationsControllerTest < ActionController::TestCase
       @user2 = create :user
       StayInformedFlag.where(user: @user2, target: @user).create!
 
-      post :create, @create_params
+      post :create, params: @create_params
 
       assert_notified @user2, [@user, :create, @user.conversations.last]
     end
@@ -85,7 +85,7 @@ class ConversationsControllerTest < ActionController::TestCase
   describe "#edit" do
     it "renders the edit form" do
       c = create :conversation, creator: @user
-      get :edit, id: c.id
+      get :edit, params: {id: c.id}
       assert_response 200
     end
   end
@@ -93,13 +93,13 @@ class ConversationsControllerTest < ActionController::TestCase
   describe "#update" do
     it "rejects changes if invalid params" do
       c = create :conversation, creator: @user
-      patch :update, id: c.id, conversation: {title: ""}
+      patch :update, params: {id: c.id, conversation: {title: ""}}
       assert_text "Unable to save your changes."
     end
 
     it "updates the convo if valid params" do
       c = create :conversation, creator: @user
-      patch :update, id: c.id, conversation: {title: "blah", tag_list: "a,b"}
+      patch :update, params: {id: c.id, conversation: {title: "blah", tag_list: "a,b"}}
       assert_redirected_to conversation_path(c)
       assert_equals "blah", c.reload.title
       assert_equals ["a", "b"], c.tag_list.sort
@@ -111,7 +111,7 @@ class ConversationsControllerTest < ActionController::TestCase
       sign_out
       c = create :conversation
       create :comment, context: c
-      get :show, id: c
+      get :show, params: {id: c}
     end
   end
 end

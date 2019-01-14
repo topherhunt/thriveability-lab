@@ -1,6 +1,6 @@
 include ActionDispatch::TestProcess
 
-FactoryGirl.define do
+FactoryBot.define do
   factory(:user) do
     auth0_uid    { "google-oauth2|" + SecureRandom.hex }
     name         { Faker::Name.name.gsub("'", "") }
