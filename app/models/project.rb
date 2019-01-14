@@ -1,4 +1,4 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   include Searchable
 
   STAGES = ["idea", "developing", "< 1 year", "1-5 years", "5-10 years", "> 10 years"]

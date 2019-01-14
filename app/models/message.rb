@@ -1,4 +1,4 @@
-class Message < ActiveRecord::Base
+class Message < ApplicationRecord
   PROJECT_SUBJECT_PRESETS = [
     "I have a question about your project",
     "I have ideas or feedback about your project",

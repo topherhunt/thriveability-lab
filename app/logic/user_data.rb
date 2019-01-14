@@ -1,3 +1,4 @@
+# TODO: More specific name, maybe UserInterestsHelper?
 class UserData
   class << self
     def contributions_map(users)
@@ -41,7 +42,7 @@ class UserData
     end
 
     def sanitize(value)
-      ActiveRecord::Base.sanitize(value)
+      ApplicationRecord.sanitize(value)
     end
   end
 end

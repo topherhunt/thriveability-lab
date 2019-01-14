@@ -1,4 +1,4 @@
-class LikeFlag < ActiveRecord::Base
+class LikeFlag < ApplicationRecord
   # TODO: Should there be a unique constraint on user + target?
   belongs_to :user
   belongs_to :target, polymorphic: true

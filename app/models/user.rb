@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include Searchable
 
   has_many :projects, foreign_key: :owner_id

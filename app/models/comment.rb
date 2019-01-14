@@ -1,4 +1,4 @@
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   VALID_CONTEXTS = ["Conversation", "Project", "Resource"]
 
   belongs_to :context, polymorphic: true

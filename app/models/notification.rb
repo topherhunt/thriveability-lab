@@ -1,4 +1,4 @@
-class Notification < ActiveRecord::Base
+class Notification < ApplicationRecord
   belongs_to :event
   belongs_to :notify_user, class_name: "User"
 

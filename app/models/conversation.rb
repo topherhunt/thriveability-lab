@@ -1,4 +1,4 @@
-class Conversation < ActiveRecord::Base
+class Conversation < ApplicationRecord
   include Searchable
 
   # See https://github.com/mbleigh/acts-as-taggable-on#usage

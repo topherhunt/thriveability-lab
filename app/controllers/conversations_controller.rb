@@ -18,7 +18,7 @@ class ConversationsController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
+    ApplicationRecord.transaction do
       @conversation = Conversation.create!(conversation_params.merge(
         creator: current_user))
       @comment = Comment.create!(comment_params.merge(

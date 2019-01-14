@@ -1,4 +1,4 @@
-class GetInvolvedFlag < ActiveRecord::Base
+class GetInvolvedFlag < ApplicationRecord
   belongs_to :user
   # target is polymorphic but will only be Project for now.
   belongs_to :target, polymorphic: true

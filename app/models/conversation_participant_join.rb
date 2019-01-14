@@ -1,4 +1,4 @@
-class ConversationParticipantJoin < ActiveRecord::Base
+class ConversationParticipantJoin < ApplicationRecord
   INTENTION_PRESETS = [
     "share about facts, events, or objective knowledge",
     "share about a personal experience or perspective",
