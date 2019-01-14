@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.5.3'
 
 # Server
-gem 'rails', '~> 5.1.6'
+gem 'rails', '~> 5.2.2'
 gem 'figaro'
 gem 'pg', '~> 0.18' # Rails needs pre-1.0, else you get vague conflict errors
 gem 'rollbar'

@@ -20,7 +20,7 @@ class Conversation < ApplicationRecord
     # TODO: What happens if you join the same assoc multiple times?
     joins(:comments)
       .group("conversations.id")
-      .order("COUNT(comments.id) DESC")
+      .order(Arel.sql("COUNT(comments.id) DESC"))
       .limit(n)
   end
 
