@@ -5,7 +5,6 @@ Rails.application.configure do
       pid: Process.pid,
       ip: event.payload[:ip],
       user: event.payload[:user],
-      time: event.time.utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
       params: event.payload[:params].except(*%w(controller action format id))
     }
   end
@@ -13,7 +12,6 @@ Rails.application.configure do
     # Data I'm excluding for brevity:
     # - controller=#{data[:controller]}##{data[:action]} (I can infer this)
     # - ip=#{data[:ip]} (Heroku router logs this in case I need it)
-    # - "#{data[:time]} "\
     # - "pid=#{data[:pid]} "\
     # Other possible starting chars: █ »
     "■ [#{data[:method]} #{data[:path]}] "\

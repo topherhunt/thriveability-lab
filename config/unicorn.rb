@@ -1,8 +1,8 @@
 # Copied from https://devcenter.heroku.com/articles/rails-unicorn
 
 worker_processes ENV['UNICORN_WORKERS'].to_i
-timeout 15
 preload_app true
+timeout 15
 
 before_fork do |server, worker|
   Signal.trap('TERM') do

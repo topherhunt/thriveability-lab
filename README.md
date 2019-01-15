@@ -30,7 +30,7 @@ Errors:
 
 I'm moving away from "full-coverage" integration tests. My current testing philosophy is:
 
-- Thorough coverage for each controller endpoint
+- Thorough coverage for each controller endpoint, each branch
 - Judicious Unit tests as-needed to cover complex logic, likely regressions, etc.
 - Integration tests:
   - `test/integration/regression/` - bare-minimum coverage of client-side functionality that can't be covered in controller tests (e.g. complex forms and JS)
