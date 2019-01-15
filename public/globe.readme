@@ -1,0 +1,1 @@
+Putting the globe icon png here exposes a static, predictable path where it can be pointed to by external services like Auth0. If I put it in app/assets/, I'd need to set up a custom endpoint for the image, because the production URL contains timestamp hash gobbledygook.
