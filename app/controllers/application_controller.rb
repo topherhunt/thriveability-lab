@@ -86,6 +86,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Explicitly control handling of 404s
   rescue_from ActiveRecord::RecordNotFound do |e|
     if requester_is_robot?
       render nothing: true, status: 404
