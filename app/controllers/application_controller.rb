@@ -86,14 +86,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Silence complaints about crawlers requesting nonexistent resources,
-  # but warn if we don't recognize that type of bot.
   rescue_from ActiveRecord::RecordNotFound do |e|
     if requester_is_robot?
       render nothing: true, status: 404
     else
-      log :warn, "Got ActiveRecord::RecordNotFound from an unknown useragent. The useragent: #{request.user_agent.inspect}"
-      raise e
+      log :warn, "Got ActiveRecord::RecordNotFound. url: #{request.original_url}, "\
+        "error: #{e}, useragent: #{request.user_agent.inspect}"
+      render file: "public/404.html", layout: false, status: 404
     end
   end
 end

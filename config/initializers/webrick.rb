@@ -1,6 +1,4 @@
-# Rails uses WEBrick as the default dev server. I'm fine with this but not
-# OK with WEBrick's verbose logging defaults and don't see an easy way to
-# adjust the config, so I'll monkeypatch.
+# Silence WEBrick's verbose per-request logging
 # See https://github.com/ruby/ruby : /lib/webrick/httpserver.rb
 if Rails.env.development?
   require 'webrick'
