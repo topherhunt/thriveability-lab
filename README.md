@@ -1,11 +1,14 @@
 # Thriveability Lab
 
+
 ## Code principles
 
 - Simpler is better. Resist overcomplexifying. Prefer duplication over imperfect abstraction.
 - HTML classes for CSS, JS, and test selection should be namespaced and kept strictly separate. For example, any class used for selecting elements in tests should start with `test-`.
 
+
 ## Areas of the code to know about
+
 
 ### Auth0
 
@@ -13,6 +16,7 @@ I abandoned Devise in favor of Auth0 managed user auth. See AuthController. Also
 
 - Google and FB login
 - Force login for admins (see auth.rake)
+
 
 ### ElasticSearch
 
@@ -26,6 +30,7 @@ Errors:
 
 - Transport exceptions usually mean that the ES service isn’t running / isn’t reachable.
 
+
 ### Tests
 
 I'm moving away from "full-coverage" integration tests. My current testing philosophy is:
@@ -36,13 +41,14 @@ I'm moving away from "full-coverage" integration tests. My current testing philo
   - `test/integration/regression/` - bare-minimum coverage of client-side functionality that can't be covered in controller tests (e.g. complex forms and JS)
   - `test/integration/tdd/` - a place to write high-level specs to drive out new features. Most of these tests are temporary and will be replaced by controller and regression integration tests in the future.
 
+
 ## Deploying
 
-An incomplete checklists list of considerations when deploying:
+Things to check when deploying to a new or majorly changed environment:
 
-- Ensure Auth0 callbacks are allowed
-- Is ELASTICSEARCH_URL set?
-- Does ES index need to be (re)built?
+- Auth0 login with FB & Google works; logout works
+  (see https://github.com/topherhunt/cheatsheets/blob/master/rails/auth0.md)
+- ElasticSearch auto-indexing of `Searchable` models works; searching works
 
 
 ## Heroku
