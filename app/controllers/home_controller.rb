@@ -27,6 +27,6 @@ class HomeController < ApplicationController
   end
 
   def ping
-    render text: "OK", status: 200
+    render json: {ok: true}, status: 200
   end
 end
