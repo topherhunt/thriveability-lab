@@ -26,7 +26,7 @@ class AuthControllerTest < ActionController::TestCase
       get :logout
 
       assert_nil session[:user_id]
-      assert_redirected_to /topherhunt.auth0.com/
+      assert_redirected_to /#{ENV.fetch("AUTH0_DOMAIN")}/
     end
   end
 

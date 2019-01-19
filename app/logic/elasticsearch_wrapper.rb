@@ -12,7 +12,7 @@ class ElasticsearchWrapper
 
   # See https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html
   def create_index
-    run(:put, index_name, {
+    run(:put, index_name, body: {
       # Start with 1 shard, and add more as content grows.
       # See https://www.elastic.co/blog/how-many-shards-should-i-have-in-my-elasticsearch-cluster
       settings: {index: {number_of_shards: 1}},
@@ -45,13 +45,16 @@ class ElasticsearchWrapper
   end
 
   def index_document!(id, body) # The id can be any arbitrary string
-    run(:put, "#{index_name}/doc/#{id}", body)
+    run(:put, "#{index_name}/doc/#{id}", body: body)
     log :info, "Indexed document #{id}"
   end
 
   def delete_document(id)
-    run(:delete, "#{index_name}/doc/#{id}")
-    log :info, "Deleted document #{id}"
+    if run(:delete, "#{index_name}/doc/#{id}", allow_404: true)
+      log :info, "Deleted document #{id}"
+    else
+      log :warn, "Unable to delete document #{id}, got a 404 error"
+    end
   end
 
   def count_documents
@@ -59,7 +62,7 @@ class ElasticsearchWrapper
   end
 
   def search(body)
-    run(:get, "#{index_name}/_search", body)
+    run(:get, "#{index_name}/_search", body: body)
   end
 
   #
@@ -83,14 +86,18 @@ class ElasticsearchWrapper
     }
   end
 
-  def run(method, path, body={})
+  def run(method, path, body: {}, allow_404: false)
     method = method.to_s.upcase
     response = client.perform_request(method, path, {}, body).body.as_json
     # log :debug, "REQUEST: #{method} #{path} #{body.to_json}. RESPONSE: #{response.to_json}"
     response
   rescue => e
-    raise "ElasticsearchWrapper#run failed on #{method} #{path} "\
-      "(body: #{body.to_json}). ERROR: #{e}."
+    if allow_404 && e.to_s.include?("[404]")
+      false
+    else
+      raise "ElasticsearchWrapper#run failed on #{method} #{path} "\
+        "(body: #{body.to_json}). ERROR: #{e}."
+    end
   end
 
   def client
