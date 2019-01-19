@@ -23,9 +23,9 @@ class FindOrCreateUserFromAuth < BaseService
   end
 
   def get_name(auth)
-    # The Auth0 database connection sets `name` to the email address, weirdly
-    if auth.info.name.include?("@")
-      auth.info.nickname
+    # The Auth0 database connection provides the email as "name"
+    if match = auth.info.name.match(/\A(.+)\@/)
+      match&.captures&.first
     else
       auth.info.name
     end
