@@ -23,17 +23,17 @@ class CommentsControllerTest < ActionController::TestCase
       assert_redirected_to root_path
     end
 
-    test "#load_context raises RecordNotFound if context isn't found" do
-      assert_raises(ActiveRecord::RecordNotFound) do
-        post :create, params: @create_params.merge(context_id: 9999)
-      end
+    test "#load_context responds with 404 if context isn't found" do
+      pre_count = Comment.count
+      post :create, params: @create_params.merge(context_id: 9999)
+      assert_404_response
+      assert_equals pre_count, Comment.count
     end
 
-    test "#load_comment raises RecordNotFound if I don't own this comment" do
+    test "#load_comment responds with 404 if I don't own this comment" do
       @comment = create :comment, author: create(:user), context: @conversation
-      assert_raises(ActiveRecord::RecordNotFound) do
-        get :edit, params: {id: @comment.id}
-      end
+      get :edit, params: {id: @comment.id}
+      assert_404_response
     end
   end
 

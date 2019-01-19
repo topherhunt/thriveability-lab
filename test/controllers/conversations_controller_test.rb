@@ -19,8 +19,9 @@ class ConversationsControllerTest < ActionController::TestCase
       assert_redirected_to root_path
     end
 
-    test "#load_conversation raises RecordNotFound if conversation isn't found" do
-      assert_raises(ActiveRecord::RecordNotFound) { get :edit, params: {id: 9999} }
+    test "#load_conversation responds with 404 if conversation isn't found" do
+      get :edit, params: {id: 9999}
+      assert_404_response
     end
 
     test "#verify_ownership raises RuntimeError if I'm not the creator" do

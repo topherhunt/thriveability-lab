@@ -2,7 +2,7 @@ include ActionDispatch::TestProcess
 
 FactoryBot.define do
   factory(:user) do
-    auth0_uid    { "google-oauth2|" + SecureRandom.hex }
+    auth0_uid    { "google-oauth2|fakeuser-" + SecureRandom.hex }
     name         { Faker::Name.name.gsub("'", "") }
     email        { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     # These are overkill for most tests, but useful in the dev seeded db

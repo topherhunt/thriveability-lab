@@ -11,8 +11,8 @@ class FindOrCreateUserFromAuth < BaseService
       log :info, "Authed known user (id: #{user.id}, uid: #{uid}, name: #{user.name})"
       user
     else
-      user = User.new(auth0_uid: uid, name: name, email: email, image: image_url)
-      ensure_image_filename(user, image_url)
+      user = User.new(auth0_uid: uid, name: name, email: email)
+      attach_image(user, image_url) if image_url.present?
       user.save!
       log :info, "Authed new user (id: #{user.id}, uid: #{uid}, "\
         "name: #{user.name}, email: #{user.email})"
@@ -31,12 +31,28 @@ class FindOrCreateUserFromAuth < BaseService
     end
   end
 
-  def ensure_image_filename(user, image_url)
-    # Work around a weird Paperclip bug where the filename gets blanked out
-    if image_url.present? && user.image_file_name.blank?
-      filename = image_url.match(/[^\/]+\z/)[0]
-      log :warn, "Paperclip failed to parse filename from image url #{image_url.inspect}, defaulting to #{filename.inspect}."
-      user.image_file_name = filename
+  # Paperclip isn't smart enough to parse many common image urls. I need to
+  # manually download the image, set the encoding, detect the type. Yuck.
+  # TODO: Migrate to CarrierWave. (ActiveStorage isn't mature enough yet.)
+  def attach_image(user, image_url)
+    open(image_url) do |io|
+      ext = case io.content_type
+      when "image/png" then ".png"
+      when "image/jpg" then ".jpg"
+      when "image/jpeg" then ".jpg"
+      when "image/gif" then ".gif"
+      else raise "Don't know how to handle content_type #{io.content_type} for image from url: #{image_url}"
+      end
+      # Cobbled together from:
+      # - https://stackoverflow.com/a/23898725/1729692
+      # - https://stackoverflow.com/q/18476985/1729692
+      # (Not sure it's safe to assume that encoding will always be ascii-8bit,
+      #  but this method reliably blows up if I don't specify encoding)
+      tempfile = Tempfile.new(["photo", ext], encoding: "ascii-8bit")
+      tempfile.write(io.read)
+      tempfile.rewind
+      user.image = tempfile # should infer content type & size
+      tempfile.close; tempfile.unlink # clean up memory usage
     end
   end
 end

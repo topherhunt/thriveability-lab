@@ -39,6 +39,11 @@ class ActionController::TestCase
       .gsub(/\n+/, "   ")
   end
 
+  def assert_404_response
+    assert_equals 404, response.status
+    assert_text "The page you were looking for doesn't exist"
+  end
+
   def assert_notified(notify_user, event)
     actor, action, target = event
     expected_notification = ["User #{actor.id}", action.to_s, target.class.to_s, target.id]
