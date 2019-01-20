@@ -10,32 +10,26 @@
             - @errors.each do |error|
               %li= error
 
-      .row.row-padded
-        .col-sm-3
-          = label_tag "conversation[title]", "Title"
-          = required
-        .col-sm-9
-          = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
+      .form-group
+        = label_tag "conversation[title]", "Title #{required_star}".html_safe
+        = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
 
-      = render partial: "shared/edit_tags", locals: {object: @conversation}
+      .form-group
+        = render partial: "shared/edit_tags_1col", locals: {object: @conversation}
 
-      = render partial: "conversations/form_intention"
+      .form-group
+        = render partial: "conversations/form_intention"
 
-      .row.row-padded
-        .col-sm-3
-          = label_tag "comment[body]", "Your opening comments"
-        .col-sm-9
-          = hidden_field_tag "comment[body]", @comment.body
-          <trix-editor input="comment_body"></trix-editor>
+      .form-group
+        = hidden_field_tag "comment[body]", @comment.body
+        <trix-editor input="comment_body"></trix-editor>
 
-      .row.row-padded
-        .col-sm-3
-        .col-sm-9
-          %hr
-          = monitor_connection
-          = submit_tag "Start this conversation!", class: "btn btn-primary"
+      .form-group
+        = monitor_connection
+        = submit_tag "Start the conversation", class: "btn btn-primary"
 
   .col-sm-4
-    %div{style: "width: 100%; height: 300px; overflow: hidden;"}
+    %div{style: "width: 110%; margin-top: -20px; height: 300px; overflow: hidden;"}
       = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -100px;"
-    = render partial: "sidebar_hint"
+    %div{style: "padding-top: 10px;"}
+      = render partial: "sidebar_hint"

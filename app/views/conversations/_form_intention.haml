@@ -1,4 +1,4 @@
-= label_tag "intention", "I'm writing this reply to... #{required_star}".html_safe, class: "js-tooltip", data: {tooltip: "Consciously setting your intention can encourage more thoughtful and more productive discussions."}
+= label_tag "intention", "I'm writing in order to... #{required_star}".html_safe, class: "js-tooltip", data: {tooltip: "Consciously setting your intention can encourage more thoughtful and more productive discussions."}
 %div
   = select_tag "intention_selector", options_for_select([["- pick an intention -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "form-control js-intention-selector", data: {target: "#intention"}}
   = text_field_tag "intention", params[:intention], placeholder: "Write in your own intention statement", class: "form-control js-hidden"
