@@ -6,8 +6,9 @@ class ConversationParticipantJoin < ApplicationRecord
     "propose a solution to a problem",
     "learn about others' perspectives",
     "critique a perspective",
-    "seek advice",
-    "offer advice"]
+    "seek insights / ideas / advice",
+    "offer insights / ideas / advice"
+  ]
 
   belongs_to :conversation
   belongs_to :participant, class_name: "User"
