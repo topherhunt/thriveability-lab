@@ -7,7 +7,8 @@ class ConversationParticipantJoin < ApplicationRecord
     "learn about others' perspectives",
     "critique a perspective",
     "seek insights / ideas / advice",
-    "offer insights / ideas / advice"
+    "offer insights / ideas / advice",
+    "something else"
   ]
 
   belongs_to :conversation

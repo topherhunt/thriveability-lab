@@ -37,9 +37,4 @@ $(function(){
     $(this).animate({opacity: 1}, 250);
   });
 
-  $('.js-populate-value').on('keyup change', function(){
-    var targetSelector = $(this).data('target');
-    $(targetSelector).val($(this).val());
-  });
-
 });

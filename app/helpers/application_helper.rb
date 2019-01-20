@@ -37,6 +37,10 @@ module ApplicationHelper
     '<div class="em small text-danger" style="margin-top: -5px; padding-bottom: 3px;">required</div>'.html_safe
   end
 
+  def required_star
+    "<span class='text-danger'>*</span>"
+  end
+
   def monitor_connection
     "<div class='js-monitor-connection js-hidden alert alert-danger'><strong>Your connection might be unstable!</strong> Please copy and paste any important changes to somewhere safe before submitting.</div>".html_safe
   end

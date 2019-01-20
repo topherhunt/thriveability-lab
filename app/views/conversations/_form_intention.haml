@@ -1,9 +1,4 @@
-.row.row-padded
-  .col-sm-3
-    = label_tag "intention", "I'm writing this post to..."
-    = required
-    .hint.small Consciously setting your intention can encourage more thoughtful and more productive discussions.
-  .col-sm-9
-    .row-padded
-      = select_tag "intention_prepopulator", options_for_select([["- select an intention -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "js-populate-value form-control", data: {target: "#intention"}}
-    = text_field_tag "intention", params[:intention], class: "form-control"
+= label_tag "intention", "I'm writing this reply to... #{required_star}".html_safe, class: "js-tooltip", data: {tooltip: "Consciously setting your intention can encourage more thoughtful and more productive discussions."}
+%div
+  = select_tag "intention_selector", options_for_select([["- pick an intention -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "form-control js-intention-selector", data: {target: "#intention"}}
+  = text_field_tag "intention", params[:intention], placeholder: "Write in your own intention statement", class: "form-control js-hidden"
