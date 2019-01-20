@@ -2,11 +2,7 @@ class User < ApplicationRecord
   include Searchable
 
   has_many :projects, foreign_key: :owner_id
-  # TODO: This can be renamed to just `resources`; the risk of confusion is low
-  has_many :created_resources,
-    class_name: 'Resource',
-    foreign_key: :creator_id,
-    inverse_of: :creator
+  has_many :resources, foreign_key: :creator_id, inverse_of: :creator
   has_many :conversations, foreign_key: "creator_id", inverse_of: :creator
   has_many :comments, foreign_key: "author_id", inverse_of: :author
   has_many :conversation_participant_joins,
@@ -53,7 +49,7 @@ class User < ApplicationRecord
       projects.latest(2).includes(:taggings),
       conversations.latest(2).includes(:taggings),
       comments.latest(2).includes(:context).map(&:context),
-      created_resources.latest(2).includes(:taggings),
+      resources.latest(2).includes(:taggings),
       created_like_flags.latest(2).where("target_type != 'User'").includes(:target).map(&:target),
       created_stay_informed_flags.latest(2).includes(:target).map(&:target),
       created_get_involved_flags.latest(2).includes(:target).map(&:target),

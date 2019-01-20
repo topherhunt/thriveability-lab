@@ -43,13 +43,13 @@ class ResourcesControllerTest < ActionController::TestCase
       @user = create_logged_in_user
       @follower = create :user
       StayInformedFlag.where(user: @follower, target: @user).create!
-      assert_equals 0, @user.created_resources.count
+      assert_equals 0, @user.resources.count
       assert_equals 0, @follower.notifications.count
 
       post :create, params: {resource: attributes_for(:resource)}
 
-      assert_equals 1, @user.created_resources.count
-      assert_redirected_to resource_path(@user.created_resources.last)
+      assert_equals 1, @user.resources.count
+      assert_redirected_to resource_path(@user.resources.last)
       assert_equals 1, @follower.notifications.count
     end
 
@@ -57,7 +57,7 @@ class ResourcesControllerTest < ActionController::TestCase
       @user = create_logged_in_user
 
       post :create, params: {resource: attributes_for(:resource, title: "")}
-      assert_equals 0, @user.created_resources.count
+      assert_equals 0, @user.resources.count
       assert_text "Unable to save your changes"
     end
   end

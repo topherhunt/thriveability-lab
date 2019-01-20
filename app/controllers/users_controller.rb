@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @projects = @user.projects.latest(5)
-    @resources = @user.created_resources.latest(5)
+    @resources = @user.resources.latest(5)
     @participating_in_conversations = @user.participating_in_conversations.latest(5)
   end
 

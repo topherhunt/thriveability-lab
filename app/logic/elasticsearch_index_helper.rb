@@ -7,7 +7,8 @@ class ElasticsearchIndexHelper
     wrapper.create_index
     num_indexed = 0
     SEARCHABLE_CLASSES.each do |klass|
-      # TODO: Batch-import records to reduce the # of ES calls used
+      # NOTE: If I need to do large-scale full reindexing often, consider
+      # setting up batch-import to reduce the # of ES calls used.
       # (see elasticsearch-rails .import(force: true), it did this well)
       klass.all.find_each { |r| create_document(r); num_indexed += 1 }
     end

@@ -18,9 +18,7 @@ gem 'factory_bot'
 gem 'faker'
 gem 'omniauth'
 gem 'omniauth-auth0'
-# TODO: This is deprecated, replace with ActiveStorage.
-# See https://github.com/thoughtbot/paperclip/blob/master/MIGRATING.md
-gem 'paperclip', git: "https://github.com/thoughtbot/paperclip"
+gem 'paperclip', git: "https://github.com/thoughtbot/paperclip" # Deprecated (see readme)
 
 # Frontend
 gem 'bootstrap-sass'

@@ -7,12 +7,12 @@ class ResourcesTest < Capybara::Rails::TestCase
   end
 
   test "resource creation form works" do
-    assert_equals 0, @user.created_resources.count
+    assert_equals 0, @user.resources.count
     visit new_resource_path
     fill_dummy_content
     page.find(".submit-resource-button").click
-    assert_path resource_path(@user.created_resources.last)
-    assert_equals 1, @user.created_resources.count
+    assert_path resource_path(@user.resources.last)
+    assert_equals 1, @user.resources.count
   end
 
   def fill_dummy_content
