@@ -8,20 +8,38 @@
 
   %table.table
     %tr
-      %th Source
-      %td
-        - if @resource.current_url.present?
-          = link_to fa_icon("external-link") + " " + @resource.source_name, @resource.current_url, target: "_blank"
-        - else
-          = @resource.source_name
-
-    %tr
       %th Description
       %td= @resource.description
 
     %tr
+      %th Source
+      %td= @resource.source_name
+
+    %tr
       %th Relevant to
       %td= @resource.relevant_to
+
+    - if @resource.attachment_file_name.present?
+      %tr
+        %th Attached file
+        %td= link_to @resource.attachment_file_name, @resource.attachment.url
+
+    - if @resource.current_url.present?
+      %tr
+        %th URL
+        %td.text-ellipsis= link_to @resource.current_url, @resource.current_url
+
+    - if @resource.target
+      %tr
+        %th Linked to
+        %td= link_to "#{@resource.target.class.to_s}: #{@resource.target.title}", url_for(@resource.target)
+
+    - if @resource.creator
+      %tr
+        %th Added by
+        %td
+          = link_to image_tag(@resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(@resource.creator)
+          = link_to @resource.creator.name, user_path(@resource.creator)
 
     %tr
       %th Tags
@@ -35,22 +53,6 @@
         - @resource.media_type_list.each do |tag|
           = link_to tag, search_path(classes: "Resource", string: tag)
           &nbsp;
-
-    - if @resource.attachment_file_name.present?
-      %tr
-        %th Attached file
-        %td= link_to @resource.attachment.url
-
-    %tr
-      %th Added by
-      %td
-        = link_to image_tag(@resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(@resource.creator)
-        = link_to @resource.creator.name, user_path(@resource.creator)
-
-    - if @resource.target.present?
-      %tr
-        %th Linked to
-        %td= link_to "#{@resource.target.class.to_s}: #{@resource.target.title}", url_for(@resource.target)
 
     %tr
       %th

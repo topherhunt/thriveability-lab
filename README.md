@@ -14,6 +14,7 @@
 
 I abandoned Devise in favor of Auth0 managed user auth. See AuthController. Also see https://github.com/topherhunt/cheatsheets/blob/master/rails/auth0.md. Features include:
 
+- Database login via UN & PW
 - Google and FB login
 - Force login for admins (see auth.rake)
 
@@ -29,6 +30,11 @@ We use ElasticSearch for a simple full-text search index. I tried `elasticsearch
 Errors:
 
 - Transport exceptions usually mean that the ES service isn’t running / isn’t reachable.
+
+
+### Paperclip
+
+Paperclip is way deprecated and slowly crumbling. I tried moving to ActiveStorage, then realized that (as of Rails 5.2) AS is an immature and intolerably unperformant solution. Ideally I'd migrate to CarrierWave, but left Paperclip in place for now to reduce my yak-shave factor. Who knows, Paperclip might serve well enough until more major architectural changes make it irrelevant.
 
 
 ### Tests

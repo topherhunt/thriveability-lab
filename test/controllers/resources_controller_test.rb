@@ -49,7 +49,7 @@ class ResourcesControllerTest < ActionController::TestCase
       post :create, params: {resource: attributes_for(:resource)}
 
       assert_equals 1, @user.created_resources.count
-      assert_redirected_to resources_path
+      assert_redirected_to resource_path(@user.created_resources.last)
       assert_equals 1, @follower.notifications.count
     end
 

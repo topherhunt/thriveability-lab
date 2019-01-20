@@ -27,7 +27,7 @@ class ResourcesController < ApplicationController
 
     if @resource.save
       Event.register(current_user, "create", @resource)
-      redirect_to return_to_path, notice: "Your changes have been saved."
+      redirect_to after_create_redirect_path, notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."
       render "new"
@@ -48,7 +48,7 @@ class ResourcesController < ApplicationController
 
   def destroy
     @resource.destroy!
-    redirect_to return_to_path, notice: "The resource was deleted."
+    redirect_to resources_path, notice: "The resource was deleted."
   end
 
   private
@@ -64,21 +64,25 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def standard_params
+    [:title, :description, :source_name, :current_url, :relevant_to, :attachment, :ownership_affirmed, :tag_list, :media_type_list]
+  end
+
   def create_params
-    params.require(:resource).permit(:title, :description, :source_name, :relevant_to, :current_url, :attachment, :ownership_affirmed, :target_type, :target_id, :tag_list, :media_type_list)
+    params.require(:resource).permit(standard_params + [:target_type, :target_id])
   end
 
   def update_params
-    params.require(:resource).permit(:title, :description, :url, :relevant_to, :attachment, :ownership_affirmed, :tag_list, :media_type_list)
+    params.require(:resource).permit(standard_params)
   end
 
-  def return_to_path
+  def after_create_redirect_path
     if @resource.target
       url_for(@resource.target)
     elsif params[:editing_user_profile].present?
       user_path(current_user)
     else
-      resources_path
+      resource_path(@resource)
     end
   end
 

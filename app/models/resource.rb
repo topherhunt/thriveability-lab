@@ -41,6 +41,8 @@ class Resource < ApplicationRecord
   end
 
   def ensure_current_url_has_protocol
-    self.current_url = "http://#{self.current_url}" unless current_url =~ /^https?\:\/\//
+    if current_url.present? && current_url !~ /^https?\:\/\//
+      self.current_url = "http://#{self.current_url}"
+    end
   end
 end
