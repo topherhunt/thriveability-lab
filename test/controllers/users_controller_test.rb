@@ -42,6 +42,10 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   context "#update" do
+    def create_prompt(stem:, response:)
+      create :user_profile_prompt, user: @user, stem: stem, response: response
+    end
+
     setup do
       @user = create :user
     end
@@ -52,6 +56,26 @@ class UsersControllerTest < ActionController::TestCase
 
       assert_equals "Daffy", @user.reload.name
       assert_redirected_to user_path(@user)
+    end
+
+    it "upserts profile prompts as relevant" do
+      sign_in @user
+      prompt1 = create_prompt stem: "Updated stem", response: "old response"
+      prompt2 = create_prompt stem: "Unchanged stem", response: "unchanged response"
+      prompt3 = create_prompt stem: "Deleted stem", response: "to-delete response"
+
+      patch :update, params: {id: @user.id,
+        user: {name: "Topher"},
+        prompts: {
+          1 => {stem: "Updated stem", response: "updated response"},
+          2 => {stem: "Unchanged stem", response: "unchanged response"},
+          3 => {stem: "Deleted stem", response: ""},
+          4 => {stem: "Newly filled-in stem", response: "new response"}
+        }
+      }
+
+      expected = ["updated response", "unchanged response", "new response"]
+      assert_equals expected.sort, @user.profile_prompts.pluck(:response).sort
     end
 
     it "rejects if the logged-in user is not the target user" do

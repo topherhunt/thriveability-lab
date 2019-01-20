@@ -6,4 +6,14 @@ module TextHelper
       string
     end
   end
+
+  def ensure_ending_period(string)
+    return if string.blank?
+    string = string.strip
+    if string =~ /[\.\?\!]\z/
+      string
+    else
+      string + "."
+    end
+  end
 end

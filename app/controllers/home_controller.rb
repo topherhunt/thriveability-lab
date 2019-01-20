@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  skip_before_action :load_current_user, only: [:ping]
+
   def home
     @users = User.most_recent(10).shuffle.take(2)
     # @user_interests = UserData.interests_map(@users)

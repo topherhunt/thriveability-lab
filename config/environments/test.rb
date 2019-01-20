@@ -38,8 +38,8 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  # Don't log every little sql query
-  config.log_level = :info
+  # :info for normal content only; :debug to log each sql statement etc.
+  config.log_level = :debug
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

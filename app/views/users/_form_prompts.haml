@@ -1,0 +1,19 @@
+- index = 0
+
+- filled_prompts.each do |prompt|
+  - index += 1
+  .row.row-padded{style: "clear: both;"}
+    .col-sm-3{style: "padding-top: 10px;"}
+      %label{for: "prompts_#{index}_response"} #{prompt[:stem]}...
+      = hidden_field_tag "prompts[#{index}][stem]", prompt[:stem]
+    .col-sm-9
+      = text_field_tag "prompts[#{index}][response]", prompt[:response], class: "form-control", style: "width: 100%;"
+
+- unfilled_prompts.each do |prompt|
+  - index += 1
+  .row.row-padded{style: "clear: both;"}
+    .col-sm-3{style: "padding-top: 10px;"}
+      %label{for: "prompts_#{index}_response"} #{prompt[:stem]}...
+      = hidden_field_tag "prompts[#{index}][stem]", prompt[:stem]
+    .col-sm-9
+      = text_field_tag "prompts[#{index}][response]", "", class: "form-control", style: "width: 100%;"

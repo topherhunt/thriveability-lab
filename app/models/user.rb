@@ -3,11 +3,18 @@ class User < ApplicationRecord
 
   has_many :projects, foreign_key: :owner_id
   # TODO: This can be renamed to just `resources`; the risk of confusion is low
-  has_many :created_resources, class_name: 'Resource', foreign_key: :creator_id, inverse_of: :creator
+  has_many :created_resources,
+    class_name: 'Resource',
+    foreign_key: :creator_id,
+    inverse_of: :creator
   has_many :conversations, foreign_key: "creator_id", inverse_of: :creator
   has_many :comments, foreign_key: "author_id", inverse_of: :author
-  has_many :conversation_participant_joins, foreign_key: "participant_id", inverse_of: :participant
-  has_many :participating_in_conversations, through: :conversation_participant_joins, source: :conversation
+  has_many :conversation_participant_joins,
+    foreign_key: "participant_id",
+    inverse_of: :participant
+  has_many :participating_in_conversations,
+    through: :conversation_participant_joins,
+    source: :conversation
   has_many :created_like_flags, class_name: "LikeFlag" # as the originator
   has_many :created_stay_informed_flags, class_name: 'StayInformedFlag'
   has_many :created_get_involved_flags, class_name: 'GetInvolvedFlag'
@@ -15,6 +22,7 @@ class User < ApplicationRecord
   has_many :received_stay_informed_flags, class_name: 'StayInformedFlag', as: :target
   has_many :notifications, foreign_key: "notify_user_id"
   has_many :events, foreign_key: "actor_id"
+  has_many :profile_prompts, class_name: "UserProfilePrompt"
 
   has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
     default_url: "/missing_user.png"
@@ -26,8 +34,6 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255} # not necessarily unique
   validates :tagline, length: { maximum: 120 }
   validates :location, length: { maximum: 255 }
-  validates :bio_interior, length: {maximum: 1000}
-  validates :bio_exterior, length: {maximum: 1000}
 
   def self.most_recent(n)
     order('last_signed_in_at DESC').limit(n)
@@ -36,7 +42,7 @@ class User < ApplicationRecord
   def to_elasticsearch_document
     {
       full_text_primary: [name].join(" "),
-      full_text_secondary: [tagline, interests, location, bio_interior, bio_exterior].join(" ")
+      full_text_secondary: [tagline, interests, location, profile_prompts.map(&:sentence)].join(" ")
     }
   end
 

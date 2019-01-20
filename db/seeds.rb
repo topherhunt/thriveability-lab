@@ -21,13 +21,7 @@ SCALE=5 # default: 5
 puts "\nCreating users..."
 (SCALE*10).times do |i|
   print "."
-  # name = Faker::Name.name
-  # sanitized_name = name.downcase.gsub(/^\w/, "")
-  # email = "#{sanitized_name}@example.com".downcase.gsub(/[^\w\@\.]/, '')
-  # location = Faker::LordOfTheRings.location
-
-  uri = URI.parse('https://randomuser.me/api/')
-  response = Net::HTTP.get_response(uri)
+  response = Net::HTTP.get_response(URI.parse('https://randomuser.me/api/'))
   json = JSON.parse(response.body)['results'].first
 
   user = FactoryBot.create(:user, {
@@ -36,11 +30,11 @@ puts "\nCreating users..."
     location: json['location']['city'] + ' ' + json['location']['state'],
     image: json['picture']['large']
   })
+  rand(1..10).times { FactoryBot.create(:user_profile_prompt, user: user) }
   @users << user
 end
 @users = @users.sample(25)
 
-# Make people follow other people first so that they receive notifications of followee activity.
 puts "\nPeople following people..."
 (SCALE*20).times do |i|
   print "."
@@ -56,7 +50,6 @@ puts "\nCreating projects..."
 (SCALE*5).times do |i|
   print "."
   user = @users.sample
-  # TODO: Add stock images... the lorempixel URL we were using, kept timing out
   project = FactoryBot.create(:project,
     owner: user,
     image: "https://source.unsplash.com/random/200x200"

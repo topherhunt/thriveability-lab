@@ -16,14 +16,16 @@
 
     %p Member since #{print_date @user.created_at}
 
-    %h3 My personality, dreams, and passions
-    = simple_format(@user.bio_interior)
-
-    %h3 My expertise, work, and goals
-    = simple_format(@user.bio_exterior)
+    - if @user.profile_prompts.any?
+      %h4 More about me
+      %ul
+        - @user.profile_prompts.each do |prompt|
+          %li
+            %span{style: "color: #555;"}= prompt.stem
+            %span{style: ""}= ensure_ending_period(prompt.response)
 
   .col-sm-4
-    = image_tag @user.image.url(:medium), style: "width: 100%;", class: "hidden-xs"
+    = image_tag @user.image.url(:medium), style: "width: 100%;", class: "img-rounded hidden-xs"
 
     %hr
 

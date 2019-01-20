@@ -7,10 +7,15 @@ FactoryBot.define do
     email        { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     # These are overkill for most tests, but useful in the dev seeded db
     tagline      { Faker::Lorem.words(rand(2..12)).join(" ").capitalize }
-    bio_interior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
-    bio_exterior { Faker::Lorem.sentences(rand(2..10)).join(" ") }
+    location     { Faker::LordOfTheRings.location }
     created_at   { (rand * 400.0).days.ago }
     last_signed_in_at { (rand * 30).days.ago }
+  end
+
+  factory(:user_profile_prompt) do
+    association :user
+    stem { Faker::Lorem.words(3).join(" ").capitalize }
+    response { Faker::Lorem.words(10).join(" ") }
   end
 
   factory(:project) do
@@ -21,7 +26,7 @@ FactoryBot.define do
     contribution_to_world { Faker::Lorem.sentences(rand(1..4)).join(" ") }
     location_of_home { Faker::Lorem.words(rand(2..3)).join(" ") }
     location_of_impact { Faker::Lorem.words(rand(2..3)).join(" ") }
-    image { fixture_file_upload(Rails.root.join('test', 'fixtures', 'test.png'), 'image/png') }
+    image { fixture_file_upload("#{Rails.root}/test/fixtures/test.png", 'image/png') }
     stage        { Project::STAGES.sample }
     tag_list     { PredefinedTag::PRESETS.sample(rand(1..3)).join(",") }
     created_at   { (rand * 400.0).days.ago }

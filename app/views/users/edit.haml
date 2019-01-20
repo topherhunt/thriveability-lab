@@ -4,61 +4,42 @@
     = show_errors_for(@user)
 
     .row.row-padded
-      .col-sm-4
+      .col-sm-3
         = f.label :name
         %span.small.em.text-danger required
-      .col-sm-8= f.text_field :name, class: "form-control"
+      .col-sm-9= f.text_field :name, class: "form-control"
     .row.row-padded
-      .col-sm-4
+      .col-sm-3
         = f.label :image, "A photo of me"
         .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
-      .col-sm-8
+      .col-sm-9
         = f.file_field :image, class: "form-control"
     .row.row-padded
-      .col-sm-4
+      .col-sm-3
         = f.label :tagline, "One-line summary"
         %span.small.em.text-danger required
         .hint.small A short description of what you do and why.
-      .col-sm-8
+      .col-sm-9
         = f.text_field :tagline, class: "form-control"
     .row.row-padded
-      .col-sm-4
+      .col-sm-3
         = f.label :location, "Where are you based?"
-      .col-sm-8
+      .col-sm-9
         = f.text_field :location, class: "form-control"
 
-    .row-padded
-      With these questions we invite you to show something of your true self!
+    %h3 More about me
+    %p We'd love to learn more about who you are! We've listed a few prompts below. Pick any that speak to you and fill in the rest of the sentence.
+
+    - if @prompt_errors.present?
+      .alert.alert-danger
+        %div There was an error saving your changes:
+        %div #{@prompt_errors}
+
+    = render partial: "form_prompts", locals: {filled_prompts: @filled_prompts, unfilled_prompts: @unfilled_prompts}
 
     .row.row-padded
-      .col-sm-4
-        = f.label :bio_interior, "Personality, passions, and dreams"
-        .hint.small
-          %p Share a little about your inner life!
-          %ul.less-indent
-            %li What traits are you proud to be known for?
-            %li What moves or inspires you most?
-            %li What future do you dream of?
-            %li What makes you feel alive?
-      .col-sm-8
-        = f.text_area :bio_interior, class: "form-control", style: "height: 120px;"
-
-    .row.row-padded
-      .col-sm-4
-        = f.label :bio_exterior, "Expertise, work, and goals"
-        .hint.small
-          %p Tell others about your work in the world.
-          %ul.less-indent
-            %li What do you do for a living?
-            %li What are your professional or career goals?
-            %li What skills and experience can you offer?
-            %li What are you looking for by being part of this community?
-      .col-sm-8
-        = f.text_area :bio_exterior, class: "form-control", style: "height: 120px;"
-
-    .row.row-padded
-      .col-sm-4
-      .col-sm-8
+      .col-sm-3
+      .col-sm-9
         = monitor_connection
         .js-monitor-connection
         = f.submit "Save", class: "test-submit-user-profile btn btn-primary"
