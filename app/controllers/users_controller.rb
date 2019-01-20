@@ -62,39 +62,9 @@ class UsersController < ApplicationController
   def upsert_profile_prompts
     return true unless params[:prompts]
 
-    @prompt_errors = ""
-    existing_prompts = @user.profile_prompts.to_a
-
-    params[:prompts].each do |index, hash|
-      stem = hash.fetch(:stem)
-      response = hash.fetch(:response)
-      existing = existing_prompts.find { |p| p.stem == stem }
-      try_create_or_update_or_destroy_prompt(existing, stem, response)
-    end
-
-    @prompt_errors.blank?
-  end
-
-  def try_create_or_update_or_destroy_prompt(existing, stem, response)
-    if existing
-      prompt = existing
-      if response.present?
-        prompt.response = response
-      else
-        prompt.destroy!
-      end
-    elsif response.present?
-      prompt = @user.profile_prompts.new(stem: stem, response: response)
-    else
-      return
-    end
-
-    if prompt.changed?
-      prompt.save || report_prompt_error(prompt)
-    end
-  end
-
-  def report_prompt_error(prompt)
-    @prompt_errors += "Prompt \"#{prompt.stem}\": #{prompt.errors.full_messages.join(", ")}. "
+    @prompt_errors = UpsertProfilePrompts.call(
+      user: @user,
+      submitted_prompts: params[:prompts].values)
+    @prompt_errors.count == 0
   end
 end

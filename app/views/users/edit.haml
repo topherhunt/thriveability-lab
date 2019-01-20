@@ -30,10 +30,10 @@
     %h3 More about me
     %p We'd love to learn more about who you are! We've listed a few prompts below. Pick any that speak to you and fill in the rest of the sentence.
 
-    - if @prompt_errors.present?
+    - if @prompt_errors && @prompt_errors.count > 0
       .alert.alert-danger
         %div There was an error saving your changes:
-        %div #{@prompt_errors}
+        %div #{@prompt_errors.join(" ")}
 
     = render partial: "form_prompts", locals: {filled_prompts: @filled_prompts, unfilled_prompts: @unfilled_prompts}
 
