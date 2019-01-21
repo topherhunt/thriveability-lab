@@ -4,12 +4,12 @@
     = hidden_field_tag "context_id", context.id
 
     - if must_state_intention
-      = render partial: "conversations/form_intention"
+      .form-group
+        = render partial: "conversations/form_intention"
 
-    = f.hidden_field :body
-    %div{style: "padding-top: 10px;"}
+    .form-group
+      = f.hidden_field :body
       <trix-editor input="comment_body" placeholder="Write your comment here"></trix-editor>
 
-    %div{style: "padding-top: 10px;"}
-      = monitor_connection
-      = f.submit "Reply", class: "btn btn-primary"
+    = monitor_connection
+    = f.submit "Reply", class: "btn btn-primary test-submit-comment"

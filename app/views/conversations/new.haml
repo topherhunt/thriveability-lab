@@ -15,9 +15,6 @@
         = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
 
       .form-group
-        = render partial: "shared/edit_tags_1col", locals: {object: @conversation}
-
-      .form-group
         = render partial: "conversations/form_intention"
 
       .form-group
@@ -25,8 +22,11 @@
         <trix-editor input="comment_body"></trix-editor>
 
       .form-group
+        = render partial: "shared/edit_tags_1col", locals: {object: @conversation}
+
+      .form-group
         = monitor_connection
-        = submit_tag "Start the conversation", class: "btn btn-primary"
+        = submit_tag "Start the conversation", class: "btn btn-primary test-start-conversation"
 
   .col-sm-4
     %div{style: "width: 110%; margin-top: -20px; height: 300px; overflow: hidden;"}
