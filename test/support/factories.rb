@@ -41,7 +41,11 @@ FactoryBot.define do
   factory(:comment) do
     context { raise "context must be specified!" }
     association :author, factory: :user
-    body { Gibberish.random_paragraphs(rand(1..5)) }
+    body { rand(1..5).times.map { Gibberish.random_paragraph }.join("<br><br>") }
+  end
+
+  def random_paragraph
+    Faker::Lorem.sentences(rand(2..10)).join(" ")
   end
 
   factory(:conversation_participant_join) do

@@ -18,24 +18,25 @@ class ConversationsController < ApplicationController
   end
 
   def create
+    @conversation = Conversation.new(create_conversation_params)
+    @comment = Comment.new(create_comment_params)
+    @participant = ConversationParticipantJoin.new(create_cpj_params)
+
     ApplicationRecord.transaction do
-      @conversation = Conversation.create!(conversation_params.merge(
-        creator: current_user))
-      @comment = Comment.create!(comment_params.merge(
-        context: @conversation,
-        author: current_user))
-      @participant = ConversationParticipantJoin.create!(
-        conversation: @conversation,
-        participant: current_user,
-        intention: params[:intention])
+      @conversation.save!
+      @comment.context = @conversation
+      @comment.save!
+      @participant.conversation = @conversation
+      @participant.save!
     end
+
     Event.register(current_user, "create", @conversation)
     redirect_to conversation_path(@conversation),
-      info: "Great, you've started the conversation!"
+      notice: "Great, you've started the conversation!"
   rescue ActiveRecord::RecordInvalid => e
-    @conversation ||= Conversation.new
-    @comment ||= Comment.new
-    @participant ||= ConversationParticipantJoin.new
+    @conversation ||= Conversation.new(conversation_params)
+    @comment ||= Comment.new(create_comment_params)
+    @participant ||= ConversationParticipantJoin.new(intention: params[:intention])
     @errors = (
       @conversation.errors.full_messages +
       @comment.errors.full_messages +
@@ -49,8 +50,8 @@ class ConversationsController < ApplicationController
   end
 
   def update
-    if @conversation.update(conversation_params)
-      redirect_to conversation_path(@conversation), info: "Your changes have been saved."
+    if @conversation.update(update_conversation_params)
+      redirect_to conversation_path(@conversation), notice: "Your changes have been saved."
     else
       flash.now.alert = "Unable to save your changes. Please see errors below."
       render "edit"
@@ -82,11 +83,19 @@ class ConversationsController < ApplicationController
     end
   end
 
-  def conversation_params
-    params.require(:conversation).permit(:title, :tag_list)
+  def create_conversation_params
+    update_conversation_params.merge(creator: current_user)
   end
 
-  def comment_params
-    params.require(:comment).permit(:body)
+  def create_comment_params
+    params.require(:comment).permit(:body).merge(author: current_user)
+  end
+
+  def create_cpj_params
+    {participant: current_user, intention: params[:intention]}
+  end
+
+  def update_conversation_params
+    params.require(:conversation).permit(:title, :tag_list)
   end
 end

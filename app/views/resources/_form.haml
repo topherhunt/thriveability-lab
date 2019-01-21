@@ -11,22 +11,19 @@
 
   .row.row-padded
     .col-sm-3
-      = f.label :title
-      = required
+      = f.label :title, "Title #{required_star}".html_safe
       .hint.small Make sure the title communicates why or how this resource is valuable to others!
     .col-sm-9= f.text_field :title, class: "form-control"
 
   .row.row-padded
     .col-sm-3
-      = f.label :description
-      = required
+      = f.label :description, "Description #{required_star}".html_safe
       .hint.small Please give a one-line description of what this resource contributes to the community.
     .col-sm-9= f.text_field :description, class: "form-control"
 
   .row.row-padded
     .col-sm-3
-      = f.label :source_name
-      = required
+      = f.label :source_name, "Source name #{required_star}".html_safe
       .hint.small Who authored or created this resource?
     .col-sm-9= f.text_field :source_name, class: "form-control"
 
@@ -53,7 +50,7 @@
       .hint.small Where can this resource be accessed online?
     .col-sm-9= f.text_field :current_url, class: "form-control"
 
-  = render partial: "shared/edit_tags", locals: {object: @resource}
+  = render partial: "shared/edit_tags", locals: {object: @resource, is_required: false}
 
   .row.row-padded
     .col-sm-3

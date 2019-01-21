@@ -11,16 +11,14 @@
 
   .row.row-padded
     .col-sm-3
-      = f.label :title
-      = required
+      = f.label :title, "Title #{required_star}".html_safe
       .hint.small Choose a catchy project title!
     .col-sm-9
       = f.text_field :title, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
   .row.row-padded
     .col-sm-3
-      = f.label :subtitle
-      = required
+      = f.label :subtitle, "Subtitle #{required_star}".html_safe
       .hint.small Describe in one line the central purpose of this project
     .col-sm-9
       = f.text_field :subtitle, class: "form-control"
@@ -41,53 +39,45 @@
       = warn_of_length_limit("#project_video_url", 255)
   .row.row-padded
     .col-sm-3
-      = f.label :image, "Image"
-      = required
+      = f.label :image, "Image #{required_star}".html_safe
       .hint.small Upload a cover photo.
     .col-sm-9
       = f.file_field :image, class: "form-control"
   .row.row-padded
     .col-sm-3
-      = f.label :desired_impact
-      = required
+      = f.label :desired_impact, "Desired impact #{required_star}".html_safe
       .hint.small What are you trying to accomplish? What's the problem you hope to contribute to? What's the change you strive for?
     .col-sm-9
       = f.text_area :desired_impact, class: "form-control"
       = warn_of_length_limit("#project_desired_impact", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :contribution_to_world, "How does your project contribute to a more thriving world?"
-      = required
+      = f.label :contribution_to_world, "How does your project contribute to a more thriving world? #{required_star}".html_safe
       .hint.small How do you contribute to a more conscious, inclusive, sustainable, happy world?
     .col-sm-9
       = f.text_area :contribution_to_world, class: "form-control"
       = warn_of_length_limit("#project_contribution_to_world", 500)
   .row.row-padded
     .col-sm-3
-      = f.label :location_of_home, "Home base"
-      = required
-      %br
+      = f.label :location_of_home, "Home base #{required_star}".html_safe
       .hint.small Out of which location, area, country, or region do you operate?
     .col-sm-9
       = f.text_field :location_of_home, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
   .row.row-padded
     .col-sm-3
-      = f.label :location_of_impact, "Zone of impact"
-      = required
-      %br
+      = f.label :location_of_impact, "Zone of impact #{required_star}".html_safe
       .hint.small Which location, area, country, or region are you trying to impact?
     .col-sm-9
       = f.text_field :location_of_impact, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
   .row.row-padded
     .col-sm-3
-      = f.label :stage, "Years in operation"
-      = required
+      = f.label :stage, "Years in operation #{required_star}".html_safe
     .col-sm-9
       = f.select :stage, Project::STAGES, {include_blank: "- select one -"}, {class: "form-control"}
 
-  = render partial: "shared/edit_tags", locals: {object: @project}
+  = render partial: "shared/edit_tags", locals: {object: @project, is_required: true}
 
   .row.row-padded
     .col-sm-3

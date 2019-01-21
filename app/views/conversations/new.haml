@@ -4,8 +4,8 @@
 
     = form_for @conversation do |f|
       - if @errors.present?
-        .alert.alert-warning
-          %h3 Your changes weren't saved due to the following errors:
+        .alert.alert-danger
+          %div.strong Your changes weren't saved due to the following errors:
           %ul
             - @errors.each do |error|
               %li= error
@@ -20,9 +20,10 @@
       .form-group
         = hidden_field_tag "comment[body]", @comment.body
         <trix-editor input="comment_body"></trix-editor>
+        = warn_of_length_limit("#comment_body", 2000)
 
       .form-group
-        = render partial: "shared/edit_tags_1col", locals: {object: @conversation}
+        = render partial: "shared/edit_tags_1col", locals: {object: @conversation, is_required: false}
 
       .form-group
         = monitor_connection

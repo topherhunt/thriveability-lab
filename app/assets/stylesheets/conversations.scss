@@ -5,6 +5,7 @@
 }
 
 trix-editor { min-height: 7em; }
+trix-editor:empty:not(:focus)::before { color: #aaa; }
 
 // Make the toolbar buttons smaller thus less busy
 trix-toolbar { font-size: 80%; }

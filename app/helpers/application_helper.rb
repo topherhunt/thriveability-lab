@@ -5,12 +5,9 @@ module ApplicationHelper
 
   def bootstrap_flash_class(key)
     case key.to_sym
-    when :notice
-      'info'
-    when :alert
-      'warning'
-    else
-      raise "Unrecognized flash key '#{key.to_s}'!"
+    when :notice then 'info'
+    when :alert  then 'warning'
+    else raise "Unrecognized flash key '#{key.to_s}'!"
     end
   end
 
@@ -33,12 +30,8 @@ module ApplicationHelper
     </div>".html_safe
   end
 
-  def required
-    '<div class="em small text-danger" style="margin-top: -5px; padding-bottom: 3px;">required</div>'.html_safe
-  end
-
   def required_star
-    "<span class='text-danger'>*</span>"
+    "<span class='text-danger js-tooltip' data-tooltip='Required'>*</span>"
   end
 
   def monitor_connection

@@ -4,16 +4,13 @@
   = form_for @conversation do |f|
     = show_errors_for @conversation
 
-    .row.row-padded
-      .col-sm-3
-        = label_tag "conversation[title]", "Title"
-        = required
-      .col-sm-9
-        = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
-    = render partial: "shared/edit_tags", locals: {object: @conversation}
-    .row.row-padded
-      .col-sm-3
-      .col-sm-9
-        %hr
-        = monitor_connection
-        = submit_tag "Save changes", class: "btn btn-primary"
+    .form-group
+      = label_tag "conversation[title]", "Title #{required_star}".html_safe
+      = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
+
+    .form-group
+      = render partial: "shared/edit_tags_1col", locals: {object: @conversation, is_required: false}
+
+    .form-group
+      = monitor_connection
+      = submit_tag "Save changes", class: "btn btn-primary"

@@ -1,9 +1,8 @@
 - object_name = object.class.to_s.downcase
 .row.row-padded
   .col-sm-3
-    = label_tag "#{object_name}[tag_list]", "Tags"
-    - if object.is_a?(Project)
-      = required
+    - label_text = is_required ? "Tags #{required_star}".html_safe : "Tags"
+    = label_tag "#{object_name}[tag_list]", label_text
     .hint.small Specify up to 3 relevant themes that help people discover your #{object_name}.
   .col-sm-9
     = text_field_tag "#{object_name}[tag_list]", object.tag_list.sort.join(","), class: "js-hidden"
