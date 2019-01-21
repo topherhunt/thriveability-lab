@@ -2,9 +2,6 @@
 # but doesn't know anything about ActiveRecord, what models are indexed, how to
 # search, etc.
 #
-# Other ops useful for debugging:
-# - List all indexes: run(:get, "_aliases").keys
-#
 class ElasticsearchWrapper
   def check_health
     client.cluster.health # If no exceptions, that means it's connected
@@ -73,6 +70,7 @@ class ElasticsearchWrapper
     @index_name ||= "thriveability-#{Rails.env}-global"
   end
 
+  # Full delete & reindex will be needed if I change the mappings
   def standard_field_mappings
     {
       class: {type: "keyword"},

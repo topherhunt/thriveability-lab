@@ -1,3 +1,6 @@
+# Include this in any model to include it in Elasticsearch indexing & search.
+# The model must also implement #to_elasticsearch_document to return a hash
+# like {full_text_primary: "The title etc."}
 module Searchable
   extend ActiveSupport::Concern
 

@@ -28,21 +28,25 @@ class RunSearch < BaseService
   # Return them in an array preserving the search result order.
   def loaded_records
     classes = identifiers.map(&:first).uniq.sort
-    records = classes.map { |c| c.constantize.find(ids_in_class(c)) }.flatten
+    records = classes.map do |klass|
+      # We don't assume that each id can currently be found in the database
+      # (some results might be orphaned references to deleted records)
+      klass.constantize.where(id: ids_in_class(klass)).all
+    end.flatten
     identifiers.map do |(klass, id)|
       records.find { |r| r.class.to_s == klass && r.id == id } # may be nil
     end.compact
   end
+
+  #
+  # Internal helpers
+  #
 
   def ids_in_class(target_class)
     identifiers
       .select { |(c, id)| c == target_class }
       .map { |(c, id)| id }
   end
-
-  #
-  # Internal helpers
-  #
 
   def validate_classes(classes)
     classes = classes.count >= 1 ? classes : all_searchable_classes

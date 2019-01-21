@@ -27,10 +27,6 @@ We use ElasticSearch for a simple full-text search index. I tried `elasticsearch
 - In production, we use the Bonsai Heroku add-on, but any ES server will work as long as we provide the full URL in `ENV['ELASTICSEARCH_URL']`.
 - To do a full reindex: `ElasticsearchIndexHelper.new.delete_and_rebuild_index!`
 
-Errors:
-
-- Transport exceptions usually mean that the ES service isn’t running / isn’t reachable.
-
 
 ### Paperclip
 

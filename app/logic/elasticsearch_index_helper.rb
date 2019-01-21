@@ -1,4 +1,4 @@
-# ElasticSearch indexing layer. Knows everything about what models should be indexed.
+# ElasticSearch high-level indexing helper.
 class ElasticsearchIndexHelper
   SEARCHABLE_CLASSES = [User, Project, Conversation, Resource]
 
