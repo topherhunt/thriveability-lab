@@ -13,7 +13,7 @@ $(function(){
     });
   });
 
-  // TODO: Unperformant?
+  // This might create minor browser-side performance problems
   $('.js-show-on-parent-hover').each(function(){
     $(this).hide();
     $(this).parent().hover(function(){

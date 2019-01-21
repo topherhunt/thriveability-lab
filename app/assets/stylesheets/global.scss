@@ -35,7 +35,6 @@ table td { vertical-align: top; }
 textarea { min-height: 100px; }
 .field_with_errors { border-bottom: 2px solid #a94442; }
 #error_explanation {
-  // TODO: Could I just import from .alert and .alert-danger?
   color: #B20000;
   background-color: #FFdddd;
   border: 1px solid #FF8080;

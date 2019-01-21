@@ -17,7 +17,6 @@ class Conversation < ApplicationRecord
   end
 
   def self.most_popular(n)
-    # TODO: What happens if you join the same assoc multiple times?
     joins(:comments)
       .group("conversations.id")
       .order(Arel.sql("COUNT(comments.id) DESC"))
