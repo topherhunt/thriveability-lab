@@ -75,10 +75,13 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "You must be logged in to take that action."
   end
 
-  # Explicitly control handling of 404s
+  # Override Rails' default RecordNotFound behavior so we don't overwhelm Rollbar
   rescue_from ActiveRecord::RecordNotFound do |e|
-    log :warn, "Got ActiveRecord::RecordNotFound. url: #{request.original_url}, "\
-      "error: #{e}, useragent: #{request.user_agent.inspect}"
+    Rails.logger.error "#{e.class}: #{e}. (url: #{request.original_url}, useragent: #{request.user_agent.inspect}) Backtrace: #{filtered_backtrace(e).join(", ")}"
     render file: "public/404.html", layout: false, status: 404
+  end
+
+  def filtered_backtrace(e)
+    e.backtrace.select { |line| line.include?(Rails.root.to_s) }
   end
 end
