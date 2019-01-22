@@ -82,6 +82,10 @@ class ApplicationController < ActionController::Base
   end
 
   def filtered_backtrace(e)
-    e.backtrace.select { |line| line.include?(Rails.root.to_s) }
+    e.backtrace.select do |line|
+      line.starts_with?(Rails.root.to_s) &&
+      !line.include?("/vendor/") &&
+      !line.include?("/bin/")
+    end
   end
 end
