@@ -1,13 +1,11 @@
 class ConversationParticipantJoin < ApplicationRecord
   INTENTION_PRESETS = [
-    "share about facts, events, or objective knowledge",
-    "share about a personal experience or perspective",
-    "raise awareness of a problem",
-    "propose a solution to a problem",
-    "learn about others' perspectives",
-    "critique a perspective",
-    "seek insights / ideas / advice",
-    "offer insights / ideas / advice",
+    "share objective facts",
+    "share my experience or perspective",
+    "offer ideas or advice",
+    "seek others' experience or perspective",
+    "seek ideas or advice",
+    "raise a question",
     "something else"
   ]
 
