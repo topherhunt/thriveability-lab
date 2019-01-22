@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :tagline, :location, :image)
+    params.require(:user).permit(:name, :tagline, :location, :image, :bio, :website_url)
   end
 
   def marshal_prompts_from_db

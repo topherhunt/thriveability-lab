@@ -1,34 +1,34 @@
-.centered-1000
+.centered-800
   %h1 Update my profile
   = form_for @user do |f|
     = show_errors_for(@user)
 
-    .row.row-padded
-      .col-sm-3
-        = f.label :name
-        %span.small.em.text-danger required
-      .col-sm-9= f.text_field :name, class: "form-control"
-    .row.row-padded
-      .col-sm-3
-        = f.label :image, "A photo of me"
-        .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
-      .col-sm-9
-        = f.file_field :image, class: "form-control"
-    .row.row-padded
-      .col-sm-3
-        = f.label :tagline, "One-line summary"
-        %span.small.em.text-danger required
-        .hint.small A short description of what you do and why.
-      .col-sm-9
-        = f.text_field :tagline, class: "form-control"
-    .row.row-padded
-      .col-sm-3
-        = f.label :location, "Where are you based?"
-      .col-sm-9
-        = f.text_field :location, class: "form-control"
+    .form-group
+      = f.label :name, "Name #{required_star}".html_safe
+      = f.text_field :name, class: "form-control"
+    .form-group
+      = f.label :image, "My face"
+      .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
+      = f.file_field :image, class: "form-control"
+    .form-group
+      = f.label :tagline, "One-line summary #{required_star}".html_safe
+      .hint.small A short description of what you do and why
+      = f.text_field :tagline, class: "form-control"
+      = warn_of_length_limit("#user_tagline", 120)
+    .form-group
+      = f.label :bio
+      = f.hidden_field :bio
+      <trix-editor input="user_bio" placeholder="Share a little more about your life"></trix-editor>
+      = warn_of_length_limit("#user_bio", 1000)
+    .form-group
+      = f.label :location, "Where I'm based"
+      = f.text_field :location, placeholder: Faker::Nation.capital_city, class: "form-control"
+    .form-group
+      = f.label :website_url, "My website"
+      = f.text_field :website_url, placeholder: "https://www.linkedin.com/my-profile/", class: "form-control"
 
     %h3 More about me
-    %p We'd love to learn more about who you are! We've listed a few prompts below. Pick any that speak to you and fill in the rest of the sentence.
+    %p We'd love to learn more about who you are! Pick any or all of the prompts below and fill in the rest of the sentence.
 
     - if @prompt_errors && @prompt_errors.count > 0
       .alert.alert-danger

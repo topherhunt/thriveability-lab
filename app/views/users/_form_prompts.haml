@@ -8,6 +8,7 @@
       = hidden_field_tag "prompts[#{index}][stem]", prompt[:stem]
     .col-sm-9
       = text_field_tag "prompts[#{index}][response]", prompt[:response], class: "form-control", style: "width: 100%;"
+      = warn_of_length_limit("#prompts_#{index}_response", 200)
 
 - unfilled_prompts.each do |prompt|
   - index += 1
@@ -17,3 +18,4 @@
       = hidden_field_tag "prompts[#{index}][stem]", prompt[:stem]
     .col-sm-9
       = text_field_tag "prompts[#{index}][response]", "", class: "form-control", style: "width: 100%;"
+      = warn_of_length_limit("#prompts_#{index}_response", 200)

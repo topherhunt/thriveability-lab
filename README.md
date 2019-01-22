@@ -35,13 +35,15 @@ Paperclip is way deprecated and slowly crumbling. I tried moving to ActiveStorag
 
 ### Tests
 
-I'm moving away from "full-coverage" integration tests. My current testing philosophy is:
+Controller tests should cover each endpoint, each important scenario, and each important outcome / side effect.
 
-- Thorough coverage for each controller endpoint, each branch
-- Judicious Unit tests as-needed to cover complex logic, likely regressions, etc.
-- Integration tests:
-  - `test/integration/regression/` - bare-minimum coverage of client-side functionality that can't be covered in controller tests (e.g. complex forms and JS)
-  - `test/integration/tdd/` - a place to write high-level specs to drive out new features. Most of these tests are temporary and will be replaced by controller and regression integration tests in the future.
+Integration tests should:
+- always  start at the root path. Avoid other `navigate_to` calls. This gives nominal coverage of navigation links etc.
+- test the happy path for each form, filling out every available field and checking that each was persisted properly. This helps ensure that controller permitted params are correctly mapped to the form fields we expect to be able to fill in.
+- cover any key JS logic that we have no other way of covering
+- be otherwise kept extremely short and minimal.
+
+Unit tests should be added as needed to cover complex logic e.g. in Service classes.
 
 
 ## Deploying

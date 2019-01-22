@@ -16,7 +16,9 @@ class Capybara::Rails::TestCase
   end
 
   def fill_fields(hash)
-    hash.each { |field, value| fill_in field, with: value }
+    hash.each do |field, value|
+      page.find("#" + field.to_s, visible: false).set(value)
+    end
   end
 
   # Use Jquery to force display a hidden element. Useful for getting at links

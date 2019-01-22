@@ -19,7 +19,7 @@ class UserProfilePrompt < ApplicationRecord
 
   validates :user_id,  presence: true
   validates :stem,     presence: true, length: {maximum: 100} # (not yet user-editable)
-  validates :response, presence: true, length: {maximum: 500}
+  validates :response, presence: true, length: {maximum: 200}
 
   def sentence
     ensure_ending_period("#{stem} #{response}")

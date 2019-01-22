@@ -7,7 +7,9 @@ FactoryBot.define do
     email        { "#{name.downcase.gsub(/[^\w]+/, '_')}@example.com" }
     # These are overkill for most tests, but useful in the dev seeded db
     tagline      { Faker::Lorem.words(rand(2..12)).join(" ").capitalize }
+    bio          { Gibberish.random_paragraph }
     location     { Faker::LordOfTheRings.location }
+    website_url  { "https://www.example.com/myname" }
     created_at   { (rand * 400.0).days.ago }
     last_signed_in_at { (rand * 30).days.ago }
   end

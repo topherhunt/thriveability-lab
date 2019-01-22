@@ -30,6 +30,8 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255} # not necessarily unique
   validates :tagline, length: { maximum: 120 }
   validates :location, length: { maximum: 255 }
+  validates :bio, length: { maximum: 1000 }
+  validates :website_url, length: { maximum: 255 }
 
   def self.most_recent(n)
     order('last_signed_in_at DESC').limit(n)
@@ -38,7 +40,10 @@ class User < ApplicationRecord
   def to_elasticsearch_document
     {
       full_text_primary: [name].join(" "),
-      full_text_secondary: [tagline, interests, location, profile_prompts.map(&:sentence)].join(" ")
+      full_text_secondary: [
+        tagline, bio, interests, location,
+        profile_prompts.map(&:sentence)
+      ].join(" ")
     }
   end
 

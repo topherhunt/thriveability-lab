@@ -9,12 +9,34 @@
     .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
       = image_tag @user.image.url(:medium), style: "width: 100%;"
 
-    %p= @user.tagline
+    .row
+      .col-sm-6
 
-    - if @user.location.present?
-      %p Based in #{@user.location}
+        - if @user.tagline.present?
+          %p
+            %strong Tagline:
+            = @user.tagline
 
-    %p Member since #{print_date @user.created_at}
+        %p
+          %strong Member since:
+          = print_date @user.created_at
+
+      .col-sm-6
+
+        - if @user.location.present?
+          %p
+            %strong Based in:
+            = @user.location
+
+        - if @user.website_url.present?
+          %p
+            %strong Website:
+            = link_to @user.website_url, @user.website_url, target: "_blank"
+
+    - if @user.bio.present?
+      %p.strong Bio:
+      .comment-box-shadow
+        = sanitize(@user.bio, tags: %w(h1 h2 h3 p div br blockquote pre strong em s a ul ol li table thead tbody tr th td img), attributes: %w(href src))
 
     - if @user.profile_prompts.any?
       %h4 More about me
