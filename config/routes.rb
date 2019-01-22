@@ -43,4 +43,7 @@ Rails.application.routes.draw do
   post   "get_involved_flags/:target_type/:target_id" => "get_involved_flags#create",
          as: "get_involved_flag"
   delete "get_involved_flags/:target_type/:target_id" => "get_involved_flags#destroy"
+
+  # Explicitly handle missing routes
+  get '/:unknown_route', to: "home#missing_route", constraints: {unknown_route: /.*/}
 end

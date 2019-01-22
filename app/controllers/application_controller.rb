@@ -75,25 +75,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "You must be logged in to take that action."
   end
 
-  # Silence complaints about crawlers requesting nonexistent routes,
-  # but warn if we don't recognize that type of bot.
-  rescue_from ActionController::RoutingError do |e|
-    if requester_is_robot?
-      render nothing: true, status: 404
-    else
-      log :warn, "Got ActionController::RoutingError from an unknown useragent. The useragent: #{request.user_agent.inspect}"
-      raise e
-    end
-  end
-
   # Explicitly control handling of 404s
   rescue_from ActiveRecord::RecordNotFound do |e|
-    if requester_is_robot?
-      render nothing: true, status: 404
-    else
-      log :warn, "Got ActiveRecord::RecordNotFound. url: #{request.original_url}, "\
-        "error: #{e}, useragent: #{request.user_agent.inspect}"
-      render file: "public/404.html", layout: false, status: 404
-    end
+    log :warn, "Got ActiveRecord::RecordNotFound. url: #{request.original_url}, "\
+      "error: #{e}, useragent: #{request.user_agent.inspect}"
+    render file: "public/404.html", layout: false, status: 404
   end
 end

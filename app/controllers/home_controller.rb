@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  skip_before_action :load_current_user, only: [:ping]
+  skip_before_action :load_current_user, only: [:ping, :throwup, :missing_route]
 
   def home
     @users = User.most_recent(10).shuffle.take(2)
@@ -24,11 +24,22 @@ class HomeController < ApplicationController
     render "home/how_you_can_help.haml", layout: "application" # (default is "home")
   end
 
+  #
+  # Utility routes, not user-facing
+  # TODO: These belong in a separate controller
+  #
+
+  def ping
+    render json: {ok: true}, status: 200
+  end
+
   def throwup
     raise "Threw up!"
   end
 
-  def ping
-    render json: {ok: true}, status: 200
+  def missing_route
+    log :error, "Routing error: Route #{request.original_url} does not exist. "\
+      "Useragent: #{request.user_agent.inspect}"
+    render file: "public/404.html", layout: false, status: 404
   end
 end
