@@ -13,32 +13,41 @@
     .col-sm-3
       = f.label :title, "Title #{required_star}".html_safe
       .hint.small Make sure the title communicates why or how this resource is valuable to others!
-    .col-sm-9= f.text_field :title, class: "form-control"
+    .col-sm-9
+      = f.text_field :title, class: "form-control"
+      = warn_of_length_limit("#resource_title", 255)
 
   .row.row-padded
     .col-sm-3
       = f.label :description, "Description #{required_star}".html_safe
       .hint.small Please give a one-line description of what this resource contributes to the community.
-    .col-sm-9= f.text_field :description, class: "form-control"
+    .col-sm-9
+      = f.text_field :description, class: "form-control"
+      = warn_of_length_limit("#resource_description", 1000)
 
   .row.row-padded
     .col-sm-3
       = f.label :source_name, "Source name #{required_star}".html_safe
       .hint.small Who authored or created this resource?
-    .col-sm-9= f.text_field :source_name, class: "form-control"
+    .col-sm-9
+      = f.text_field :source_name, class: "form-control"
+      = warn_of_length_limit("#resource_source_name", 100)
 
   .row.row-padded
     .col-sm-3
       = f.label :relevant_to, "Relevant to"
       .hint.small Which groups would particularly benefit from knowing about this, and why?
-    .col-sm-9= f.text_field :relevant_to, class: "form-control"
+    .col-sm-9
+      = f.text_field :relevant_to, class: "form-control"
+      = warn_of_length_limit("#resource_relevant_to", 255)
 
   .row.row-padded
     .col-sm-3
       = f.label :attachment, "Attach a file"
       .hint.small Please only upload files that you own or have permission to distribute. If you don't, then only provide the website link.
     .col-sm-9= f.file_field :attachment, class: "form-control"
-  .row.row-padded#js-affirm-ownership{ class: "js-hidden" }
+
+  .row.row-padded#js-affirm-ownership{class: "js-hidden"}
     .col-sm-3
       = f.label :ownership_affirmed, "I affirm that I own or have permission to distribute this document."
     .col-sm-9
@@ -48,7 +57,9 @@
     .col-sm-3
       = f.label :current_url, "Current URL"
       .hint.small Where can this resource be accessed online?
-    .col-sm-9= f.text_field :current_url, class: "form-control"
+    .col-sm-9
+      = f.text_field :current_url, class: "form-control"
+      = warn_of_length_limit("#resource_current_url", 255)
 
   = render partial: "shared/edit_tags", locals: {object: @resource, is_required: false}
 

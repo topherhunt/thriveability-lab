@@ -9,3 +9,4 @@
 = label_tag "intention", "I'm writing in order to... #{required_star}".html_safe, class: "js-tooltip", data: {tooltip: "Consciously setting your intention can encourage more thoughtful and more productive discussions."}
 = select_tag "intention_selector", options_for_select([["- pick an intention -", ""]] + ConversationParticipantJoin::INTENTION_PRESETS), {class: "form-control js-intention-selector #{hide_select}", data: {target: "#intention"}}
 = text_field_tag "intention", current_value, placeholder: "Write in your own intention statement", class: "form-control #{hide_text_field}"
+= warn_of_length_limit("#intention", 255)

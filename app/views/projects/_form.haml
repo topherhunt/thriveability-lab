@@ -16,6 +16,7 @@
     .col-sm-9
       = f.text_field :title, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
+
   .row.row-padded
     .col-sm-3
       = f.label :subtitle, "Subtitle #{required_star}".html_safe
@@ -23,6 +24,7 @@
     .col-sm-9
       = f.text_field :subtitle, class: "form-control"
       = warn_of_length_limit("#project_subtitle", 255)
+
   .row.row-padded
     .col-sm-3
       = f.label :partners, "Project partners and/or partnering organizations"
@@ -30,6 +32,7 @@
     .col-sm-9
       = f.text_area :partners, class: "form-control"
       = warn_of_length_limit("#project_partners", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :video_url, "Short intro video"
@@ -37,12 +40,14 @@
     .col-sm-9
       = f.text_field :video_url, class: "form-control"
       = warn_of_length_limit("#project_video_url", 255)
+
   .row.row-padded
     .col-sm-3
       = f.label :image, "Image #{required_star}".html_safe
       .hint.small Upload a cover photo.
     .col-sm-9
       = f.file_field :image, class: "form-control"
+
   .row.row-padded
     .col-sm-3
       = f.label :desired_impact, "Desired impact #{required_star}".html_safe
@@ -50,6 +55,7 @@
     .col-sm-9
       = f.text_area :desired_impact, class: "form-control"
       = warn_of_length_limit("#project_desired_impact", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :contribution_to_world, "How does your project contribute to a more thriving world? #{required_star}".html_safe
@@ -57,6 +63,7 @@
     .col-sm-9
       = f.text_area :contribution_to_world, class: "form-control"
       = warn_of_length_limit("#project_contribution_to_world", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :location_of_home, "Home base #{required_star}".html_safe
@@ -64,6 +71,7 @@
     .col-sm-9
       = f.text_field :location_of_home, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
+
   .row.row-padded
     .col-sm-3
       = f.label :location_of_impact, "Zone of impact #{required_star}".html_safe
@@ -71,6 +79,7 @@
     .col-sm-9
       = f.text_field :location_of_impact, class: "form-control"
       = warn_of_length_limit("#project_title", 100)
+
   .row.row-padded
     .col-sm-3
       = f.label :stage, "Years in operation #{required_star}".html_safe
@@ -96,6 +105,7 @@
     .col-sm-9
       = f.text_area :q_background, class: "form-control"
       = warn_of_length_limit("#project_q_background", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_meaning, "What is most meaningful or exciting to you about this project?"
@@ -103,6 +113,7 @@
     .col-sm-9
       = f.text_area :q_meaning, class: "form-control"
       = warn_of_length_limit("#project_q_meaning", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_community, "What is the community you are working for and/or with?"
@@ -110,6 +121,7 @@
     .col-sm-9
       = f.text_area :q_community, class: "form-control"
       = warn_of_length_limit("#project_q_community", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_goals, "What are your concrete goals?"
@@ -117,6 +129,7 @@
     .col-sm-9
       = f.text_area :q_goals, class: "form-control"
       = warn_of_length_limit("#project_q_goals", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_how_make_impact, "How do you make impact, and what are the kinds of impacts you strive for? "
@@ -124,6 +137,7 @@
     .col-sm-9
       = f.text_area :q_how_make_impact, class: "form-control"
       = warn_of_length_limit("#project_q_how_make_impact", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_how_measure_impact, "How do you measure your impact, either in quantitative or qualitative terms?"
@@ -131,6 +145,7 @@
     .col-sm-9
       = f.text_area :q_how_measure_impact, class: "form-control"
       = warn_of_length_limit("#project_q_how_measure_impact", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_potential_barriers, "What are potential barriers to your success? What needs attention or support? "
@@ -138,6 +153,7 @@
     .col-sm-9
       = f.text_area :q_potential_barriers, class: "form-control"
       = warn_of_length_limit("#project_q_potential_barriers", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_project_assets, "What makes your project stand out? What assets may lead to success?"
@@ -145,6 +161,7 @@
     .col-sm-9
       = f.text_area :q_project_assets, class: "form-control"
       = warn_of_length_limit("#project_q_project_assets", 500)
+
   .row.row-padded
     .col-sm-3
       = f.label :q_larger_vision, "What's your larger (future) vision for this project?"

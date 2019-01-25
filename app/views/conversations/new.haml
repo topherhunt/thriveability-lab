@@ -13,6 +13,7 @@
       .form-group
         = label_tag "conversation[title]", "Title #{required_star}".html_safe
         = text_field_tag "conversation[title]", @conversation.title, class: "form-control"
+        = warn_of_length_limit("#conversation_title", 255)
 
       .form-group
         = render partial: "conversations/form_intention"

@@ -14,5 +14,5 @@ class ConversationParticipantJoin < ApplicationRecord
 
   validates :conversation_id, presence: true
   validates :participant_id, presence: true
-  validates :intention, presence: true
+  validates :intention, presence: true, length: {maximum: 255}
 end

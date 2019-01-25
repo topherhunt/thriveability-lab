@@ -6,26 +6,34 @@
     .form-group
       = f.label :name, "Name #{required_star}".html_safe
       = f.text_field :name, class: "form-control"
+      = warn_of_length_limit("#user_name", 255)
+
     .form-group
       = f.label :image, "My face"
       .hint.small Show us your face! Because we aim for authentic interactions, seeing each other is helpful.
       = f.file_field :image, class: "form-control"
+
     .form-group
       = f.label :tagline, "One-line summary #{required_star}".html_safe
       .hint.small A short description of what you do and why
       = f.text_field :tagline, class: "form-control"
       = warn_of_length_limit("#user_tagline", 120)
+
     .form-group
       = f.label :bio
       = f.hidden_field :bio
       <trix-editor input="user_bio" placeholder="Share a little more about your life"></trix-editor>
       = warn_of_length_limit("#user_bio", 1000)
+
     .form-group
       = f.label :location, "Where I'm based"
       = f.text_field :location, placeholder: Faker::Nation.capital_city, class: "form-control"
+      = warn_of_length_limit("#user_location", 255)
+
     .form-group
       = f.label :website_url, "My website"
       = f.text_field :website_url, placeholder: "https://www.linkedin.com/my-profile/", class: "form-control"
+      = warn_of_length_limit("#user_website_url", 255)
 
     %h3 More about me
     %p We'd love to learn more about who you are! Pick any or all of the prompts below and fill in the rest of the sentence.
