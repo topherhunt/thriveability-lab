@@ -1,4 +1,4 @@
-.centered-800
+.centered-800.large-body-text
   %h1 How you can help
 
   %h3 Use it
@@ -13,4 +13,6 @@
     = link_to fa_icon("commenting") + " Give feedback", feedback_form_url, target: "_blank"
 
   %h3 Hack it
-  %p Do you have web development, design, copywriting, marketing, community building, or project management experience? Would you be excited to work with us to improve our platform, either one specific part of it or as a general contributor? Or do you know someone who does? We'd love to hear from you; please reach out!
+  %p
+    Do you have web development, design, copywriting, marketing, community building, or project management experience? Would you be excited to work with us to improve our platform, either one specific part of it or as a general contributor? Or do you know someone who does? We'd love to hear from you;
+    = mail_to "contact@thriveabilitylab.com", "please reach out!"

@@ -21,3 +21,7 @@ table.table { width: auto; }
 .label a { color: #fff !important; }
 
 .text-ellipsis { text-overflow: ellipsis; }
+
+.large-body-text {
+  p, ul, ol { font-size: 16px; }
+}
