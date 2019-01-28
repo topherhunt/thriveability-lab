@@ -15,7 +15,7 @@
   .col-md-8
     .row
       .col-sm-7
-        %h3 Recently active
+        %h3 Most active
         - @most_active_users.each do |user|
           = render partial: "list_row", locals: {user: user, opts: {}}
         %hr
