@@ -19,26 +19,38 @@
         .col-sm-9
           = button_tag "Search", class: "btn btn-primary test-search-submit"
 
-  %h4 #{@results.total} results
+  - if @results.total > 0
+    %h4 #{pluralize @results.total, "result"}
 
-  - if @page > 1 and @last_page > 1
-    = render partial: "pagination"
-    .blank-space
+    - if @page > 1 and @last_page > 1
+      = render partial: "pagination"
+      .blank-space
 
-  - @results.loaded_records.each do |record|
-    .test-search-result
-      - case record.class.to_s
-      - when "User"
-        = render partial: "users/list_row", locals: {user: record, opts: {in_search: true}}
-      - when "Project"
-        = render partial: "projects/list_row", locals: {project: record, opts: {in_search: true}}
-      - when "Conversation"
-        = render partial: "conversations/list_row", locals: {conversation: record, opts: {in_search: true}}
-      - when "Resource"
-        = render partial: "resources/list_row", locals: {resource: record, opts: {in_search: true}}
-      - else
-        - raise "Don't know how to render search result of class #{record.class}!"
+    - @results.loaded_records.each do |record|
+      .test-search-result
+        - case record.class.to_s
+        - when "User"
+          = render partial: "users/list_row", locals: {user: record, opts: {in_search: true}}
+        - when "Project"
+          = render partial: "projects/list_row", locals: {project: record, opts: {in_search: true}}
+        - when "Conversation"
+          = render partial: "conversations/list_row", locals: {conversation: record, opts: {in_search: true}}
+        - when "Resource"
+          = render partial: "resources/list_row", locals: {resource: record, opts: {in_search: true}}
+        - else
+          - raise "Don't know how to render search result of class #{record.class}!"
 
-  - if @last_page > 1
-    .blank-space
-    = render partial: "pagination"
+    - if @last_page > 1
+      .blank-space
+      = render partial: "pagination"
+
+  - else
+    .well
+      %h4.text-center We didn't find any results for that search.
+      %p.text-center Let's fix that! Want to share your experience with the Thriveability Lab community?
+      %p.text-center
+        = link_to fa_icon("lightbulb-o") + " Add a project", new_project_path, class: "btn btn-success"
+        &nbsp;
+        = link_to fa_icon("comments-o") + " Start a conversation", new_conversation_path, class: "btn btn-info"
+        &nbsp;
+        = link_to fa_icon("file-text") + " Add a useful resource", new_resource_path, class: "btn btn-primary"
