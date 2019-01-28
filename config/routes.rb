@@ -19,7 +19,6 @@ Rails.application.routes.draw do
 
   resources :resources
 
-  get "/projects/resources" => "projects#resources", as: "projects_resources"
   resources :projects, only: [:index, :show, :new, :create, :edit, :update]
 
   get "/search", to: "search#search", as: "search"
