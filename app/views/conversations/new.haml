@@ -31,8 +31,8 @@
         = submit_tag "Start the conversation", class: "btn btn-primary test-start-conversation"
 
   .col-sm-4
-    %div{style: "width: 110%; margin-top: -20px; height: 300px; overflow: hidden;"}
-      = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -100px;"
+    %div.img-rounded{style: "height: 300px; overflow: hidden;"}
+      = image_tag "conversations_#{rand(1..2)}_portrait_md.jpg", style: "width: 100%; margin-top: -100px;"
     %div{style: "padding-top: 10px; margin-bottom: -10px; font-size: 90%;"}
       %p.strong Some tips for awesome conversations:
       %ul

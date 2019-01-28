@@ -10,7 +10,7 @@
     = render partial: "shared/write_medium_article"
 
     .hidden-sm.hidden-xs
-      = image_tag "list_images/people#{[1,2].shuffle.first}.jpg", style: "width: 100%;"
+      = image_tag "people_#{rand(1..2)}_portrait_md.jpg", style: "width: 100%;", class: "img-rounded"
 
   .col-md-8
     .row
