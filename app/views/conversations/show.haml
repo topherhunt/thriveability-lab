@@ -17,7 +17,12 @@
         .col-sm-7
           = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
         .col-sm-5
-          = render partial: "conversations/sidebar_hint"
+          %div{style: "margin-bottom: -10px; font-size: 90%;"}
+            %p.strong Some tips for awesome conversations:
+            %ul
+              - new_comment_tips(3).each do |tip|
+                %li= tip
+
   - else
     %div{style: "padding-top: 10px;"}
       #{link_to "Log in", login_url} to join the conversation.

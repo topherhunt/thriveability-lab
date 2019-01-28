@@ -33,5 +33,9 @@
   .col-sm-4
     %div{style: "width: 110%; margin-top: -20px; height: 300px; overflow: hidden;"}
       = image_tag "list_images/conversations.jpg", style: "width: 100%; margin-top: -100px;"
-    %div{style: "padding-top: 10px;"}
-      = render partial: "sidebar_hint"
+    %div{style: "padding-top: 10px; margin-bottom: -10px; font-size: 90%;"}
+      %p.strong Some tips for awesome conversations:
+      %ul
+        - new_conversation_tips(3).each do |tip|
+          %li= tip
+
