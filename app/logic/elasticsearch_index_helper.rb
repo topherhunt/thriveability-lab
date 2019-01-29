@@ -1,4 +1,7 @@
 # ElasticSearch high-level indexing helper.
+# e.g.:
+# > ElasticsearchIndexHelper.new.delete_and_rebuild_index!
+#
 class ElasticsearchIndexHelper
   SEARCHABLE_CLASSES = [User, Project, Conversation, Resource]
 
