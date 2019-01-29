@@ -16,8 +16,8 @@ class HomeController < ApplicationController
     render "home/about.haml", layout: "application" # (default is "home")
   end
 
-  def guiding_principles
-    render "home/guiding_principles.haml", layout: "application" # (default is "home")
+  def principles
+    render "home/principles.haml", layout: "application" # (default is "home")
   end
 
   def how_you_can_help

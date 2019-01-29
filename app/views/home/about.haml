@@ -1,36 +1,55 @@
-.centered-800.large-body-text
+.row
+  .col-sm-8
+    %div.large-body-text
+      %h1 What is Thriveability Lab?
+      %p Thriveability Lab is a peer-to-peer platform where anybody with interest in fostering a more ‘thriving’ world can come to be inspired and empowered.
+      %p Thriveability Lab aims to support people to connect, to learn and grow together, and to bring more visibility, collaboration, and impact to their initiatives.
+      %p The platform is designed to support high quality conversations, creative action, community, experiment, and the sharing of resources. As well as the emergence of more integrative, life-enhancing values, paradigms, and approaches to change. See #{link_to "our guiding principles", principles_path} to learn more.
+      %p This platform is open source. You're welcome to check out the source code or make your own copy of the site at #{link_to "our GitHub repository", "https://github.com/topherhunt/thriveability-lab", target: "_blank"}.
 
-  %h3 What is Thriveability Lab?
-  %p Thriveability Lab is a peer-to-peer platform where anybody with interest in fostering a more ‘thriving’ world can come to be inspired and empowered.
-  %p Thriveability Lab aims to support people to connect, to learn and grow together, and to bring more visibility, collaboration, and impact to their initiatives.
-  %p The platform is designed to support high quality conversations, creative action, community, experiment, and the sharing of resources. As well as the emergence of more integrative, life-enhancing values, paradigms, and approaches to change.
-  %p This platform is open source. See #{link_to "the Github repository", "https://github.com/topherhunt/thriveability-lab", target: "_blank"} to check out the source code or create your own version.
+      %h3 Why "thriveability"?
+      %p Thriveability refers to ‘our ability to thrive’ ~ our individual and collective capacity to ‘flourish’ and ‘flower’ in synergy with ourselves, each other, and Nature.
+      %p Thriveability is thus about more than the ability to ‘sustain’ ourselves (sustainability), and offers an inspiring ideal, a mobilizing vision for the future that can speak to all humans. After all, who doesn’t want to thrive?
+      %p Fundamentally, the notion points to an appreciation of the human potential for goodness, truth, and beauty, and an exciting sense of what life is all about.
 
-  %h3 Why "thriveability"?
-  %p Thriveability refers to ‘our ability to thrive’ ~ our individual and collective capacity to ‘flourish’ and ‘flower’ in synergy with ourselves, each other, and Nature.
-  %p Thriveability is thus about more than the ability to ‘sustain’ ourselves (sustainability), and offers an inspiring ideal, a mobilizing vision for the future that can speak to all humans. After all, who doesn’t want to thrive?
-  %p Fundamentally, the notion points to an appreciation of the human potential for goodness, truth, and beauty, and an exciting sense of what life is all about.
+      %h3 Why a lab-approach to change?
+      %p It is becoming clear that our complex, systemic, global challenges cannot be addressed with approaches based on traditional planning and top-down control.
+      %p We therefore aim to support more daring and innovative approaches. Approaches based on experiment, learning, self-organization, and creative collaboration. That is, ‘laboratory-style’ approaches to change.
+      %p That’s why we refer to our platform as a lab. A lab where we bundle our creative forces to advance our capacity for thriving. Hence: Thriveability Lab.
 
-  %h3 Why a lab-approach to change?
-  %p It is becoming clear that our complex, systemic, global challenges cannot be addressed with approaches based on traditional planning and top-down control.
-  %p We therefore aim to support more daring and innovative approaches. Approaches based on experiment, learning, self-organization, and creative collaboration. That is, ‘laboratory-style’ approaches to change.
-  %p That’s why we refer to our platform as a lab. A lab where we bundle our creative forces to advance our capacity for thriving. Hence: Thriveability Lab.
+      %h3 A value-driven social platform
+      %p Many social platforms suffer from a host of problems because they are shaped by the corporate values that dominate our economy and society. That is, they are profit-driven rather than value-driven.
+      %p We don’t believe in this approach. Yet we do see the enormous potential of social platforms for making change for the better.
+      %p That’s why we have created a value-driven social platform: a platform inspired by values and worldviews that are currently gaining traction on a global scale, and offer powerful alternatives for the narrow-minded focus on profit only.
+      %p These values include mindfulness, nature, service to the greater whole, integration, compassion, purpose, inner growth, openness to learning, and collaboration. Thriveability Lab aims to both support and embody these values.
 
-  %h3 A value-driven social platform
-  %p Many social platforms suffer from a host of problems because they are shaped by the corporate values that dominate our economy and society. That is, they are profit-driven rather than value-driven.
-  %p We don’t believe in this approach. Yet we do see the enormous potential of social platforms for making change for the better.
-  %p That’s why we have created a value-driven social platform: a platform inspired by values and worldviews that are currently gaining traction on a global scale, and offer powerful alternatives for the narrow-minded focus on profit only.
-  %p These values include mindfulness, nature, service to the greater whole, integration, compassion, purpose, inner growth, openness to learning, and collaboration. Thriveability Lab aims to both support and embody these values.
+      %h3 Who are we?
 
-  %h3 Who are we?
+      %p We are Annick and Topher, and we have been working on this platform for a number of years, motivated to create a social platform that is designed for supporting the deep, transformative change that we sense is so needed in our world.
 
-  %p We are Annick and Topher, and we have been working on this platform for a number of years, motivated to create a social platform that is designed for supporting the deep, transformative change that we sense is so needed in our world.
+      - @team.each do |user|
+        %div{style: "min-height: 60px;"}
+          = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
+          %div{style: "margin-left: 60px;"}
+            %span.h4
+              = link_to user.name, user_path(user)
+            .nowrap= user.location
+            .nowrap= user.tagline
 
-  - @team.each do |user|
-    %div{style: "min-height: 60px;"}
-      = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
-      %div{style: "margin-left: 60px;"}
-        %span.h4
-          = link_to user.name, user_path(user)
-        .nowrap= user.location
-        .nowrap= user.tagline
+  .col-sm-4.hidden-xs
+
+    %div.img-rounded{style: "max-height: 300px; overflow: hidden;"}
+      = image_tag("home/lee-701445-md.jpg", style: "width: 100%;")
+    .blank-space
+
+    %div.img-rounded{style: "max-height: 300px; overflow: hidden;"}
+      = image_tag("home/christopher-sardegna-1735-md.jpg", style: "width: 100%; margin-top: -25%;")
+    .blank-space
+
+    %div.img-rounded{style: "max-height: 300px; overflow: hidden;"}
+      = image_tag("home/eli-defaria-41667-md.jpg", style: "width: 100%;")
+    .blank-space
+
+    %div.img-rounded{style: "max-height: 300px; overflow: hidden;"}
+      = image_tag("home/bekir-donmez-335320-md.jpg", style: "width: 100%; margin-top: -25%;")
+    .blank-space

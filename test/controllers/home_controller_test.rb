@@ -24,9 +24,9 @@ class HomeControllerTest < ActionController::TestCase
     end
   end
 
-  context "#guiding_principles" do
+  context "#principles" do
     it "renders correctly" do
-      get :guiding_principles
+      get :principles
       assert_text "Principles of Thriveability Lab"
     end
   end

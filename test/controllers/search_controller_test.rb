@@ -44,7 +44,7 @@ class SearchControllerTest < ActionController::TestCase
       get :search
 
       assert_response 200
-      assert_text "0 results"
+      assert_text "We didn't find any results"
       assert_no_text @project.title
     end
   end
