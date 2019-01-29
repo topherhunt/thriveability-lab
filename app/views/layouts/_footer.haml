@@ -7,6 +7,8 @@
     &nbsp;
     = link_to fa_icon("users") + " How to help", how_you_can_help_path
     &nbsp;
-    = link_to fa_icon("envelope") + " Newsletter", "http://eepurl.com/cWwWWf", target: "_blank"
+    = mail_to "contact@thriveabilitylab.com", fa_icon("envelope") + " Email us"
+    &nbsp;
+    = link_to fa_icon("newspaper-o") + " Newsletter", "http://eepurl.com/cWwWWf", target: "_blank"
     &nbsp;
     = link_to fa_icon("commenting") + " Feedback", feedback_form_url, target: "_blank"
