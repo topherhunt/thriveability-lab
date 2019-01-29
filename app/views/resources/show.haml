@@ -22,7 +22,7 @@
     - if @resource.attachment_file_name.present?
       %tr
         %th Attached file
-        %td= link_to @resource.attachment_file_name, @resource.attachment.url
+        %td= link_to @resource.attachment_file_name, @resource.attachment.url, target: "_blank"
 
     - if @resource.current_url.present?
       %tr
