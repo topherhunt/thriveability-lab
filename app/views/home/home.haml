@@ -27,7 +27,7 @@
           = link_to "+ #{User.count - @users.count} more", users_path
         .col-sm-3
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
-            = image_tag "people_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
+            = image_tag "people_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
       %h3 Projects for meaningful change
       .row
@@ -37,7 +37,7 @@
           = link_to "+ #{Project.count - @projects.count} more", projects_path
         .col-sm-3
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
-            = image_tag "projects_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
+            = image_tag "projects_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
   .blank-space
   .row
     .col-sm-6
@@ -49,7 +49,7 @@
           = link_to "+ #{Conversation.count - @conversations.count} more", conversations_path
         .col-sm-3
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
-            = image_tag "conversations_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
+            = image_tag "conversations_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
       %h3 Resources for impact-makers
       .row
@@ -59,4 +59,4 @@
           = link_to "+ #{Resource.count - @resources.count} more", resources_path
         .col-sm-3
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
-            = image_tag "resources_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -50%;", class: "hidden-xs"
+            = image_tag "resources_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -50%;", class: "hidden-xs"
