@@ -1,30 +1,32 @@
 .row
   .col-sm-8
     %div
-      %span.h1= @project.title
-      - if @project.owner == current_user
-        &nbsp;
-        = link_to fa_icon("pencil"), edit_project_path(@project), class: "test-edit-link"
-    %h4= @project.subtitle
+      %div.visible-xs{style: "float: left; width: 40px; margin-right: 10px;"}
+        = image_tag @project.image.url(:thumb), class: "img-rounded", style: "width: 100%;"
+      %h1= @project.title
+    %p.strong= @project.subtitle
 
-    %table.table
-      %tr
-        %th Owner
-        %td= link_to @project.owner.name, user_path(@project.owner)
-      %tr
-        %th Home base
-        %td= @project.location_of_home
-      %tr
-        %th Zone of impact
-        %td= @project.location_of_impact
-      %tr
-        %th Stage
-        %td= @project.stage
-      %tr
-        %th Tags
-        %td
+    .row
+      .col-sm-6
+        %p
+          %strong Owner:
+          = link_to image_tag(@project.owner.image.url(:thumb), class: "img-circle", style: "width: 20px;") + " " + @project.owner.name, user_path(@project.owner)
+        %p
+          %strong Home base:
+          = @project.location_of_home
+        %p
+          %strong Zone of impact:
+          = @project.location_of_impact
+      .col-sm-6
+        %p
+          %strong Stage:
+          = @project.stage
+        %p
+          %strong Tags:
           - @project.tag_list.each do |name|
             = link_to name, search_path(string: name), class: "label label-default"
+        - if @project.owner == current_user
+          %p= link_to fa_icon("pencil") + " Edit this project", edit_project_path(@project), class: "test-edit-link"
 
     %hr
 
@@ -50,7 +52,7 @@
     - if @project.video_url.present?
       <iframe width="100%" height="200" src="//www.youtube.com/embed/#{@project.youtube_video_guid}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     - else
-      = image_tag @project.image.url(:medium), style: "width: 100%; max-width: 300px;"
+      = image_tag @project.image.url, style: "width: 100%;", class: "img-rounded hidden-xs"
 
     %hr
 

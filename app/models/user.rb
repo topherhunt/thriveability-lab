@@ -20,8 +20,12 @@ class User < ApplicationRecord
   has_many :events, foreign_key: "actor_id"
   has_many :profile_prompts, class_name: "UserProfilePrompt"
 
-  has_attached_file :image, styles: { medium: "300x300#", thumb: "100x100#" },
-    default_url: "/missing_user.png"
+  has_attached_file :image, default_url: "/missing_user.png", styles: {
+    original: "800x800#",
+    medium: "300x300#",
+    thumb: "100x100#"
+  }
+
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   # See https://github.com/thoughtbot/paperclip#quick-start

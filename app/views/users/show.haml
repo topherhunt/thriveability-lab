@@ -1,13 +1,9 @@
 .row
   .col-sm-8
     %div{style: "padding-bottom: 10px;"}
-      %span.h1= @user.name || "Nameless Cool Person"
-      - if current_user == @user
-        &nbsp;
-        = link_to fa_icon("pencil") + " Edit my profile", edit_user_path(@user), class: "test-edit-user"
-
-    .visible-xs{style: "max-width: 200px; margin-left: auto; margin-right: auto;"}
-      = image_tag @user.image.url(:medium), style: "width: 100%;"
+      %div.visible-xs{style: "float: left; width: 40px; margin-right: 10px;"}
+        = image_tag @user.image.url(:thumb), class: "img-circle", style: "width: 100%;"
+      %h1= @user.name
 
     .row
       .col-sm-6
@@ -33,6 +29,9 @@
             %strong Website:
             = link_to @user.website_url, @user.website_url, target: "_blank"
 
+        - if current_user == @user
+          %p= link_to fa_icon("pencil") + " Edit my profile", edit_user_path(@user), class: "test-edit-user"
+
     - if @user.bio.present?
       %p.strong Bio:
       .comment-box-shadow
@@ -47,7 +46,7 @@
             %span{style: ""}= ensure_ending_period(prompt.response)
 
   .col-sm-4
-    = image_tag @user.image.url(:medium), style: "width: 100%;", class: "img-rounded hidden-xs"
+    = image_tag @user.image.url, style: "width: 100%;", class: "img-rounded hidden-xs"
 
     %hr
 
@@ -61,13 +60,13 @@
 
 .row
   - @projects.each do |project|
-    .col-sm-4
+    .col-sm-4{style: "height: 100px;"}
       = render partial: "projects/list_row", locals: {project: project, opts: {in_search: true}}
 
   - @resources.each do |resource|
-    .col-sm-4
+    .col-sm-4{style: "height: 100px;"}
       = render partial: "resources/list_row", locals: {resource: resource, opts: {in_search: true}}
 
   - @participating_in_conversations.each do |conversation|
-    .col-sm-4
+    .col-sm-4{style: "height: 100px;"}
       = render partial: "conversations/list_row", locals: {conversation: conversation, opts: {in_search: true}}
