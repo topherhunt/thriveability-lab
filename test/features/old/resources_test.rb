@@ -10,7 +10,7 @@ class ResourcesTest < Capybara::Rails::TestCase
     assert_equals 0, @user.resources.count
     visit new_resource_path
     fill_dummy_content
-    page.find(".submit-resource-button").click
+    page.find(".test-submit-resource").click
     assert_path resource_path(@user.resources.last)
     assert_equals 1, @user.resources.count
   end
