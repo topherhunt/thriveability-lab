@@ -1,6 +1,6 @@
 .centered-800
   %div{style: "padding-bottom: 10px;"}
-    %h1.text-info #{@resource.title}
+    %h1 #{@resource.title}
 
   - if current_user == @resource.creator
     %p= link_to fa_icon("pencil") + " Edit this resource", edit_resource_path(@resource)

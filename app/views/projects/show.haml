@@ -3,7 +3,7 @@
     %div
       %div.visible-xs{style: "float: left; width: 40px; margin-right: 10px;"}
         = image_tag @project.image.url(:thumb), class: "img-rounded", style: "width: 100%;"
-      %h1.text-info= @project.title
+      %h1= @project.title
     %p.strong.text-info= @project.subtitle
 
     .row
