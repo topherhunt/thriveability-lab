@@ -11,10 +11,10 @@
             Start discovering
 
   %div
-    %h1{style: "color: #5cb85c;"} Thriveability Lab
-    %div{style: "margin-top: -5px; color: #5cb85c;"}
+    %h1.text-success Thriveability Lab
+    %div.text-success{style: "margin-top: -5px;"}
       %em{style: "font-size: 1.1em;"} Inspiration, collaboration, and experimentation <br> for planetary thriving.
-      = link_to "More about us", about_path
+      = link_to "Learn more about us", about_path
   .blank-space
 
   .row
@@ -41,7 +41,7 @@
   .blank-space
   .row
     .col-sm-6
-      %h3 Space for dialogue & collaboration
+      %h3 Space for dialogue and collaboration
       .row
         .col-sm-9
           - @conversations.each do |c|
