@@ -1,24 +1,21 @@
 #main-container.container-fluid
 
-  .row
-    .col-sm-6
-      %h1.text-center{style: "color: #5cb85c;"} Thriveability Lab
-      %div.text-center{style: "margin-top: -5px; color: #5cb85c;"}
-        %em{style: "font-size: 1.1em;"} Inspiration, collaboration, and experimentation <br> for planetary thriving.
-        = link_to "More about us", about_path
-      .blank-space
+  %div{style: "width: 400px; margin-top: -20px; margin-left: auto; margin-right: auto;"}
+    %h2.text-center.text-info What do you care about?
+    %form{action: search_path, method: "GET"}
+      .input-group
+        %input.form-control{type: "text", autofocus: true, placeholder: "Enter your life dreams here", name: "string"}
+        .input-group-btn
+          %button.btn.btn-success{type: "submit"}
+            %i.fa.fa-search
+            Start discovering
 
-    .col-sm-6
-      %div{style: "width: 400px; margin-top: -20px; margin-left: auto; margin-right: auto;"}
-        %h2.text-center.text-info What do you care about?
-        %form{action: search_path, method: "GET"}
-          .input-group
-            %input.form-control{type: "text", autofocus: true, placeholder: "Enter your life dreams here", name: "string"}
-            .input-group-btn
-              %button.btn.btn-success{type: "submit"}
-                %i.fa.fa-search
-                Start discovering
-      .blank-space
+  %div
+    %h1{style: "color: #5cb85c;"} Thriveability Lab
+    %div{style: "margin-top: -5px; color: #5cb85c;"}
+      %em{style: "font-size: 1.1em;"} Inspiration, collaboration, and experimentation <br> for planetary thriving.
+      = link_to "More about us", about_path
+  .blank-space
 
   .row
     .col-sm-6
@@ -29,7 +26,7 @@
             = render partial: "users/list_row", locals: {user: user, opts: {}}
           = link_to "+ #{User.count - @users.count} more", users_path
         .col-sm-3
-          %div.img-rounded{style: "height: 200px; overflow: hidden;"}
+          %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "people_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
       %h3.text-info Projects for meaningful change
@@ -39,7 +36,7 @@
             = render partial: "projects/list_row", locals: {project: project, opts: {}}
           = link_to "+ #{Project.count - @projects.count} more", projects_path
         .col-sm-3
-          %div.img-rounded{style: "height: 200px; overflow: hidden;"}
+          %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "projects_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
   .blank-space
   .row
@@ -51,7 +48,7 @@
             = render partial: "conversations/list_row", locals: {conversation: c, opts: {}}
           = link_to "+ #{Conversation.count - @conversations.count} more", conversations_path
         .col-sm-3
-          %div.img-rounded{style: "height: 200px; overflow: hidden;"}
+          %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "conversations_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
       %h3.text-info Resources for impact-makers
@@ -61,5 +58,5 @@
             = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
           = link_to "+ #{Resource.count - @resources.count} more", resources_path
         .col-sm-3
-          %div.img-rounded{style: "height: 200px; overflow: hidden;"}
+          %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "resources_#{rand(1..2)}_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -50%;", class: "hidden-xs"
