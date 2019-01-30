@@ -3,7 +3,7 @@
     %div{style: "padding-bottom: 10px;"}
       %div.visible-xs{style: "float: left; width: 40px; margin-right: 10px;"}
         = image_tag @user.image.url(:thumb), class: "img-circle", style: "width: 100%;"
-      %h1= @user.name
+      %h1.text-info= @user.name
 
     .row
       .col-sm-6

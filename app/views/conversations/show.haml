@@ -1,10 +1,10 @@
 .centered-800
-  %div
-    %span.h1= @conversation.title
+  %div{style: "padding-bottom: 10px;"}
+    %span.h1.text-info= @conversation.title
     - if current_user == @conversation.creator
       &nbsp;
       = link_to fa_icon("pencil") + " Edit", edit_conversation_path(@conversation), class: "edit-conversation-link"
-  %p
+  %p{style: "padding-bottom: 10px;"}
     - @conversation.tag_list.each do |name|
       = link_to name, search_path(string: name), class: "btn btn-xs btn-default disabled"
 

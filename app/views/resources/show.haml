@@ -1,10 +1,9 @@
 .centered-800
-  %div Resource:
   %div{style: "padding-bottom: 10px;"}
-    %span.h1 #{@resource.title}
-    - if current_user == @resource.creator
-      &nbsp;
-      = link_to fa_icon("pencil") + " Edit", edit_resource_path(@resource)
+    %h1.text-info #{@resource.title}
+
+  - if current_user == @resource.creator
+    %p= link_to fa_icon("pencil") + " Edit this resource", edit_resource_path(@resource)
 
   %table.table
     %tr
@@ -54,8 +53,6 @@
           = link_to tag, search_path(classes: "Resource", string: tag)
           &nbsp;
 
-    %tr
-      %th
-      %td
-        = render partial: "shared/likes_section", locals: { target: @resource, link_wording: "This inspires me" }
-        = render partial: "shared/stay_informed_flags_section", locals: { target: @resource, owner: @resource.creator, link_wording: "Send me updates on this resource" }
+  %div
+    = render partial: "shared/likes_section", locals: { target: @resource, link_wording: "This inspires me" }
+    = render partial: "shared/stay_informed_flags_section", locals: { target: @resource, owner: @resource.creator, link_wording: "Send me updates on this resource" }
