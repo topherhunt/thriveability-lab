@@ -11,8 +11,8 @@
             Start discovering
 
   %div
-    %h1.text-success Thriveability Lab
-    %div.text-success{style: "margin-top: -5px;"}
+    %h1{style: "color: #5cb85c;"} Thriveability Lab
+    %div{style: "margin-top: -5px; color: #5cb85c;"}
       %em{style: "font-size: 1.1em;"} Inspiration, collaboration, and experimentation <br> for planetary thriving.
       = link_to "Learn more about us", about_path
   .blank-space
@@ -59,4 +59,4 @@
           = link_to "+ #{Resource.count - @resources.count} more", resources_path
         .col-sm-3
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
-            = image_tag "resources_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -50%;", class: "hidden-xs"
+            = image_tag "resources_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%;", class: "hidden-xs"
