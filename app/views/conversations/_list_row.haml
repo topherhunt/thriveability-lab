@@ -8,11 +8,12 @@
       %span.h4= link_to conversation.title, conversation_path(conversation), class: "test-conversation-link"
     .nowrap.text-ellipsis.text-muted
       = sanitize(conversation.comments.first&.body, tags: [])
-    .nowrap
-      - conversation.participants.limit(5).each do |user|
-        = link_to image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 20px;"), user_path(user)
-      - if conversation.participants.length > 5
-        = "+#{conversation.participants.length - 5}"
+    .nowrap{style: "padding-left: 8px;"}
+      - community = conversation.participants
+      - community.limit(5).each do |user|
+        = image_tag(user.image.url(:thumb), class: "img-circle", style: "width: 22px; border: 1px solid #fff; margin-left: -8px;")
+      - if community.length > 5
+        = "+#{community.length - 5}"
       &nbsp;
       - conversation.tag_list.each do |name|
-        = link_to name, search_path(string: name), class: "label label-default"
+        %span.label.label-default= name

@@ -10,7 +10,8 @@
     .nowrap.text-ellipsis.text-muted
       = resource.description
     .nowrap
+      = image_tag(resource.creator.image.url(:thumb), class: "img-circle", style: "width: 20px;")
       - resource.tag_list.each do |name|
-        = link_to name, search_path(string: name), class: "label label-default"
+        %span.label.label-default= name
       - resource.media_type_list.each do |name|
-        = link_to name, search_path(string: name), class: "label label-default"
+        %span.label.label-default= name
