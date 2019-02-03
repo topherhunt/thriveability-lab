@@ -34,13 +34,17 @@ class ApplicationController < ActionController::Base
 
   def require_logged_in
     unless current_user
-      if request.method == "GET"
-        session[:return_to] = request.original_url
-      else
-        session[:return_to] = request.referer
-      end
-      redirect_to root_path, alert: "You must be logged in to take that action."
+      redirect_to_signin_page
     end
+  end
+
+  def redirect_to_signin_page
+    if request.method == "GET"
+      session[:return_to] = request.original_url
+    else
+      session[:return_to] = request.referer
+    end
+    redirect_to login_path
   end
 
   #
@@ -71,8 +75,7 @@ class ApplicationController < ActionController::Base
   # We can assume that most CSRF violations are due to login timeouts.
   # TODO: Review how MAPP does this. Anything to improve here?
   rescue_from ActionController::InvalidAuthenticityToken do
-    session[:return_to] = request.referer
-    redirect_to root_path, alert: "You must be logged in to take that action."
+    redirect_to_signin_page
   end
 
   # Override Rails' default RecordNotFound behavior so we don't overwhelm Rollbar

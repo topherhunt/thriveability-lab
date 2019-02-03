@@ -20,7 +20,7 @@ class CommentsControllerTest < ActionController::TestCase
     test "#require_logged_in redirects if unauthenticated" do
       sign_out
       post :create, params: @create_params
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
 
     test "#load_context responds with 404 if context isn't found" do

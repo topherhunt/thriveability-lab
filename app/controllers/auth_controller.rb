@@ -1,4 +1,8 @@
 class AuthController < ApplicationController
+  def login
+    # Just a static page explaining to the person that they need to sign in again.
+  end
+
   # On successful auth, Auth0 redirects the user back here. The Omniauth gem
   # registers a magical middleware that exchanges the auth token for the userinfo
   # (see config/initializers/omniauth.rb) and puts the userinfo in request.env.

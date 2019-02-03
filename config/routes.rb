@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "ping" => "home#ping"
 
   get "auth/auth0_callback" => "auth#auth0_callback"
+  get "auth/login" => "auth#login", as: "login"
   get "auth/logout" => "auth#logout", as: "logout"
   get "auth/force_login/:user_id" => "auth#force_login", as: "force_login"
 

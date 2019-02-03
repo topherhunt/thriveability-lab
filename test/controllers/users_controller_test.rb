@@ -37,7 +37,7 @@ class UsersControllerTest < ActionController::TestCase
 
     it "rejects if you aren't logged in" do
       get :edit, params: {id: @user.id}
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
   end
 
@@ -103,7 +103,7 @@ class UsersControllerTest < ActionController::TestCase
     it "rejects if not logged in" do
       patch :update, params: {id: @user.id, user: {name: "Daffy"}}
 
-      assert_redirected_to root_path
+      assert_redirected_to login_path
     end
   end
 end
