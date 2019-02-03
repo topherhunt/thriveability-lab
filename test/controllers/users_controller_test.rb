@@ -46,15 +46,24 @@ class UsersControllerTest < ActionController::TestCase
       create :user_profile_prompt, user: @user, stem: stem, response: response
     end
 
+    def valid_params(overrides = {})
+      {
+        name: "Daffy Duck",
+        image: fixture_file_upload("#{Rails.root}/test/fixtures/test.png", 'image/png'),
+        tagline: "Some tagline",
+        location: "Some location"
+      }.merge(overrides)
+    end
+
     setup do
-      @user = create :user
+      @user = create :user, image: nil, tagline: nil, location: nil
     end
 
     it "updates the user" do
       sign_in @user
-      patch :update, params: {id: @user.id, user: {name: "Daffy"}}
+      patch :update, params: {id: @user.id, user: valid_params}
 
-      assert_equals "Daffy", @user.reload.name
+      assert_equals "Daffy Duck", @user.reload.name
       assert_redirected_to user_path(@user)
     end
 
@@ -65,7 +74,7 @@ class UsersControllerTest < ActionController::TestCase
       prompt3 = create_prompt stem: "Deleted stem", response: "to-delete response"
 
       patch :update, params: {id: @user.id,
-        user: {name: "Topher"},
+        user: valid_params,
         prompts: {
           1 => {stem: "Updated stem", response: "updated response"},
           2 => {stem: "Unchanged stem", response: "unchanged response"},
@@ -84,7 +93,7 @@ class UsersControllerTest < ActionController::TestCase
       orig_user1_name = @user.name
       orig_user2_name = user2.name
 
-      patch :update, params: {id: @user.id, user: {name: "Daffy"}}
+      patch :update, params: {id: @user.id, user: valid_params}
 
       assert_redirected_to root_path
       assert_equals orig_user1_name, @user.reload.name
@@ -94,14 +103,23 @@ class UsersControllerTest < ActionController::TestCase
     it "rejects if invalid params" do
       sign_in @user
       original_name = @user.name
-      patch :update, params: {id: @user.id, user: {name: "too long  "*100}}
+      patch :update, params: {id: @user.id, user: valid_params(name: "Too long"*100)}
+
+      assert_equals original_name, @user.reload.name
+      assert_text "Unable to save your changes."
+    end
+
+    it "rejects if a required profile field is missing" do
+      sign_in @user
+      original_name = @user.name
+      patch :update, params: {id: @user.id, user: valid_params(tagline: nil)}
 
       assert_equals original_name, @user.reload.name
       assert_text "Unable to save your changes."
     end
 
     it "rejects if not logged in" do
-      patch :update, params: {id: @user.id, user: {name: "Daffy"}}
+      patch :update, params: {id: @user.id, user: valid_params}
 
       assert_redirected_to login_path
     end

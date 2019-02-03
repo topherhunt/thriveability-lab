@@ -26,6 +26,8 @@ class User < ApplicationRecord
     thumb: "100x100#"
   }
 
+  attr_accessor :on_profile_page
+
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   # See https://github.com/thoughtbot/paperclip#quick-start
@@ -36,6 +38,9 @@ class User < ApplicationRecord
   validates :location, length: { maximum: 255 }
   validates :bio, length: { maximum: 1000 }
   validates :website_url, length: { maximum: 255 }
+  validates :image, presence: true, if: :on_profile_page
+  validates :tagline, presence: true, if: :on_profile_page
+  validates :location, presence: true, if: :on_profile_page
 
   def self.most_recent(n)
     order('last_signed_in_at DESC').limit(n)

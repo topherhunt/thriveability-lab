@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user.on_profile_page = true
     if @user.update(user_params) && upsert_profile_prompts
       Event.register(@user, "update", @user)
       redirect_to user_path(@user), notice: "Your profile has been updated."
