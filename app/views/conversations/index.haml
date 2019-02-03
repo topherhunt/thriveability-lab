@@ -30,11 +30,11 @@
         - @recent_comments.each do |comment|
           .list-row
             %div{style: "float: left; width: 50px;"}
-              = link_to image_tag(comment.author.image.url(:thumb), class: "img-rounded", style: "width: 100%;"), user_path(comment.author)
+              = image_tag(comment.author.image.url(:thumb), class: "img-rounded", style: "width: 100%;")
             %div{style: "margin-left: 60px;"}
               %div.small.text-muted
                 = link_to comment.author.name, user_path(comment.author)
-                = "@"
+                on
                 = print_date comment.created_at, abbreviated: true
               %div.small{style: "height: 48px; text-overflow: ellipsis; overflow: hidden;"}
                 = link_to ellipsify(sanitize(comment.body, tags: []), 100), url_for(controller: comment.context_type.downcase.pluralize, action: "show", id: comment.context_id), class: "text-default"

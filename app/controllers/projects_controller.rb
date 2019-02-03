@@ -33,6 +33,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update(project_params)
+      Event.register(current_user, "update", @project)
       redirect_to project_path(@project), notice: "Your project was updated successfully."
     else
       flash.now.alert = "Unable to save your changes. See error messages below."

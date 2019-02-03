@@ -5,7 +5,7 @@ class ConversationsController < ApplicationController
 
   def index
     @most_active_conversations = Conversation.most_popular(8)
-    @recent_comments = Comment.order("updated_at DESC").limit(8).includes(:author)
+    @recent_comments = load_recent_comments(5)
     @tag_counts = Conversation.order("updated_at DESC").limit(100)
       .tag_counts_on(:tags)
       .sort_by(&:name)
@@ -68,6 +68,19 @@ class ConversationsController < ApplicationController
 
   def load_conversation
     @conversation = Conversation.find(params[:id])
+  end
+
+  # TODO: Ideally track comments as Events, and use Event.latest logic instead.
+  def load_recent_comments(n)
+    known_author_ids = []
+    Comment.order("updated_at DESC").limit(n*4).includes(:author).select do |c|
+      if c.author_id.in?(known_author_ids)
+        false
+      else
+        known_author_ids << c.author_id
+        true
+      end
+    end.take(n)
   end
 
   def load_intentions_by_participant(conversation)

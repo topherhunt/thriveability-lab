@@ -10,8 +10,6 @@ class Event < ApplicationRecord
   validates :target_type, presence: true, inclusion: {in: %w(User Project Conversation Resource)}
   validates :target_id, presence: true
 
-  scope :latest, ->(n) { order("id DESC").limit(n) }
-
   class << self
     def register(actor, action, target)
       event = create!(actor: actor, action: action, target: target)
@@ -23,10 +21,22 @@ class Event < ApplicationRecord
     end
 
     def clear_caches(event)
-      if event.action.to_s.in?(["create", "publish"])
+      if event.action.in?(["create", "publish"])
         SafeCacher.delete_matched("user_#{event.actor_id}_recent_contributions")
       end
       SafeCacher.delete_matched("user_#{event.actor_id}_interests")
+    end
+
+    def latest(n)
+      known_actor_ids = []
+      self.order("id DESC").limit(n*4).select do |event|
+        if event.actor_id.in?(known_actor_ids)
+          false
+        else
+          known_actor_ids << event.actor_id
+          true
+        end
+      end.take(n)
     end
   end
 
@@ -35,14 +45,18 @@ class Event < ApplicationRecord
   end
 
   def action_description
-    case action.to_s
+    case action
     when "create"
       case target_type
       when "Project" then "listed the project"
       when "Resource" then "added the resource"
       when "Conversation" then "started the conversation"
       end
-    when "update" then (target_type == "User" ? "updated their profile page" : nil)
+    when "update"
+      case target_type
+      when "User" then "updated their profile page"
+      else "updated the #{target_type.downcase}"
+      end
     when "comment" then "commented on the conversation"
     when "like" then "was inspired by"
     when "follow" then "is now following"
@@ -50,7 +64,8 @@ class Event < ApplicationRecord
   end
 
   def target_description
-    target_type.to_s == "User" ? target.name : target.title
+    return nil if target_type == "User" && action == "update"
+    target.try(:name) || target.title
   end
 
   def image_url

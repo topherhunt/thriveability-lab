@@ -10,7 +10,8 @@
       %td
         = link_to e.actor.name, notification_path(n, redirect_to: "actor")
         = e.action_description
-        = link_to "\"#{e.target_description}\"", notification_path(n, redirect_to: "target")
+        - if e.target_description
+          = link_to "#{e.target_description}", notification_path(n, redirect_to: "target")
   - if unread_notifications_count > 0
     %tr
       %td
