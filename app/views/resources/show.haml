@@ -26,7 +26,7 @@
     - if @resource.current_url.present?
       %tr
         %th URL
-        %td.text-ellipsis= link_to @resource.current_url, @resource.current_url
+        %td.text-ellipsis= link_to @resource.current_url, @resource.current_url, target: "_blank"
 
     - if @resource.target
       %tr
