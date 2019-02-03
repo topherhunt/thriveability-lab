@@ -29,13 +29,7 @@
         %p We are Annick and Topher, and we have been working on this platform for a number of years, motivated to create a social platform that is designed for supporting the deep, transformative change that we sense is so needed in our world.
 
         - @team.each do |user|
-          %div{style: "min-height: 60px;"}
-            = link_to image_tag(user.image.url(:thumb), class: "img-rounded", style: "float: left; width: 50px;"), user_path(user)
-            %div{style: "margin-left: 60px;"}
-              %span.h4
-                = link_to user.name, user_path(user)
-              .nowrap= user.location
-              .nowrap= user.tagline
+          = render partial: "users/list_row", locals: {user: user, opts: {}}
 
     .col-sm-4.hidden-xs
 
