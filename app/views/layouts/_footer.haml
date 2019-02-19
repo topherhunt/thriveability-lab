@@ -7,8 +7,20 @@
     &nbsp;
     = link_to fa_icon("users") + " How to help", how_you_can_help_path
     &nbsp;
-    = mail_to "contact@thriveabilitylab.com", fa_icon("envelope") + " Email us"
+    = link_to fa_icon("envelope") + " Email us", "#", data: {toggle: "modal", target: "#contact-us-modal"}
     &nbsp;
     = link_to fa_icon("newspaper-o") + " Newsletter", "http://eepurl.com/cWwWWf", target: "_blank"
     &nbsp;
     = link_to fa_icon("commenting") + " Feedback", feedback_form_url, target: "_blank"
+#contact-us-modal.modal.fade{tabindex: "-1", role: "dialog"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %button.close{type: "button", data: {dismiss: "modal"}}
+          %span &times;
+        %h4 Contact us
+      .modal-body
+        Questions, suggestions, ideas? We'd love to hear from you! Reach out at:
+        %p.text-center.strong.js-show-contact-email
+%script
+  $('.js-show-contact-email').text('contact'+'@'+'thriveabilitylab'+'.'+'com');
