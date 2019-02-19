@@ -6,7 +6,7 @@
       = link_to "Share a resource", new_resource_path, class: "test-new-resource-link btn btn-success"
 
     = render partial: "shared/simple_search_form", locals: {model_name: "Resource"}
-    = render partial: "shared/write_medium_article"
+    .hidden-xs= render partial: "shared/write_medium_article"
 
     .hidden-sm.hidden-xs
       = image_tag "resources_1_portrait_md.jpg", style: "width: 100%;", class: "img-rounded"

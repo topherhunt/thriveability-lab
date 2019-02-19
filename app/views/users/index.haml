@@ -7,7 +7,7 @@
         = link_to "Join the community", login_url, class: "test-signup-button btn btn-success"
 
     = render partial: "shared/simple_search_form", locals: {model_name: "User"}
-    = render partial: "shared/write_medium_article"
+    .hidden-xs= render partial: "shared/write_medium_article"
 
     .hidden-sm.hidden-xs
       = image_tag "people_1_portrait_md.jpg", style: "width: 100%;", class: "img-rounded"

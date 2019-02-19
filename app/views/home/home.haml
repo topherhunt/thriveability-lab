@@ -1,6 +1,6 @@
 #main-container.container-fluid
 
-  %div{style: "width: 400px; margin-top: -20px; margin-left: auto; margin-right: auto;"}
+  %div.hidden-xs{style: "width: 400px; margin-top: -20px; margin-left: auto; margin-right: auto;"}
     %h2.text-center What do you care about?
     %form{action: search_path, method: "GET"}
       .input-group
@@ -25,7 +25,7 @@
           - @users.each do |user|
             = render partial: "users/list_row", locals: {user: user, opts: {}}
           = link_to "+ #{User.count - @users.count} more", users_path
-        .col-sm-3
+        .col-sm-3.hidden-xs
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "people_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
@@ -35,7 +35,7 @@
           - @projects.each do |project|
             = render partial: "projects/list_row", locals: {project: project, opts: {}}
           = link_to "+ #{Project.count - @projects.count} more", projects_path
-        .col-sm-3
+        .col-sm-3.hidden-xs
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "projects_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
   .blank-space
@@ -47,7 +47,7 @@
           - @conversations.each do |c|
             = render partial: "conversations/list_row", locals: {conversation: c, opts: {}}
           = link_to "+ #{Conversation.count - @conversations.count} more", conversations_path
-        .col-sm-3
+        .col-sm-3.hidden-xs
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "conversations_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%; margin-top: -25%;", class: "hidden-xs"
     .col-sm-6
@@ -57,6 +57,6 @@
           - @resources.each do |resource|
             = render partial: "resources/list_row", locals: {resource: resource, opts: {}}
           = link_to "+ #{Resource.count - @resources.count} more", resources_path
-        .col-sm-3
+        .col-sm-3.hidden-xs
           %div.img-rounded{style: "height: 200px; overflow: hidden; margin-left: -15%; width: 120%;"}
             = image_tag "resources_1_portrait_md.jpg", style: "width: 150%; min-width: 200px; margin-left: -25%;", class: "hidden-xs"

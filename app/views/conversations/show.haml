@@ -16,7 +16,7 @@
       .row
         .col-sm-7
           = render partial: "comments/new", locals: {context: @conversation, comment: Comment.new, must_state_intention: @must_state_intention}
-        .col-sm-5
+        .col-sm-5.hidden-xs
           %div{style: "margin-bottom: -10px; font-size: 90%;"}
             %p.strong Some tips for awesome conversations:
             %ul
