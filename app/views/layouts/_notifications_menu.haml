@@ -2,12 +2,19 @@
   %a.dropdown-toggle{"data-toggle": "dropdown"}
     = fa_icon("bell")
     - if unread_notifications_count > 0
-      .label.label-danger #{unread_notifications_count}
+      .label.label-danger{style: "border-radius: 10px;"}= unread_notifications_count
+    - elsif !current_user.profile_filled_in?
+      .label.label-danger{style: "border-radius: 10px;"}= fa_icon("star")
     %span.caret
   %ul.dropdown-menu.notifications-list{style: "padding-left: 5px; min-width: 400px;"}
     %div.strong Notifications
 
-    - if my_recent_notifications.count == 0
+    - if !current_user.profile_filled_in?
+      %div.notification.unread{style: "min-height: 45px; padding: 3px; border: 1px solid #eee; margin: 3px;"}
+        .label.label-danger{style: "border-radius: 10px;"}= fa_icon("star")
+        Fill in your profile so other Thriveability members can get to know you better!
+        = link_to "Update my profile", edit_user_path(current_user)
+    - elsif my_recent_notifications.count == 0
       %p Nothing to report lately!
 
     - my_recent_notifications.each do |n|

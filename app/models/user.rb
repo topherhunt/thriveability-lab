@@ -56,6 +56,10 @@ class User < ApplicationRecord
     }
   end
 
+  def profile_filled_in?
+    image.present? && tagline.present? && location.present?
+  end
+
   # TODO: Cache this for performance, and figure out when to bust the cache.
   # Maybe this should be a service object that caches and returns the list of interests.
   def interests
